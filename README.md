@@ -1,6 +1,6 @@
 keosu
 =====
-
+Keosu is an open source CMS for mobile app.
 
 Requirement
 ===

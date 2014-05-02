@@ -44,9 +44,9 @@ run
 
 Test it
 ==
-Login : admin
-Password: lagoutte
-
+Move to your web/app.php with your navigator (ie http://localhost/keosu/web/app.php)<br /> 
+Login : admin<br /> 
+Password: lagoutte<br /> 
 
 
 Note

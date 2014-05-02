@@ -1,0 +1,11 @@
+keosu_gadget_last_article_gadget_add:
+    pattern:  /views/page/gadget/lastarticlegadget/add/{page}/{zone}
+    defaults: { _controller: KeosuGadgetLastArticleGadgetBundle:Edit:add }
+    
+keosu_gadget_last_article_gadget_edit:
+    pattern:  /views/page/gadget/lastarticlegadget/edit/{page}/{zone}
+    defaults: { _controller: KeosuGadgetLastArticleGadgetBundle:Edit:edit }
+    
+keosu_gadget_last_article_service:
+    pattern:  /service/gadget/lastarticle/{gadgetId}/{offset}/{format}
+    defaults: { _controller: KeosuGadgetLastArticleGadgetBundle:Service:viewList }

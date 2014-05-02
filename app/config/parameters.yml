@@ -1,0 +1,8 @@
+#
+# This file is used for initial configuration
+# DO NOT MODIFY THIS FILE
+# Use parameters_default.yml instead
+#
+imports:
+    - { resource: parameters_default.yml }
+    - { resource: parameters_custom.yml }

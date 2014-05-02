@@ -1,0 +1,18 @@
+#
+# This file is used for initial configuration
+# DO NOT MODIFY IT
+#
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     3306
+    database_name:     keosu
+    database_user:     root
+    database_password: root
+
+    # Base URL 
+    # for exemple
+    # in local installtion http://localhost/keosu/web or http://localhost/keosu 
+    # in remote installation http://demo.keosu.com 
+    url_base:          http://localhost/keosu/web
+    url_param:         /app_dev.php/

@@ -1,0 +1,83 @@
+	{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+
+{% extends 'KeosuCoreBundle::page.html.twig' %}
+
+
+{% block pagemenu %}
+	<div class="activesidebartitle">
+		 <a href="{{ path('keosu_core_page') }}">
+				<span class="glyphicon glyphicon-folder-open"></span>
+				&nbsp;Pages
+		</a>
+	</div>
+ 	{% include "KeosuCoreBundle:Page:view.html.twig"%} 
+	<div>&nbsp;</div>
+{% endblock %}
+
+		
+{% block body %}
+	<div id="checklayout">
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$.get('{{path('keosu_core_views_page_check') }}', function(data) {
+					$('#checklayout').html(data);
+				});
+			} );
+		</script>
+	</div>
+	<div id="content">
+		<div class="panel">
+			{% block content %}
+				<div class="dashboard">
+				<div class="row">
+					<div class="col-md-12">
+						<h2>The page part</h2>
+						<p>
+							The page part is about your application page, articles, readers data, etc...
+						</p>
+						<p>
+							Let your creation guide your mouse
+						</p>
+					</div>
+				</div>	
+				<div class="row">
+					<div class="col-md-3">
+						<div class="wellcustom">
+							<h3>page</h3>
+							<p>
+								A page is a page page, no matter about content for instance, it's only a way to display something (but have an idea of what you want to display :P)
+							</p>
+							<a href="{{ path('keosu_core_views_page_manage') }}" ><button type="button" class="btn btn-default">Manage pages </button></a>
+						</div>				
+					</div>
+					{% for page in pages %}
+						<div class="col-md-3">
+							<div class="wellcustom">
+								<h3>{{ page.name }}</h3>
+								
+								<a href="{{ path('keosu_core_views_page',{'id':page.id}) }}"><button type="button" class="btn btn-default">Edit {{ page.name }}</button></a>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			{% endblock %}
+		</div>
+	</div>
+{% endblock %}

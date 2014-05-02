@@ -1,0 +1,15 @@
+keosu_gadget_aroundme_gadget_add:
+    pattern:  /views/page/gadget/aroundme/add/{page}/{zone}
+    defaults: { _controller: KeosuGadgetAroundMeGadgetBundle:Edit:add }
+    
+keosu_gadget_aroundme_gadget_edit:
+    pattern:  /views/page/gadget/aroundme/edit/{page}/{zone}
+    defaults: { _controller: KeosuGadgetAroundMeGadgetBundle:Edit:edit }
+    
+keosu_gadget_aroundme_service:
+    pattern:  /service/gadget/aroundme/{gadgetId}/{lat}/{lng}/{offset}/{limit}/{format}
+    defaults: { _controller: KeosuGadgetAroundMeGadgetBundle:Service:viewList}
+    
+keosu_gadget_aroundme_service_viewone:
+    pattern:  /service/gadget/aroundme/view/{poiid}/{format}
+    defaults: { _controller: KeosuGadgetAroundMeGadgetBundle:Service:viewOne}

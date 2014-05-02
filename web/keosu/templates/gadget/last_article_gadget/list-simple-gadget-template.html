@@ -1,0 +1,45 @@
+<div ng-controller="last_article_gadgetController">
+	<div ng-show="isList">
+		<div class="panel list">
+			<li
+				ng-class="{active: activePage.page == $index, 
+    inactive: activePage.page != $index}"
+				ng-repeat="page in pages track by $index">
+
+				<div class="panel-body list-content">
+					<div class="row-fluid list-elements" ng-repeat="apage in page">
+						<div class="media" ng-click="open(apage)">
+							<div class="media-body">
+								<h6 class="title">{{ apage.title }}</h6>
+							</div>
+						</div>
+						<hr>
+					</div>
+					<a ng-show="pages[$index - 1]"
+						ng-click="activePage.page = $index-1" class="previous" href="#"><button
+							class="btn btn-default btn-page">Previous</button></a> <a
+						ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1"
+						class="next" href="#"><button
+							class="btn btn-default btn-page pull-right">Next</button></a>
+			</li>
+		</div>
+	</div>
+	<div ng-show="isArticle">
+		<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a>
+		<div class="row-fluid">
+			<h4 class="title" style="text-align: center">{{ article.title }}</h4>
+		</div>
+		<hr>
+		<div class="gadget-content">
+			<div class="row-fluid">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-bind-html="article.content"></div>
+				</div>
+			</div>
+		</div>
+		<ul class="img-list">
+			<li ng-repeat="img in article.attachments"><img class="center"
+				ng-if="img" src="{{ img.path }}" alt="" /></li>
+		</ul>
+	</div>
+</div>

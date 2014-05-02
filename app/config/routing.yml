@@ -1,0 +1,77 @@
+keosu_gadget_pictures_gallery_gadget:
+    resource: "@KeosuGadgetPicturesGalleryGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_gadget_picture_gadget:
+    resource: "@KeosuGadgetPictureGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_data_model_picture_model:
+    resource: "@KeosuDataModelPictureModelBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+keosu_gadget_around_me_gadget:
+    resource: "@KeosuGadgetAroundMeGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_reader_rss_reader:
+    resource: "@KeosuReaderRssReaderBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_gadget_menu_gadget:
+    resource: "@KeosuGadgetMenuGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+keosu_gadget_chrono_gadget:
+    resource: "@KeosuGadgetChronoGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_gadget_last_article_gadget:
+    resource: "@KeosuGadgetLastArticleGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_gadget_article_gadget:
+    resource: "@KeosuGadgetArticleGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_gadget_map_gadget:
+    resource: "@KeosuGadgetMapGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_core:
+    resource: "@KeosuCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_article:
+    resource: "@KeosuDataModelArticleModelBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+keosu_poi:
+    resource: "@KeosuDataModelMapModelBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+#FOS User route
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+
+# Internal routing configuration to handle ESI
+#_internal:
+#    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#    prefix:   /_internal

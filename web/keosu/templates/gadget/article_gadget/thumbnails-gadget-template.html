@@ -1,0 +1,23 @@
+<div ng-controller="article_gadgetController">
+	<div class="row-fluid">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="media">
+				<div class="pull-left">
+					<img class="img-rounded img-min" ng-if="article.attachments"
+						src="{{ article.attachments[0].path }}" alt="" />
+				</div>
+				<div class="medias-body">
+					<h6>{{ article.title }}</h6>
+				</div>
+			</div>
+			<hr>
+		</div>
+	</div>
+	<div class="gadget-content">
+	<div class="row-fluid">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div ng-bind-html="article.content"></div>
+		</div>
+	</div>
+	</div>
+</div>

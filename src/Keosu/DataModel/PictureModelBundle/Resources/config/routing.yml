@@ -1,0 +1,15 @@
+keosu_picture_viewlist:
+    pattern:  /content/picture/
+    defaults: { _controller: KeosuDataModelPictureModelBundle:View:view }
+    
+keosu_picture_delete:
+    pattern:  /content/picture/delete/{id}
+    defaults: { _controller: KeosuDataModelPictureModelBundle:Edit:delete }
+    
+keosu_picture_edit:
+    pattern:  /content/picture/edit/{id}
+    defaults: { _controller: KeosuDataModelPictureModelBundle:Edit:edit }
+    
+keosu_picture_add:
+    pattern:  /content/picture/add
+    defaults: { _controller: KeosuDataModelPictureModelBundle:Edit:add }

@@ -1,0 +1,15 @@
+keosu_article_viewlist:
+    pattern:  /content/article/
+    defaults: { _controller: KeosuDataModelArticleModelBundle:View:view }
+    
+keosu_article_delete:
+    pattern:  /content/article/delete/{id}
+    defaults: { _controller: KeosuDataModelArticleModelBundle:Edit:delete }
+    
+keosu_article_edit:
+    pattern:  /content/article/edit/{id}
+    defaults: { _controller: KeosuDataModelArticleModelBundle:Edit:edit }
+    
+keosu_article_add:
+    pattern:  /content/article/add
+    defaults: { _controller: KeosuDataModelArticleModelBundle:Edit:add }

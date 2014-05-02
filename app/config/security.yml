@@ -1,0 +1,54 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+    
+security:
+  encoders:
+    Symfony\Component\Security\Core\User\User: plaintext
+    FOS/UserBundle/Model/UserInterface: sha512
+    Keosu\UserBundle\Entity\User: sha512
+    
+  role_hierarchy:
+    ROLE_ADMIN:       ROLE_USER
+    ROLE_SUPER_ADMIN: ROLE_ADMIN
+    
+  providers:
+    chain_provider:
+      chain:
+        providers: [in_memory, fos_userbundle]
+    fos_userbundle:
+       id: fos_user.user_provider.username
+    in_memory:
+      memory:
+        users: 
+          admin: { password: lagoutte, roles: 'ROLE_SUPER_ADMIN' }
+   
+  firewalls:
+    dev:
+      pattern:  ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      pattern: ^/
+      form_login:
+        provider: chain_provider
+        csrf_provider:  form.csrf_provider
+      logout:     true
+      anonymous:  true
+
+      
+  access_control:
+        #Assets access for all
+        - { path: ^/bundles, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/img, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/js, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/css, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/service, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/install, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        
+        #Routes
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: ROLE_SUPER_ADMIN }
+        - { path: ^/, role: ROLE_USER }
+        

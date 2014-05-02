@@ -1,0 +1,11 @@
+keosu_gadget_pictures_gallery_gadget_add:
+    pattern:  /views/page/gadget/picturesgallerygadget/add/{page}/{zone}
+    defaults: { _controller: KeosuGadgetPicturesGalleryGadgetBundle:Edit:add }
+    
+keosu_gadget_pictures_gallery_gadget_edit:
+    pattern:  /views/page/gadget/picturesgallerygadget/edit/{page}/{zone}
+    defaults: { _controller: KeosuGadgetPicturesGalleryGadgetBundle:Edit:edit }
+    
+keosu_gadget_pictures_gallery_service:
+    pattern:  /service/gadget/picturesgallery/{gadgetId}/{offset}/{format}
+    defaults: { _controller: KeosuGadgetPicturesGalleryGadgetBundle:Service:viewList }

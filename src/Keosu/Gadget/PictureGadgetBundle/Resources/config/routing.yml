@@ -1,0 +1,12 @@
+keosu_gadget_picture_gadget_add:
+    pattern:  /views/page/gadget/picturegadget/add/{page}/{zone}
+    defaults: { _controller: KeosuGadgetPictureGadgetBundle:Edit:add }
+    
+keosu_gadget_picture_gadget_edit:
+    pattern:  /views/page/gadget/picturegadget/edit/{page}/{zone}
+    defaults: { _controller: KeosuGadgetPictureGadgetBundle:Edit:edit }
+    
+keosu_gadget_picture_service:
+    pattern:  /service/gadget/picture/{gadgetId}/{format}
+    defaults: { _controller: KeosuGadgetPictureGadgetBundle:Service:viewOne }
+

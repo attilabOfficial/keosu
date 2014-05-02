@@ -1,0 +1,80 @@
+	{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+
+{% extends 'KeosuCoreBundle:Page:editGadget.html.twig' %}
+
+{% block gadgetform %}
+<script type="text/javascript">
+$(document).ready(function() {
+		$.get('{{path('keosu_gadget_article_gadget_viewtable') }}', function(data) {
+			$('#dialog-modal').html(data);
+		});
+		$('#selected-article-label').html($('#form_articleId').find(":selected").text());
+
+		$( "#dialog-modal" ).dialog({
+			 autoOpen: false,
+			 modal: true,
+			 title: "Select an article",
+			 width: 800,
+			 height:600,
+			 show: {
+			 effect: "blind",
+			 duration: 100
+			 },
+			 hide: {
+			 effect: "explode",
+			 duration: 100
+			 }
+		});
+		$(document).on("click",'#select-article',function() {
+			$( "#dialog-modal" ).dialog( "open" );
+		});
+		$(document).on("click",'.article',function() {
+			$('#form_articleId option[value='+$(this).find('.articleid').text()+']').attr('selected', 'selected'); 
+			$('#selected-article-label').html($('#form_articleId').find(":selected").text());
+			$( "#dialog-modal" ).dialog( "close" );
+		});
+		
+}); 
+
+</script>
+<br/>
+<div>
+	<div class="form-group form_gadgetTemplate_form_group">
+		<label class=" control-label col-lg-3 control-label required" for="form_gadgetTemplate"> Seleted article </label>
+		<div class="col-lg-9">
+				<span id="selected-article-label"></span>		
+			   	<button type="button" id="select-article" class="btn btn-info uploader">Select a new article</button>
+		</div>
+	</div>
+   {{ form_start(form) }}
+	    {{ form_errors(form) }}
+	    <div id="input-article-id" class="hidden">
+	    	{{ form_row(form.articleId) }}
+	    </div>
+	    {{ form_row(form.shared) }}
+	   	{{ form_row(form.gadgetTemplate) }}
+    	<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+     {{ form_end(form) }}
+    
+</div>
+
+<div id="dialog-modal">
+</div>
+
+{% endblock %}

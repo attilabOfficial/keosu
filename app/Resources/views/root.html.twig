@@ -1,0 +1,79 @@
+	{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+    
+ <!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{% block title %}Keosu{% endblock %} </title>
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    	
+	    {% stylesheets 	
+			'less/bootstrap.less'
+			'css/jquery-ui-1.10.4.css'
+			'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css'			
+	     %}
+			<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+		{% endstylesheets %}
+    	
+    	{% javascripts
+	        'js/jquery-1.10.2.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/transition.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/alert.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/modal.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/dropdown.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/scrollspy.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/tab.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/popover.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/button.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/collapse.js'
+	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/carousel.js'
+	        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
+	        'js/jquery-ui-1.10.4.min.js'
+	        'js/master.js'
+	        'js/jquery.dataTables.js'
+		 %}
+		<script type="text/javascript" src="{{ asset_url }}">
+		 	$(function() {
+				 $( document ).tooltip();
+			});
+		</script>
+		{% endjavascripts %}
+    </head>
+    <body>
+    <script type="text/javascript"">
+	 	
+	</script>
+    
+    <!-- invisible -->
+    <div id="dialog-confirm" title="Cancellation" style="display:none;">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+     Do you really want to leave this page ?
+    </p>
+	</div>
+	
+	
+    	{% block skeleton %}
+    	
+    	{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,34 @@
+{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+{% extends 'MopaBootstrapBundle:Form:fields.html.twig' %}
+
+
+{% block file_widget %}
+    {% spaceless %}
+    	{% if image_url is not null %}
+    		<center>
+	   		 	<img src="{{url_base}}/{{ asset(image_url) }}" id="img-preview" class="uploader"/>
+	   		 </center>
+	   	{% else %}
+	   		<center>
+	   		 	<img src="{{url_base}}/{{ asset(image_url) }}" id="img-preview" class="uploader" style="display:none"/>
+	   		 </center>
+	   	{% endif %}
+	    {{ block('form_widget') }}
+    {% endspaceless %}
+{% endblock %}

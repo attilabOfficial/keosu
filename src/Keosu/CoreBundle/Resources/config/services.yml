@@ -1,0 +1,13 @@
+parameters:
+    keosu_core.exporter.class: Keosu\CoreBundle\Service\Exporter
+    keosu_core.curapp.class: Keosu\CoreBundle\Service\CurApp
+
+services:
+    keosu_core.exporter:
+        class: %keosu_core.exporter.class%
+    keosu_core.curapp:
+        class: %keosu_core.curapp.class%
+    keosu_core.image_type_extension:
+        class: Keosu\CoreBundle\Form\Extension\ImageTypeExtension
+        tags:
+            - { name: form.type_extension, alias: file }

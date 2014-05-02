@@ -1,0 +1,33 @@
+<div ng-controller="pictures_gallery_gadgetController">
+	<div ng-show="isGallery" class="gallery">
+		<li
+			ng-class="{active: activePage.page == $index, 
+    inactive: activePage.page != $index}"
+			ng-repeat="page in pages track by $index">
+			<div class="row-fluid">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 gallery">
+					<div ng-repeat="apage in page">
+						<div class="picture-gallery center">
+							<img src="{{ apage.path }}" alt="" ng-click="open(apage, apage.id)" class="{{ imgClass[apage.id] }}" />
+						</div>
+					</div>
+				</div>
+			</div> <br>
+			<hr>
+			<div class="row-fluid">
+				<a ng-show="pages[$index - 1]" ng-click="activePage.page = $index-1"
+					class="previous" href="#"><button class="btn btn-default btn-page">Previous</button></a>
+				<a ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1"
+					class="next" href="#"><button
+						class="btn btn-default btn-page pull-right">Next</button></a>
+			</div>
+		</li>
+	</div>
+	<div ng-show="isPicture">
+		<div class="full">
+			<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a> <img
+				class="photo-full" src="{{image.path}}" alt=""
+				ng-click="open(apage)"></img>
+		</div>
+	</div>
+</div>

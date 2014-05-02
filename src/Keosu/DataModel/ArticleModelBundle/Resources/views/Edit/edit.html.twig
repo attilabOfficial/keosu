@@ -1,0 +1,112 @@
+	{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+{% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
+{% form_theme form 'KeosuCoreBundle:Form:fields-article.html.twig' %}
+
+{% block title %}
+Edit article
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+{{ tinymce_init() }}
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.date').datepicker({ dateFormat: 'dd-mm-y' });
+		
+		var $container = $('.article-images');
+		 // Add a new attachment
+		 function add_image() {
+			 index = $container.children().length;
+			 prototype='<div class="image-collection-entry">';
+			 prototype+='<a class="badge remove-button">';
+			 prototype+='<span class="glyphicon glyphicon-remove"></span></a>';
+			 prototype+='<span class="clear">&nbsp;</span>';
+			 widget=$container.attr('data-prototype').replace(/__name__/g, index);
+			 prototype+=widget;
+			 prototype+='<center><button type="button" class="btn btn-info uploader">Upload File</button></center>';
+			 prototype+='<center><img src="#"style="display:none" class="img-thumbnail img-preview uploader"/></center>';
+			 prototype+='</div>'
+			 $container.append($(prototype));
+	  	}
+		function openInput($el){
+			$el.parent().parent().find('input[type="file"]')[ 0 ].click();
+		}
+		 
+		$(document).on("click",'.uploader',function() {
+			 	openInput($(this));
+			    return false;
+		 });
+		$(document).on("click",'.remove-button',function() {
+		      $(this).parent().remove(); 
+		      $(this).remove();
+		      return false;
+		 });
+		$(document).on("change",'input[type="file"]',function() {
+			if (this.files &&  this.files[0]) {
+	            var reader = new FileReader();
+	            el= $(this);
+	            reader.onload = function (e) {
+	            	el.parent().parent().parent().find('img').attr('src', e.target.result).show();
+	            	el.parent().parent().parent().find('button').hide();
+	            }
+	            reader.readAsDataURL(this.files[0]);
+	        }
+		});
+		$('#add_image').click(function() {
+			add_image();
+			return false;
+		});
+		
+	});
+	</script>
+	<div id="articleform">
+			{{ form_start(form) }}
+			    {{ form_errors(form) }}
+			
+			    {{ form_row(form.title) }}
+			    {{ form_row(form.body) }}
+			    {{ form_row(form.author) }}
+			    {{ form_row(form.date) }}
+			    <br class="clear"/>
+			   
+			   <a href="#" id="add_image" class="btn btn-info">Add a new picture</a>
+			    
+			    <div class="article-images" 
+			    	data-prototype="{{ form_widget(form.attachments.vars.prototype)|e }}">
+				        {% for attachment in form.attachments %}
+					        <div class="image-collection-entry">
+								<a class="badge remove-button">
+									<span class="glyphicon glyphicon-remove"></span>
+								</a>
+								<span class="clear"/>
+				           		{{ form_row(attachment) }}
+				           	</div>
+				        {% endfor %}
+			    </div>
+			    <br class="clear"/>
+			    <br class="clear"/>
+			
+	    		<input type="submit" class="btn btn-success" /><span>&nbsp;</span><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+			 {{ form_end(form) }}
+	    		    	
+	    </form>
+	    
+	</div>
+{% endblock %}

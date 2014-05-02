@@ -1,0 +1,8 @@
+The architecture of base templates
+- skeleton : contain base html structure and inclusion (javascript, css, etc ...)
+- headered.skeleton : decorate skeleton with header
+- footered.headered : decorate headered.skeleton
+- base : use by all other template
+
+
+Finally to fullfil page, you need too write into body block

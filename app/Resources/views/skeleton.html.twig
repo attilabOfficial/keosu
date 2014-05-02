@@ -1,0 +1,152 @@
+	{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+{% extends '::root.html.twig' %}
+{% block skeleton %}
+  
+	<section id="main-content">
+		
+		<div class="container-fluid">
+			{% block maincontent %}
+			<div class="row">
+				<div class="col-md-3 leftcol">
+					<div class="leftcol">
+						<section id="leftmenu" class="leftcol">
+							<div class="sidebar leftcol">
+	
+							<div class="sidemenu leftcol">	
+								{% block leftmenu %}
+									<center>
+										<img class="logotop" src="{{url_base}}/img/logo-black-334.png"/>
+									</center>
+									<br/>
+
+									<div class="dropdown" id="applist">
+										<script type="text/javascript" charset="utf-8">
+												$(document).ready(function() {
+													$.get('{{path('keosu_core_app_service_list',{'format':'html'}) }}', function(data) {
+														$('#applist').html(data);
+													});
+												} );
+										</script>
+									</div>
+									<div class="separator">&nbsp;</div>
+									{% block contentmenu %}
+										<div class="sidebartitle">
+										  <a href="{{ path('keosu_core_homepage') }}">
+											<span class="glyphicon glyphicon-book"></span> 
+												Content
+										 </a>
+										</div>
+									{% endblock %}
+									<div class="separator">&nbsp;</div>
+									{% block pagemenu %}
+										<div class="sidebartitle">
+											 <a href="{{ path('keosu_core_page') }}">
+													<span class="glyphicon glyphicon-folder-open"></span>
+													&nbsp;Pages
+											</a>
+										</div>
+									{% endblock %}
+									<div class="separator">&nbsp;</div>
+									{% block previewmenu %}
+										<div class="sidebartitle">
+											<a id="simulator" target="_blank" class="mainnavel" href="http://emulate.phonegap.com?url={{url_base}}/keosu/export/simulator/www/index.html">
+													<span class="glyphicon glyphicon-film"></span> Preview
+											</a>
+										</div>
+									{% endblock %}
+									<div class="separator">&nbsp;</div>
+									{% block publishmenu %}
+										<div class="sidebartitle">
+											<a href="{{ path('keosu_core_publish') }}"> 
+													<span class="glyphicon glyphicon-cloud-upload"></span> Publish
+											</a>
+										</div>
+									{% endblock %}
+									<div class="separator">&nbsp;</div>
+									{% block configurationmenu %}
+										<div class="sidebartitle">
+											<a href="{{ path('keosu_core_app_manage') }}"> 
+													<span class="glyphicon glyphicon-cog"></span> 
+													Configuration
+											</a>
+										</div>
+									{% endblock %}
+									<div class="separator">&nbsp;</div>	
+								{% endblock %}
+							</div>
+							</div>
+						</section>
+					</div>
+				</div>
+				<div class="col-md-9">
+					<div class="container">
+					     <div class="row-fluid">
+						      <div class="span6 pull-right logininfo" style="text-align:right">
+						           <span class="glyphicon glyphicon-user"></span>
+										Hello {{ app.user.username }} <a href="{{ path('fos_user_security_logout') }}">
+											(Logout)
+										</a>
+						      </div>
+						  </div>
+				  	</div>
+					<div>
+						<section id="body">
+							{% block body %}
+	            
+							{% endblock %}
+						</section>
+					</div>
+				</div>
+			</div>
+			{% endblock %}
+		</div>
+
+	</section>
+	
+	<div id="dialog" title="Confirmation Required">
+ 		 Are you sure about this? All your modification will be lost
+	</div>
+	<script type="text/javascript">
+	 $(document).ready(function() {
+		    $("#dialog").dialog({
+		      autoOpen: false,
+		      modal: true
+		    });
+		  });
+
+		  $(".confirmModal").click(function(e) {
+		    e.preventDefault();
+		    var targetUrl = $(this).attr("href");
+
+		    $("#dialog").dialog({
+		      buttons : {
+		        "Confirm" : function() {
+		          window.location.href = targetUrl;
+		        },
+		        "Cancel" : function() {
+		          $(this).dialog("close");
+		        }
+		      }
+		    });
+
+		    $("#dialog").dialog("open");
+		  });
+	</script>
+	
+{% endblock %}

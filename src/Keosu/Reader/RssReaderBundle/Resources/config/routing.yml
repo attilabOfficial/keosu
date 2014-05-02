@@ -1,0 +1,11 @@
+keosu_ReaderManager_RssReader_add:
+    pattern:  /content/reader/manage/add/rss
+    defaults: { _controller: KeosuReaderRssReaderBundle:Edit:add }
+    
+keosu_ReaderManager_RssReader_edit:
+    pattern:  /content/reader/manage/edit/rss/{id}
+    defaults: { _controller: KeosuReaderRssReaderBundle:Edit:edit }
+    
+keosu_ReaderManager_RssReader_sync:
+    pattern:  /content/reader/sync/rss/{id}
+    defaults: { _controller: KeosuReaderRssReaderBundle:Sync:sync }

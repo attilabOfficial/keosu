@@ -1,0 +1,11 @@
+keosu_gadget_map_gadget_add:
+    pattern:  /views/page/gadget/poigadget/add/{page}/{zone}
+    defaults: { _controller: KeosuGadgetMapGadgetBundle:Edit:add }
+    
+keosu_gadget_map_gadget_edit:
+    pattern:  /views/page/gadget/poigadget/edit/{page}/{zone}
+    defaults: { _controller: KeosuGadgetMapGadgetBundle:Edit:edit }
+
+keosu_gadget_map_gadget_service_view:
+    pattern:  /service/gadget/mapgadget/{gadgetId}/{format}
+    defaults: { _controller: KeosuGadgetMapGadgetBundle:Service:viewOne }

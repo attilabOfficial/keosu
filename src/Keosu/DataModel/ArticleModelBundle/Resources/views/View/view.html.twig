@@ -1,0 +1,85 @@
+	{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+{% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
+
+	
+{% block content %}
+<script>
+$(document).ready(function() {
+	// Init table for article
+	$('#content-table').dataTable({
+			"bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": true,
+         	"aoColumns": [
+                            null,
+                            null,
+                            null,
+                            null 
+			]});
+});
+</script>
+<div class="row">
+	<div class="col-md-12">
+		<div id="dynamic" class="table">
+			<fieldset>
+				<div class="clearfix">
+		    		<h1 class="pull-left">Articles</h1>
+		    		<a class="right-button pull-right" href="{{ path('keosu_article_add') }}">
+						<button class="btn btn-success" title="Create an article">
+							New article
+						</button>
+					</a>
+				</div>
+				<table class="table table-striped table-hover clearfix" id="content-table" width="100%">
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Reader</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					
+					{% for article in articles %}
+							<tr>
+								<td>{{ article.title }}</td>
+								<td>{% if article.reader %} {{article.reader.name}}{% endif %}</td>
+								<td>{% if article.reader == false or (article.reader and article.reader.allowupdate == false) %} <a href={{ path('keosu_article_edit',{'id':article.id}) }}><i class='glyphicon glyphicon-edit'></i></a>{% endif %}</td>
+								<td>{% if article.reader == false or (article.reader and article.reader.allowupdate == false) %} <a href={{ path('keosu_article_delete',{'id':article.id}) }}><i class='glyphicon glyphicon-remove'></i></a>{% endif %}</td>
+							</tr>
+    				{% endfor %}	
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>Title</th>
+							<th>Reader</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</tfoot>
+				</table>
+			</fieldset>
+		</div>
+	</div>
+</div>
+{% endblock %}

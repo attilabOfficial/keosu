@@ -19,6 +19,17 @@ Tips you can use php -info command to locate your php.ini
 
 Installation
 ===
+With packaged version (easy way)
+=
+Go to release page (<a href="https://github.com/vleborgne/keosu/releases">here</a>) and download the last ralease zip file.<br/>
+Unzip it in your apache webdir<br/>
+Move to your web/app.php with your navigator (ie http://localhost/keosu/web/app.php)<br /> 
+Login : admin<br /> 
+Password: lagoutte<br /> 
+
+
+From sources (nerd only)
+=
 Clone project in your apache webspace
 Download composer.phar
 <pre>
@@ -44,9 +55,9 @@ run
 
 Test it
 ==
-Login : admin
-Password: lagoutte
-
+Move to your web/app.php with your navigator (ie http://localhost/keosu/web/app.php)<br /> 
+Login : admin<br /> 
+Password: lagoutte<br /> 
 
 
 Note

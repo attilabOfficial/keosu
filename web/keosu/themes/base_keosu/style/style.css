@@ -7,11 +7,16 @@ body {
 	padding-right: 0px !important;
 	margin-left: 0px !important;
 	margin-right: 0px !important;
+	word-wrap: break-word;
 }
 
 .content {
 	margin-top: 60px;
 	margin-bottom: 45px;
+}
+
+.footer-menu {
+	padding: 0px 15px !important;
 }
 
 #logo {
@@ -39,6 +44,10 @@ hr {
 	margin-bottom: 5px !important;
 }
 
+a {
+	color: black !important;
+}
+
 /***************************
    LIST
 ***************************/
@@ -57,7 +66,7 @@ hr {
 
 .list-elements {
 	margin: 0 auto;
-	padding: 5px 10px !important;
+	padding: 0px !important;
 }
 
 .list-elem-right {
@@ -90,14 +99,30 @@ hr {
    IMAGE
 ***************************/
 .gallery {
-	margin: 0px 10px;
-	padding: 5px;
+	margin: 0px !important;
+	padding: 0px !important;
 }
 
 .picture-gallery {
+	width: 90px;
+	height: 90px;
+	overflow: hidden;
+	float: left;
+	
 }
 
-.picture-gallery img {
+.picture-horizontal {
+	position: relative;
+	max-width: none !important;
+	height: 90px;
+	width: auto;
+}
+
+.picture-vertical {
+	position: relative;
+	max-width: none !important;
+	width: 90px;
+	height: auto;
 }
 
 .img-min {
@@ -106,6 +131,10 @@ hr {
 	background-color: #34495e;
 	width: 64px; 
 	height: 64px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 }
 
 .img-list {
@@ -144,20 +173,27 @@ h6.title, h4.title {
 	display: none;
 }
 
+/***************************
+   GADGET
+***************************/
+
 .gadget-content {	
 }
+
+/***************************
+   BUTTON
+***************************/
 
 .btn-basic, .btn-page {
 	text-shadow: none !important;
 }
+
+/***************************
+   MAP
+***************************/
 
 #map_canvas {
 	width: 100%;
 	height: 400px;
 	margin: 0;
 }
-
-.footer-menu {
-	padding: 0px 15px !important;
-}
-

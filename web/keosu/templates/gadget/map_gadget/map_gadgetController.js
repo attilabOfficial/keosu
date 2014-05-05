@@ -1,5 +1,5 @@
 /************************************************************************
-	Keosu is an open source CMS for mobile app
+	Pockeit is an open source CMS for mobile app
 	Copyright (C) 2013  Vincent Le Borgne
 
     This program is free software: you can redistribute it and/or modify

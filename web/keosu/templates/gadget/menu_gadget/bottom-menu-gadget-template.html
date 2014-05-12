@@ -1,11 +1,9 @@
-<div ng-controller="menu_gadgetController">
-	<div class="row-fluid footer-menu">
+<div ng-controller="menu_gadgetController" class="row-fluid menu">
 		<div ng-repeat="page in pages"
-			class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			class="menu-elements">
 			<a href="{{ page.name }}"><img
-				class="icons-footer" src="{{ page.ico }}" alt="" /></a>
+				class="icons-menu" src="{{ page.ico }}" alt="" /></a>
 		</div>
-	</div>
 </div>
 
 

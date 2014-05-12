@@ -1,1 +1,1 @@
-var app = angular.module('keosuApp', ['angular-chrono', 'ngSanitize']);
+var app = angular.module('keosuApp', ['angular-chrono', 'ngSanitize', 'ngTouch', 'ngRoute']);

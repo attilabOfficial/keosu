@@ -42,6 +42,24 @@ class TemplateUtil {
 		$templateString = str_replace("'", "\'", $templateString);
 		return $templateString;
 	}
+	/**
+	 * Scan the $PAGE_TEMPLATE_PATH dir and return the list of file finished by $TEMPLATE_SUFFIX
+	 * @return multitype:unknown
+	 */
+	
+	public static function getTemplateList() {
+		$fileList = scandir(TemplateUtil::getPageTemplateAbsolutePath());
+		$templateList = Array();
+	
+		//Filter
+		foreach ($fileList as $file) {
+			if (StringUtil::endsWith($file, ThemeUtil::getTemplateSuffix())) {
+				$templateList[$file] = $file;
+			}
+		}
+		return $templateList;
+	
+	}
 
 	
 	public static function getTemplateGadgetList($gadgetName) {
@@ -65,6 +83,10 @@ class TemplateUtil {
 		return null === TemplateUtil::getTemplateDir() ? null
 				: TemplateUtil::getUploadRootDir() . '/'
 						. TemplateUtil::getTemplateDir();
+	}
+	
+	public static function getPageTemplateAbsolutePath() {
+		return TemplateUtil::getAbsolutePath() . '/page-template/';
 	}
 
 	public static function getGadgetAbsolutePath() {

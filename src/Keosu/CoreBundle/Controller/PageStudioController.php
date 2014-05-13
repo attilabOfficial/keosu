@@ -51,7 +51,7 @@ class PageStudioController extends Controller {
 		//Page Template content as String
 		$templateHtml = 
 				file_get_contents(
-					ThemeUtil::getAbsolutePath() . $theme->getTheme().'/page-templates/'
+					TemplateUtil::getPageTemplateAbsolutePath()
 						. $content->getTemplateId());
 		//Get all the elements of class "zone" in template dom
 		$crawler = new Crawler($templateHtml);

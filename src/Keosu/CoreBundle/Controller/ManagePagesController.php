@@ -115,7 +115,7 @@ class ManagePagesController extends Controller {
 		$formBuilder = $this
 				->createFormBuilder($page,
 						array('label' => 'Page edit'));
-		$this->buildPageForm($formBuilder,$theme->getTheme());
+		$this->buildPageForm($formBuilder);
 		$form = $formBuilder->getForm();
 		$request = $this->get('request');
 		//If we are in POST method, form is submit
@@ -155,11 +155,11 @@ class ManagePagesController extends Controller {
 	/**
 	 * Edit page form
 	 */
-	private function buildPageForm($formBuilder,$themeValue) {
+	private function buildPageForm($formBuilder) {
 		$formBuilder->add('name', 'text')
 				->add('isMain', 'checkbox', array('required' => false)) //Main is index page
 				->add('templateId', 'choice',
-						array('choices' => ThemeUtil::getTemplateList($themeValue),
+						array('choices' => TemplateUtil::getTemplateList(),
 								'required'  => true, 'expanded'=>true ));
 	}
 	

@@ -47,27 +47,7 @@ class ThemeUtil {
 
 	}
 	
-	/**
-	 * Scan the $THEME_PATH/xxx/page-templates dir and return the list of file finished by $TEMPLATE_SUFFIX
-	 * @return multitype:unknown
-	 */
-	
-	public static function getTemplateList($themeValue) {
-		$fileList = scandir(ThemeUtil::getAbsolutePath().$themeValue.'/page-templates');
-		$templateList = Array();
-	
-		//Filter
-		foreach ($fileList as $file) {
-			if (StringUtil::endsWith($file, ThemeUtil::getTemplateSuffix())) {
-				$templateList[$file] = $file;
-			}
-		}
-		return $templateList;
-	
-	}
-	public static function getCurThemeDir($themeValue){
-		return ThemeUtil::getWebPath().$themeValue.'/page-templates';
-	}
+
 
 	public static function getAbsolutePath() {
 		return null === ThemeUtil::getThemeDir() ? null

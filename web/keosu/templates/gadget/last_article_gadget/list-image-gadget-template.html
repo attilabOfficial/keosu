@@ -1,14 +1,14 @@
 <div ng-controller="last_article_gadgetController">
 	<div ng-show="isList">
-		<div class="panel list">
+		<div class="list">
 			<li
 				ng-class="{active: activePage.page == $index, 
     inactive: activePage.page != $index}"
 				ng-repeat="page in pages track by $index">
-				<div class="panel-body list-content">
-					<div class="row-fluid list-elements" ng-repeat="apage in page">
-						<div class="media list-elements" ng-click="open(apage)">
-							<div class="row" ng-click="open(apage)">
+				<div class="list-content">
+					<div class="list-elements" ng-repeat="apage in page">
+						<div class="media list-elements">
+							<a href="#" class="row" ng-click="open(apage)">
 								<div class="col-xs-4 vcenter">
 									<span ng-if="apage.attachments[0].path"> <img
 										class="img-rounded img-min"
@@ -23,7 +23,7 @@
 									</span>
 									</span>
 								</div>
-							</div>
+							</a>
 						</div>
 						<hr>
 					</div>

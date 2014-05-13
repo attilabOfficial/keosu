@@ -28,6 +28,34 @@ body {
 	max-height: 54px;
 }
 
+#logo {
+	height: 45px;
+	width: 137px;
+	background-image: url(img/logo.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin-top: 5px;
+}
+
+#logo, .center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px;
+}
+
+.full {	
+}
+
+hr {
+	margin-top: 5px !important;
+	margin-bottom: 5px !important;
+}
+
+a {
+	color: black !important;
+}
+
 h6.title, h4.title {
 	text-align: center;
 }
@@ -114,34 +142,6 @@ h6.title, h4.title {
 
 .slide-content, .content-right, .content-left {
 	margin-top: 5px;
-}
-
-#logo {
-	height: 45px;
-	width: 137px;
-	background-image: url(img/logo.png);
-	background-repeat: no-repeat;
-	background-size: cover;
-	margin-top: 5px;
-}
-
-#logo, .center {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 5px;
-}
-
-.full {	
-}
-
-hr {
-	margin-top: 5px !important;
-	margin-bottom: 5px !important;
-}
-
-a {
-	color: black !important;
 }
 
 /***************************
@@ -285,4 +285,13 @@ a {
 
 .mini {
 	verical-align: middle !important;
+}
+
+/***************************
+   THUMBNAILS
+***************************/
+
+.thumbnails-left {
+	 margin:0  !important; 
+	 margin-right:10px  !important;
 }

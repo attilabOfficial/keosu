@@ -133,7 +133,7 @@ class Exporter {
 		$document = new \DOMDocument();
 		//Template of page content as String
 		$templateHtml = file_get_contents(
-				ThemeUtil::getAbsolutePath() . $themeValue.'/page-templates/'
+				TemplateUtil::getPageTemplateAbsolutePath()
 						. $page->getTemplateId());
 		$templateHtml = utf8_encode($templateHtml);
 		//Disallow errors to allow HTML5 parsing

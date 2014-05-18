@@ -148,7 +148,7 @@ class ManagePagesController extends Controller {
 				->render('KeosuCoreBundle:Page:edit.html.twig',
 						array('form' => $form->createView(),
 							'theme'=>$theme->getTheme(),
-							'templateDir'=>ThemeUtil::getCurThemeDir($theme->getTheme())
+							'templateDir'=>TemplateUtil::getPageTemplateWebPath()
 						));
 	}
 

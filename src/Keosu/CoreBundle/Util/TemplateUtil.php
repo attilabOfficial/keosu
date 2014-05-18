@@ -28,6 +28,10 @@ class TemplateUtil {
 	protected static function getGadgetTemplateSuffix() {
 		return "gadget-template.html";
 	}
+	
+	protected static function getTemplateSuffix() {
+		return "template.html";
+	}
 
 	/**
 	 * Delete line return
@@ -53,7 +57,7 @@ class TemplateUtil {
 	
 		//Filter
 		foreach ($fileList as $file) {
-			if (StringUtil::endsWith($file, ThemeUtil::getTemplateSuffix())) {
+			if (StringUtil::endsWith($file, TemplateUtil::getTemplateSuffix())) {
 				$templateList[$file] = $file;
 			}
 		}
@@ -87,6 +91,9 @@ class TemplateUtil {
 	
 	public static function getPageTemplateAbsolutePath() {
 		return TemplateUtil::getAbsolutePath() . '/page-template/';
+	}
+	public static function getPageTemplateWebPath() {
+		return TemplateUtil::getWebPath() . '/page-template/';
 	}
 
 	public static function getGadgetAbsolutePath() {

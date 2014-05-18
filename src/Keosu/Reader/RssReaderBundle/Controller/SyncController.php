@@ -139,17 +139,17 @@ class SyncController extends Controller {
 		$article->setTitle($title);
 		$article->setIdext($idext);
 		$article->setVersion("1.0");
+		//RSS attachment
+		if($img!=null){
+			$attachment = new ArticleAttachment();
+			$filePath=$this->downloadFile($img,$attachment->getUploadRootDir());
+			$baseName=basename($img);
+			$file=new UploadedFile($filePath,$baseName);
+			$attachment->setName($baseName);		
+			$attachment->setPath($baseName);
+			$article->addAttachment($attachment);
+		}
 		
-		$attachment = new ArticleAttachment();
-		$filePath=$this->downloadFile($img,$attachment->getUploadRootDir());
-		$baseName=basename($img);
-		$file=new UploadedFile($filePath,$baseName);
-		$attachment->setName($baseName);		
-		$attachment->setPath($baseName);
-		$article->addAttachment($attachment);
-		
-		
-		/*TODO Rss attachments*/
 		$article->setDate($date);
 		$this->get('doctrine')->getManager('default')->persist($article);
 		$this->get('doctrine')->getManager('default')->flush();

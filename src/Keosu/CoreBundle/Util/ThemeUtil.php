@@ -23,9 +23,6 @@ class ThemeUtil {
 	protected static function getThemeDir() {
 		return "keosu/themes/";
 	}
-	protected static function getTemplateSuffix() {
-		return "template.html";
-	}
 
 	/**
 	 * Scan the $THEME_PATH dir and return the list of file finished by $TEMPLATE_SUFFIX

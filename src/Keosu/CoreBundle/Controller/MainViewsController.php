@@ -32,6 +32,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class MainViewsController extends Controller{
 	
 	/**
+	 * Display the Configuration page
+	 */
+	public function configurationAction() {
+		if($this->checkNoApp()){
+			return $this->redirect(
+					$this->generateUrl('keosu_core_app_manage_add'));
+		}
+		return $this->render('KeosuCoreBundle:MainViews:configuration.html.twig');
+	}
+	
+	
+	/**
 	 * Display the Content page
 	 */
 	public function contentAction() {

@@ -22,14 +22,49 @@
 
 {% block configurationmenu %}
 	<div class="activesidebartitle">
-		<a href="{{ path('keosu_core_app_manage') }}"> 
+		<a href="{{ path('keosu_core_configuration') }}"> 
 				<span class="glyphicon glyphicon-cog"></span> 
 				Configuration
+		</a>
+	</div>
+	<div class="sidebarlink">
+		<a href="{{ path('keosu_core_app_manage') }}"> 
+				Apps
+		</a>
+	</div>
+	<div class="sidebarlink">
+		<a href="{{ path('keosu_core_theme_manage') }}"> 
+				Themes
 		</a>
 	</div>
 {% endblock %}
 
 {% block body %}
-
-	
+	<div id="content">
+		<div class="panel">
+			{% block content %}
+			<div class="dashboard">
+				<div class="row">
+					<div class="col-md-11">
+						<h2>The configuration part</h2>
+					</div>
+				</div>	
+				<div class="row">
+					<div class="col-md-3">
+						<div class="wellcustom">
+							<h3>Apps</h3>
+							<a href="{{ path('keosu_core_app_manage') }}"><button type="button" class="btn btn-default">Manage Apps</button></a>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="wellcustom">
+							<h3>Themes</h3>
+							<a href="{{ path('keosu_core_theme_manage') }}"><button type="button" class="btn btn-default">Manage Themes</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endblock %}
+		</div>
+	</div>
 {% endblock %}

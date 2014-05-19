@@ -14,6 +14,11 @@ keosu_core_install_installdb:
     pattern:  /install/installdb
     defaults: { _controller: KeosuCoreBundle:Install:installdb }
 
+keosu_core_configuration:
+    pattern:  /configuration
+    defaults: { _controller: KeosuCoreBundle:MainViews:configuration }
+    
+
 keosu_core_homepage:
     pattern:  /content
     defaults: { _controller: KeosuCoreBundle:MainViews:content, appid:0 }
@@ -65,6 +70,18 @@ keosu_core_app_manage_add:
 keosu_core_app_manage_edit:
     pattern:  /app/manage/edit/{id}
     defaults: { _controller: KeosuCoreBundle:ManageApps:edit }
+    
+keosu_core_theme_manage:
+    pattern:  /theme/manage
+    defaults: { _controller: KeosuCoreBundle:ManageThemes:view }
+    
+keosu_core_theme_manage_add:
+    pattern:  /theme/manage/add
+    defaults: { _controller: KeosuCoreBundle:ManageThemes:add }
+    
+keosu_core_theme_manage_edit:
+    pattern:  /theme/manage/edit/{id}
+    defaults: { _controller: KeosuCoreBundle:ManageThemes:edit }
     
 keosu_core_views_content_service_list:
     pattern:  /service/views/content/list/{format}

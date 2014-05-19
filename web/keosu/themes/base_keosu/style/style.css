@@ -3,11 +3,21 @@
 ***************************/
 body {
 	background-color: #fbfbfb !important;
+	color: #000000 !important;
 	padding-left: 0px !important;
 	padding-right: 0px !important;
 	margin-left: 0px !important;
 	margin-right: 0px !important;
 	word-wrap: break-word;
+}
+
+hr {
+	margin-top: 5px !important;
+	margin-bottom: 5px !important;
+}
+
+a {
+	color: #000000 !important;
 }
 
 .content {
@@ -24,8 +34,7 @@ body {
 }
 
 .classic-navbar {
-	height: 54px;
-	max-height: 54px;
+	min-height: 54px;
 }
 
 #logo {
@@ -43,19 +52,8 @@ body {
 	margin-right: auto;
 	padding: 5px;
 }
-
 .full {	
 }
-
-hr {
-	margin-top: 5px !important;
-	margin-bottom: 5px !important;
-}
-
-a {
-	color: black !important;
-}
-
 h6.title, h4.title {
 	text-align: center;
 }
@@ -63,7 +61,6 @@ h6.title, h4.title {
 /***************************
    MENU
 ***************************/
-
 .icons-menu {
 	display: block !important;
 	margin-left: auto !important;
@@ -150,9 +147,8 @@ h6.title, h4.title {
 .list {
 	margin: 0px 5px !important;
 	padding: 5px !important;
-	background-color: white!important;
+	background-color: #ffffff !important;
 	border: none !important;
-	border-radius: none !important;
 	box-shadow: none !important;
 }
 
@@ -163,7 +159,6 @@ h6.title, h4.title {
 .list-elements {
 	margin: 0 auto;
 	padding: 0px !important;
-	top: 50% !important;
 }
 
 .list-elem-right {
@@ -183,7 +178,7 @@ h6.title, h4.title {
    ICON
 ***************************/
 [class*="basic-icon-"] {
-	color: black;
+	color: #000000;
 	margin: 0 auto !important;
 }
 
@@ -249,7 +244,6 @@ h6.title, h4.title {
 /***************************
    PAGE
 ***************************/
-
 .active {
 	display: block;
 }
@@ -261,14 +255,12 @@ h6.title, h4.title {
 /***************************
    GADGET
 ***************************/
-
 .gadget-content {	
 }
 
 /***************************
    BUTTON
 ***************************/
-
 .btn-basic, .btn-page {
 	text-shadow: none !important;
 }
@@ -276,7 +268,6 @@ h6.title, h4.title {
 /***************************
    MAP
 ***************************/
-
 #map_canvas {
 	width: 100%;
 	height: 400px;

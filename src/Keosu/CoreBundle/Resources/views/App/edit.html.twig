@@ -20,36 +20,47 @@
 {% block title %}
 	Edit App
 {% endblock %}
-{% block configurationmenu %}
-	<div class="activesidebartitle">
-		<a href="{{ path('keosu_core_app_manage') }}"> 
-				<span class="glyphicon glyphicon-cog"></span> 
-				Configuration
-		</a>
-	</div>
-{% endblock %}
 {% block body %}
+<script type="text/javascript">
+	$(document).ready(function() {
+		$( ".radio" ).each(function( index ) {
+			input = $(this).find('input');
+			themeName=input.attr('value');
+			img='<img alt="'+themeName+'" src="{{url_base}}/{{ themeDir }}'+themeName+'/'+themeName+'.png"/>';
+			$( this ).text("");
+			$( this ).append(input);
+			$( this ).append(img);
+		});
+	});
+</script>
 	<div class="panel">
 		<div class="row">
-			<div class="col-md-3">
-			</div>
-			<div class="col-md-6">
+			
+			<div class="col-md-12">
 				{% if firstApp%}
 					<div class="alert alert-success">
 						<strong>Welcome to Keosu!</strong>
 						To start, create your first app
 						</div>
 				{% endif %}
-			    <form method="post" {{ form_enctype(form) }}>
-			    	{{ form_widget(form) }}
-			    	    	
-			    	<input type="submit" class="btn btn-success" />
-			    	&nbsp;
-			    	<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-			    </form>
+			   <div class="panel">
+			<h1>Edit App</h1>
+			{{ form_start(form) }}
+			    {{ form_errors(form) }}
+			
+			    {{ form_row(form.name) }}
+			    <div class="templateimg">
+			    	{{ form_row(form.theme) }}
+		    	 </div> 
+
+		    	
+		     	<br class="clear"/><br class="clear"/>
+		    	<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+		    {{ form_end(form) }}
+
+</div>
 			 </div>
-			 <div class="col-md-3">
-			 </div>
+			 
 		   
 		</div>	
 	</div>

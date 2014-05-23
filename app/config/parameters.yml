@@ -5,4 +5,4 @@
 #
 imports:
     - { resource: parameters_default.yml }
-    - { resource: parameters_custom.yml }
+    - { resource: parameters_temp.yml }

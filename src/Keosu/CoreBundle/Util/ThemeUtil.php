@@ -20,7 +20,7 @@ namespace Keosu\CoreBundle\Util;
 
 class ThemeUtil {
 
-	protected static function getThemeDir() {
+	public static function getThemeDir() {
 		return "keosu/themes/";
 	}
 

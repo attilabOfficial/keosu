@@ -11,14 +11,6 @@ body {
 	word-wrap: break-word;
 }
 
-hr {
-	margin-top: 5px !important;
-	margin-bottom: 5px !important;
-}
-
-a {
-	color: #000000 !important;
-}
 
 .content {
 	margin-top: 60px;

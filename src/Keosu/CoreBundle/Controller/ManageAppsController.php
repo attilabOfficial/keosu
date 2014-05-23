@@ -104,7 +104,8 @@ class ManageAppsController extends Controller {
 		}
 		return $this
 				->render('KeosuCoreBundle:App:edit.html.twig',
-						array('form' => $form->createView(), 'firstApp'=>$isFirstApp));
+						array('form' => $form->createView(), 'firstApp'=>$isFirstApp,
+							'themeDir'=>ThemeUtil::getThemeDir()));
 	}
 
 	/**
@@ -114,7 +115,7 @@ class ManageAppsController extends Controller {
 		$formBuilder->add('name', 'text')
 				->add('theme', 'choice',
 						array('choices' => ThemeUtil::getThemeList(),
-								'required' => true,));
+								'required' => true,'expanded'=>true));
 	}
 
 }

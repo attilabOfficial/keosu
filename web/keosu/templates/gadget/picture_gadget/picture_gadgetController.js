@@ -23,7 +23,7 @@ app.controller('picture_gadgetController', function ($scope, $http) {
 		$http.get(host + param +
 				'service/gadget/picture/' + gadget + '/json').success( function (data) {
 					$scope.image = data[0].path;
-					$scope.title = data[0].name;
+					$scope.title = $('<div/>').html(data[0].name).text();
 					$scope.description = data[0].description;
 				});
 	};

@@ -41,7 +41,7 @@ body {
 }
 
 .classic-navbar {
-	min-height: 54px;
+	height: 60px;
 	font-family: 'amatic' !important;
 }
 

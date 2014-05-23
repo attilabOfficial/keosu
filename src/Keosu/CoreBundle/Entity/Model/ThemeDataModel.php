@@ -2,15 +2,14 @@
 
 namespace Keosu\CoreBundle\Entity\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-use Keosu\CoreBundle\Entity\Model\DataModel;
+use Doctrine\ORM\Mapping as ORM;	
 use \ZipArchive;
 use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @ORM\MappedSuperclass
  */
-abstract class ThemeDataModel extends DataModel {
+abstract class ThemeDataModel{
 	const THEME = 'themes';
 	const TEMPLATES = 'templates';
 	const PAGE = 'page-template';

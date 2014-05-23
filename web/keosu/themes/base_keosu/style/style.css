@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'quicksand';
+    src: url('polices/quicksand/quicksand-regular.eot') format('eot'),
+         url('polices/quicksand/quicksand-regular.woff') format('woff'),
+         url('polices/quicksand/quicksand-regular.ttf') format('truetype'),
+         url('polices/quicksand/quicksand-regular.svg') format('svg');
+}
+
+@font-face {
+    font-family: 'amatic';
+    src: url('polices/amatic/amatic-bold.eot') format('eot'),
+         url('polices/amatic/amatic-bold.woff') format('woff'),
+         url('polices/amatic/amatic-bold.ttf') format('truetype'),
+         url('polices/amatic/amatic-bold.svg') format('svg');
+}
 /***************************
    GLOBAL
 ***************************/
@@ -13,7 +28,7 @@ body {
 
 
 .content {
-	margin-top: 60px;
+	margin-top: 75px;
 	margin-bottom: 45px;
 }
 
@@ -27,6 +42,7 @@ body {
 
 .classic-navbar {
 	min-height: 54px;
+	font-family: 'amatic' !important;
 }
 
 #logo {
@@ -46,8 +62,11 @@ body {
 }
 .full {	
 }
-h6.title, h4.title {
+
+h6.title, h5.title, h4.title, h3.title, h2.title, h1.title {
 	text-align: center;
+	margin-top: 0px;
+	color: #000000 !important;
 }
 
 /***************************

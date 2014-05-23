@@ -109,7 +109,8 @@ class SyncController extends Controller {
 		}
 		if($entry->getElementsByTagName("dc:creator")->item(0)!=null)
 			$author=$entry->getElementsByTagName("dc:creator")->item(0)->nodeValue;
-
+		
+		print("hello2");
 		//Store in database
 		$this->storeArticle($title, $body, $date, $idext, $img, $author,
 			$reader);
@@ -118,6 +119,7 @@ class SyncController extends Controller {
 	
 	private function storeArticle($title, $body, $date, $idext, $img, $author,
 			$reader) {
+		print("hello");
 		//Test if article already exist
 		$article = $this->get('doctrine')->getManager()
 			->getRepository(

@@ -1,4 +1,4 @@
-/uploads
+/uploads/documents/*
 /bundles/*
 /app_local.php
 .DS_Store

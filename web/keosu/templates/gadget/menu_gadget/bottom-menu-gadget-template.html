@@ -1,8 +1,9 @@
-<div ng-controller="menu_gadgetController" class="row-fluid menu">
+<div ng-controller="menu_gadgetController" class="row-fluid menu menukeosu">
 		<div ng-repeat="page in pages"
 			class="menu-elements">
-			<a href="{{ page.name }}"><img
-				class="icons-menu" src="{{ page.ico }}" alt="" /></a>
+			<a href="{{ page.name }}">	
+				<span class="glyphicon {{ page.ico }} {{ page.isactive }}"></span>
+			</a>
 		</div>
 </div>
 

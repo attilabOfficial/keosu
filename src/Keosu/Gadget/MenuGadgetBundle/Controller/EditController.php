@@ -22,6 +22,8 @@ use Keosu\CoreBundle\Controller\iGadgetController;
 
 use Keosu\CoreBundle\Controller\GadgetEditController;
 
+use Keosu\Gadget\MenuGadgetBundle\Form\MenuPageType;
+
 use Keosu\CoreBundle\Util\TemplateUtil;
 
 use Keosu\CoreBundle\Entity\Gadget;
@@ -38,14 +40,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *
  */
 class EditController extends GadgetEditController  implements iGadgetController {
-	private $pageImg = array ('home', 'chrono', 'news', 'map');
-	
-	public function getListImg() {
-		return $this->pageImg;
-	}
 	
 	public function getGadgetClass(){
 		return "Keosu\Gadget\MenuGadgetBundle\MenuGadget";
+	}
+	/**
+	 * Override edit template (default is in GadgetEditController
+	 */
+	public function getRenderEditTemplate(){
+		return 'KeosuGadgetMenuGadgetBundle:Edit:editGadget.html.twig';
 	}
 	
 	//Specific form for the gadget
@@ -60,31 +63,24 @@ class EditController extends GadgetEditController  implements iGadgetController 
 			$pageList[$page->getId()] = $page->getName();
 		}
 		$formBuilder
-				->add('page1', 'choice',
-						array('choices' => $pageList, 'required' => true,))
-				/*->add('icon', 'choice',
-						array('choices' => $this->pageImg, 'required' => true,))*/
-				->add('page2', 'choice',
-						array('choices' => $pageList, 'required' => false,))
-				/*->add('icon', 'choice',
-						array('choices' => $this->pageImg, 'required' => false,))*/
-				->add('page3', 'choice',
-						array('choices' => $pageList, 'required' => false,))
-				/*->add('icon', 'choice',
-						array('choices' => $this->pageImg, 'required' => false,))*/
-				->add('page4', 'choice',
-						array('choices' => $pageList, 'required' => false,))
-				->add('page5', 'choice',
-						array('choices' => $pageList, 'required' => false,))
-				->add('page6', 'choice',
-						array('choices' => $pageList, 'required' => false,))
-				->add('shared', 'checkbox', array(
-    					'label'     => 'Shared with all pages',
-    					'required'  => false,))
+			->add('pages', 'collection',
+				array('type' => new MenuPageType($pageList),
+						'required' => false,
+						'label' => false,
+						'allow_add' => true,
+						'allow_delete' => true,
+						'by_reference' => true,
+						'options'  => array(
+								'label'  => false,
+						)
+				))
     			->add('gadgetTemplate', 'choice',
     					array(
     						'choices' => TemplateUtil::getTemplateGadgetList(
     							$gadgetName), 'required' => true,'expanded'=>true))
+    			->add('shared', 'checkbox', array(
+    									'label'     => 'Shared with all pages',
+    									'required'  => false,))
 		;
 
 	}

@@ -36,12 +36,13 @@
 </script>
 
 <div class="panel">
-
 			<h1>Edit page</h1>
+
 			{{ form_start(form) }}
 			    {{ form_errors(form) }}
 			
 			    {{ form_row(form.name) }}
+			    {{ form_row(form.icon) }}
 			    {{ form_row(form.isMain) }}
 			    <div class="templateimg">
 			    	{{ form_row(form.templateId) }}

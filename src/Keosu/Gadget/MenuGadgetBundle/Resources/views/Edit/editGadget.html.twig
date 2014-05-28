@@ -15,26 +15,21 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #}
-{% spaceless%}
-{ "pages": [
-	{% for page in pages %}
-		{
-			"name":
-				{% if page.getIsMain %}
-					"index"
-				{% else %}
-					"{{page.name}}"
-				{% endif %}
-			,
-			"icon":"{{page.icon}}"
-		}
-		
-	    {% if loop.last ==false%}
-	     ,
-	    {% endif %}
-	{% endfor %}
-]
 
-}
-{% endspaceless %}
-		  
+{% extends 'KeosuCoreBundle:Page:editGadget.html.twig' %}
+
+{% block gadgetform %}
+
+   	{{ form_start(form) }}
+		{{ form_errors(form) }}
+		<div class="pagelist">
+			<h4>Page list</h4>
+			{{ form_row(form.pages) }}
+		</div>
+		{{ form_row(form.shared) }}
+		{{ form_row(form.gadgetTemplate) }}
+		<br class="clear"/>
+		<br class="clear"/>
+    	<input type="submit" class="btn btn-success" /><span>&nbsp;</span><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+	{{ form_end(form) }}
+{% endblock %}

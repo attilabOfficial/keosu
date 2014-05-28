@@ -27,12 +27,12 @@ app.controller('menu_gadgetController', function ($scope, $http) {
 			var ico = [];
 			img = ['home', 'news', 'chrono', 'map'];
 			for (var i = 0; i < data.pages.length; i++){
-				var pageFileName = data.pages[i] + ".html";
+				var pageFileName = data.pages[i].name + ".html";
 				if (pageFileName.replace(' ', '') == $scope.page){  
-					pages[i] = {name : pageFileName.replace(' ', ''), ico : 'theme/img/' + img[i] + '_active.png'};
+					pages[i] = {name : pageFileName.replace(' ', ''), ico : data.pages[i].icon, isactive:'active' };
 				}
 				else
-					pages[i] = {name : pageFileName.replace(' ', ''), ico : 'theme/img/' + img[i] + '.png'};
+					pages[i] = {name : pageFileName.replace(' ', ''), ico : data.pages[i].icon, isactive:''};
 			}
 			$scope.pages = pages;
 		});

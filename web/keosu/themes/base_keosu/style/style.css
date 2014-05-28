@@ -86,7 +86,24 @@ h6.title, h5.title, h4.title, h3.title, h2.title, h1.title {
 
 .classic-menu >.menu >.menu-elements {
 	float: left;
-	width: 25%;
+	font-size: 30px;
+    width: 15%;
+    color:black;
+}
+
+.classic-menu >.menu >.menu-elements >a >span{
+    color:black;
+}
+.classic-menu >.menu >.menu-elements >a >span.active{
+    color:#FA6900;
+}
+
+
+.menukeosu{
+	margin-left:30px;
+	margin-right:30px;
+	padding-top:5px;
+	padding-bottom:5px;
 }
 
 .vertical-menu, .slide-menu {

@@ -55,6 +55,14 @@ class GadgetEditController extends Controller {
 		$this->get('doctrine')->getManager()->remove($commonGadget);
 		$this->get('doctrine')->getManager()->flush();
 		
+		//Export app
+		$baseurl = $this->container->getParameter('url_base');
+		$param = $this->container->getParameter('url_param');
+		$exporter = $this->container->get('keosu_core.exporter');
+		$exporter
+			->exportApp($this->get('doctrine')->getManager(),
+				$baseurl, $param, $appid);
+		
 		//Redirect to the last page
 		return $this
 				->redirect(
@@ -155,7 +163,8 @@ class GadgetEditController extends Controller {
 			$commonGadget = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Gadget')
 				->findOneBy(array('zone' => $zone, 'page' => $page));
-		}		
+		}	
+			
 	
 		//Convert the common gadget to a specific gadget object
 		$gadget = $gadgetClass::constructfromGadget($commonGadget);
@@ -183,20 +192,25 @@ class GadgetEditController extends Controller {
 	 * Store the gadget in database
 	 */
 	public function formCommonGadget($form, $gadget, $commonGadget, $oldGadget) {
-
 		$request = $this->get('request');
 		//If we are in POST method, form is submit
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
-
 			if ($form->isValid()) {
 				$em = $this->get('doctrine')->getManager();
 				//If there is an existing gadget in the same page/zone we delete it
 				if ($oldGadget != null) {
 					$em->remove($oldGadget);
 				}
+				
+				//Store config in two times to prevent Cache error
 				$gadget->convertAsExistingCommonGadget($commonGadget);  
+				$config=$commonGadget->getConfig();
+				$commonGadget->setConfig(null);
 				$commonGadget->setStatic($gadget->isStatic());
+				$em->persist($commonGadget);
+				$em->flush();
+				$commonGadget->setConfig($config);
 				$em->persist($commonGadget);
 				$em->flush();
 

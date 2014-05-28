@@ -19,18 +19,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\Gadget\MenuGadgetBundle;
 use Keosu\CoreBundle\iGadget;
 use Keosu\CoreBundle\GadgetParent;
+use Keosu\Gadget\MenuGadgetBundle\Model\MenuPage;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class MenuGadget extends GadgetParent implements iGadget {
 
-	//TODO Change this to an infinite list
-	private $page1;
-	private $page2;
-	private $page3;
-	private $page4;
-	private $page5;
-	private $page6;
+	private $pages;
+	
+	public function __construct(){
+		$this->pages = array();
+		$this->pages[] = new MenuPage();
+		$this->pages[] = new MenuPage();
+		$this->pages[] = new MenuPage();
+		$this->pages[] = new MenuPage();
+		$this->pages[] = new MenuPage();	
+	}
 
 
 	/**
@@ -53,18 +57,8 @@ class MenuGadget extends GadgetParent implements iGadget {
 		parent::constructParentFromGadget($gadget,$instance);
 		//Specific conf for this gadget
 		$gadgetConfig = $gadget->getConfig();
-		if (array_key_exists('page1', $gadgetConfig)) 
-			$instance->page1 = $gadgetConfig['page1'];
-		if (array_key_exists('page2', $gadgetConfig))
-			$instance->page2 = $gadgetConfig['page2'];
-		if (array_key_exists('page3', $gadgetConfig))
-			$instance->page3 = $gadgetConfig['page3'];
-		if (array_key_exists('page4', $gadgetConfig))
-			$instance->page4 = $gadgetConfig['page4'];
-		if (array_key_exists('page5', $gadgetConfig))
-			$instance->page5 = $gadgetConfig['page5'];
-		if (array_key_exists('page6', $gadgetConfig))
-			$instance->page5 = $gadgetConfig['page6'];
+		if (array_key_exists('pages', $gadgetConfig)) 
+			$instance->pages = $gadgetConfig['pages'];
 		return $instance;
 	}
 	/**
@@ -72,25 +66,12 @@ class MenuGadget extends GadgetParent implements iGadget {
 	 */
 	public function getAsCommonGadget() {
 		$commonGadget = parent::getAsCommonGadget();
+		echo($this->pages[1]->getPageId());
+		echo(jnqdskjnqs);
 		//Specific conf for this gadget
 		$config = array();
-		if ($this->page1 != null) {
-			$config['page1'] = $this->page1;
-		}
-		if ($this->page2 != null) {
-			$config['page2'] = $this->page2;
-		}
-		if ($this->page3 != null) {
-			$config['page3'] = $this->page3;
-		}
-		if ($this->page4 != null) {
-			$config['page4'] = $this->page4;
-		}
-		if ($this->page5 != null) {
-			$config['page5'] = $this->page5;
-		}
-		if ($this->page6 != null) {
-			$config['page6'] = $this->page5;
+		if ($this->pages != null) {
+			$config['pages'] = $this->pages;
 		}
 		$commonGadget->setConfig($config);
 		
@@ -103,68 +84,18 @@ class MenuGadget extends GadgetParent implements iGadget {
 		parent::convertAsExistingCommonGadget($commonGadget);
 		//Specific conf for articleId
 		$config = array();
-		if ($this->page1 != null) {
-			$config['page1'] = $this->page1;
-		}
-		if ($this->page2 != null) {
-			$config['page2'] = $this->page2;
-		}
-		if ($this->page3 != null) {
-			$config['page3'] = $this->page3;
-		}
-		if ($this->page4 != null) {
-			$config['page4'] = $this->page4;
-		}
-		if ($this->page5 != null) {
-			$config['page5'] = $this->page5;
-		}
-		if ($this->page6 != null) {
-			$config['page6'] = $this->page6;
+		if ($this->pages != null) {
+			$config['pages'] = $this->pages;
+			var_dump($config);
 		}
 		$commonGadget->setConfig($config);
 	}
 	
-	public function getpage1() {
-		return $this->page1;
+	public function getPages() {
+		return $this->pages;
 	}
-	public function setpage1($page) {
-		$this->page1 = $page;
-		return $this;
-	}
-	public function getpage2() {
-		return $this->page2;
-	}
-	public function setpage2($page) {
-		$this->page2 = $page;
-		return $this;
-	}
-	public function getpage3() {
-		return $this->page3;
-	}
-	public function setpage3($page) {
-		$this->page3 = $page;
-		return $this;
-	}
-	public function getpage4() {
-		return $this->page4;
-	}
-	public function setpage4($page) {
-		$this->page4 = $page;
-		return $this;
-	}
-	public function getpage5() {
-		return $this->page5;
-	}
-	public function setpage5($page) {
-		$this->page5 = $page;
-		return $this;
-	}
-	
-	public function getpage6() {
-		return $this->page6;
-	}
-	public function setpage6($page) {
-		$this->page6 = $page;
+	public function setPages($pages) {
+		$this->pages = $pages;
 		return $this;
 	}
 

@@ -1,0 +1,40 @@
+<div class="cal-week-box">
+	<% var day=(cal._first_day()==1) ? 0 : 1 %>
+	<div class="cal-row-fluid cal-row-head">
+		<% _.each(months, function(name) { %>
+			<div>
+				<span data-cal-date="<%= start.getFullYear() %>-<%= start.getMonthFormatted() %>-<%= start.getDateFormatted() %>" data-cal-view="day">
+					<div class="cal-cell1 <%= cal._getDayClass('week', start) %>" style="clear:both; width: 100%" data-toggle="tooltip" title="<%= cal._getHolidayName(start) %>"><%= name %>
+						<%= start.getDate() %>
+					</div>
+				</span>
+				<div class="cal-cell1 cal-offset4 day-highlight dh-" style="width: 100%">
+					<% var day_events = []
+					_.each(events, function(event){
+						var event_day = (cal._first_day()==1) ? ((new Date(parseInt(event.start)).getDay()) + 6) % 7 : new Date(parseInt(event.start)).getDay()
+						if (event_day == day){
+							day_events.push(event);
+						} 
+					}); 
+					
+					if (day_events.length > 0){	%>
+						<% var cols_width = 12/(day_events.length>3 ? 3 : day_events.length); %>
+						<% _.each(day_events, function(event){ %>
+						<div class="col-xs-<%=cols_width%>" style="padding: 1px 1px 1px 1px">
+							<div onclick='change_selection(<%= event.id %>)' data-event-class="<%= event['class'] %>" class='calendar-event'>
+								<span data-event-id="<%= event.id %>"><%= event.title %></span>
+								(<span class="cal-hours"><%= event.start_hour.substr(event.start_hour.indexOf(":")-2) %> - <%= event.end_hour.substr(event.end_hour.indexOf(":")-2) %></span>)
+							</div>
+						</div>
+					<% }); } %>
+					
+					
+				</div>
+			</div>
+			<% start.setDate(start.getDate() + 1); day++; %>
+		<% }) %>
+	</div>
+</div>
+
+
+

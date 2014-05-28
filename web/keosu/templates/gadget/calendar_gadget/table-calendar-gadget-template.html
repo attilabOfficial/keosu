@@ -1,0 +1,75 @@
+<!--
+ Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ -->
+ 
+<link rel="stylesheet" href="components/bootstrap2/css/bootstrap.css">
+<link rel="stylesheet" href="css/calendar.css">
+<div ng-controller="calendar_gadgetController">
+	<div ng-show="isCalendar">
+		<span style='display:none' my-current-time='format'></span>
+		<div class="page-header" style="border:none">
+			<h3 style='font-size:20px'></h3>
+
+	
+			<div class="btn-group" style="margin-left: auto; margin-right: auto; display: block; width: 212px">
+				<button class="btn" data-calendar-view="year">Year</button>
+				<button class="btn active" data-calendar-view="month">Month</button>
+				<button class="btn" data-calendar-view="week">Week</button>
+				<button class="btn" data-calendar-view="day">Day</button>
+			</div>
+		</div>
+		
+		<div id="calendar"></div>
+	
+		<input type='hidden' id="selection" ng-model='name' value=0></input>
+			
+		<br/>
+		
+		<div class="btn-group" style="margin-left: auto; margin-right: auto; display: block; width:201px">
+			<button class="btn" data-calendar-nav="prev"><< Prev</button>
+			<button class="btn" data-calendar-nav="today">Today</button>
+			<button class="btn" data-calendar-nav="next">Next >></button>
+		</div>
+		
+		<br/>
+		<br/>
+		
+		<div class="span3"></div>
+		<script type="text/javascript" src="components/underscore/underscore-min.js"></script>
+		<script type="text/javascript" src="components/bootstrap2/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/calendar.js"></script>
+		<script type="text/javascript" src="js/app_calendar.js"></script>
+		<script id="init_calendar" type="text/javascript"></script>
+	</div>	
+	<div ng-show="isEvent">
+		<a ng-click="close()"><i class="fui-cross"></i></a>
+		<div class="row-fluid">
+			<h3 class="event-name" style="text-align: center">{{ anEvent.name }}</h3><p style="text-align: center;">{{ anEvent.date }}  <button id='bouton' class="btn" onclick='calendarDemoAdd()'>Add event to my calendar</button></p>
+		</div>
+		<hr>
+		<div class="row-fluid">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="event-body" ng-bind-html="anEvent.description" style="word-wrap:break-word"></div>
+			</div>
+		</div>
+		<div>
+			{{ anEvent.lieu }}
+			<div id="calendar_map_canvas" style="height: 400px; margin: 0; width: 100%;">
+			</div>
+		</div>
+	</div>
+</div>

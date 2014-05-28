@@ -1,0 +1,11 @@
+keosu_ReaderManager_icsReader_add:
+    pattern:  /content/reader/manage/add/ics
+    defaults: { _controller: KeosuReadericsReaderBundle:Edit:add }
+    
+keosu_ReaderManager_icsReader_edit:
+    pattern:  /content/reader/manage/edit/ics/{id}
+    defaults: { _controller: KeosuReadericsReaderBundle:Edit:edit }
+    
+keosu_ReaderManager_icsReader_sync:
+    pattern:  /content/reader/sync/ics/{id}
+    defaults: { _controller: KeosuReadericsReaderBundle:Sync:sync }

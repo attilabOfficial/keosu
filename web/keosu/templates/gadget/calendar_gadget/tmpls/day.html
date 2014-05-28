@@ -1,0 +1,28 @@
+<script src="js/calendar.js"></script>
+<% var somme = 0; %>
+<div id="cal-day-box">
+	<div class="row-fluid cal-row-head">
+		<div class="span11 col-xs-11 cal-cell"><%= cal.locale.events %></div>
+	</div>
+	<div id="cal-day-panel" class="clearfix">		
+		<% _.each(by_hour, function(event){ %>
+			<div onclick='change_selection(<%= event.id %>)' class="calendar-event pull-left day-event day-highlight dh-<%= event.class %>" style="margin-top: <%= ((event.top * 30 - somme) > 0 ? (event.top * 30 - somme) : 0)  %>px; height: <%= (event.lines * 30) %>px; clear:both; width: 100%;">
+				<span class="cal-hours"><%= event.start_hour %> - <%= event.end_hour %></span>
+				<%= event.title %>
+			</div>
+		<% somme=event.lines*30+event.top*30; }); %>
+
+		<div id="cal-day-panel-hour">
+			<% for(i = 0; i < hours; i++){ %>
+				<div class="cal-day-hour">
+					<% for(l = 0; l < in_hour; l++){ %>
+						<div class="row-fluid cal-day-hour-part">
+							<div class="span1 col-xs-1"><b><%= cal._hour(i, l) %></b></div>
+							<!-- <div class="span11 col-xs-11"></div> -->
+						</div>
+				<% }; %>
+				</div>
+			<% }; %>
+		</div>
+	</div>
+</div>

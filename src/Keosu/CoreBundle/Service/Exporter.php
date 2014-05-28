@@ -70,6 +70,68 @@ class Exporter {
 		//Copy all theme/header/js dir to web/export/www/js
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $theme->getTheme().'/header/js',
 		ExporterUtil::getAbsolutePath() . '/simulator/www/js');
+		
+		// Needed files for the calendar
+		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls', 0777, true);
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/day.html',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/day.html');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/events-list.html',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/events-list.html');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/modal.html',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/modal.html');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/month-day.html',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/month-day.html');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/month.html',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/month.html');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/week-days.html',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/week-days.html');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/week.html',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/week.html');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/year-month.html',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/year-month.html');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/year.html',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/year.html');
+			
+		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/css', 0777, true);
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/css/calendar.css',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/css/calendar.css');
+		
+		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components', 0777, true);
+		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2', 0777, true);
+		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/css', 0777, true);
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/css/bootstrap-responsive.css',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/css/bootstrap-responsive.css');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/css/bootstrap.css',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/css/bootstrap.css');
+		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/js', 0777, true);
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/js/bootstrap.min.js',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/js/bootstrap.min.js');
+		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/img', 0777, true);
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/img/glyphicons-halflings-white.png',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/img/glyphicons-halflings-white.png');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/img/glyphicons-halflings.png',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/img/glyphicons-halflings.png');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/img/Thumbs.db',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/img/Thumbs.db');
+			
+		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/underscore', 0777, true);
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/underscore/underscore-min.js',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/components/underscore/underscore-min.js');
+		
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/js/app_calendar.js',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/js/app_calendar.js');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/js/calendar.js',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/js/calendar.js');
+		
+		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/img', 0777, true);
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/img/dark_wood.png',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/img/dark_wood.png');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/img/slide-bg.png',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/img/slide-bg.png');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/img/tick.png',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/img/tick.png');
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/img/Thumbs.db',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/img/Thumbs.db');
 
 		foreach ($pages as $page) {
 			if ($page->getIsMain()) {

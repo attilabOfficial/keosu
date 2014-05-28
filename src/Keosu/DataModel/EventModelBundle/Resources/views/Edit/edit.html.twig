@@ -1,0 +1,71 @@
+	{# 
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+    
+{% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
+
+{% block title %}
+Edit event
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+{{ tinymce_init() }}
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.date').datepicker({ dateFormat: 'dd-mm-y' });
+		$('#form_hour_hour').parent().width(70);
+		$('#form_hour_minute').parent().width(70);
+		$('#form_hour_minute').parent().html('<p><label style="float:left; margin-top:5px; margin-right:25px">:</label>'+$('#form_hour_minute').parent().html()+'</p>');
+	});
+</script>
+<script>
+function initialize() {
+	var input = document.getElementById('form_lieu');
+	var options = {
+	
+	};
+	autocomplete = new google.maps.places.Autocomplete(input, options);
+	
+	google.maps.event.addListener(autocomplete, 'place_changed', function() {
+		var coords = autocomplete.getPlace().geometry.location.toString();	// Suppression des parenthèses en trop
+		coords = coords.substr(1,coords.length-3);
+		lat=document.getElementById('form_latitude');
+		lon=document.getElementById('form_longitude');
+		lat.value=coords.substr(0,coords.lastIndexOf(',')-1);		
+		lon.value=coords.substr(coords.lastIndexOf(',')+2);
+
+	});
+	
+	
+}
+google.maps.event.addDomListener(window, 'load', initialize);  
+</script>
+
+
+
+
+<div>
+	<form method="post" {{ form_enctype(form) }}>
+    	{{ form_widget(form) }}
+    	<input type="submit" class="btn btn-success" /><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+    </form>
+</div>
+{% endblock %}

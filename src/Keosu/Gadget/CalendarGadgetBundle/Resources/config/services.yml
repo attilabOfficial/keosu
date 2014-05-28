@@ -1,0 +1,7 @@
+parameters:
+#    keosu_gadget_calendar_gadget.example.class: Keosu\Gadget\CalendarGadgetBundle\Example
+
+services:
+#    keosu_gadget_calendar_gadget.example:
+#        class: %keosu_gadget_calendar_gadget.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

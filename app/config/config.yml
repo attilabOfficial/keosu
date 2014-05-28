@@ -70,6 +70,7 @@ doctrine:
                     KeosuDataModelArticleModelBundle: ~
                     KeosuDataModelMapModelBundle: ~
                     KeosuDataModelPictureModelBundle: ~
+                    KeosuDataModelEventModelBundle: ~
                     KeosuCoreBundle: ~
                     KeosuUserBundle: ~
                     FOSUserBundle: ~

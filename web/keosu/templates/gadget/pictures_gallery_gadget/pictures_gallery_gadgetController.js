@@ -23,7 +23,7 @@ function parts(isGallery, isPicture, $scope) {
 
 //Main function
 
-app.controller('pictures_gallery_gadgetController', function ($scope, $http) {
+app.controller('pictures_gallery_gadgetController', function ($scope, $http, usSpinnerService) {
 	parts(true, false, $scope);
 	$scope.index = 0;
 	$scope.close = function () {
@@ -52,8 +52,10 @@ app.controller('pictures_gallery_gadgetController', function ($scope, $http) {
 				page:0
 		};
 		$scope.imgClass = [];
+		usSpinnerService.spin('spinner');
 		$http.get(host + param + 'service/gadget/picturesgallery/'
 				+ gadget + '/' + '0' + '/' + 'json').success(function (data) {
+					usSpinnerService.stop('spinner');
 					$tmp = [];
 					for (i = 0; i < data.data.length && i < 10; i++) {
 						$tmp[i] = data.data[i];

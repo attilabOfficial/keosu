@@ -36,6 +36,10 @@ class AppKernel extends Kernel
             new Keosu\DataModel\PictureModelBundle\KeosuDataModelPictureModelBundle(),
             new Keosu\Gadget\PictureGadgetBundle\KeosuGadgetPictureGadgetBundle(),
             new Keosu\Gadget\PicturesGalleryGadgetBundle\KeosuGadgetPicturesGalleryGadgetBundle(),
+        	new Keosu\DataModel\EventModelBundle\KeosuDataModelEventModelBundle(),
+        	new Keosu\Reader\icsReaderBundle\KeosuReadericsReaderBundle(),
+        	new Keosu\Reader\RssEventReaderBundle\KeosuReaderRssEventReaderBundle(),
+        	new Keosu\Gadget\CalendarGadgetBundle\KeosuGadgetCalendarGadgetBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {

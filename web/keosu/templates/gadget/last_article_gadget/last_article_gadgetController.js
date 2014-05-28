@@ -23,7 +23,7 @@ function parts(isList, isArticle, $scope) {
 
 //Main function
 
-app.controller('last_article_gadgetController', function ($scope, $http, $sce) {
+app.controller('last_article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
 	parts(true, false, $scope);
 	$scope.close = function () {
 		parts(true, false, $scope);
@@ -37,7 +37,9 @@ app.controller('last_article_gadgetController', function ($scope, $http, $sce) {
 		$scope.activePage = {
 				page:0
 		};
+		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		$http.get(host + param + 'service/gadget/lastarticle/' + gadget + '/' + offset + '/' + 'json').success( function (data) {
+			usSpinnerService.stop('spinner');
 			$tmp = [];		
 			for (i = 0; i < data.data.length; i++) {
 				$tmp[i] = data.data[i];

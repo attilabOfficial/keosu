@@ -314,3 +314,11 @@ h6.title, h5.title, h4.title, h3.title, h2.title, h1.title {
 	 margin:0  !important; 
 	 margin-right:10px  !important;
 }
+
+/****************************
+	CALENDAR
+****************************/
+.calendar-event {
+	background-color: #EA7354;
+	color: #FFFFFF;
+}

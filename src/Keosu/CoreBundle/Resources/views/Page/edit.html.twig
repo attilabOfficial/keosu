@@ -24,7 +24,15 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$( ".radio" ).each(function( index ) {
+		$( "#form_icon .radio" ).each(function( index ) {
+			input = $(this).find('input');
+			templateName=input.attr('value');
+			img='<span class="glyphicon '+templateName+'"></span>';
+			$( this ).text("");
+			$( this ).append(input);
+			$( this ).append(img);
+		});
+		$( ".templateimg .radio" ).each(function( index ) {
 			input = $(this).find('input');
 			templateName=input.attr('value');
 			img='<img alt="'+templateName+'" src="{{url_base}}/{{ templateDir }}/'+templateName+'.png"/>';

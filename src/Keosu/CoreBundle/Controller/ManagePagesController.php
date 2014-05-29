@@ -34,7 +34,7 @@ class ManagePagesController extends Controller {
 		'glyphicon-star'=>'glyphicon-star',
 		'glyphicon-asterisk'=>'glyphicon-asterisk',
 		'glyphicon-envelope'=>'glyphicon-envelope',
-		'glyphicon-pensil'=>'glyphicon-pensil',
+		'glyphicon-pencil'=>'glyphicon-pencil',
 		'glyphicon-glass'=>'glyphicon-glass',
 		'glyphicon-music'=>'glyphicon-music',
 		'glyphicon-search'=>'glyphicon-search',
@@ -55,7 +55,7 @@ class ManagePagesController extends Controller {
 		'glyphicon-book'=>'glyphicon-book',
 		'glyphicon-print'=>'glyphicon-print',
 		'glyphicon-camera'=>'glyphicon-camera',
-		'glyphicon-video'=>'glyphicon-video',
+		'glyphicon-facetime-video'=>'glyphicon-facetime-video',
 		'glyphicon-picture'=>'glyphicon-picture',
 		'glyphicon-map-marker'=>'glyphicon-map-marker',
 		'glyphicon-tint'=>'glyphicon-tint',
@@ -201,7 +201,7 @@ class ManagePagesController extends Controller {
 	private function buildPageForm($formBuilder) {
 		$formBuilder->add('name', 'text')
 				->add('icon', 'choice',
-						array('choices' => $this->iconList, 'required' => true,))
+						array('choices' => $this->iconList, 'required' => true,'expanded'=>true))
 				->add('isMain', 'checkbox', array('required' => false)) //Main is index page
 				->add('templateId', 'choice',
 						array('choices' => TemplateUtil::getTemplateList(),

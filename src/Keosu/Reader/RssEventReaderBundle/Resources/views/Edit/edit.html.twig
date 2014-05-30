@@ -1,0 +1,47 @@
+	{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+{% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
+
+{% block title %}
+	Configure a new event reader
+{% endblock %}
+{% block content %}
+<div>
+	<h1>Edit RSS Event Reader</h1>
+   {{ form_start(form) }}
+	    {{ form_errors(form) }}
+	
+	    {{ form_row(form.name) }}
+	    {{ form_row(form.feed_url) }}
+	    <br class="clear"/>
+	    <div class="allowupdate">
+	    	{{ form_row(form.allowupdate) }}
+	    	<div class="allowupdatelabel">
+	    		Allow content be to synchronise again after the first import.
+	    		<a class="badge remove-button" title="Allow content be to update after the first import. If you check this box you won't be able to modify content manually">
+					<span class="glyphicon glyphicon-info-sign"></span>
+				</a>
+	    		 
+	    	</div>
+	    </div>
+    	 <br class="clear"/>
+	    <input type="submit" class="btn btn-success" /><span>&nbsp;</span><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+	{{ form_end(form) }}
+    
+</div>
+{% endblock %}

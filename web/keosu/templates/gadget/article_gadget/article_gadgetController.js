@@ -18,9 +18,11 @@
 
 //Main function
 
-app.controller('article_gadgetController', function ($scope, $http, $sce) {
+app.controller('article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
 	$scope.init = function(host, param, page, gadget, zone){
+		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		$http.get(host + param + 'service/gadget/article/' + gadget + '/json').success(function(data) {
+			usSpinnerService.stop('spinner');
 			var decodedContent = data[0].content;
 			decodedContent = $('<div/>').html(decodedContent).text();
 			decodedContent = decodedContent.replace(/[/\\*]/g, "");

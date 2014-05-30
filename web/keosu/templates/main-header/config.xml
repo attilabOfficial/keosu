@@ -49,6 +49,7 @@ permission on your app, which PhoneGap requires.
 	<preference name="DisallowOverscroll" value="true" />
 	<preference name="splash-screen-duration" value="10000"/>
     <!-- Plugins can also be added here. -->
+    <gap:plugin name="nl.x-services.plugins.calendar" version="4.2.2" />
     <!--
 <gap:plugin name="Example" />
 A list of available plugins are available at https://build.phonegap.com/docs/plugins

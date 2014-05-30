@@ -28,17 +28,21 @@ class KeosuExtension {
 			'menu_gadget' => 'menu_gadget',
 			'picture_gadget' => 'picture_gadget',
 			'pictures_gallery_gadget' => 'pictures_gallery_gadget',
-			'aroundme_gadget'=>'aroundme_gadget'
+			'aroundme_gadget'=>'aroundme_gadget',
+			'calendar_gadget'=>'calendar_gadget',
 	);
 
 	
 	public static $readerList = array(
-			'RssReader' => 'RSS'
+			'RssReader' => 'RSS',
+			'RssEventReader' => 'Event RSS',
+			'icsReader' => 'iCalendar',
 	);
 	
 	public static $dataModelList = array(
 			'article' => 'article',
 			'map'=>'map',
-			'picture' => 'picture'
+			'picture' => 'picture',
+			'event' => 'event',
 	);
 }

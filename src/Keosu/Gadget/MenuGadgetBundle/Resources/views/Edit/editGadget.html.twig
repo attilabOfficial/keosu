@@ -1,0 +1,35 @@
+	{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+
+{% extends 'KeosuCoreBundle:Page:editGadget.html.twig' %}
+
+{% block gadgetform %}
+
+   	{{ form_start(form) }}
+		{{ form_errors(form) }}
+		<div class="pagelist">
+			<h4>Page list</h4>
+			{{ form_row(form.pages) }}
+		</div>
+		{{ form_row(form.shared) }}
+		{{ form_row(form.gadgetTemplate) }}
+		<br class="clear"/>
+		<br class="clear"/>
+    	<input type="submit" class="btn btn-success" /><span>&nbsp;</span><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+	{{ form_end(form) }}
+{% endblock %}

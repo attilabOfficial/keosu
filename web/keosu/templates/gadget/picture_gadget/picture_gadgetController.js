@@ -18,10 +18,12 @@
 
 //Main function
 
-app.controller('picture_gadgetController', function ($scope, $http) {
+app.controller('picture_gadgetController', function ($scope, $http, usSpinnerService) {
 	$scope.init = function(host, param, page, gadget, zone){
+		usSpinnerService.spin('spinner');
 		$http.get(host + param +
 				'service/gadget/picture/' + gadget + '/json').success( function (data) {
+					usSpinnerService.stop('spinner');
 					$scope.image = data[0].path;
 					$scope.title = $('<div/>').html(data[0].name).text();
 					$scope.description = data[0].description;

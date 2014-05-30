@@ -22,7 +22,6 @@ function parts(isList, isArticle, $scope) {
 }
 
 //Main function
-
 app.controller('last_article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {	
 	parts(true, false, $scope);
 	$scope.close = function () {

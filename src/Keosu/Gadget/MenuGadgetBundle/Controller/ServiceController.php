@@ -31,37 +31,19 @@ class ServiceController extends Controller {
 		$gadget = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
+		
+		if (array_key_exists('pages', $gadgetConfig))
+			$pageList = $gadgetConfig["pages"];
 		$pages = array();
-		if (array_key_exists('page1', $gadgetConfig))
-			$pages[]=
-		 		$this->get('doctrine')->getManager()
-					->getRepository('KeosuCoreBundle:Page')
-					->find($gadgetConfig["page1"]);
-		if (array_key_exists('page2', $gadgetConfig))
-			$pages[]=
-				$this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page')
-				->find($gadgetConfig["page2"]);
-		if (array_key_exists('page3', $gadgetConfig))
-			$pages[]=
-				$this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page')
-				->find($gadgetConfig["page3"]);
-		if (array_key_exists('page4', $gadgetConfig))
-			$pages[]=
-				$this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page')
-				->find($gadgetConfig["page4"]);
-		if (array_key_exists('page5', $gadgetConfig))
-			$pages[]=
-				$this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page')
-				->find($gadgetConfig["page5"]);
-		if (array_key_exists('page6', $gadgetConfig))
-			$pages[]=
-			$this->get('doctrine')->getManager()
-			->getRepository('KeosuCoreBundle:Page')
-			->find($gadgetConfig["page6"]);
+		foreach ($pageList as $page){
+			if($page->getPageId()!=null){
+				$pages[]=
+					$this->get('doctrine')->getManager()
+						->getRepository('KeosuCoreBundle:Page')
+						->find($page->getPageId());
+			}
+			
+		}
 		return $this
 				->render(
 						'KeosuGadgetMenuGadgetBundle:Service:viewone.' . $format

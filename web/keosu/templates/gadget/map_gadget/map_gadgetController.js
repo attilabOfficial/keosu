@@ -18,10 +18,12 @@
 
 //Main function
 
-app.controller('map_gadgetController', function ($scope, $http, $sce) {
+app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
 	$scope.init = function (host, param, page, gadget, zone){ 
+		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		$http.get(host + param + 'service/gadget/mapgadget/'
 				+ gadget + '/json').success( function (data) {
+					usSpinnerService.stop('spinner');
 					var map=initialize();
 					$scope.title = $('<div/>').html(data[0].name).text();
 					var decodedContent = data[0].description;

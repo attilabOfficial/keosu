@@ -1,0 +1,8 @@
+<script src="js/calendar.js"></script>
+<% _.each(events, function(event){ %>
+<div class="cal-row-fluid">
+	<div onclick='change_selection(<%= event.id %>)' class="cal-cell<%= event.days%> cal-offset<%= event.start_day %> day-highlight dh-<%= event['class'] %>" data-event-class="<%= event['class'] %>" style="<%= event.style_dim %>">
+		<span data-event-id="<%= event.id %>" class="cal-event-week event<%= event.id %>"><%= event.title %></span>
+	</div>
+</div>
+<% }); %>

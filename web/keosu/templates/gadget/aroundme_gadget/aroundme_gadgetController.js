@@ -24,11 +24,13 @@ function parts(isList, isMap, $scope) {
 
 //Main function
 
-app.controller('aroundme_gadgetController', function ($scope, $http, $sce) {
+app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
 	parts(true, false, $scope);
 	$scope.open = function (page) {
+		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		$http.get($scope.host + $scope.param + 'service/gadget/aroundme/view/'
 				+ page.id + '/json').success(function (data){
+					usSpinnerService.stop('spinner');
 					$scope.myMap = data[0];
 					var decodedContent = data[0].description;
 					decodedContent = $('<div/>').html(decodedContent).text();
@@ -59,9 +61,11 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce) {
 		$scope.param = param;
 
 		var onGpsSuccess = function(position) {
+			usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 			$http.get(host +param + 'service/gadget/aroundme/' + gadget +'/'
 					+ position.coords.latitude + '/'
 					+ position.coords.longitude + '/0/' + '10' + '/json').success(function (data) {
+						usSpinnerService.stop('spinner');
 						$tmp = [];		
 						for (i = 0; i < data.data.length; i++) {
 							$tmp[i] = data.data[i];

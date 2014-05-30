@@ -17,6 +17,14 @@ keosu_gadget_around_me_gadget:
 keosu_reader_rss_reader:
     resource: "@KeosuReaderRssReaderBundle/Resources/config/routing.yml"
     prefix:   /
+    
+keosu_readerics_reader:
+    resource: "@KeosuReadericsReaderBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_reader_rss_event_reader:
+    resource: "@KeosuReaderRssEventReaderBundle/Resources/config/routing.yml"
+    prefix:   /
 
 keosu_gadget_menu_gadget:
     resource: "@KeosuGadgetMenuGadgetBundle/Resources/config/routing.yml"
@@ -38,6 +46,10 @@ keosu_gadget_article_gadget:
 keosu_gadget_map_gadget:
     resource: "@KeosuGadgetMapGadgetBundle/Resources/config/routing.yml"
     prefix:   /
+    
+keosu_gadget_calendar_gadget:
+    resource: "@KeosuGadgetCalendarGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
 
 keosu_core:
     resource: "@KeosuCoreBundle/Resources/config/routing.yml"
@@ -49,6 +61,10 @@ keosu_article:
     
 keosu_poi:
     resource: "@KeosuDataModelMapModelBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+keosu_event:
+    resource: "@KeosuDataModelEventModelBundle/Resources/config/routing.yml"
     prefix:   /
     
 #FOS User route

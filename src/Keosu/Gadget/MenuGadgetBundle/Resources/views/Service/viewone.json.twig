@@ -18,11 +18,16 @@
 {% spaceless%}
 { "pages": [
 	{% for page in pages %}
-			{% if page.getIsMain %}
-				"index"
-			{% else %}
-				"{{page.name}}"
-			{% endif %}
+		{
+			"name":
+				{% if page.getIsMain %}
+					"index"
+				{% else %}
+					"{{page.name}}"
+				{% endif %}
+			,
+			"icon":"{{page.icon}}"
+		}
 		
 	    {% if loop.last ==false%}
 	     ,

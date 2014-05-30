@@ -1,0 +1,63 @@
+<!--
+ Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ -->
+ 
+ <div ng-controller="calendar_gadgetController">
+	<div ng-show="isCalendar">
+		<div class="panel">
+			<li
+				ng-class="{active: activePage.page == $index, 
+    inactive: activePage.page != $index}"
+				ng-repeat="page in pages track by $index">
+				<div class="panel-body">
+					<div class="row" ng-repeat="apage in page">
+						<div class="media" ng-click="open(apage.id)">
+							<div class="media-body">
+								<span class="">
+									<h6>{{apage.name}}</h6><p>{{apage.date}}</p>
+								</span>
+							</div>
+						</div>
+						<hr>
+					</div>
+					<a ng-show="pages[$index - 1]"
+						ng-click="activePage.page = $index-1" class="previous" href="#"><button
+							class="btn btn-default">Previous</button></a> <a
+						ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1"
+						class="next" href="#"><button
+							class="btn btn-default pull-right">Next</button></a>
+			</li>
+		</div>
+	</div>	
+	<div ng-show="isEvent">
+		<a ng-click="close()"><i class="fui-cross"></i></a>
+		<div class="row-fluid">
+			<h3 class="event-name" style="text-align: center">{{ anEvent.name }}</h3><p style="text-align: center;">{{ anEvent.date }}  <button id='bouton' class="btn" onclick='calendarDemoAdd()'>Add event to my calendar</button></p>
+		</div>
+		<hr>
+		<div class="row-fluid">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="event-body" ng-bind-html="anEvent.description" style="word-wrap:break-word"></div>
+			</div>
+		</div>
+		<div>
+			{{ anEvent.lieu }}
+			<div id="calendar_map_canvas" style="height: 400px; margin: 0; width: 100%;">
+			</div>
+		</div>
+	</div>
+</div>

@@ -56,7 +56,7 @@ abstract class ThemeDataModel {
 	public function upload() {
 		$zip = new ZipArchive ();
 		$j = 0;
-		if (! $this->file)
+		if ($this->file === null)
 			return "You must upload a zip archive or cancel.";
 		if (($unzip = $zip->open ( $this->file )) === TRUE) {
 			for($i = 0; $i < $zip->numFiles; $i ++) {

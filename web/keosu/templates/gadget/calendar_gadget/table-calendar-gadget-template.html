@@ -25,11 +25,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<h3 style='font-size:20px'></h3>
 
 	
-			<div class="btn-group" style="margin-left: auto; margin-right: auto; display: block; width: 212px">
-				<button class="btn" data-calendar-view="year">Year</button>
-				<button class="btn active" data-calendar-view="month">Month</button>
-				<button class="btn" data-calendar-view="week">Week</button>
-				<button class="btn" data-calendar-view="day">Day</button>
+			<div class="btn-group" style="margin-left: auto; margin-right: auto; display: block; width: auto">
+				<button class="btn btn-default btn-page" data-calendar-view="year" style="width: 25%;">Year</button>
+				<button class="btn btn-default btn-page active" data-calendar-view="month" style="width: 25%;">Month</button>
+				<button class="btn btn-default btn-page" data-calendar-view="week" style="width: 25%;">Week</button>
+				<button class="btn btn-default btn-page" data-calendar-view="day" style="width: 25%;">Day</button>
 			</div>
 		</div>
 		
@@ -39,10 +39,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			
 		<br/>
 		
-		<div class="btn-group" style="margin-left: auto; margin-right: auto; display: block; width:201px">
-			<button class="btn" data-calendar-nav="prev"><< Prev</button>
-			<button class="btn" data-calendar-nav="today">Today</button>
-			<button class="btn" data-calendar-nav="next">Next >></button>
+		<div class="btn-group" style="margin-left: auto; margin-right: auto; display: block; width: auto">
+			<button class="btn btn-default btn-page" data-calendar-nav="prev" style="width: 33%;">Prev</button>
+			<button class="btn btn-default btn-page" data-calendar-nav="today" style="width: 33%;">Today</button>
+			<button class="btn btn-default btn-page" data-calendar-nav="next" style="width: 33%;">Next</button>
 		</div>
 		
 		<br/>
@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<div ng-show="isEvent">
 		<a ng-click="close()"><i class="fui-cross"></i></a>
 		<div class="row-fluid">
-			<h3 class="event-name" style="text-align: center">{{ anEvent.name }}</h3><p style="text-align: center;">{{ anEvent.date }}  <button id='bouton' class="btn" onclick='calendarDemoAdd()'>Add event to my calendar</button></p>
+			<h3 class="event-name" style="text-align: center">{{ anEvent.name }}</h3><p style="text-align: center;">{{ anEvent.date }} <br/> <button id='bouton' class="btn btn-default btn-page" onclick='calendarDemoAdd()'>Add event to my calendar</button></p>
 		</div>
 		<hr>
 		<div class="row-fluid">

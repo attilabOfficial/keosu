@@ -217,7 +217,7 @@
   font-weight: bolder;
 }
 #cal-day-box .cal-day-hour:nth-child(odd) {
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
 }
 #cal-day-box #cal-day-panel {
   position: relative;
@@ -340,7 +340,7 @@
 }
 .cal-year-box .row-fluid:hover,
 .cal-row-fluid:hover {
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
 }
 .cal-month-day {
   height: 40px;	
@@ -405,10 +405,10 @@ span[data-cal-date]:hover {
   cursor: default;
 }
 .cal-day-today {
-  background-color: #e8fde7;
+  /* background-color: #e8fde7; */
 }
 .cal-day-today span[data-cal-date] {
-  color: darkgreen;
+  /* color: darkgreen; */
 }
 .cal-month-box .cal-day-today span[data-cal-date] {
   font-size: 1.9em;
@@ -417,7 +417,7 @@ span[data-cal-date]:hover {
   color: #800080;
 }
 .cal-day-weekend span[data-cal-date] {
-  color: darkred;
+  /* color: darkred; */
 }
 #cal-week-box {
   border: 1px solid #e1e1e1;

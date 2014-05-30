@@ -188,7 +188,7 @@
       if (target) {
         target.insertBefore(el, target.firstChild||null)
       }
-
+      el.innerHTML = el.innerHTML+'<div style="margin-left: -20px; background-color: black; padding: 20px; margin-top: -20px; border-radius: 7px;"></div>';
       el.setAttribute('role', 'progressbar')
       self.lines(el, self.opts)
 
@@ -218,7 +218,7 @@
     /**
      * Stops and removes the Spinner.
      */
-    stop: function() {
+    stop: function(target) {
       var el = this.el
       if (el) {
         clearTimeout(this.timeout)

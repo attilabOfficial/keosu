@@ -17,7 +17,13 @@
     #}
 {% extends 'KeosuCoreBundle:MainViews:configuration.html.twig' %}
 
+
 {% block content %}
+{% if error != null %}
+<div class="alert alert-danger">
+	{{error}}
+</div>
+{% endif %}
 <script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -31,19 +37,19 @@
 		 });
 
 		$(document).on("change",'input[type="file"]',function() {
+			$nameFile = $( this ).val().split('\\');
+			$('#name-file').html('	' + $nameFile[$nameFile.length - 1]);
 		});
 	});
 	</script>
 	<div class="picture-edit">
-	<h1 id="file_name"></h1>
 		{{ form_start(form) }}
 		    {{ form_errors(form) }}
 			    <div class="upload image-collection-entry col-lg-12">
 			    	{{ form_row(form.file) }}
-			    	<button type="button" class="btn btn-info uploader">Upload new Theme</button>
+			    	<button type="button" class="btn btn-info uploader">Upload new Theme</button><span id="name-file"></span>	
 			    </div>
 		    <br class="clear"/>
-	    	
  <br class="clear"/>
 			    <br class="clear"/>
 				<div class="col-md-3"></div>

@@ -27,7 +27,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class ManageThemesController extends Controller {
-	
 	/**
 	 * "Manage Themes" page
 	 * We can set add/delete new themes
@@ -52,7 +51,6 @@ class ManageThemesController extends Controller {
 			if ($this->themeExists ( $theme, $themesData, FALSE ) === FALSE) {
 				$theme_tmp = new Theme ();
 				$theme_tmp->setName ( $theme );
-				$theme_tmp->setPath ( $theme . '.zip' );
 				$em = $this->get ( 'doctrine' )->getManager ();
 				$em->persist ( $theme_tmp );
 				$em->flush ();
@@ -66,7 +64,7 @@ class ManageThemesController extends Controller {
 		}
 		$themesData = $this->get ( 'doctrine' )->getManager ()->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
 		return $this->render ( 'KeosuCoreBundle:Theme:manage.html.twig', array (
-				'themes' => $themesData 
+				'themes' => $themesData
 		) );
 	}
 	
@@ -95,7 +93,7 @@ class ManageThemesController extends Controller {
 	 */
 	private function editTheme($theme) {
 		// Find existing app to know if it's the first one
-		$themes = $this->get ( 'doctrine' )->getManager ()->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
+		$error = null;
 		
 		// page edit form
 		$formBuilder = $this->createFormBuilder ( $theme, array (
@@ -106,20 +104,31 @@ class ManageThemesController extends Controller {
 		$request = $this->get ( 'request' );
 		// If we are in POST method, form is submit
 		if ($request->getMethod () == 'POST') {
+
 			$form->bind ( $request );
 			if ($form->isValid ()) {
-				// Storing page
+				// Storing pag
+				if (($error = $theme->upload()) !== null)
+					return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig', array (
+							'form' => $form->createView (),
+							'theme' => $theme,
+							'error' => $error
+					) );
 				$em = $this->get ( 'doctrine' )->getManager ();
 				$em->persist ( $theme );
 				$em->flush ();
 				$session = $this->get ( "session" );
 				$session->set ( "themeid", $theme->getId () );
+				$themesData = $this->get ( 'doctrine' )->getManager ()->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
 				return $this->redirect ( $this->generateUrl ( 'keosu_core_theme_manage' ) );
+				
+
 			}
 		}
 		return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig', array (
 				'form' => $form->createView (),
-				'theme' => $theme 
+				'theme' => $theme,
+				'error' => $error
 		) );
 	}
 	
@@ -128,8 +137,7 @@ class ManageThemesController extends Controller {
 	 */
 	private function buildThemeForm($formBuilder) {
 		$formBuilder->add ( 'file', 'file', array (
-				'required' => true,
-				'image_path' => 'webPath' 
+				'required' => true 
 		) );
 	}
 }

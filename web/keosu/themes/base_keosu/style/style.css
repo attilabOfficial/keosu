@@ -69,6 +69,11 @@ h6.title, h5.title, h4.title, h3.title, h2.title, h1.title {
 	color: #000000 !important;
 }
 
+a {
+	color: #000000 !important;
+}
+
+
 /***************************
    MENU
 ***************************/
@@ -86,7 +91,24 @@ h6.title, h5.title, h4.title, h3.title, h2.title, h1.title {
 
 .classic-menu >.menu >.menu-elements {
 	float: left;
-	width: 25%;
+	font-size: 30px;
+    width: 15%;
+    color:black;
+}
+
+.classic-menu >.menu >.menu-elements >a >span{
+    color:black;
+}
+.classic-menu >.menu >.menu-elements >a >span.active{
+    color:#FA6900;
+}
+
+
+.menukeosu{
+	margin-left:30px;
+	margin-right:30px;
+	padding-top:5px;
+	padding-bottom:5px;
 }
 
 .vertical-menu, .slide-menu {
@@ -172,6 +194,12 @@ h6.title, h5.title, h4.title, h3.title, h2.title, h1.title {
 	padding: 0px !important;
 }
 
+.list-title > .ng-scope > h6, h6.title.ng-binding {
+	white-space: nowrap;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
 .list-elem-right {
 	color: #bdc3c7 !important;
 }
@@ -224,12 +252,20 @@ h6.title, h5.title, h4.title, h3.title, h2.title, h1.title {
 	height: auto;
 }
 
+.img-min-list {
+  position:relative  !important;
+  margin-left: auto;
+  margin-right: auto;
+  height:64px  !important;
+  width:64px  !important;
+  overflow:hidden  !important;
+}
+
 .img-min {
-	display:block;
-	margin:auto;
-	width:64px;
-	height:64px;
-	vertical-align:middle;
+	min-width: 170px;
+  	left: -20;
+	height: auto;
+	position:absolute  !important;
 }
 
 .img-list {
@@ -296,4 +332,12 @@ h6.title, h5.title, h4.title, h3.title, h2.title, h1.title {
 .thumbnails-left {
 	 margin:0  !important; 
 	 margin-right:10px  !important;
+}
+
+/****************************
+	CALENDAR
+****************************/
+.calendar-event {
+	background-color: #EA7354;
+	color: #FFFFFF;
 }

@@ -2,64 +2,23 @@
 
 namespace Keosu\CoreBundle\Entity\Model;
 
-use Doctrine\ORM\Mapping as ORM;	
+use Doctrine\ORM\Mapping as ORM;
 use \ZipArchive;
 use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @ORM\MappedSuperclass
  */
-abstract class ThemeDataModel{
+abstract class ThemeDataModel {
 	const THEME = 'themes';
 	const TEMPLATES = 'templates';
 	const PAGE = 'page-template';
 	const NONE = '';
-	
-	/**
-	 *
-	 * @var string $path
-	 *     
-	 *      @ORM\Column(name="path", type="string", length=255)
-	 */
-	private $path;
-	
-	/**
-	 * Set path
-	 *
-	 * @param string $path        	
-	 * @return ArticleAttachment
-	 */
-	public 
-
-	function setPath($path) {
-		$this->path = $path;
-		
-		return $this;
-	}
-	
-	/**
-	 * Get path
-	 *
-	 * @return string
-	 */
-	public function getPath() {
-		return $this->path;
-	}
 	private $file;
-	public function getAbsolutePath() {
-		return null === $this->path ? null : $this->getUploadRootDir () . '/' . $this->path;
-	}
-	public function getWebPath($where) {
-		return null === $this->path ? null : '/' . $this->getUploadDir ( $where ) . '/' . $this->path;
-	}
 	public function getUploadRootDir($where) {
-		// the absolute directory path where uploaded
-		// documents should be saved
 		return __DIR__ . '/../../../../../web/' . $this->getUploadDir ( $where );
 	}
 	protected function getUploadDir($where) {
-		// get rid of the __DIR__ so it doesn't screw up
-		// when displaying uploaded doc/image in the view.
 		return 'keosu/' . $where;
 	}
 	
@@ -82,15 +41,24 @@ abstract class ThemeDataModel{
 		);
 		foreach ( $errorCode as $errorNum => $errorString ) {
 			if ($errorNum == $errno) {
-				return 'Zip File Function error : ' . $errorString;
+				return $errorString;
 			}
 		}
-		return 'Zip File Function error : unknown';
+		return 'Error unknown';
 	}
 	public function setFile($file) {
+		$this->file = $file;
+		return $file;
+	}
+	public function getFile() {
+		return $this->file;
+	}
+	public function upload() {
 		$zip = new ZipArchive ();
 		$j = 0;
-		if (($unzip = $zip->open ( $file )) === TRUE) {
+		if (! $this->file)
+			return "You must upload a zip archive or cancel.";
+		if (($unzip = $zip->open ( $this->file )) === TRUE) {
 			for($i = 0; $i < $zip->numFiles; $i ++) {
 				if (substr ( ($nameIndex = $zip->getNameIndex ( $i )), 0, 7 ) === self::THEME . '/' || substr ( $zip->getNameIndex ( $i ), 0, 14 ) === self::PAGE . '/') {
 					if (substr ( $zip->getNameIndex ( $i ), 0, 7 ) === self::THEME . '/' && count ( ($array = explode ( '/', $nameIndex )) ) === 3 && file_exists ( $this->getUploadRootDir ( self::NONE ) . $nameIndex ) && $array [2] [0] !== '.') {
@@ -104,24 +72,9 @@ abstract class ThemeDataModel{
 				}
 			}
 			$zip->close ();
-		} else if ($unzip !== TRUE) {
-			$zip->close ();
-			die ( $this->zipFileErrMsg ( $unzip ) );
+			return null;
 		} else {
-			$zip->close ();
-			die ( 'The theme already  exists ' );
+			return $this->zipFileErrMsg ( $unzip );
 		}
-		$this->path = $file->getClientOriginalName ();
-	}
-	public function getFile() {
-		return $this->file;
 	}
 }
-
-
-/*if (strpos ( $array [1], '--' ) === TRUE && $array [1][count($array [1]) - 2] >= '0' && $array [1][count($array [1]) - 2] <= '9')
-							$replaceIndex = str_replace('--' . substr(strrchr($array [1], "-"), 1), '--' . strval(intval(substr(strrchr($array [1], "-"), 1)) + 1),  $nameIndex );
-							
-						else
-							$replaceIndex = str_replace ( $array [1], $array [1] . '--1', $nameIndex );
-							$zip->renameName ( $zip->getNameIndex ( $i ), $replaceIndex); */

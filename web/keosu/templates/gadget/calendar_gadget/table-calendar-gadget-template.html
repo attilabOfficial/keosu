@@ -58,7 +58,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<div ng-show="isEvent">
 		<a ng-click="close()"><i class="fui-cross"></i></a>
 		<div class="row-fluid">
-			<h3 class="event-name" style="text-align: center">{{ anEvent.name }}</h3><p style="text-align: center;">{{ anEvent.date }} <br/> <button id='bouton' class="btn btn-default btn-page" onclick='calendarDemoAdd()'>Add event to my calendar</button></p>
+			<h3 class="event-name" style="text-align: center">{{ anEvent.name }}</h3>
+			<p style="text-align: center;">{{ anEvent.date }} <br/>
+				<button id='bouton' class="btn btn-default btn-page" onclick='calendarDemoAdd()'>Add event to my calendar</button>
+				
+				<button class="btn btn-default btn-page" onclick="window.plugins.socialsharing.canShareVia('com.apple.social.facebook', 'msg', null, null, null, function(e){alert(e)}, function(e){alert(e)})">is facebook available on iOS?</button>
+				<button class="btn btn-default btn-page" onclick="window.plugins.socialsharing.canShareVia('facebook', 'msg', null, null, null, function(e){alert(e)}, function(e){alert(e)})">is facebook available on Android?</button>
+				<button class="btn btn-default btn-page" onclick="window.plugins.socialsharing.canShareVia('com.apple.social.twitter', 'msg', null, null, null, function(e){alert(e)}, function(e){alert(e)})">is twitter available on iOS?</button>
+				<button class="btn btn-default btn-page" onclick="window.plugins.socialsharing.canShareVia('twitter', 'msg', null, null, null, function(e){alert(e)}, function(e){alert(e)})">is twitter available on Android?</button>
+				
+				<!-- 
+				<button style="background: url('twitter_sharing.png') repeat scroll 0% 0% transparent; width: 224px; height: 54px; border : none;" onclick='window.plugins.socialsharing.shareViaTwitter("Message via Twitter")'>Share on Twitter</button>
+				<button style="background: url('facebook_sharing.png') repeat scroll 0% 0% transparent; width: 224px; height: 54px; border : none;" onclick="window.plugins.socialsharing.shareViaFacebook('Message via Facebook', null, null, function() {console.log('share ok')}, function(errormsg){alert(errormsg)})">Share on Facebook</button>
+				-->
+			</p>
 		</div>
 		<hr>
 		<div class="row-fluid">

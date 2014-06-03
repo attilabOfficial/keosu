@@ -1,41 +1,41 @@
 <div ng-controller="last_article_gadgetController">
 	<div ng-show="isList">
-		<div class="list">
 			<li
 				ng-class="{active: activePage.page == $index, 
     inactive: activePage.page != $index}"
 				ng-repeat="page in pages track by $index">
+						<div class="list">
 				<div class="list-content">
-						<div class="media list-elements" ng-repeat="apage in page">
-							<a href="#" class="row" ng-click="open(apage)">
-								<div class="col-xs-4 vcenter">
+					<div class="media list-elements" ng-repeat="apage in page">
+						<a href="#" class="row" ng-click="open(apage)">
+							<div class="col-xs-4 vcenter">
 								<div class="img-min-list">
 									<span ng-if="apage.attachments[0].path"> <img
-										class="img-min"
-										src="{{ apage.attachments[0].path }}" alt="" />
-									</span>
-									</div>
-								</div>
-								<div class="col-xs-8 vcenter">
-									<span class="list-title"> <span ng-if="apage.attachments[0].path">
-											<h6>{{ apage.title }}</h6>
-									</span> <span ng-if="!(apage.attachments[0].path)">
-											<h6 class="title list-title">{{ apage.title }}</h6>
-									</span>
+										class="img-min" src="{{ apage.attachments[0].path }}" alt="" />
 									</span>
 								</div>
-							</a>
+							</div>
+							<div class="col-xs-8 vcenter">
+								<span class="list-title"> <span
+									ng-if="apage.attachments[0].path">
+										<h6>{{ apage.title }}</h6>
+								</span> <span ng-if="!(apage.attachments[0].path)">
+										<h6 class="title list-title">{{ apage.title }}</h6>
+								</span>
+								</span>
+							</div>
+						</a>
 						<hr>
-						</div>
-					<a ng-show="pages[$index - 1]"
-						ng-click="activePage.page = $index-1" class="previous" href="#"><button
-							class="btn btn-default btn-page">Previous</button></a> <a
-						ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1"
-						class="next" href="#"><button
-							class="btn btn-default pull-right btn-page">Next</button></a>
-				</div>
+					</div>
+							</div>
+				</div> <a ng-show="pages[$index - 1]"
+				ng-click="activePage.page = $index-1" class="previous" href="#"><button
+						class="btn btn-default btn-page">Previous</button></a> <a
+				ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1"
+				class="next" href="#"><button
+						class="btn btn-default btn-page pull-right">Next</button></a>
 			</li>
-		</div>
+
 	</div>
 	<div ng-show="isArticle">
 		<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a>

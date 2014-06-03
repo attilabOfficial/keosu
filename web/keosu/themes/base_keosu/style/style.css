@@ -337,7 +337,7 @@ a {
 /****************************
 	CALENDAR
 ****************************/
-.calendar-event {
+.calendar-event, .cal-day-today {
 	background-color: #EA7354;
 	color: #FFFFFF;
 }

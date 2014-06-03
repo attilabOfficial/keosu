@@ -125,7 +125,7 @@ class SyncController extends Controller {
 					$minute = substr($dateStr,11,2);
 					$date=new \DateTime($year.'/'.$month.'/'.$day.' '.$hour.':'.$minute.':00+0000');
 				} else if (strstr($buffer, "SUMMARY:")!=''){
-					$name = str_replace( "\n", '<br />', substr($buffer,8));
+					$name = str_replace( "\n", '', substr($buffer,8));
 				} else if (strstr($buffer, "DESCRIPTION:")!=''){
 					$desc = '<p>'.str_replace( "\n", '<br />', substr($buffer,12)).'</p>';
 				} else if (strstr($buffer, 'END:VEVENT')!=''){

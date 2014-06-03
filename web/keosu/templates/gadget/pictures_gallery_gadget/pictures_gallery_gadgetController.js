@@ -57,7 +57,7 @@ app.controller('pictures_gallery_gadgetController', function ($scope, $http, usS
 				+ gadget + '/' + '0' + '/' + 'json').success(function (data) {
 					usSpinnerService.stop('spinner');
 					$tmp = [];
-					for (i = 0; i < data.data.length && i < 10; i++) {
+					for (i = 0; i < data.data.length; i++) {
 						$tmp[i] = data.data[i];
 						toto = new Image;
 						toto.src = $tmp[i].path;

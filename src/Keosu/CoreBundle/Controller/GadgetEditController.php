@@ -245,14 +245,6 @@ class GadgetEditController extends Controller {
 	}
 	
 	/**
-	 * Get a liveService
-	 * @return a live service
-	 */
-	public function getLiveService($name, $id) {
-		return $this->get($name)->setReader($id);
-	}
-	
-	/**
 	 * Can be overrided
 	 */
 	public function getRenderEditTemplate(){

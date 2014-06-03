@@ -95,25 +95,7 @@ class Exporter {
 		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/css', 0777, true);
 		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/css/calendar.css',
 		ExporterUtil::getAbsolutePath() . '/simulator/www/css/calendar.css');
-		
-		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components', 0777, true);
-		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2', 0777, true);
-		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/css', 0777, true);
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/css/bootstrap-responsive.css',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/css/bootstrap-responsive.css');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/css/bootstrap.css',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/css/bootstrap.css');
-		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/js', 0777, true);
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/js/bootstrap.min.js',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/js/bootstrap.min.js');
-		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/img', 0777, true);
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/img/glyphicons-halflings-white.png',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/img/glyphicons-halflings-white.png');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/img/glyphicons-halflings.png',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/img/glyphicons-halflings.png');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/img/Thumbs.db',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/img/Thumbs.db');
-			
+	
 		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/underscore', 0777, true);
 		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/underscore/underscore-min.js',
 		ExporterUtil::getAbsolutePath() . '/simulator/www/components/underscore/underscore-min.js');

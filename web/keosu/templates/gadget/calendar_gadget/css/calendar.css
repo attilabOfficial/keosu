@@ -444,7 +444,6 @@ span[data-cal-date]:hover {
   padding-left: 20px;
   padding-right: 20px;
   color: #ffffff;
-  background-image: url("../img/dark_wood.png");
   -webkit-box-shadow: inset 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
   box-shadow: inset 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
 }

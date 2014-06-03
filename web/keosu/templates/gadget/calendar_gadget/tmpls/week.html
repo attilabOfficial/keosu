@@ -21,10 +21,12 @@
 						<% var cols_width = 12/(day_events.length>3 ? 3 : day_events.length); %>
 						<% _.each(day_events, function(event){ %>
 						<div class="col-xs-<%=cols_width%>" style="padding: 1px 1px 1px 1px">
-							<div onclick='change_selection(<%= event.id %>)' data-event-class="<%= event['class'] %>" class='calendar-event'>
-								<span data-event-id="<%= event.id %>"><%= event.title %></span>
-								(<span class="cal-hours"><%= event.start_hour.substr(event.start_hour.indexOf(":")-2) %> - <%= event.end_hour.substr(event.end_hour.indexOf(":")-2) %></span>)
-							</div>
+							<a href='#'>
+								<div onclick='change_selection(<%= event.id %>)' data-event-class="<%= event['class'] %>" class='calendar-event'>
+									<span data-event-id="<%= event.id %>"><%= event.title %></span>
+									(<span class="cal-hours"><%= event.start_hour.substr(event.start_hour.indexOf(":")-2) %> - <%= event.end_hour.substr(event.end_hour.indexOf(":")-2) %></span>)
+								</div>
+							</a>
 						</div>
 					<% }); } %>
 					

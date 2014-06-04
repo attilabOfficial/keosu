@@ -47,7 +47,10 @@ class Exporter {
 		//Export theme
 		$theme = $manager->getRepository('KeosuCoreBundle:App')
 				->find($appId);
-
+		$json = json_encode(array('name' => $theme->getName()));
+		FilesUtil::copyContent($json, ExporterUtil::getAbsolutePath() . '/simulator/www/data/appName.json');
+		
+		
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $theme->getTheme().'/style',
 				ExporterUtil::getAbsolutePath() . '/simulator/www/theme');
 		

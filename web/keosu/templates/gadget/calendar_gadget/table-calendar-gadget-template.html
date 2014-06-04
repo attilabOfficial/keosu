@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div ng-controller="calendar_gadgetController">
 	<div ng-show="isCalendar">
 		<span style='display:none' my-current-time='format'></span>
-		<div class="page-header" style="border:none">
+		<div class="page-header" style="border:none; margin-top:-35px">
 			<h3 style='font-size:20px'></h3>
 
 	
@@ -49,6 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		
 		<div class="span3"></div>
 		<script type="text/javascript" src="components/underscore/underscore-min.js"></script>
+		<script type="text/javascript" src="components/bootstrap2/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/calendar.js"></script>
 		<script type="text/javascript" src="js/app_calendar.js"></script>
 		<script id="init_calendar" type="text/javascript"></script>
@@ -60,10 +61,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<p style="text-align: center;">{{ anEvent.date }} <br/>
 				<button id='bouton' class="btn btn-default btn-page" onclick='calendarDemoAdd()'>Add event to my calendar</button>
 				
-				<button class="btn btn-default btn-page" onclick="window.plugins.socialsharing.canShareVia('com.apple.social.facebook', 'msg', null, null, null, function(e){alert(e)}, function(e){alert(e)})">is facebook available on iOS?</button>
-				<button class="btn btn-default btn-page" onclick="window.plugins.socialsharing.canShareVia('facebook', 'msg', null, null, null, function(e){alert(e)}, function(e){alert(e)})">is facebook available on Android?</button>
-				<button class="btn btn-default btn-page" onclick="window.plugins.socialsharing.canShareVia('com.apple.social.twitter', 'msg', null, null, null, function(e){alert(e)}, function(e){alert(e)})">is twitter available on iOS?</button>
-				<button class="btn btn-default btn-page" onclick="window.plugins.socialsharing.canShareVia('twitter', 'msg', null, null, null, function(e){alert(e)}, function(e){alert(e)})">is twitter available on Android?</button>
+				<button id='twitter_button'
+						onclick="window.plugins.socialsharing.shareViaTwitter(anEvent.name+'\nDescription\n'+anEvent.decodedDescription)"
+						style="background: url('twitter_sharing.png') repeat scroll 0% 0% transparent; width: 224px; height: 54px; border : none;">
+				Share on Twitter</button>
+				<button id='facebook_button'
+						onclick="window.plugins.socialsharing.shareViaFacebook(anEvent.name+'\nDescription\n'+anEvent.decodedDescription, null, null, function() {console.log('share ok')}, function(errormsg){alert(errormsg)})"
+						style="background: url('facebook_sharing.png') repeat scroll 0% 0% transparent; width: 224px; height: 54px; border : none;">
+				Share on Facebook</button>
+				
+				<button class="btn btn-default btn-page" onclick="window.plugins.socialsharing.share(anEvent.name+'\nDescription\n'+anEvent.decodedDescription)">Share on what you can</button>
 				
 				<!-- 
 				<button style="background: url('twitter_sharing.png') repeat scroll 0% 0% transparent; width: 224px; height: 54px; border : none;" onclick='window.plugins.socialsharing.shareViaTwitter("Message via Twitter")'>Share on Twitter</button>

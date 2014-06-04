@@ -96,6 +96,10 @@ class Exporter {
 		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/css/calendar.css',
 		ExporterUtil::getAbsolutePath() . '/simulator/www/css/calendar.css');
 	
+		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/js', 0777, true);
+		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/js/bootstrap.min.js',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/js/bootstrap.min.js');
+		
 		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/underscore', 0777, true);
 		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/underscore/underscore-min.js',
 		ExporterUtil::getAbsolutePath() . '/simulator/www/components/underscore/underscore-min.js');

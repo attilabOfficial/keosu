@@ -88,7 +88,7 @@ class SyncController extends Controller {
 		if($entry->getElementsByTagName("title")->item(0)!=null)
 			$name=$entry->getElementsByTagName("title")->item(0)->nodeValue;
 		if($entry->getElementsByTagName("description")->item(0)!=null)
-			$desc=$entry->getElementsByTagName("description")->item(0)->nodeValue;
+			$desc='<p>'.$entry->getElementsByTagName("description")->item(0)->nodeValue.'</p>';
 		
 		if($entry->getElementsByTagName("date")->item(0)!=null){
 			$dateString = $entry->getElementsByTagName("date")->item(0)->nodeValue;

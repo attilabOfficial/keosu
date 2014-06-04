@@ -85,7 +85,7 @@ function initialize() {
 app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpinnerService) {	
 	
 	// At the beginning, we display the calendar
-	parts(true, false, $scope);
+	parts(true, false, $scope);	
 	
 	// If you close an event, the app displays the calendar
 	$scope.close = function () {
@@ -245,7 +245,30 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 					window.plugins.calendar.deleteEvent(title,location,notes,startDate,endDate,calSuccess,calError);
 					// Change the button data
 					change(false);
-				}			
+				}		
+				
+				
+				document.getElementById('twitter_button').hidden = true;
+				document.getElementById('facebook_button').hidden = true;
+				window.plugins.socialsharing.canShareVia('com.apple.social.facebook', 'msg', null, null, null, function(e){alert(e)}, 
+						function(){
+							window.plugins.socialsharing.canShareVia('facebook', 'msg', null, null, null, function(e){alert(e)}, 
+								function(){
+									alert('Facebook not available');
+									document.getElementById('facebook_button').hidden = true;
+								});
+						});
+				
+				window.plugins.socialsharing.canShareVia('twitter', 'msg', null, null, null, function(e){alert(e)}, 
+						function(){
+							window.plugins.socialsharing.canShareVia('com.apple.social.twitter', 'msg', null, null, null, function(e){alert(e)}, 
+								function(){
+									alert('Twitter not available');
+									document.getElementById('twitter_button').hidden = true;
+								});
+						});
+					
+					
 		}).error(function (response, data, status, header) {
 			// If the file could not have been loaded, we alert it an stop the spinner
 			usSpinnerService.stop('spinner');
@@ -270,7 +293,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	// When the page is loaded, this function is called
 	$scope.init = function (host, param, page, gadget, zone){ 	
 		
-		//host = 'http://192.168.1.12/keosu/web';
+		//host = 'http://192.168.1.8/keosu/web';
 		// We store the parameters information, we need it the functions
 		$scope.host = host;
 		$scope.param = param;

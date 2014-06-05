@@ -30,6 +30,7 @@ class KeosuExtension {
 			'pictures_gallery_gadget' => 'pictures_gallery_gadget',
 			'aroundme_gadget'=>'aroundme_gadget',
 			'calendar_gadget'=>'calendar_gadget',
+			'authentification_gadget'=>'authentification_gadget'
 	);
 
 	

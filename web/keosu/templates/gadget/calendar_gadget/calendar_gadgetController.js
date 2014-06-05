@@ -246,63 +246,48 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 					// Change the button data
 					change(false);
 				}		
-				
-				alert('a');
-				
 				var twitter_button  = document.getElementById('twitter_button');
 				var facebook_button = document.getElementById('facebook_button');
 				twitter_button.type  = 'hidden';
 				facebook_button.type  = 'hidden';
 				
-				alert('b');
-				alert(twitter_button);
-				alert(facebook_button);
-				alert(twitter_button.style);
-				
 				document.getElementById('other_share').onclick=function(){window.plugins.socialsharing.share(title+'\nDescription\n'+notes);};
 				
-				alert('c');
 				
 				if (window.plugins.socialsharing){
 					window.plugins.socialsharing.canShareVia('com.apple.social.facebook', 'msg', null, null, null, 
 							function(){
-								alert('d');
 								facebook_button.hidden = false;
 								facebook_button.onclick=function(){window.plugins.socialsharing.shareViaFacebook(title+'\nDescription\n'+notes, null, null, function(){}, function(){});};
 							}, 
 							function(){
 								window.plugins.socialsharing.canShareVia('facebook', 'msg', null, null, null, 
 									function(){
-										alert('d2');
 										facebook_button.hidden = false;
 										facebook_button.onclick=function(){window.plugins.socialsharing.shareViaFacebook(title+'\nDescription\n'+notes, null, null, function(){}, function(){});};
 									}, 
 									function(){
-										alert('Facebook not available');
+										alert('Facebook not available on this device');
 									});
 							});
 				
 					
 					window.plugins.socialsharing.canShareVia('twitter', 'msg', null, null, null, 
 							function(){
-						alert('e');
 								twitter_button.hidden = false;
 								twitter_button.onclick=function(){window.plugins.socialsharing.shareViaTwitter(title+'\nDescription\n'+notes);};
 							}, 
 							function(){
 								window.plugins.socialsharing.canShareVia('com.apple.social.twitter', 'msg', null, null, null, 
 									function(){
-									alert('e2');
 										twitter_button.hidden = false;
 										twitter_button.onclick=function(){window.plugins.socialsharing.shareViaTwitter(title+'\nDescription\n'+notes);};
 									}, 
 									function(){
-										alert('Twitter not available');
+										alert('Twitter not available on this device');
 									});
 							});
-					alert('f');
 				}
-				alert('g');
 					
 		}).error(function (response, data, status, header) {
 			// If the file could not have been loaded, we alert it an stop the spinner
@@ -328,7 +313,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	// When the page is loaded, this function is called
 	$scope.init = function (host, param, page, gadget, zone){ 	
 		
-		host = 'http://192.168.1.8/keosu/web';
+		//host = 'http://192.168.1.8/keosu/web';
 		// We store the parameters information, we need it the functions
 		$scope.host = host;
 		$scope.param = param;

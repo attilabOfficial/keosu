@@ -5,3 +5,7 @@ keosu_gadget_authentification_gadget_add:
 keosu_gadget_authentification_gadget_edit:
     pattern:  /views/page/gadget/authentificationgadget/edit/{page}/{zone}
     defaults: { _controller: KeosuGadgetAuthentificationGadgetBundle:Edit:edit }
+
+keosu_gadget_article_service_login:
+    pattern:  /service/gadget/authentification/{gadgetId}/{format}/login
+    defaults: { _controller: KeosuGadgetAuthentificationGadgetBundle:Service:login }

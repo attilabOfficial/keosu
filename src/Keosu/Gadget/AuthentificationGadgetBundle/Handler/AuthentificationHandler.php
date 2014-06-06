@@ -45,7 +45,7 @@ class AuthentificationHandler implements AuthenticationSuccessHandlerInterface, 
 	public function onAuthenticationSuccess( Request $request, TokenInterface $token )
 	{
 		// if AJAX login
-		if ( $request->isXmlHttpRequest() ) {
+		if ( $request->request->get('ajax') ) {
 
 			$array = array( 'success' => true ); // data to return via JSON
 			$response = new Response( json_encode( $array ) );
@@ -76,7 +76,7 @@ class AuthentificationHandler implements AuthenticationSuccessHandlerInterface, 
 	public function onAuthenticationFailure( Request $request, AuthenticationException $exception )
 	{
 	// if AJAX login
-	if ( $request->isXmlHttpRequest() ) {
+	if ( $request->request->get('ajax') ) {
 
 		$array = array( 'success' => false, 'message' => $exception->getMessage() ); // data to return via JSON
 		$response = new Response( json_encode( $array ) );

@@ -31,7 +31,6 @@ class EditController extends GadgetEditController implements iGadgetController{
 		return "Keosu\Gadget\CalendarGadgetBundle\CalendarGadget";
 	}
 
-	//No specific config for this gadget, we can only choose the template
 	public function buildGadgetForm($formBuilder, $gadgetName) {
 		$eventsPerPage = array(3=>3, 5=>5, 10=>10, 20=>20, 50=>50, 100=>100);
 		$formBuilder
@@ -39,12 +38,23 @@ class EditController extends GadgetEditController implements iGadgetController{
 						array(
 								'choices' => $eventsPerPage, 'required' => true))
 				->add('shared', 'checkbox', array(
-    					'label'     => 'Shared with all layouts',
+    					'label'     => 'Shared with all pages',
     					'required'  => false,))
 				->add('gadgetTemplate', 'choice',
 						array(
 								'choices' => TemplateUtil::getTemplateGadgetList(
 										$gadgetName), 'required' => true,'expanded'=>true));
+		
+		// Hide the options when you choose the list template
+		echo "	<script>
+					setTimeout( function() {
+					document.getElementById('form_gadgetTemplate').onclick = 
+						function() {
+							document.getElementsByClassName('form_eventsPerPage_form_group')[0].hidden = 
+								!document.getElementById('form_gadgetTemplate_0').checked 
+						}
+					}, 500);
+				</script>";
 
 	}
 

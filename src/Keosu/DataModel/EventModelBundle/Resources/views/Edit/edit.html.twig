@@ -31,8 +31,10 @@ Edit event
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.date').datepicker({ dateFormat: 'dd-mm-y' });
-		$('#form_hour_hour').parent().width(70);
-		$('#form_hour_minute').parent().width(70);
+		$('#form_hour_hour').parent().removeClass('col-lg-9');
+		$('#form_hour_hour').parent().addClass('col-lg-4');
+		$('#form_hour_minute').parent().removeClass('col-lg-9');
+		$('#form_hour_minute').parent().addClass('col-lg-4');
 		$('#form_hour_minute').parent().html('<p><label style="float:left; margin-top:5px; margin-right:25px">:</label>'+$('#form_hour_minute').parent().html()+'</p>');
 	});
 </script>

@@ -64,7 +64,7 @@ class Event extends DataModel{
 	 /**
 	  * @var string
 	  * 
-	  * @ORM\Column(name="lieu", type="string")
+	  * @ORM\Column(name="location", type="string")
 	  */
 	 private $lieu;
 	 

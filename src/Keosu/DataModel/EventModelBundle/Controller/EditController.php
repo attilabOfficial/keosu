@@ -113,7 +113,7 @@ class EditController extends Controller {
 									'format' => 'dd-MM-yy',
 									'attr' => array('class' => 'date')
 						))
-				->add('hour', 'time')
+				->add('hour', 'time', array('label'=>'Hour (HH:MM)'))
 				->getForm();
 	}
 }

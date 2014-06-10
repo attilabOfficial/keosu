@@ -137,6 +137,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	
 	// $scope.open is called when an event is choosen
 	$scope.open = function (page_id) {		
+		alert('a');
 		// This variables are used to have all the informations needed in the phone's calendar
 		var date_ms = 0; var title = ""; var location = ""; var notes = ""; var startDate; var endDate;
 		// First, it is necessary to load the file with the events informations
@@ -245,49 +246,64 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 					window.plugins.calendar.deleteEvent(title,location,notes,startDate,endDate,calSuccess,calError);
 					// Change the button data
 					change(false);
-				}		
+				}	
+				
+				alert('b');
+				
 				var twitter_button  = document.getElementById('twitter_button');
 				var facebook_button = document.getElementById('facebook_button');
 				twitter_button.type  = 'hidden';
 				facebook_button.type  = 'hidden';
 				
+				alert('c');
+				
 				document.getElementById('other_share').onclick=function(){window.plugins.socialsharing.share(title+'\nDescription\n'+notes);};
 				
+				alert('d');
 				
 				if (window.plugins.socialsharing){
 					window.plugins.socialsharing.canShareVia('com.apple.social.facebook', 'msg', null, null, null, 
 							function(){
+								alert('e');
 								facebook_button.hidden = false;
 								facebook_button.onclick=function(){window.plugins.socialsharing.shareViaFacebook(title+'\nDescription\n'+notes, null, null, function(){}, function(){});};
 							}, 
 							function(){
 								window.plugins.socialsharing.canShareVia('facebook', 'msg', null, null, null, 
 									function(){
+										alert('f');
 										facebook_button.hidden = false;
 										facebook_button.onclick=function(){window.plugins.socialsharing.shareViaFacebook(title+'\nDescription\n'+notes, null, null, function(){}, function(){});};
 									}, 
 									function(){
+										alert('g');
 										alert('Facebook not available on this device');
 									});
 							});
 				
+					alert('h');
 					
-					window.plugins.socialsharing.canShareVia('twitter', 'msg', null, null, null, 
+					window.plugins.socialsharing.canShareVia('com.apple.social.twitter', 'msg', null, null, null, 
 							function(){
+								alert('i');
 								twitter_button.hidden = false;
 								twitter_button.onclick=function(){window.plugins.socialsharing.shareViaTwitter(title+'\nDescription\n'+notes);};
 							}, 
 							function(){
-								window.plugins.socialsharing.canShareVia('com.apple.social.twitter', 'msg', null, null, null, 
+								window.plugins.socialsharing.canShareVia('twitter', 'msg', null, null, null, 
 									function(){
+										alert('j');
 										twitter_button.hidden = false;
 										twitter_button.onclick=function(){window.plugins.socialsharing.shareViaTwitter(title+'\nDescription\n'+notes);};
 									}, 
 									function(){
+										alert('k');
 										alert('Twitter not available on this device');
 									});
 							});
 				}
+				
+				alert('l');
 					
 		}).error(function (response, data, status, header) {
 			// If the file could not have been loaded, we alert it an stop the spinner
@@ -313,7 +329,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	// When the page is loaded, this function is called
 	$scope.init = function (host, param, page, gadget, zone){ 	
 		
-		//host = 'http://192.168.1.8/keosu/web';
+		host = 'http://192.168.1.8/keosu/web';	// It is for testing, please let it like this
 		// We store the parameters information, we need it the functions
 		$scope.host = host;
 		$scope.param = param;
@@ -323,7 +339,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 		$scope.activePage = {
 				page:0
 		};
-		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
+		//usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		// There is an element to know where are the events on the table calendar
 		var test_init = document.getElementById('init_calendar');
 		if (test_init!=null){

@@ -46,7 +46,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<div ng-show="isEvent">
 		<a ng-click="close()"><i class="fui-cross"></i></a>
 		<div class="row-fluid">
-			<h3 class="event-name" style="text-align: center">{{ anEvent.name }}</h3><p style="text-align: center;">{{ anEvent.date }} <br/> <button id='bouton' class="btn btn-default btn-page" onclick='calendarDemoAdd()'>Add event to my calendar</button></p>
+			<h3 class="event-name" style="text-align: center">{{ anEvent.name }}</h3>
+			<p style="text-align: center;">{{ anEvent.date }} <br/>
+				<button id='bouton' class="btn btn-default btn-page" onclick='calendarDemoAdd()'>Add event to my calendar</button>
+				
+				<input 	type='button'
+						id='twitter_button'
+						class='btn btn-default btn-page'
+						style="width: 224px; height: 54px; border : none;"
+						value='Share on Twitter'/>
+				<input 	type='button'
+						id='facebook_button'
+						class='btn btn-default btn-page'
+						style="width: 224px; height: 54px; border : none;"
+						value='Share on Facebook'/>
+				
+				<button class="btn btn-default btn-page" id='other_share'>Share on ...</button>
+			</p>
 		</div>
 		<hr>
 		<div class="row-fluid">

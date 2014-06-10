@@ -16,34 +16,27 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-namespace Keosu\CoreBundle;
+namespace Keosu\Gadget\AuthentificationGadgetBundle\Controller;
 
-class KeosuExtension {
+use Keosu\CoreBundle\Util\TemplateUtil;
 
-	public static $gadgetList = array(
-			'article_gadget' => 'article_gadget',
-			'last_article_gadget' => 'last_article_gadget',
-			'chrono_gadget' => 'chrono_gadget',
-			'map_gadget' => 'map_gadget',
-			'menu_gadget' => 'menu_gadget',
-			'picture_gadget' => 'picture_gadget',
-			'pictures_gallery_gadget' => 'pictures_gallery_gadget',
-			'aroundme_gadget'=>'aroundme_gadget',
-			'calendar_gadget'=>'calendar_gadget',
-			'authentification_gadget'=>'authentification_gadget'
-	);
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
+
+class ServiceController extends Controller {
+
+	public function loginAction($gadgetId,$format) {
 	
-	public static $readerList = array(
-			'RssReader' => 'RSS',
-			'RssEventReader' => 'Event RSS',
-			'icsReader' => 'iCalendar',
-	);
+		$csrfToken = $this->container->has('form.csrf_provider')
+			? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate')
+			: null;
 	
-	public static $dataModelList = array(
-			'article' => 'article',
-			'map'=>'map',
-			'picture' => 'picture',
-			'event' => 'event',
-	);
+		$response = new JsonResponse();
+		$response->setData(array(
+			'csrf_token' => $csrfToken
+		));
+		return $response;
+	}
+
 }

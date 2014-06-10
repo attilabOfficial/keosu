@@ -1,3 +1,7 @@
+keosu_gadget_authentification_gadget:
+    resource: "@KeosuGadgetAuthentificationGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
 keosu_gadget_pictures_gallery_gadget:
     resource: "@KeosuGadgetPicturesGalleryGadgetBundle/Resources/config/routing.yml"
     prefix:   /

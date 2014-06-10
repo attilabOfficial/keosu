@@ -40,6 +40,7 @@ class AppKernel extends Kernel
         	new Keosu\Reader\icsReaderBundle\KeosuReadericsReaderBundle(),
         	new Keosu\Reader\RssEventReaderBundle\KeosuReaderRssEventReaderBundle(),
         	new Keosu\Gadget\CalendarGadgetBundle\KeosuGadgetCalendarGadgetBundle(),
+            new Keosu\Gadget\AuthentificationGadgetBundle\KeosuGadgetAuthentificationGadgetBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {

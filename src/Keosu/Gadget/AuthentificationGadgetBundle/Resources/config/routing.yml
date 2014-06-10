@@ -9,3 +9,7 @@ keosu_gadget_authentification_gadget_edit:
 keosu_gadget_article_service_login:
     pattern:  /service/gadget/authentification/{gadgetId}/{format}/login
     defaults: { _controller: KeosuGadgetAuthentificationGadgetBundle:Service:login }
+    
+keosu_gadget_article_service_register:
+    pattern:  /service/gadget/authentification/{gadgetId}/{format}/register
+    defaults: { _controller: KeosuGadgetAuthentificationGadgetBundle:Service:register }

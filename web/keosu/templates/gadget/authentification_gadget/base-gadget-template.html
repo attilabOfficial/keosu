@@ -1,23 +1,49 @@
 <div ng-controller="authentification_gadgetController" class="row-fluid center">
 
-	<section>
+	<section ng-show="login">
+		<div ng-show="loginSuccess" class="alert alert-success">{{ loginSuccess}}</div>
 		<div ng-show="loginError" class="alert alert-danger">{{ loginError }}</div>
 		<form role="form" ng-submit="loginAction()">
 			<div class="form-group">
-				<label for="inputUsername">Username</label>
-				<input type="text" class="form-control" id="inputUsername" placeholder="Enter your username" ng-model="username">
+				<label for="inputUsernameLogin">Username</label>
+				<input type="text" class="form-control" id="inputUsernameLogin" placeholder="Enter your username" ng-model="username">
 			</div>
-			
 			<div class="form-group">
-				<label for="inputPassword">Password</label>
-				<input type="password" class="form-control" id="inputPassword" placeholder="Enter your password" ng-model="password">
+				<label for="inputPasswordLogin">Password</label>
+				<input type="password" class="form-control" id="inputPasswordLogin" placeholder="Enter your password" ng-model="password">
 			</div>
-			<div class="checkbox">
+			<div>
 				<label>
-					<input type="checkbox"> Remember me
+					<input type="checkbox" ng-model="rememberMe"> Remember me
 				</label>
 			</div>
-			<button type="submit" class="btn btn-default">Connect</button>
+			<button type="submit" class="btn btn-default">Log in</button>
+		</form>
+		<a ng-click="registerInit()">You don't have account ?</a><br>
+		<a ng-click="forgetPasswordInit()">Forgot your username ?</a>
+	</section>
+	
+	<section ng-show="register">
+		<a ng-click="loginInit()">Go back to login</a>
+		<div ng-show="registerError" class="alert alert-danger">{{ registerError }}</div>
+		<form role="form" ng-submit="registerAction()">
+			<div class="form-group">
+				<label for="inputUsernameRegister">Username</label>
+				<input type="text" class="form-control" id="inputUsernameRegister" placeholder="Enter your username" ng-model="username" required>
+			</div>
+			<div class="form-group">
+				<label for="inputMailRegister">Email</label>
+				<input type="mail" class="form-control" id="inputMailRegister" placeholder="Enter your email" ng-model="email" required>
+			</div>
+			<div class="form-group">
+				<label for="inputPasswordRegister">Password</label>
+				<input type="password" class="form-control" id="inputPasswordRegister" placeholder="Enter your password" ng-model="password" required>
+			</div>
+			<div class="form-group">
+				<label for="inputPasswordRegister2">Password re-type</label>
+				<input type="password" class="form-control" id="inputPasswordRegister2" placeholder="Re enter your password" ng-model="password2" required>
+			</div>
+			<button type="submit" class="btn btn-default">Register</button>
 		</form>
 	</section>
 

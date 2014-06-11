@@ -66,7 +66,7 @@ class ServiceController extends Controller {
 						if($errors == "") {
 						
 							$user->setUsername($request->request->get('username'));
-							$user->setPassword($request->request->get('password'));
+							$user->setPlainPassword($request->request->get('password'));
 							$user->setEmail($request->request->get('email'));
 							try {
 								$userManager->updateUser($user);

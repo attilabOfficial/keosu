@@ -67,7 +67,10 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 	
 		usSpinnerService.spin('spinner');
 		$scope.loginError = null;
-		var data = '_csrf_token='+$scope.token+'&_username='+$scope.username+'&_password='+$scope.password+'&_remember_me='+$scope.rememberMe+'&ajax=true';
+		var data = '_csrf_token='+$scope.token+'&_username='+$scope.username+'&_password='+$scope.password+'&ajax=true';
+		if($scope.rememberMe) {
+			data+='&_remember_me='+$scope.rememberMe;
+		}
 		$http.post($scope.param.host + 'login_check',data).success(function(data) {
 			usSpinnerService.stop('spinner');
 			if(data.success) {

@@ -107,6 +107,43 @@ class ServiceController extends Controller {
 	
 	}
 	
+	public function forgotPasswordAction($gadgetId, $format,Request $request) {
+
+		$username = $request->request->get('username');
+
+		/** @var $user UserInterface */
+		$user = $this->container->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
+
+		if (null === $user) {
+			$response = array(
+				'message' => $username.' is an invalid username',
+				'success' => false);
+		} else if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
+			$response = array(
+				'message' => 'Request already send',
+				'success' => false);
+		} else {
+
+			if (null === $user->getConfirmationToken()) {
+			/** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
+				$tokenGenerator = $this->container->get('fos_user.util.token_generator');
+				$user->setConfirmationToken($tokenGenerator->generateToken());
+			}
+
+			$this->container->get('fos_user.mailer')->sendResettingEmailMessage($user);
+			$user->setPasswordRequestedAt(new \DateTime());
+			$this->container->get('fos_user.user_manager')->updateUser($user);
+
+			$response = array(
+				'success' => true
+			);
+		}
+		
+		$resp = new JsonResponse();
+		$resp->setData($response);
+		return $resp;
+	}
+	
 	private function getCsrfToken($action) {
 		return $this->container->has('form.csrf_provider')
 			? $this->container->get('form.csrf_provider')->generateCsrfToken($action)

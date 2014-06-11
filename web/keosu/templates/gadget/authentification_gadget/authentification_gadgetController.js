@@ -9,6 +9,7 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 
 		$scope.login = false;
 		$scope.register = false;
+		$scope.forgotPassword = false;
 	
 		switch (page) {
 			case 'login':
@@ -17,6 +18,10 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 		
 			case 'register':
 			$scope.register = true;
+			break;
+			
+			case 'forgotPassword':
+			$scope.forgotPassword = true;
 			break;
 		}
 	}
@@ -75,7 +80,6 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 	}
 
 	$scope.registerAction = function() {
-		
 		$scope.registerError = null;
 		if($scope.password.length < 5 ) {
 			$scope.registerError = "a password must contain at least 5 characters";
@@ -95,4 +99,31 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 		}
 	}
 	
+	/*************
+	 * Forgot password part
+	 *************/
+	$scope.forgotPasswordInit = function(message) {
+		usSpinnerService.spin('spinner');
+		$scope.routing('forgotPassword');
+		$scope.forgotPasswordError = message;
+		usSpinnerService.stop('spinner');
+	}
+	
+	$scope.forgotPasswordAction = function () {
+		$scope.forgotPasswordError = null;
+		if(typeof($scope.username) == "undefined" || $scope.username.length == 0) {
+			$scope.forgotPasswordError = "All fields are required";
+		} else {
+			usSpinnerService.spin('spinner');
+			var data = 'username='+$scope.username;
+			$http.post($scope.param.host + 'service/gadget/authentification/' + $scope.param.gadget + '/json/forgotPassword',data).success(function(data) {
+				usSpinnerService.stop('spinner');
+				if(data.success) {
+					$scope.loginInit(null,"Please check your email account to recover to password");
+				} else {
+					$scope.forgotPasswordInit(data.message);
+				}
+			});
+		}
+	}
 });

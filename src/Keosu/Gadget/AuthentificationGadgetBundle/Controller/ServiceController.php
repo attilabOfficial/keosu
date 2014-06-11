@@ -29,10 +29,29 @@ use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 
 class ServiceController extends Controller {
 
+	public function initAction($gadgetId,$format) {
+		$gadget = $this->get('doctrine')->getManager()
+				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+		$gadgetConfig = $gadget->getConfig();
+
+		$response = new JsonResponse();
+		$response->setData($gadgetConfig);
+		return $response;
+	}
+
 	public function loginAction($gadgetId,$format) {
+
+		$loggedRemembered = false;
+
+		$securityContext = $this->container->get('security.context');
+		if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+			$loggedRemembered = true;
+		}
+		
 		$response = new JsonResponse();
 		$response->setData(array(
-			'csrf_token' => $this->getCsrfToken('authenticate')
+			'csrf_token' => $this->getCsrfToken('authenticate'),
+			'allReadyLogged' => $loggedRemembered
 		));
 		return $response;
 	}

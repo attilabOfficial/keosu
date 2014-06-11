@@ -36,6 +36,11 @@ security:
         failure_handler: keosu.security.authentification_handler
       logout:     true
       anonymous:  true
+      remember_me:
+        key:      "%secret%"
+        lifetime: 31536000 # 365 days in seconds
+        path:     /
+        domain:   ~ 
 
       
   access_control:

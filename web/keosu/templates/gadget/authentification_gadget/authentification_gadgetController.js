@@ -30,13 +30,20 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 	 * Init part
 	 **************/
 	$scope.init = function(host, param, page, gadget, zone){
-		$scope.param = {
-			'host' :   host+param,
-			'page' :   page,
-			'gadget' : gadget,
-			'zone' :   zone
-		}
-		$scope.loginInit();
+
+		$http.get(host+param + 'service/gadget/authentification/' + gadget + '/json/init').success(function(data) {
+			$scope.param = {
+				'host' :   host+param,
+				'page' :   page,
+				'gadget' : gadget,
+				'zone' :   zone,
+				'pageToGoAfterLogin' : data.pageToGoAfterLogin
+			}
+		
+			$scope.loginInit();
+		});
+		
+
 	};
 
 	/**************
@@ -51,16 +58,21 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 		$http.get($scope.param.host + 'service/gadget/authentification/' + $scope.param.gadget + '/json/login').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.token = data.csrf_token;
+			if(data.allReadyLogged) {
+				window.location = $scope.param.pageToGoAfterLogin+'.html';
+			}
 		});
 	}
 	$scope.loginAction = function() {
 	
 		usSpinnerService.spin('spinner');
 		$scope.loginError = null;
-		var data = '_csrf_token='+$scope.token+'&_username='+$scope.username+'&_password='+$scope.password+'&ajax=true';
+		var data = '_csrf_token='+$scope.token+'&_username='+$scope.username+'&_password='+$scope.password+'&_remember_me='+$scope.rememberMe+'&ajax=true';
 		$http.post($scope.param.host + 'login_check',data).success(function(data) {
 			usSpinnerService.stop('spinner');
-			if(!data.success) {
+			if(data.success) {
+				window.location = $scope.param.pageToGoAfterLogin+'.html';
+			} else {
 				$scope.loginInit(data.message);
 			}
 		});

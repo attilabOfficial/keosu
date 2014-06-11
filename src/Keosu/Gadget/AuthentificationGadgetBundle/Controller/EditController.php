@@ -43,11 +43,21 @@ class EditController extends GadgetEditController implements iGadgetController {
 	//Specific form for articleGadget
 	public function buildGadgetForm($formBuilder, $gadgetName) {
 	
+		$appid = $this->container->get('keosu_core.curapp')->getCurApp($this->get('doctrine')->getManager(),$this->get("session"));
+		$pages = $this->get('doctrine')->getManager()
+				->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
+		$pageList = Array();
+		foreach ($pages as $page) {
+			$pageList[$page->getName()] = $page->getName();
+		}
+	
 		$formBuilder
-				->add('gadgetTemplate', 'choice',
-						array(
-								'choices' => TemplateUtil::getTemplateGadgetList(
-										$gadgetName), 'required' => true, 'expanded'=>true))
+				->add('pageToGoAfterLogin', 'choice',array(
+						'choices' => $pageList
+				))
+				->add('gadgetTemplate', 'choice',array(
+							'choices' => TemplateUtil::getTemplateGadgetList(
+									$gadgetName), 'required' => true, 'expanded'=>true))
 				->add('shared', 'checkbox', array(
 						'label'     => 'Shared with all pages',
 						'required'  => false,))

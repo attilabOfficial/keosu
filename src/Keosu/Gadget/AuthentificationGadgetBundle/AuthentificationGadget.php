@@ -26,7 +26,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class AuthentificationGadget extends GadgetParent implements iGadget {
 
-	//TODO
+	private $pageToGoAfterLogin;
 	/**
 	 * Gadget Name
 	 * Used to find the gadget template path and routs
@@ -45,9 +45,9 @@ class AuthentificationGadget extends GadgetParent implements iGadget {
 	public static function constructFromGadget($gadget) {
 		$instance = new self();
 		parent::constructParentFromGadget($gadget,$instance);
-		//Specific conf for this gadget
 		$gadgetConfig = $gadget->getConfig();
-
+		if (array_key_exists('pageToGoAfterLogin', $gadgetConfig)) 
+			$instance->pageToGoAfterLogin = $gadgetConfig['pageToGoAfterLogin'];
 		return $instance;
 	}
 
@@ -56,10 +56,11 @@ class AuthentificationGadget extends GadgetParent implements iGadget {
 	 */
 	public function getAsCommonGadget() {
 		$commonGadget = parent::getAsCommonGadget();
-		//Specific conf for article
 		if ($this->articleId != null) {
 			$config = array();
-			//TODO
+			if ($this->pages != null) {
+				$config['pageToGoAfterLogin'] = $this->pageToGoAfterLogin;
+			}
 			$commonGadget->setConfig($config);
 		}
 		return $commonGadget;
@@ -69,12 +70,20 @@ class AuthentificationGadget extends GadgetParent implements iGadget {
 	 * Convert a commonGadget (Keosu\CoreBundle\Entity\Gadget) to specific
 	 */
 	public function convertAsExistingCommonGadget($commonGadget) {
-		parent::convertAsExistingCommonGadget($commonGadget);	
-		//Specific conf for articleId
-		if ($this->articleId != null) {
-			$config = array();
-			//TODO
-			$commonGadget->setConfig($config);
+		parent::convertAsExistingCommonGadget($commonGadget);
+		$config = array();
+		if ($this->pageToGoAfterLogin != null) {
+			$config['pageToGoAfterLogin'] = $this->pageToGoAfterLogin;
 		}
+		$commonGadget->setConfig($config);
+	}
+	
+	public function getpageToGoAfterLogin() {
+		return $this->pageToGoAfterLogin;
+	}
+	
+	public function setpageToGoAfterLogin($page) {
+		$this->pageToGoAfterLogin = $page;
+		return $this;
 	}
 }

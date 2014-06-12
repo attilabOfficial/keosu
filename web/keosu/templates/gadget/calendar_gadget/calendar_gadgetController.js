@@ -136,8 +136,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	}
 	
 	// $scope.open is called when an event is choosen
-	$scope.open = function (page_id) {		
-		alert('a');
+	$scope.open = function (page_id) {
 		// This variables are used to have all the informations needed in the phone's calendar
 		var date_ms = 0; var title = ""; var location = ""; var notes = ""; var startDate; var endDate;
 		// First, it is necessary to load the file with the events informations
@@ -172,6 +171,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				startDate = new Date(parseInt(date_ms)+7200000);
 				endDate = new Date();
 				endDate.setTime(startDate.getTime()+3600000);
+				
 				try {
 					// If it is possible, we create the Google Map
 					if ($scope.anEvent.lieu.substring($scope.anEvent.lieu.length-27)!='(location can not be found)'){
@@ -206,6 +206,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				// These are the arguments for adding/deleting the event
 				var calSuccess = function(message) { };
 				var calError = function(message) { };
+				
 				// When an event is added/deleted, we propose the other action
 				function change(present) {
 					// First, we need to handle the button
@@ -226,7 +227,9 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 						bouton.innerHTML='Add event to my calendar';
 					}
 				}
-				if (find_ok){	// It is possible to find an event, so we search the event in the calendar
+				
+				// Find event not used because of a bug on iOS devices
+				/*if (find_ok){	// It is possible to find an event, so we search the event in the calendar
 					if(window.plugins.calendar.findEvent(title,location,notes,startDate,endDate,calSuccess,calError)!=undefined){
 						change(true);
 					} else {
@@ -235,11 +238,17 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				} else {	// We consider it is not in calendar, because we can't check
 					change(false);
 				}
+				*/
+				
 				// Function used to add the event
 				function calendarDemoAdd() {
 					// Change the button data
 					change(true);
-					window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,calSuccess,calError);
+					if (window.plugins.calendar){
+						window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,calSuccess,calError);
+					} else {
+						alert('Not available on desktop');
+					}
 				}
 				// Function used to delete the event
 				function calendarDemoRemove() {
@@ -247,64 +256,53 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 					// Change the button data
 					change(false);
 				}	
-				
-				alert('b');
+						
 				
 				var twitter_button  = document.getElementById('twitter_button');
 				var facebook_button = document.getElementById('facebook_button');
 				twitter_button.type  = 'hidden';
-				facebook_button.type  = 'hidden';
+				facebook_button.type  = 'hidden';		
 				
-				alert('c');
-				
-				document.getElementById('other_share').onclick=function(){window.plugins.socialsharing.share(title+'\nDescription\n'+notes);};
-				
-				alert('d');
 				
 				if (window.plugins.socialsharing){
+					document.getElementById('other_share').onclick=function(){window.plugins.socialsharing.share(title+'\nDescription\n'+notes);};
+					
 					window.plugins.socialsharing.canShareVia('com.apple.social.facebook', 'msg', null, null, null, 
 							function(){
-								alert('e');
 								facebook_button.hidden = false;
 								facebook_button.onclick=function(){window.plugins.socialsharing.shareViaFacebook(title+'\nDescription\n'+notes, null, null, function(){}, function(){});};
 							}, 
 							function(){
 								window.plugins.socialsharing.canShareVia('facebook', 'msg', null, null, null, 
 									function(){
-										alert('f');
 										facebook_button.hidden = false;
 										facebook_button.onclick=function(){window.plugins.socialsharing.shareViaFacebook(title+'\nDescription\n'+notes, null, null, function(){}, function(){});};
 									}, 
 									function(){
-										alert('g');
 										alert('Facebook not available on this device');
 									});
 							});
-				
-					alert('h');
+					
 					
 					window.plugins.socialsharing.canShareVia('com.apple.social.twitter', 'msg', null, null, null, 
 							function(){
-								alert('i');
 								twitter_button.hidden = false;
 								twitter_button.onclick=function(){window.plugins.socialsharing.shareViaTwitter(title+'\nDescription\n'+notes);};
 							}, 
 							function(){
 								window.plugins.socialsharing.canShareVia('twitter', 'msg', null, null, null, 
 									function(){
-										alert('j');
 										twitter_button.hidden = false;
 										twitter_button.onclick=function(){window.plugins.socialsharing.shareViaTwitter(title+'\nDescription\n'+notes);};
 									}, 
 									function(){
-										alert('k');
 										alert('Twitter not available on this device');
 									});
 							});
-				}
 				
-				alert('l');
-					
+				} else {
+					document.getElementById('other_share').onclick=function(){alert('Not available on desktop');};
+				}					
 		}).error(function (response, data, status, header) {
 			// If the file could not have been loaded, we alert it an stop the spinner
 			usSpinnerService.stop('spinner');
@@ -329,7 +327,6 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	// When the page is loaded, this function is called
 	$scope.init = function (host, param, page, gadget, zone){ 	
 		
-		host = 'http://192.168.1.8/keosu/web';	// It is for testing, please let it like this
 		// We store the parameters information, we need it the functions
 		$scope.host = host;
 		$scope.param = param;

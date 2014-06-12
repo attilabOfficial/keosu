@@ -234,13 +234,11 @@ body{
   z-index: -1;
 }
 #cal-day-box .day-event {
-  max-width: 200px;
   overflow: hidden;
 }
 #cal-day-box .day-highlight {
   line-height: 30px;
   padding-left: 8px;
-  padding-right: 8px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;

@@ -23,20 +23,156 @@ use Keosu\CoreBundle\Util\TemplateUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
+
 
 class ServiceController extends Controller {
 
+	public function initAction($gadgetId,$format) {
+		$gadget = $this->get('doctrine')->getManager()
+				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+		$gadgetConfig = $gadget->getConfig();
+
+		$response = new JsonResponse();
+		$response->setData($gadgetConfig);
+		return $response;
+	}
+
 	public function loginAction($gadgetId,$format) {
-	
-		$csrfToken = $this->container->has('form.csrf_provider')
-			? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate')
-			: null;
-	
+
+		$loggedRemembered = false;
+
+		$securityContext = $this->container->get('security.context');
+		if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+			$loggedRemembered = true;
+		}
+		
 		$response = new JsonResponse();
 		$response->setData(array(
-			'csrf_token' => $csrfToken
+			'csrf_token' => $this->getCsrfToken('authenticate'),
+			'allReadyLogged' => $loggedRemembered
 		));
 		return $response;
+	}
+	
+	
+	public function registerAction($gadgetId,$format,Request $request) {
+
+		$action = "register";
+
+		/** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+		$userManager = $this->container->get('fos_user.user_manager');
+
+		$user = $userManager->createUser();
+		$user->setEnabled(true);
+
+		if ('POST' === $request->getMethod()) {
+		
+			$success = false;
+			$message = "";
+		
+			if($this->checkCsrfToken($action,$request->request->get('csrf_token'))) {
+			
+				if($request->request->get('password') == $request->request->get('password2')) {
+				
+					if(strlen($request->request->get('password'))> 5) {
+
+						// check email
+						$emailConstraint = new EmailConstraint();
+						$errors = $this->get('validator')->validateValue($request->request->get('email'),$emailConstraint);
+
+						if($errors == "") {
+						
+							$user->setUsername($request->request->get('username'));
+							$user->setPlainPassword($request->request->get('password'));
+							$user->setEmail($request->request->get('email'));
+							try {
+								$userManager->updateUser($user);
+								$success = true;
+							} catch(\Exception $e) {
+								$message = "Username or User mail already exist";
+							}
+						} else {
+							$message = "Invalid email";
+						}
+					} else {
+						$message = "a password must contain at least 5 characters";
+					}
+				} else {
+					$message = "passwords don't match";
+				}
+			} else {
+				$message = "invalid csrf token";
+			}
+			
+			if($success) {
+				$response = array('success'=>true);
+			} else {
+				$response = array(
+					'success'=> false,
+					'message'=> $message
+				);
+			}
+		} else {
+			$response = array(
+				'csrf_token'=> $this->getCsrfToken($action)
+			);
+		}
+
+		$resp = new JsonResponse();
+		$resp->setData($response);
+		return $resp;
+	
+	}
+	
+	public function forgotPasswordAction($gadgetId, $format,Request $request) {
+
+		$username = $request->request->get('username');
+
+		/** @var $user UserInterface */
+		$user = $this->container->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
+
+		if (null === $user) {
+			$response = array(
+				'message' => $username.' is an invalid username',
+				'success' => false);
+		} else if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
+			$response = array(
+				'message' => 'Request already send',
+				'success' => false);
+		} else {
+
+			if (null === $user->getConfirmationToken()) {
+			/** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
+				$tokenGenerator = $this->container->get('fos_user.util.token_generator');
+				$user->setConfirmationToken($tokenGenerator->generateToken());
+			}
+
+			$this->container->get('fos_user.mailer')->sendResettingEmailMessage($user);
+			$user->setPasswordRequestedAt(new \DateTime());
+			$this->container->get('fos_user.user_manager')->updateUser($user);
+
+			$response = array(
+				'success' => true
+			);
+		}
+		
+		$resp = new JsonResponse();
+		$resp->setData($response);
+		return $resp;
+	}
+	
+	private function getCsrfToken($action) {
+		return $this->container->has('form.csrf_provider')
+			? $this->container->get('form.csrf_provider')->generateCsrfToken($action)
+			: null;
+	}
+	
+	private function checkCsrfToken($action,$token) {
+		return $this->container->has('form.csrf_provider')
+			? $this->container->get('form.csrf_provider')->isCsrfTokenValid($action,$token)
+			: true;
 	}
 
 }

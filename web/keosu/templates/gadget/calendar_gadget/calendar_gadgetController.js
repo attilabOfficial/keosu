@@ -137,13 +137,11 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	
 	// $scope.open is called when an event is choosen
 	$scope.open = function (page_id) {
-		alert(page_id);
 		// This variables are used to have all the informations needed in the phone's calendar
 		var date_ms = 0; var title = ""; var location = ""; var notes = ""; var startDate; var endDate;
 		// First, it is necessary to load the file with the events informations
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		$http.get($scope.host + $scope.param + 'service/gadget/calendar/view/' + page_id + '/json', {timeout: 10000}).success(function (data){
-				alert(data);
 				// If the file has been loaded, we execute the following code
 				usSpinnerService.stop('spinner');
 				// The data is stored in variables which can be readed from the html (with $scope)

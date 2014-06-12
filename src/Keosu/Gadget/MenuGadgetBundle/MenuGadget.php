@@ -86,7 +86,6 @@ class MenuGadget extends GadgetParent implements iGadget {
 		$config = array();
 		if ($this->pages != null) {
 			$config['pages'] = $this->pages;
-			var_dump($config);
 		}
 		$commonGadget->setConfig($config);
 	}

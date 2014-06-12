@@ -24,32 +24,32 @@
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-    	
-	    {% stylesheets 	
+
+		{% stylesheets 	
 			'less/bootstrap.less'
 			'css/jquery-ui-1.10.4.css'
 			'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css'
-	     %}
+		%}
 			<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
 		{% endstylesheets %}
-    	
-    	{% javascripts
-	        'js/jquery-1.10.2.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/transition.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/alert.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/modal.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/dropdown.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/scrollspy.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/tab.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/popover.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/button.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/collapse.js'
-	        '@MopaBootstrapBundle/Resources/public/bootstrap/js/carousel.js'
-	        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
-	        'js/jquery-ui-1.10.4.min.js'
-	        'js/master.js'
-	        'js/jquery.dataTables.js'
+
+		{% javascripts
+			'js/jquery-1.10.2.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/transition.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/alert.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/modal.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/dropdown.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/scrollspy.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/tab.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/popover.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/button.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/collapse.js'
+			'@MopaBootstrapBundle/Resources/public/bootstrap/js/carousel.js'
+			'@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
+			'js/jquery-ui-1.10.4.min.js'
+			'js/master.js'
+			'js/jquery.dataTables.js'
 		 %}
 		<script type="text/javascript" src="{{ asset_url }}"></script>
 		{% endjavascripts %}
@@ -60,13 +60,6 @@
 			 $( document ).tooltip();
 		});
 	</script>
-	<!-- invisible -->
-	<div id="dialog-confirm" title="Cancellation" style="display:none;">
-		<p>
-			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-			Do you really want to leave this page ?
-		</p>
-	</div>
 	{% block skeleton %}{% endblock %}
 	</body>
 </html>

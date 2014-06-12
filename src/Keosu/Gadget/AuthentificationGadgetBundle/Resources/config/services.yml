@@ -11,3 +11,9 @@ services:
         arguments:
             - @router
             - @session
+
+    keosu.password_resetting:
+        class: Keosu\Gadget\AuthentificationGadgetBundle\EventListener\PasswordResettingListener
+        arguments: [@router]
+        tags:
+            - { name: kernel.event_subscriber }

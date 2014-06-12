@@ -28,7 +28,7 @@
 	    {% stylesheets 	
 			'less/bootstrap.less'
 			'css/jquery-ui-1.10.4.css'
-			'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css'			
+			'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css'
 	     %}
 			<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
 		{% endstylesheets %}
@@ -51,29 +51,22 @@
 	        'js/master.js'
 	        'js/jquery.dataTables.js'
 		 %}
-		<script type="text/javascript" src="{{ asset_url }}">
-		 	$(function() {
-				 $( document ).tooltip();
-			});
-		</script>
+		<script type="text/javascript" src="{{ asset_url }}"></script>
 		{% endjavascripts %}
-    </head>
-    <body>
-    <script type="text/javascript"">
-	 	
+	</head>
+	<body>
+	<script type="text/javascript">
+		$(function() {
+			 $( document ).tooltip();
+		});
 	</script>
-    
-    <!-- invisible -->
-    <div id="dialog-confirm" title="Cancellation" style="display:none;">
-  <p>
-    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-     Do you really want to leave this page ?
-    </p>
+	<!-- invisible -->
+	<div id="dialog-confirm" title="Cancellation" style="display:none;">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			Do you really want to leave this page ?
+		</p>
 	</div>
-	
-	
-    	{% block skeleton %}
-    	
-    	{% endblock %}
-    </body>
+	{% block skeleton %}{% endblock %}
+	</body>
 </html>

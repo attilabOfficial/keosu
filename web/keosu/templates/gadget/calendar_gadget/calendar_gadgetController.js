@@ -327,7 +327,6 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	// When the page is loaded, this function is called
 	$scope.init = function (host, param, page, gadget, zone){ 	
 		
-		host = 'http://192.168.1.8/keosu/web';	// It is for testing, please leave it like this
 		// We store the parameters information, we need it the functions
 		$scope.host = host;
 		$scope.param = param;

@@ -41,7 +41,7 @@ class EditController extends Controller {
 
 		$article = $repo->find($id);
 
-		if ($article->getReader() === null) {
+		if ($article->getReader() === null || $article->getReader()->allowupdate !== false) {
 			$this->get('doctrine')->getManager()->remove($article);
 			$this->get('doctrine')->getManager()->flush();
 		}

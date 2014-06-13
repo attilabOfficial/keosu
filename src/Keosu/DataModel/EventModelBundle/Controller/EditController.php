@@ -59,12 +59,11 @@ class EditController extends Controller {
 
 		$event = $repo->find($id);
 
-		if ($event->getReader() === null) {
+		if ($event->getReader() === null || $event->getReader()->allowupdate !== false) {
 			$this->get('doctrine')->getManager()->remove($event);
 			$this->get('doctrine')->getManager()->flush();
 		}
 		return $this->redirect($this->generateUrl('keosu_event_viewlist'));
-		//->redirect($this->generateUrl('keosu_event_viewlist'));
 	}
 
 	/**
@@ -85,7 +84,6 @@ class EditController extends Controller {
 				$em->persist($event);
 				$em->flush();
 				return $this
-						//->redirect($this->generateUrl('keosu_event_viewlist'));
 						->redirect($this->generateUrl('keosu_event_viewlist'));
 			}
 		}
@@ -106,13 +104,13 @@ class EditController extends Controller {
 				->add('lieu', 'text')
 				->add('latitude','hidden')
 				->add('longitude','hidden')
-								->add('date', 'date', 
-							array(
-									'input' => 'datetime',
-									'widget' => 'single_text',
-									'format' => 'dd-MM-yy',
-									'attr' => array('class' => 'date')
-						))
+				->add('date', 'date', 
+					array(
+						'input' => 'datetime',
+						'widget' => 'single_text',
+						'format' => 'dd-MM-yy',
+						'attr' => array('class' => 'date')
+					))
 				->add('hour', 'time', array('label'=>'Hour (HH:MM)'))
 				->getForm();
 	}

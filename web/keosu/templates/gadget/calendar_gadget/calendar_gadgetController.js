@@ -168,7 +168,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				// Here, we use the data for the phone's calendar
 				notes = interpret(description_html);
 				date_ms = data[0].date_ms;
-				startDate = new Date(parseInt(date_ms)+7200000);
+				startDate = new Date(parseInt(date_ms));
 				endDate = new Date();
 				endDate.setTime(startDate.getTime()+3600000);
 				
@@ -219,26 +219,17 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 						} else { // It is not possible to delete : display that it is added and block the button
 						
 							bouton.onclick=null;
+							bouton.disabled=true;
 							bouton.innerHTML='Event added in my calendar';
 						}
 					} else {
 						// The event does not exist, propose to add
 						bouton.onclick=function(){calendarDemoAdd();};
+						bouton.disabled=false;
 						bouton.innerHTML='Add event to my calendar';
 					}
 				}
 				
-				// Find event not used because of a bug on iOS devices
-				/*if (find_ok){	// It is possible to find an event, so we search the event in the calendar
-					if(window.plugins.calendar.findEvent(title,location,notes,startDate,endDate,calSuccess,calError)!=undefined){
-						change(true);
-					} else {
-						change(false);
-					}
-				} else {	// We consider it is not in calendar, because we can't check
-					change(false);
-				}
-				*/
 				
 				// Function used to add the event
 				function calendarDemoAdd() {
@@ -257,6 +248,20 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 					change(false);
 				}	
 						
+				// Find event not used because of a bug on iOS devices
+				/*
+				if (find_ok){	// It is possible to find an event, so we search the event in the calendar
+					if(window.plugins.calendar.findEvent(title,location,notes,startDate,endDate,calSuccess,calError)!=undefined){
+						change(true);
+					} else {
+						change(false);
+					}
+				} else {	// We consider it is not in calendar, because we can't check
+					change(false);
+				}
+				*/
+				
+				change(false);
 				
 				var twitter_button  = document.getElementById('twitter_button');
 				var facebook_button = document.getElementById('facebook_button');

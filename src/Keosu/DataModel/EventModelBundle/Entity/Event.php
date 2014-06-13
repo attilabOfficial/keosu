@@ -161,7 +161,7 @@ class Event extends DataModel{
 	  * @return string
 	  */
 	 public function getDateMs(){
-	 	return strtotime(date_format($this->date,'d M y h:i:s A'))*1000-7200000;
+	 	return strtotime(date_format($this->date,'d M y h:i:s A'))*1000;
 	 }
 	 
 	 /**

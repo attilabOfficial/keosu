@@ -55,7 +55,7 @@ class EditController extends GadgetEditController implements iGadgetController{
 						}
 					document.getElementsByClassName('form_eventsPerPage_form_group')[0].hidden = 
 								!document.getElementById('form_gadgetTemplate_0').checked;	// Initializing with the good option
-					}, 500);
+					}, 1000);
 				</script>";
 
 	}

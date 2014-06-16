@@ -52,7 +52,6 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 	$scope.loginInit = function(message,success) {
 	
 		usSpinnerService.spin('spinner');
-		$scope.routing('login');
 		$scope.loginError = message;
 		$scope.loginSuccess = success;
 		$http.get($scope.param.host + 'service/gadget/authentification/' + $scope.param.gadget + '/json/login').success(function(data) {
@@ -60,6 +59,8 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 			$scope.token = data.csrf_token;
 			if(data.allReadyLogged) {
 				window.location = $scope.param.pageToGoAfterLogin+'.html';
+			} else {
+				$scope.routing('login');
 			}
 		});
 	}

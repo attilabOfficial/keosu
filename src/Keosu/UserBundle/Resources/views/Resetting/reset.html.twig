@@ -1,0 +1,23 @@
+{# Extension of login page #}
+{% extends '::root.html.twig' %}
+
+{% block title %}Keosu password recovery{% endblock %}
+
+{% block skeleton %}
+	<div>
+		<form role="form" action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+			<fieldset>
+				<legend>Reset your password</legend>
+				{{form_widget(form.plainPassword)}}
+			
+				{{form_rest(form)}}
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<input type="submit" value="Reset password" class="btn btn-default"/>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+
+{% endblock %}

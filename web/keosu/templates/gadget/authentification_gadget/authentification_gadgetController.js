@@ -42,7 +42,6 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 		
 			$scope.loginInit();
 		});
-		
 
 	};
 
@@ -97,10 +96,26 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 
 	$scope.registerAction = function() {
 		$scope.registerError = null;
-		if($scope.password.length < 5 ) {
+		
+		var checkEmpty = function() {
+			var ret = false;
+			$('#register input').each(function(){
+				if($(this).val() == "") {
+					ret = true;
+				}
+			});
+			return ret;
+		}
+		
+		if(checkEmpty()) {
+			$scope.registerError = "All field are required";
+			window.scrollTo(0, 0);
+		} else if($scope.password.length < 5 ) {
 			$scope.registerError = "a password must contain at least 5 characters";
+			window.scrollTo(0, 0);
 		} else if($scope.password != $scope.password2) {
 			$scope.registerError = "passwords don't match";
+			window.scrollTo(0, 0);
 		} else {
 			usSpinnerService.spin('spinner');
 			var data = 'csrf_token='+$scope.token+'&username='+$scope.username+'&password='+$scope.password+'&password2='+$scope.password2+'&email='+$scope.email;
@@ -110,6 +125,7 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 					$scope.loginInit(null,"Registration completed you can now log in");
 				} else {
 					$scope.registerInit(data.message);
+					window.scrollTo(0, 0);
 				}
 			});
 		}

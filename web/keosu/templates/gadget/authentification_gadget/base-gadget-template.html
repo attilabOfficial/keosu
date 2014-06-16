@@ -3,7 +3,7 @@
 	<section ng-show="login">
 		<div ng-show="loginSuccess" class="alert alert-success">{{ loginSuccess}}</div>
 		<div ng-show="loginError" class="alert alert-danger">{{ loginError }}</div>
-		<form role="form" ng-submit="loginAction()">
+		<form role="form">
 			<div class="form-group">
 				<label for="inputUsernameLogin">Username</label>
 				<input type="text" class="form-control" id="inputUsernameLogin" placeholder="Enter your username" ng-model="username">
@@ -17,10 +17,18 @@
 					<input type="checkbox" ng-model="rememberMe"> Remember me
 				</label>
 			</div>
-			<button type="submit" class="btn btn-default">Log in</button>
+			<div style="margin-left:2%;margin-right:2%;">
+				<div style="float:left;">
+					<button ng-click="loginAction()" class="btn btn-default">Log in</button>
+				</div>
+				<div style="float:right;">
+					<button ng-click="registerInit()" class="btn btn-default">Register</button>
+				</div>
+			</div>
 		</form>
-		<a ng-click="registerInit()">You don't have account ?</a><br>
-		<a ng-click="forgotPasswordInit()">Forgot your username ?</a>
+		<div style="clear:both;">
+		<a ng-click="forgotPasswordInit()">You forget your username ?</a>
+		</div>
 	</section>
 	
 	<section ng-show="register">

@@ -119,8 +119,6 @@ class Exporter {
 		ExporterUtil::getAbsolutePath() . '/simulator/www/img/slide-bg.png');
 		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/img/tick.png',
 		ExporterUtil::getAbsolutePath() . '/simulator/www/img/tick.png');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/img/Thumbs.db',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/img/Thumbs.db');
 
 		foreach ($pages as $page) {
 			if ($page->getIsMain()) {

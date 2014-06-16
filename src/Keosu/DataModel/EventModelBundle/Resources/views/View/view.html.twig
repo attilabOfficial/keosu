@@ -41,16 +41,18 @@ $(document).ready(function() {
 });
 </script>
 <div class="row">
-	<div class="col-md-1 table-actions-column">
-
-			<a href="{{ path('keosu_event_add') }}"><button class="btn btn-success" title="Create an event">Add</button></a>
-
-	</div>
-	<div class="col-md-11">
+	<div class="col-md-12">
 		<div id="dynamic" class="table">
 			<fieldset>
-	    		<legend>Event</legend>
-				<table class="table table-striped table-hover" id="content-table" width="100%">
+				<div class="clearfix">
+		    		<h1 class="pull-left">Events</h1>
+		    		<a class="right-button pull-right" href="{{ path('keosu_event_add') }}">
+						<button class="btn btn-success" title="Create an article">
+							New event
+						</button>
+					</a>
+				</div>
+				<table class="table table-striped table-hover clearfix" id="content-table" width="100%">
 					<thead>
 						<tr>
 							<th>Name</th>

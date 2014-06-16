@@ -446,12 +446,10 @@ if(!String.prototype.formatNum) {
 			e.end_hour = f.getHours().toString().formatNum(2) + ':' + f.getMinutes().toString().formatNum(2);
 
 			if(e.start < start.getTime()) {
-				warn(1);
 				e.start_hour = s.getDate() + ' ' + $self.locale['ms' + s.getMonth()] + ' ' + e.start_hour;
 			}
 
 			if(e.end > end.getTime()) {
-				warn(1);
 				e.end_hour = f.getDate() + ' ' + $self.locale['ms' + f.getMonth()] + ' ' + e.end_hour;
 			}
 

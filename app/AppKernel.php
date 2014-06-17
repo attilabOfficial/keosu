@@ -41,6 +41,7 @@ class AppKernel extends Kernel
         	new Keosu\Reader\RssEventReaderBundle\KeosuReaderRssEventReaderBundle(),
         	new Keosu\Gadget\CalendarGadgetBundle\KeosuGadgetCalendarGadgetBundle(),
             new Keosu\Gadget\AuthentificationGadgetBundle\KeosuGadgetAuthentificationGadgetBundle(),
+            new Keosu\Gadget\MyAccountGadgetBundle\KeosuGadgetMyAccountGadgetBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {
@@ -56,4 +57,23 @@ class AppKernel extends Kernel
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
+    
+    /* for virtual machine
+    public function getCacheDir()
+    {
+        if (in_array($this->environment, array('dev', 'test'))) {
+            return '/dev/shm/cache/' .  $this->environment;
+        }
+
+        return parent::getCacheDir();
+    }
+
+    public function getLogDir()
+    {
+        if (in_array($this->environment, array('dev', 'test'))) {
+            return '/dev/shm/logs';
+        }
+
+        return parent::getLogDir();
+    }*/
 }

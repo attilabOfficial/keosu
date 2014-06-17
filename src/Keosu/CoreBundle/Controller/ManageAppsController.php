@@ -113,6 +113,8 @@ class ManageAppsController extends Controller {
 	 */
 	private function buildAppForm($formBuilder) {
 		$formBuilder->add('name', 'text')
+				->add('privateApp','checkbox',
+						array('required'=> false)) 
 				->add('theme', 'choice',
 						array('choices' => ThemeUtil::getThemeList(),
 								'required' => true,'expanded'=>true));

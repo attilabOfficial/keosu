@@ -50,6 +50,13 @@ class App
      * @ORM\Column(name="theme", type="string", length=255)
      */
     private $theme;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="privateApp", type="boolean")
+     */
+    private $privateApp;
 
 
     /**
@@ -106,5 +113,32 @@ class App
     public function getTheme()
     {
         return $this->theme;
+    }
+    
+    /**
+     * Set privateApp
+     *
+     * @param boolean $privateApp
+     * @return App
+     */
+    public function setPrivateApp($privateApp)
+    {
+        $this->privateApp = $privateApp;
+    
+        return $this;
+    }
+
+    /**
+     * Get privateApp
+     *
+     * @return boolean
+     */
+    public function getPrivateApp()
+    {
+        return $this->privateApp;
+    }
+    
+    public function isPrivate() {
+        return $this->privateApp;
     }
 }

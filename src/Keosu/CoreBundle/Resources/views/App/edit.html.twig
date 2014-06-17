@@ -33,6 +33,11 @@
 		});
 	});
 </script>
+<style type="text/css">
+.imgtheme img {
+	height:200px;
+}
+</style>
 	<div class="panel">
 		<div class="row">
 			
@@ -49,7 +54,8 @@
 			    {{ form_errors(form) }}
 			
 			    {{ form_row(form.name) }}
-			    <div class="templateimg">
+			    {{ form_row(form.privateApp)}}
+			    <div class="imgtheme">
 			    	{{ form_row(form.theme) }}
 		    	 </div> 
 

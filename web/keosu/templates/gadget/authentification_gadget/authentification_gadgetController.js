@@ -43,7 +43,7 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 			$scope.loginInit();
 		});
 
-	};
+	}
 
 	/**************
 	 * Login part
@@ -79,7 +79,7 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 				$scope.loginInit(data.message);
 			}
 		});
-	};
+	}
 	
 	/**************
 	 * Register part
@@ -111,7 +111,7 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 			$scope.registerError = "All field are required";
 			window.scrollTo(0, 0);
 		} else if($scope.password.length < 5 ) {
-			$scope.registerError = "a password must contain at least 5 characters";
+			$scope.registerError = "a password must contain at least 6 letters";
 			window.scrollTo(0, 0);
 		} else if($scope.password != $scope.password2) {
 			$scope.registerError = "passwords don't match";

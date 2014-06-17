@@ -97,7 +97,7 @@ class ServiceController extends Controller {
 							$message = "Invalid email";
 						}
 					} else {
-						$message = "a password must contain at least 5 characters";
+						$message = "a password must contain at least 6 characters";
 					}
 				} else {
 					$message = "passwords don't match";

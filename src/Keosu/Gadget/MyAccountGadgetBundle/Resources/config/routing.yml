@@ -1,0 +1,15 @@
+keosu_gadget_my_account_gadget_add:
+    pattern:  /views/page/gadget/myaccountgadget/add/{page}/{zone}
+    defaults: { _controller: KeosuGadgetMyAccountGadgetBundle:Edit:add }
+    
+keosu_gadget_my_account_gadget_edit:
+    pattern:  /views/page/gadget/myaccount/edit/{page}/{zone}
+    defaults: { _controller: KeosuGadgetMyAccountGadgetBundle:Edit:edit }
+    
+keosu_gadget_my_account_gadget_info:
+    pattern:  /service/gadget/myaccount/info
+    defaults: { _controller: KeosuGadgetMyAccountGadgetBundle:Service:info }
+    
+keosu_gadget_my_account_gadget_password:
+    pattern:  /service/gadget/myaccount/password
+    defaults: { _controller: KeosuGadgetMyAccountGadgetBundle:Service:password }

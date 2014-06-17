@@ -1,0 +1,46 @@
+<div ng-controller="my_account_gadgetController" class="row-fluid center">
+
+	<div ng-show="logged">
+		<button style="float:right;" class="btn btn-default" ng-click="logoutAction()">Logout</button>
+		<div style="clear:both;"></div>
+		
+		<section ng-show="showAccount">
+			<div ng-show="showAccountSuccess" class="alert alert-success">{{ showAccountSuccess}}</div>
+			<div>
+				Username : {{ account.username }}
+			</div>
+			<div>
+				Email : {{ account.email }}
+			</div>
+			<button ng-click="passwordUpdateInit()" ng-show="account.type == 'Keosu'" class="btn btn-default">Edit password</button>
+		</section>
+		
+		<section ng-show="passwordUpdate" id="passwordUpdate">
+			<a ng-click="showAccountInit()">< Go back to profile</a>
+			<div ng-show="passwordUpdateError" class="alert alert-danger">{{passwordUpdateError}}</div>
+			<form role="form" ng-submit="passwordUpdateAction()">
+				<div class="form-group">
+					<label for="inputOldPassword">Old Password</label>
+					<input type="password" class="form-control" id="inputOldPassword" placeholder="Enter your current password" ng-model="oldPassword">
+				</div>
+				<div class="form-group">
+					<label for="inputNewPassword">New password</label>
+					<input type="password" class="form-control" id="inputNewPassword" placeholder="Enter your new password" ng-model="newPassword">
+				</div>
+				<div class="form-group">
+					<label for="inputPassword2">New password confirmation</label>
+					<input type="password" class="form-control" id="inputNewPassword2" placeholder="Re-enter your new password" ng-model="newPassword2">
+				</div>
+				<button type="submit" class="btn btn-default">Update password</button>
+			</form>
+			<div style="height:30%;">
+				<!-- fix to see all field in mobile app -->
+			</div>
+		</section>
+	</div>
+	
+	<div ng-hide="logged" class="alert alert-danger">
+		You must be connected to access at this part of the app
+	</div>
+
+</div>

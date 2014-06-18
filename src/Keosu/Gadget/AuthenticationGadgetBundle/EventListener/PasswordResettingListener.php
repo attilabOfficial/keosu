@@ -1,5 +1,5 @@
 <?php
-namespace Keosu\Gadget\AuthentificationGadgetBundle\EventListener;
+namespace Keosu\Gadget\AuthenticationGadgetBundle\EventListener;
 
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;

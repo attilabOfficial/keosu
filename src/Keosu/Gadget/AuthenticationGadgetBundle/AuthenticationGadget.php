@@ -16,7 +16,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-namespace Keosu\Gadget\AuthentificationGadgetBundle;
+namespace Keosu\Gadget\AuthenticationGadgetBundle;
 use Keosu\CoreBundle\GadgetParent;
 
 use Keosu\CoreBundle\iGadget;
@@ -24,7 +24,7 @@ use Keosu\CoreBundle\iGadget;
 use Keosu\CoreBundle\Entity\Reader;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class AuthentificationGadget extends GadgetParent implements iGadget {
+class AuthenticationGadget extends GadgetParent implements iGadget {
 
 	private $pageToGoAfterLogin;
 	/**
@@ -32,7 +32,7 @@ class AuthentificationGadget extends GadgetParent implements iGadget {
 	 * Used to find the gadget template path and routs
 	 */
 	public function getGadgetName() {
-		return "authentification_gadget";
+		return "authentication_gadget";
 	}
 	
 	public function isStatic() {

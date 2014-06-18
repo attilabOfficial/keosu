@@ -32,8 +32,8 @@ security:
       form_login:
         provider: chain_provider
         csrf_provider:  form.csrf_provider
-        success_handler: keosu.security.authentification_handler
-        failure_handler: keosu.security.authentification_handler
+        success_handler: keosu.security.authentication_handler
+        failure_handler: keosu.security.authentication_handler
       logout:     true
       anonymous:  true
       remember_me:

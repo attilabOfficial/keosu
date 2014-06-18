@@ -1,6 +1,6 @@
 <?php
 
-namespace Keosu\Gadget\AuthentificationGadgetBundle\Handler;
+namespace Keosu\Gadget\AuthenticationGadgetBundle\Handler;
  
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerI
 /**
  * @see http://www.webtipblog.com/adding-an-ajax-login-form-to-a-symfony-project/
  */
-class AuthentificationHandler implements AuthenticationSuccessHandlerInterface, AuthenticationFailureHandlerInterface
+class AuthenticationHandler implements AuthenticationSuccessHandlerInterface, AuthenticationFailureHandlerInterface
 {
 	private $router;
 	private $session;

@@ -1,4 +1,4 @@
-app.controller('authentification_gadgetController',function ($scope, $http, usSpinnerService) {
+app.controller('authentication_gadgetController',function ($scope, $http, usSpinnerService) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -31,7 +31,7 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 	 **************/
 	$scope.init = function(host, param, page, gadget, zone){
 
-		$http.get(host+param + 'service/gadget/authentification/' + gadget + '/json/init').success(function(data) {
+		$http.get(host+param + 'service/gadget/authentication/' + gadget + '/json/init').success(function(data) {
 			$scope.param = {
 				'host' :   host+param,
 				'page' :   page,
@@ -53,7 +53,7 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 		usSpinnerService.spin('spinner');
 		$scope.loginError = message;
 		$scope.loginSuccess = success;
-		$http.get($scope.param.host + 'service/gadget/authentification/' + $scope.param.gadget + '/json/login').success(function(data) {
+		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/login').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.token = data.csrf_token;
 			if(data.allReadyLogged) {
@@ -88,7 +88,7 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 		usSpinnerService.spin('spinner');
 		$scope.routing('register');
 		$scope.registerError = message;
-		$http.get($scope.param.host + 'service/gadget/authentification/' + $scope.param.gadget + '/json/register').success(function(data) {
+		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/register').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.token = data.csrf_token;
 		});
@@ -119,7 +119,7 @@ app.controller('authentification_gadgetController',function ($scope, $http, usSp
 		} else {
 			usSpinnerService.spin('spinner');
 			var data = 'csrf_token='+$scope.token+'&username='+$scope.username+'&password='+$scope.password+'&password2='+$scope.password2+'&email='+$scope.email;
-			$http.post($scope.param.host + 'service/gadget/authentification/' + $scope.param.gadget + '/json/register',data).success(function(data) {
+			$http.post($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/register',data).success(function(data) {
 				usSpinnerService.stop('spinner');
 				if(data.success) {
 					$scope.loginInit(null,"Registration completed you can now log in");

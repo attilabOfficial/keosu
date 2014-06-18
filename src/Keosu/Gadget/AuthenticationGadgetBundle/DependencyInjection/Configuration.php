@@ -1,6 +1,6 @@
 <?php
 
-namespace Keosu\Gadget\AuthentificationGadgetBundle\DependencyInjection;
+namespace Keosu\Gadget\AuthenticationGadgetBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('keosu_gadget_authentification_gadget');
+        $rootNode = $treeBuilder->root('keosu_gadget_authentication_gadget');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

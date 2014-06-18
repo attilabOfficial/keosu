@@ -16,7 +16,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-namespace Keosu\Gadget\AuthentificationGadgetBundle\Controller;
+namespace Keosu\Gadget\AuthenticationGadgetBundle\Controller;
 
 use Keosu\CoreBundle\Util\TemplateUtil;
 
@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ResetController extends Controller {
 
 	public function successAction() {
-		return $this->container->get('templating')->renderResponse('KeosuGadgetAuthentificationGadgetBundle:Resetting:success.html.twig');
+		return $this->container->get('templating')->renderResponse('KeosuGadgetAuthenticationGadgetBundle:Resetting:success.html.twig');
 	}
 
 }

@@ -1,0 +1,16 @@
+parameters:
+#    keosu_gadget_authentication_gadget.example.class: Keosu\Gadget\AuthenticationGadgetBundle\Example
+
+services:
+    keosu.security.authentication_handler:
+        class: Keosu\Gadget\AuthenticationGadgetBundle\Handler\AuthenticationHandler
+        public: false
+        arguments:
+            - @router
+            - @session
+
+    keosu.password_resetting:
+        class: Keosu\Gadget\AuthenticationGadgetBundle\EventListener\PasswordResettingListener
+        arguments: [@router]
+        tags:
+            - { name: kernel.event_subscriber }

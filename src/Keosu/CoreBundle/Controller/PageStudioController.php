@@ -38,9 +38,7 @@ class PageStudioController extends Controller {
 	 */
 	public function viewAction($id) {
 		//Curent app id
-		$appid = $this->container->get('keosu_core.curapp')
-			->getCurApp($this->get('doctrine')->getManager(),
-				$this->get("session"));
+		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 		//Get Curent theme
 		$repo = $this->get('doctrine')->getManager()
 			->getRepository('KeosuCoreBundle:App');

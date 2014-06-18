@@ -17,30 +17,35 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Service;
+
 use Keosu\CoreBundle\Util\ZipUtil;
-
 use Keosu\CoreBundle\Util\ThemeUtil;
-
 use Keosu\CoreBundle\Util\FilesUtil;
-
 use Keosu\CoreBundle\Util\ExporterUtil;
-
-use Keosu\CoreBundle\Delegate\ExporterDelegate;
-
 use Keosu\CoreBundle\Util\StringUtil;
-
-use Keosu\CoreBundle\Model\ZoneModel;
-
 use Keosu\CoreBundle\Util\TemplateUtil;
 
 use Keosu\CoreBundle\Entity\Page;
+use Keosu\CoreBundle\Delegate\ExporterDelegate;
+use Keosu\CoreBundle\Model\ZoneModel;
+
 use Symfony\Component\DomCrawler\Crawler;
 
 class CurApp {
-	public function getCurApp($manager,$session) {
-		$appid=$session->get("appid");
+
+	private $doctrine;
+
+	private $session;
+
+	public function __construct($doctrine,$session) {
+		$this->session = $session;
+		$this->doctrine = $doctrine;
+	}
+
+	public function getCurApp() {
+		$appid=$this->session->get("appid");
 		if($appid==null){
-			$apps = $manager->getRepository('KeosuCoreBundle:App')->findAll();
+			$apps = $doctrine->getManager()->getRepository('KeosuCoreBundle:App')->findAll();
 			if($apps==null){
 				return 0;
 			}

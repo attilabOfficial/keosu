@@ -39,29 +39,23 @@ class GadgetEditController extends Controller {
 	 * @param $zone where we want to delete the gadget
 	 */
 	public function deleteAction($page, $zone) {
-		$appid = $this->container->get('keosu_core.curapp')
-			->getCurApp($this->get('doctrine')->getManager(),
-				$this->get("session"));
+		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
+		$em = $this->get('doctrine')->getManager();
+		
 		//Look if there is a shared gadget in this zone
-		$commonGadget=$this->get('doctrine')->getManager()
-			->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
+		$commonGadget=$em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
 		//If there is no share gadget we try to find the specific one
 		if($commonGadget == null){
-			$commonGadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')
+			$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')
 				->findOneBy(array('zone' => $zone, 'page' => $page));
 		}
 		//Delete the gadget
-		$this->get('doctrine')->getManager()->remove($commonGadget);
-		$this->get('doctrine')->getManager()->flush();
+		$em->remove($commonGadget);
+		$em->flush();
 		
 		//Export app
-		$baseurl = $this->container->getParameter('url_base');
-		$param = $this->container->getParameter('url_param');
 		$exporter = $this->container->get('keosu_core.exporter');
-		$exporter
-			->exportApp($this->get('doctrine')->getManager(),
-				$baseurl, $param, $appid);
+		$exporter->exportApp();
 		
 		//Redirect to the last page
 		return $this->redirect(
@@ -92,21 +86,9 @@ class GadgetEditController extends Controller {
 	 */
 	private function addGadgetCommonAction($page, $zone, $gadgetClass) {
 	
-		$appid = $this->container->get('keosu_core.curapp')
-			->getCurApp($this->get('doctrine')->getManager(),
-				$this->get("session"));
-		//Find if there is already a gadget in the zone
-		//We do this to delete it later
-		$commonGadget=$this->get('doctrine')->getManager()
-			->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
-		//If there is no share gadget we try to find the specific one
-		if($commonGadget==null){
-			$commonGadget = $this->get('doctrine')->getManager()
-			->getRepository('KeosuCoreBundle:Gadget')
-			->findOneBy(array('zone' => $zone, 'page' => $page));
-		}
-		$commonGadget = $this->get('doctrine')->getManager()
-			->getRepository('KeosuCoreBundle:Gadget')
+		$em = $this->get('doctrine')->getManager();
+
+		$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')
 			->findOneBy(array('zone' => $zone, 'page' => $page));
 	
 		$oldGadget = null;
@@ -120,8 +102,7 @@ class GadgetEditController extends Controller {
 		$commonGadget->setStatic($gadget->isStatic());
 		
 		//Finding curent page and zone to store it in gadget object
-		$pageObject = $this->get('doctrine')->getManager()
-			->getRepository('KeosuCoreBundle:Page')->find($page);
+		$pageObject = $em->getRepository('KeosuCoreBundle:Page')->find($page);
 		$gadget->setPage($pageObject);
 		$gadget->setZone($zone);
 	
@@ -149,16 +130,13 @@ class GadgetEditController extends Controller {
 	 * Editing gadget process
 	 */
 	private function editGadgetCommonAction($page, $zone, $gadgetClass) {
-		$appid = $this->container->get('keosu_core.curapp')
-			->getCurApp($this->get('doctrine')->getManager(),
-				$this->get("session"));
+		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
+		$em = $this->get('doctrine')->getManager();
 		//Look if there is a shared gadget in this zone
-		$commonGadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
+		$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
 		//If there is no share gadget we try to find the specific one
 		if($commonGadget == null){
-			$commonGadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')
+			$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')
 				->findOneBy(array('zone' => $zone, 'page' => $page));
 		}
 	
@@ -210,17 +188,7 @@ class GadgetEditController extends Controller {
 				$em->persist($commonGadget);
 				$em->flush();
 
-				//Export the app to see the changes in simulator
-				$baseurl = $this->container->getParameter('url_base');
-				$param = $this->container->getParameter('url_param');
-				
-				$appid = $this->container->get('keosu_core.curapp')
-					->getCurApp($this->get('doctrine')->getManager(),
-						$this->get("session"));
-				$exporter = $this->container->get('keosu_core.exporter');
-				$exporter
-						->exportApp($this->get('doctrine')->getManager(),
-								$baseurl, $param, $appid);
+				$exporter = $this->container->get('keosu_core.exporter')->exportApp();
 
 				return $this->redirect(
 							$this->generateUrl('keosu_core_views_page',

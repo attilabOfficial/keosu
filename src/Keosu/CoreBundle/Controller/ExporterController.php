@@ -26,18 +26,8 @@ class ExporterController extends Controller {
 	 */
 	public function exportAction() {
 
-		$baseurl = $this->container->getParameter('url_base');
-		$param = $this->container->getParameter('url_param');
+		$this->container->get('keosu_core.exporter')->exportApp();
 		
-		$appid = $this->container->get('keosu_core.curapp')
-			->getCurApp($this->get('doctrine')->getManager(),
-				$this->get("session"));
-		
-		$exporter = $this->container->get('keosu_core.exporter');
-		$exporter
-				->exportApp($this->get('doctrine')->getManager(), $baseurl,
-						$param, $appid);
-
 		return $this->redirect($this->generateUrl('keosu_core_publish'));
 	}
 

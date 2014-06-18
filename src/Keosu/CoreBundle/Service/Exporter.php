@@ -17,27 +17,38 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Service;
+
 use Keosu\CoreBundle\Util\ZipUtil;
-
 use Keosu\CoreBundle\Util\ThemeUtil;
-
 use Keosu\CoreBundle\Util\FilesUtil;
-
 use Keosu\CoreBundle\Util\ExporterUtil;
-
-use Keosu\CoreBundle\Delegate\ExporterDelegate;
-
 use Keosu\CoreBundle\Util\StringUtil;
-
-use Keosu\CoreBundle\Model\ZoneModel;
-
 use Keosu\CoreBundle\Util\TemplateUtil;
 
+use Keosu\CoreBundle\Delegate\ExporterDelegate;
+use Keosu\CoreBundle\Model\ZoneModel;
 use Keosu\CoreBundle\Entity\Page;
+
 use Symfony\Component\DomCrawler\Crawler;
 
 class Exporter {
-	public function exportApp($manager, $baseurl, $param, $appId) {
+
+	private $doctrine;
+
+	private $container;
+
+	public function __construct($doctrine,$container) {
+		$this->doctrine = $doctrine;
+		$this->container = $container;
+	}
+
+	public function exportApp() {
+		
+		$manager = $this->doctrine->getManager();
+		$baseurl = $this->container->getParameter('url_base');
+		$param = $this->container->getParameter('url_param');
+		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
+		
 		
 		$pages = $manager->getRepository('KeosuCoreBundle:Page')->findByAppId($appId);
 		$isIndexPageImported = false;

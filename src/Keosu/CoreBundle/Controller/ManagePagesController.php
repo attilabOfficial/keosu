@@ -79,9 +79,7 @@ class ManagePagesController extends Controller {
 		/**
 		 * List of pages for an app we display them in a array after
 		 */
-		$appid = $this->container->get('keosu_core.curapp')
-			->getCurApp($this->get('doctrine')->getManager(),
-				$this->get("session"));
+		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 		$contents = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
 		
@@ -133,10 +131,7 @@ class ManagePagesController extends Controller {
 	public function addAction() {
 		$page = new Page();
 		
-		$appid = $this->container->get('keosu_core.curapp')
-			->getCurApp($this->get('doctrine')->getManager(),
-				$this->get("session"));
-		
+		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 		$page->setAppId($appid);
 		//Form and store action are shared with editAction
 		return $this->editPage($page);
@@ -165,9 +160,7 @@ class ManagePagesController extends Controller {
 	private function editPage($page) {
 		//Curent theme
 		//Curent app id
-		$appid = $this->container->get('keosu_core.curapp')
-			->getCurApp($this->get('doctrine')->getManager(),
-				$this->get("session"));
+		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 		//Get Curent theme
 		$repo = $this->get('doctrine')->getManager()
 			->getRepository('KeosuCoreBundle:App');
@@ -188,15 +181,7 @@ class ManagePagesController extends Controller {
 				$em->persist($page);
 				$em->flush();
 				//Export app to see new page in simulator
-				$baseurl = $this->container->getParameter('url_base');
-				$param = $this->container->getParameter('url_param');
-				$appid = $this->container->get('keosu_core.curapp')
-					->getCurApp($this->get('doctrine')->getManager(),
-						$this->get("session"));
-				$exporter = $this->container->get('keosu_core.exporter');
-				$exporter
-						->exportApp($this->get('doctrine')->getManager(),
-								$baseurl, $param, $appid);
+				$this->container->get('keosu_core.exporter')->exportApp();
 				return $this
 						->redirect(
 								$this
@@ -230,9 +215,7 @@ class ManagePagesController extends Controller {
 	 * Check if there is a "isMain" page in the app
 	 */
 	public function checkIsMainAction() {
-		$appid = $this->container->get('keosu_core.curapp')
-			->getCurApp($this->get('doctrine')->getManager(),
-				$this->get("session"));
+		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 		//Count number of isMain
 		$nbrIsMain = $this->get('doctrine')->getManager()->getRepository('KeosuCoreBundle:Page')
 											->countIsMainByAppId($appid);

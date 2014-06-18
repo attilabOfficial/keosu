@@ -5,8 +5,10 @@ parameters:
 services:
     keosu_core.exporter:
         class: %keosu_core.exporter.class%
+        arguments: [@doctrine,@service_container]
     keosu_core.curapp:
         class: %keosu_core.curapp.class%
+        arguments: [@doctrine,@session]
     keosu_core.image_type_extension:
         class: Keosu\CoreBundle\Form\Extension\ImageTypeExtension
         tags:

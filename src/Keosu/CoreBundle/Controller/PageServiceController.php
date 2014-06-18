@@ -26,9 +26,7 @@ class PageServiceController extends Controller {
 	 * REST service returning the list of all pages
 	 */
 	public function listAction($format) {
-		$appid = $this->container->get('keosu_core.curapp')
-					->getCurApp($this->get('doctrine')->getManager(),
-					$this->get("session"));
+		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 		
 		$contents = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);

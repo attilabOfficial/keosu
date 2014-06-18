@@ -26,7 +26,8 @@
 		$( ".radio" ).each(function( index ) {
 			input = $(this).find('input');
 			themeName=input.attr('value');
-			img='<img alt="'+themeName+'" src="{{url_base}}/{{ themeDir }}'+themeName+'/'+themeName+'.png"/>';
+			input.attr('id',themeName);
+			img='<label for="'+themeName+'"><img alt="'+themeName+'" src="{{url_base}}/{{ themeDir }}'+themeName+'/'+themeName+'.png"/></label>';
 			$( this ).text("");
 			$( this ).append(input);
 			$( this ).append(img);
@@ -36,6 +37,11 @@
 <style type="text/css">
 .imgtheme img {
 	height:200px;
+}
+.imgtheme .radio input[type="radio"]{
+	float:none;
+	clear:both;
+	margin-left:0px;
 }
 </style>
 	<div class="panel">
@@ -55,20 +61,20 @@
 			
 			    {{ form_row(form.name) }}
 			    {{ form_row(form.privateApp)}}
+			    <div class="col-lg-9">
 			    <span class="help-block">if the checkbox is checked only logged user can access to this app and a special authentication page is created.</span>
+			    </div>
 			    <div class="imgtheme">
 			    	{{ form_row(form.theme) }}
-		    	 </div> 
+				</div>
 
-		    	
-		     	<br class="clear"/><br class="clear"/>
-		    	<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-		    {{ form_end(form) }}
-
-</div>
-			 </div>
-			 
-		   
-		</div>	
+				<br class="clear"/><br class="clear"/>
+				<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+			{{ form_end(form) }}
+			</div>
+			</div>
+			
+		
+		</div>
 	</div>
 {% endblock %}

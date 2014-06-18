@@ -59,7 +59,7 @@ class Gadget {
 	private $shared;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Keosu\CoreBundle\Entity\Page", inversedBy="id")
+	 * @ORM\ManyToOne(targetEntity="Keosu\CoreBundle\Entity\Page")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $page;

@@ -47,14 +47,14 @@ class Page {
 	 *
 	 * @ORM\Column(name="isMain", type="boolean")
 	 */
-	public $isMain;
+	private $isMain;
 	
 	/**
 	 * @var int $appId
 	 *
 	 * @ORM\Column(name="appId", type="integer")
 	 */
-	public $appId;
+	private $appId;
 	/**
 	 * @var string $icon
 	 *

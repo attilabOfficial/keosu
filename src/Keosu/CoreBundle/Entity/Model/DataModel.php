@@ -27,7 +27,7 @@ abstract class DataModel {
 	/**
 	 * @var integer $reader
 	 *
-	 * @ORM\ManyToOne(targetEntity="Keosu\CoreBundle\Entity\Reader", inversedBy="reader")
+	 * @ORM\ManyToOne(targetEntity="Keosu\CoreBundle\Entity\Reader")
 	 */
 	private $reader;
 

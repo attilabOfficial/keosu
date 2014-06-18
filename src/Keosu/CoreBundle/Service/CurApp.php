@@ -45,7 +45,7 @@ class CurApp {
 	public function getCurApp() {
 		$appid=$this->session->get("appid");
 		if($appid==null){
-			$apps = $doctrine->getManager()->getRepository('KeosuCoreBundle:App')->findAll();
+			$apps = $this->doctrine->getManager()->getRepository('KeosuCoreBundle:App')->findAll();
 			if($apps==null){
 				return 0;
 			}

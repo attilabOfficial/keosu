@@ -24,61 +24,58 @@
 {% block content %}
 
 <div class="row">
-	<div class="col-md-1 table-actions-column">
-	   
-	</div>
-				
-	<div class="col-md-10">
-    	<fieldset>
-    		<legend>pages</legend>
+	<div class="col-md-10 col-md-offset-1">
+		<fieldset>
+			<legend>Manage Pages</legend>
 
 			<a class="btn btn-success" href="{{ path('keosu_core_views_page_manage_add') }}">Add new page</a>
 
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<th>is Index</th>
+						<th>is index</th>
 						<th>page name</th>
-						<th>page Template Id</th>
-						<th></th>
-						<th></th>
+						<th>page template</th>
+						<th colspan="2"></th>
 					</tr>
 				</thead>
 				<tbody>
-			  {% for content in contents %}
-			   <tr>
-			   		<td>
-						{% if content.isMain %}
-							<span class="glyphicon glyphicon-hand-right"></span>
+				{% for content in contents %}
+					<tr>
+						<td>
+							{% if content.isMain %}
+								<span class="glyphicon glyphicon-hand-right"></span>
+							{% endif %}
+						</td>
+						<td>{{ content.name }}</td>
+						<td>{{ content.templateId }}</td>
+						{% if content.id in cannotEdit %}
+						<td colspan="2">
+						</td>
+						{% else %}
+						<td>
+							<a href="{{ path('keosu_core_views_page_manage_edit',{'id':content.id}) }}"><i class="glyphicon glyphicon-edit"></i></a>
+						</td>
+						<td>
+							<a href="{{ path('keosu_core_views_page_manage_delete',{'id':content.id}) }}"><i class="glyphicon glyphicon-remove"></i></a>
+						</td>
 						{% endif %}
-					</td>
-					<td>{{ content.name }}</td>
-					<td>{{ content.templateId }}</td>
-					<td>
-						<a href="{{ path('keosu_core_views_page_manage_edit',{'id':content.id}) }}"><i class="glyphicon glyphicon-edit"></i></a>
-					</td>
-					<td>
-						<a href="{{ path('keosu_core_views_page_manage_delete',{'id':content.id}) }}"><i class="glyphicon glyphicon-remove"></i></a>
-					</td>
-				</tr>
-			  {% else %}
-			    <p>No content</p>
-			  {% endfor %}
-			  	</tbody>
+					</tr>
+				{% else %}
+					<p>No content</p>
+				{% endfor %}
+				</tbody>
 				<tfoot>
 					<tr>
+						<th>is index</th>
 						<th>page name</th>
-						<th>page Template Id</th>
-						<th></th>
-						<th></th>
+						<th>page template</th>
+						<th colspan="2"></th>
 					</tr>
 				</tfoot>
 			</table>
 		</fieldset>
 		</ul>
-	</div>
-	<div class="col-md-1 table-actions-column">
-	   
 	</div>
 </div>
 {% endblock %}

@@ -108,5 +108,16 @@ class TemplateUtil {
 	public static function getUploadRootDir() {
 		return __DIR__ . '/../../../../web/';
 	}
+	
+	/**
+	 * For authentication
+	 */
+	public static function getAuthenticationTemplateId() {
+		return 'keosu-authentication-template-special.html';
+	}
+	
+	public static function getAuthenticationPageName() {
+		return 'authenticationPage';
+	}
 
 }

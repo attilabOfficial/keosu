@@ -84,9 +84,19 @@ class ManagePagesController extends Controller {
 				$this->get("session"));
 		$contents = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
+		
+		// Private app case
+		$cannotEdit = array();
+		foreach($contents as $content) {
+			if($content->getName() == TemplateUtil::getAuthenticationPageName()
+				&& $content->getTemplateid() == TemplateUtil::getAuthenticationTemplateId()) {
+				$cannotEdit[] = $content->getId();
+			}
+		}
 		return $this
 				->render('KeosuCoreBundle:Page:manage.html.twig',
-						array('contents' => $contents));
+						array('contents'   => $contents,
+							  'cannotEdit' => $cannotEdit));
 	}
 	
 	/**
@@ -96,7 +106,7 @@ class ManagePagesController extends Controller {
 		$gadgetRepo = $this->get('doctrine')->getManager()
 			->getRepository('KeosuCoreBundle:Gadget');
 		$gadgets = $gadgetRepo->findByPage($id);
-		//First delete manually all its gagdegt
+		//First delete manually all its gadget
 		foreach ($gadgets as $gadget) {
 			$this->get('doctrine')->getManager()->remove($gadget);
 		}
@@ -104,13 +114,17 @@ class ManagePagesController extends Controller {
 				->getRepository('KeosuCoreBundle:Page');
 		//Delete the page
 		$page = $repo->find($id);
-		$this->get('doctrine')->getManager()->remove($page);
-		$this->get('doctrine')->getManager()->flush();
-		return $this
-				->redirect(
-						$this
-								->generateUrl(
-										'keosu_core_views_page_manage'));
+		
+		if($page->getname() == TemplateUtil::getAuthenticationPageName()
+			&& $page->gettemplateid() == TemplateUtil::getAuthenticationTemplateId()) {
+			// the user can't delete this page because it's a private app
+		} else {
+			$this->get('doctrine')->getManager()->remove($page);
+			$this->get('doctrine')->getManager()->flush();
+		}
+		return $this->redirect(
+						$this->generateUrl('keosu_core_views_page_manage')
+					);
 	}
 
 	/**
@@ -135,6 +149,10 @@ class ManagePagesController extends Controller {
 		$repo = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Page');
 		$page = $repo->find($id);
+		if($page->getname() == TemplateUtil::getAuthenticationPageName() && $page->gettemplateid() == TemplateUtil::getAuthenticationTemplateId()) {
+			// the user can't edit this page because it's a private app
+			return $this->redirect($this->generateUrl('keosu_core_views_page_manage'));
+		}
 		//Form and store action are shared with editAction
 		return $this->editPage($page);
 

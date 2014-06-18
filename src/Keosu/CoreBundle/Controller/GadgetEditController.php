@@ -46,7 +46,7 @@ class GadgetEditController extends Controller {
 		$commonGadget=$this->get('doctrine')->getManager()
 			->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
 		//If there is no share gadget we try to find the specific one
-		if($commonGadget==null){
+		if($commonGadget == null){
 			$commonGadget = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Gadget')
 				->findOneBy(array('zone' => $zone, 'page' => $page));
@@ -64,13 +64,10 @@ class GadgetEditController extends Controller {
 				$baseurl, $param, $appid);
 		
 		//Redirect to the last page
-		return $this
-				->redirect(
-						$this
-								->generateUrl(
-										'keosu_core_views_page',
-										array(
-												'id' => $page)));
+		return $this->redirect(
+						$this->generateUrl('keosu_core_views_page',array(
+												'id' => $page))
+							);
 	}
 	/**
 	 * Ading a new Gadget in a zone
@@ -81,13 +78,13 @@ class GadgetEditController extends Controller {
 		//Call the common gadget function with gadget class in parameter
 		//$this->getGadgetClass() is defined in the child object it return the full package of the gadget class
 		// (for exemple Keosu\Gadget\ArticleGadgetBundle\ArticleGadget)
-		$gadgetArrray = $this::addGadgetCommonAction($page, $zone,
+		$gadgetArray = $this::addGadgetCommonAction($page, $zone,
 				$this->getGadgetClass());
 		//Specific gadget witch is an instance of getGadgetClass
-		$specificGadget = $gadgetArrray['specific'];
+		$specificGadget = $gadgetArray['specific'];
 		//Common gadget witch is an instance of Gadget Entity
-		$commonGadget = $gadgetArrray['common']; 
-		$oldGadget = $gadgetArrray['old'];
+		$commonGadget = $gadgetArray['common']; 
+		$oldGadget = $gadgetArray['old'];
 		return $this->formGadget($specificGadget, $commonGadget, $oldGadget);//Create form
 	}
 	/**
@@ -141,10 +138,10 @@ class GadgetEditController extends Controller {
 	 */
 	public function editAction($page, $zone) {
 		//Call the common gadget function with gadget class in parameter
-		$gadgetArrray = $this::editGadgetCommonAction($page, $zone,
+		$gadgetArray = $this::editGadgetCommonAction($page, $zone,
 				$this->getGadgetClass());
-		$specificGadget = $gadgetArrray['specific'];
-		$commonGadget = $gadgetArrray['common'];
+		$specificGadget = $gadgetArray['specific'];
+		$commonGadget = $gadgetArray['common'];
 		return $this->formGadget($specificGadget, $commonGadget, null);
 	}
 	
@@ -156,15 +153,14 @@ class GadgetEditController extends Controller {
 			->getCurApp($this->get('doctrine')->getManager(),
 				$this->get("session"));
 		//Look if there is a shared gadget in this zone
-		$commonGadget=$this->get('doctrine')->getManager()
+		$commonGadget = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
 		//If there is no share gadget we try to find the specific one
-		if($commonGadget==null){
+		if($commonGadget == null){
 			$commonGadget = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Gadget')
 				->findOneBy(array('zone' => $zone, 'page' => $page));
-		}	
-			
+		}
 	
 		//Convert the common gadget to a specific gadget object
 		$gadget = $gadgetClass::constructfromGadget($commonGadget);
@@ -226,15 +222,10 @@ class GadgetEditController extends Controller {
 						->exportApp($this->get('doctrine')->getManager(),
 								$baseurl, $param, $appid);
 
-				return $this
-						->redirect(
-								$this
-										->generateUrl(
-												'keosu_core_views_page',
-												array(
-														'id' => $commonGadget
-																->getPage()
-																->getId())));
+				return $this->redirect(
+							$this->generateUrl('keosu_core_views_page',
+									array('id' => $commonGadget->getPage()->getId())
+									));
 			}
 		}
 		return $this

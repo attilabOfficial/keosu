@@ -76,36 +76,80 @@ class ManageAppsController extends Controller {
 		$apps = $this->get('doctrine')->getManager()
 			->getRepository('KeosuCoreBundle:App')->findAll();
 		//If it's the first app we display an info panel
-		$isFirstApp= ($apps==null);
+		$isFirstApp = ($apps==null);
 		
 		//page edit form
-		$formBuilder = $this
-				->createFormBuilder($app,
-						array('label' => 'Edit App'));
+		$formBuilder = $this->createFormBuilder($app,array(
+													'label' => 'Edit App'
+							));
 		$this->buildAppForm($formBuilder);
 		$form = $formBuilder->getForm();
 		$request = $this->get('request');
 		//If we are in POST method, form is submit
 		if ($request->getMethod() == 'POST') {
+
 			$form->bind($request);
 			if ($form->isValid()) {
 				//Storing page
 				$em = $this->get('doctrine')->getManager();
 				$em->persist($app);
 				$em->flush();
+				$em->refresh($app);
+
+				// if the app is private we have to add an authentication page
+				$authenticationPage = $em->getRepository('KeosuCoreBundle:Page')->findOneBy(array(
+					'appId'     => $app->getId(),
+					'templateId'=> TemplateUtil::getAuthenticationTemplateId(),
+					'name'      => TemplateUtil::getAuthenticationPageName()));
+				
+				if($authenticationPage == null) {
+					if($app->isPrivate()) {
+						$page = new Page();
+						$page->setIcon('glyphicon-lock');
+						$page->setTemplateId(TemplateUtil::getAuthenticationTemplateId());
+						$page->setName(TemplateUtil::getAuthenticationPageName());
+						$page->setAppId($app->getId());
+						
+						// the authentication become main
+						$page->setIsMain(true);
+						$em->persist($page);
+						
+						$pagesMain = $em->getRepository('KeosuCoreBundle:Page')->findBy(array(
+								'appId'  => $app->getId(),
+								'isMain' => true));
+						foreach($pagesMain as $pageMain) {
+							$pageMain->setIsMain(true);
+							$em->persist($pageMain);
+						}
+					}
+				}
+				
+				if(!$app->isPrivate() && $authenticationPage != null) {
+
+					$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($authenticationPage->getId());
+					//First delete manually all its gadget
+					foreach ($gadgets as $gadget) {
+						$em->remove($gadget);
+					}
+					$em->remove($authenticationPage);
+				}
+
+				
+				$em->flush();
+
 				$session = $this->get("session");
 				$session->set("appid",$app->getId());
-				return $this
-						->redirect(
-								$this
-										->generateUrl(
-												'keosu_core_app_manage'));
+
+				return $this->redirect(
+							$this->generateUrl('keosu_core_app_manage')
+						);
 			}
 		}
-		return $this
-				->render('KeosuCoreBundle:App:edit.html.twig',
-						array('form' => $form->createView(), 'firstApp'=>$isFirstApp,
-							'themeDir'=>ThemeUtil::getThemeDir()));
+		return $this->render('KeosuCoreBundle:App:edit.html.twig',array(
+							'form' => $form->createView(),
+							'firstApp'=>$isFirstApp,
+							'themeDir'=>ThemeUtil::getThemeDir()
+						));
 	}
 
 	/**
@@ -113,11 +157,13 @@ class ManageAppsController extends Controller {
 	 */
 	private function buildAppForm($formBuilder) {
 		$formBuilder->add('name', 'text')
-				->add('privateApp','checkbox',
-						array('required'=> false)) 
-				->add('theme', 'choice',
-						array('choices' => ThemeUtil::getThemeList(),
-								'required' => true,'expanded'=>true));
+				->add('privateApp','checkbox', array(
+							'required'=> false
+					)) 
+				->add('theme', 'choice', array(
+							'choices' => ThemeUtil::getThemeList(),
+							'required' => true,'expanded'=>true
+					));
 	}
 
 }

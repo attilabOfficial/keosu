@@ -19,14 +19,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Controller;
 
 use Keosu\CoreBundle\Entity\App;
+use Keosu\CoreBundle\Entity\Page;
+use Keosu\CoreBundle\Entity\Gadget;
 
 use Keosu\CoreBundle\Util\ThemeUtil;
-
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Entity\Page;
+use Keosu\Gadget\AuthenticationGadgetBundle\AuthenticationGadget;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DomCrawler\Crawler;
 
 class ManageAppsController extends Controller {
 
@@ -102,8 +104,16 @@ class ManageAppsController extends Controller {
 					'templateId'=> TemplateUtil::getAuthenticationTemplateId(),
 					'name'      => TemplateUtil::getAuthenticationPageName()));
 				
-				if($authenticationPage == null) {
-					if($app->isPrivate()) {
+				if($authenticationPage == null && $app->isPrivate()) {
+						// remove other main
+						$pagesMain = $em->getRepository('KeosuCoreBundle:Page')->findBy(array(
+								'appId'  => $app->getId(),
+								'isMain' => true));
+						foreach($pagesMain as $pageMain) {
+							$pageMain->setIsMain(false);
+							$em->persist($pageMain);
+						}
+					
 						$page = new Page();
 						$page->setIcon('glyphicon-lock');
 						$page->setTemplateId(TemplateUtil::getAuthenticationTemplateId());
@@ -114,24 +124,37 @@ class ManageAppsController extends Controller {
 						$page->setIsMain(true);
 						$em->persist($page);
 						
-						$pagesMain = $em->getRepository('KeosuCoreBundle:Page')->findBy(array(
-								'appId'  => $app->getId(),
-								'isMain' => true));
-						foreach($pagesMain as $pageMain) {
-							$pageMain->setIsMain(true);
-							$em->persist($pageMain);
-						}
-					}
-				}
-				
-				if(!$app->isPrivate() && $authenticationPage != null) {
+						$gadgetAuthentication = new AuthenticationGadget();
+						$gadget = new Gadget();
+						$gadgetAuthentication->convertAsExistingCommonGadget($gadget);
+						$gadget->setStatic(false);
+						$gadget->setShared(false);
+						$listTemplate = TemplateUtil::getTemplateGadgetList($gadgetAuthentication->getGadgetName());
+						$keys = array_keys($listTemplate);
+						$gadget->setGadgetTemplate($listTemplate[$keys[0]]); // 0 by default
+						$gadget->setPage($page);
+						
+						// there is only one zone on this template
+						$templateHtml = 
+								file_get_contents(
+									TemplateUtil::getPageTemplateAbsolutePath()
+										. TemplateUtil::getAuthenticationTemplateId());
+						//Get all the elements of class "zone" in template dom
+						$crawler = new Crawler($templateHtml);
+						$zones = $crawler->filter('.zone')->extract(array('id'));
+						$gadget->setZone($zones[0]);
 
-					$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($authenticationPage->getId());
-					//First delete manually all its gadget
-					foreach ($gadgets as $gadget) {
-						$em->remove($gadget);
+						$em->persist($gadget);
+				} else {
+
+					if(!$app->isPrivate() && $authenticationPage != null) {
+						$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($authenticationPage->getId());
+						//First delete manually all its gadget
+						foreach ($gadgets as $gadget) {
+							$em->remove($gadget);
+						}
+						$em->remove($authenticationPage);
 					}
-					$em->remove($authenticationPage);
 				}
 
 				

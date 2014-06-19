@@ -19,94 +19,96 @@
 
 {% block content %}
 
-				<div class="pageinfo">
-					<h4>{{ content.name }}</h4>
-				
-					<!--<h3>Screen size</h3>-->
-				
-					<div class="btn-group">
-					    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						    Screen size
-						    <span class="caret"></span>
-					    </a>
-					    <ul class="dropdown-menu">
-					    	<li>
-					    		<a onclick="changePreviewSize(480,320)" href="#">Phone</a>
-								<a onclick="changePreviewSize(320,480)" href="#">Phone Landscape</a>
-								<a onclick="changePreviewSize(576, 432)" href="#">Tablet</a>
-								<a onclick="changePreviewSize(432,576)" href="#">Tablet Landscape</a>
-							</li>
-					    </ul>
-				    </div>
-				</div>
-					
+<div class="pageinfo">
+	<h4>{{ content.name }}</h4>
 
-					<script>
-						function changePreviewSize(height, width){
-							$('.templatepreview').css('height',height);
-							$('.templatepreview').css('width',width);
-							$('#iframepreview').attr('height',height);
-							$('#iframepreview').attr('width',width);
-							//$("iframe").contents().find("#zone-corps").css('background-color','red');
-							//$('#iframepreview #zone-corps').css('background-color','red');
-						}
-					</script>
-					
-					<div class="row">
-						<div class="col-md-5">
-								{% for zone in zones %}
-									<div id="panel{{ zone.zoneId }}" class="panel panel-info">
-										<div class="panel-heading">
-											<h3 class="panel-title">{{ zone.zoneId }}</h3>
-										</div>
-										<div class="panel-body">
-											<div class="btn-group">
-											
-												<button class="btn btn-success dropdown-toggle" data-toggle="dropdown" type="button">
-													Add gadget
-													<span class="caret"></span>
-												</button>
-											
-												<ul class="dropdown-menu">
-													{% for gadget in gadgets %}
-														<li>
-															<a href="{{ path('keosu_gadget_'~gadget~'_add',{'page':content.id, 'zone':zone.zoneId}) }}">
-																Add {{ gadget }}
-															</a>
-														</li>
-													{% endfor %}
-												</ul>
-											</div>
-											{% if zone.gadgetName %}
-												<a class="btn btn-info editgadget" href="{{ path('keosu_gadget_'~ zone.gadgetName~'_edit',{'page':content.id, 'zone':zone.zoneId}) }}">
-													Edit {{ zone.gadgetName }}
-												</a>
-												<a class="badge" href="{{ path('keosu_gadget_delete',{'page':content.id, 'zone':zone.zoneId}) }}" title="Clean zone">
-													<span class="glyphicon glyphicon-minus"></span>
-												</a>
-											{% endif %}
-										</div>
-									</div>
-									<script>
-									$( "#panel{{ zone.zoneId }}" ).hover(
-										function() {
-											$("iframe").contents().find("#{{ zone.zoneId }}").css("border","5px solid red");
-										}, function() {
-											$("iframe").contents().find("#{{ zone.zoneId }}").css("border","none");
-										}
-									);
-									</script>
-									
-								{% endfor %}
-					
-						</div>
+	<div class="btn-group">
+		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+			Screen size
+			<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu">
+			<li>
+				<a onclick="changePreviewSize(480,320)" href="#">Phone</a>
+				<a onclick="changePreviewSize(320,480)" href="#">Phone Landscape</a>
+				<a onclick="changePreviewSize(576, 432)" href="#">Tablet</a>
+				<a onclick="changePreviewSize(432,576)" href="#">Tablet Landscape</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<script>
+	function changePreviewSize(height, width){
+		$('.templatepreview').css('height',height);
+		$('.templatepreview').css('width',width);
+		$('#iframepreview').attr('height',height);
+		$('#iframepreview').attr('width',width);
+		//$("iframe").contents().find("#zone-corps").css('background-color','red');
+		//$('#iframepreview #zone-corps').css('background-color','red');
+	}
+</script>
 	
-						<div class="col-md-7">
-							<center>
-								<iframe id="iframepreview" width="320px" height="480px" src="{{url_base}}/keosu/export/simulator/www/{{ content.fileName }}?enableripple=cordova"></iframe>
-							</center>
-						</div>
+<div class="row">
+	<div class="col-md-5">
+			{% for zone in zones %}
+				<div id="panel{{ zone.zoneId }}" class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">{{ zone.zoneId }}</h3>
 					</div>
+					<div class="panel-body">
+						{% if not(editableOnly) %}
+						<div class="btn-group">
+						
+							<button class="btn btn-success dropdown-toggle" data-toggle="dropdown" type="button">
+								Add gadget
+								<span class="caret"></span>
+							</button>
+						
+							<ul class="dropdown-menu">
+								{% for gadget in gadgets %}
+									<li>
+										<a href="{{ path('keosu_gadget_'~gadget~'_add',{'page':content.id, 'zone':zone.zoneId}) }}">
+											Add {{ gadget }}
+										</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+						{% endif %}
+						{% if zone.gadgetName %}
+							<a class="btn btn-info editgadget" href="{{ path('keosu_gadget_'~ zone.gadgetName~'_edit',{'page':content.id, 'zone':zone.zoneId}) }}">
+								Edit {{ zone.gadgetName }}
+							</a>
+							
+							{% if not(editableOnly) %}
+							<a class="badge" href="{{ path('keosu_gadget_delete',{'page':content.id, 'zone':zone.zoneId}) }}" title="Clean zone">
+								<span class="glyphicon glyphicon-minus"></span>
+							</a>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div>
+				<script>
+				$( "#panel{{ zone.zoneId }}" ).hover(
+					function() {
+						$("iframe").contents().find("#{{ zone.zoneId }}").css("border","5px solid red");
+					}, function() {
+						$("iframe").contents().find("#{{ zone.zoneId }}").css("border","none");
+					}
+				);
+				</script>
 				
-				
-			{% endblock %}
+			{% endfor %}
+
+	</div>
+
+	<div class="col-md-7">
+		<center>
+			<iframe id="iframepreview" width="320px" height="480px" src="{{url_base}}/keosu/export/simulator/www/{{ content.fileName }}?enableripple=cordova"></iframe>
+		</center>
+	</div>
+</div>
+
+
+{% endblock %}

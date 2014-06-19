@@ -17,9 +17,8 @@
     #}
 {% extends 'KeosuCoreBundle:MainViews:configuration.html.twig' %}
 
-{% block title %}
-	Edit App
-{% endblock %}
+{% block title %}Edit App{% endblock %}
+
 {% block body %}
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -28,9 +27,13 @@
 			themeName=input.attr('value');
 			input.attr('id',themeName);
 			img='<label for="'+themeName+'"><img alt="'+themeName+'" src="{{url_base}}/{{ themeDir }}'+themeName+'/'+themeName+'.png"/></label>';
+			var div = document.createElement('div');
+			
+			$( div ).append(input);
+			$( div ).append(img);
+			
 			$( this ).text("");
-			$( this ).append(input);
-			$( this ).append(img);
+			$( this ).append(div);
 		});
 	});
 </script>
@@ -47,37 +50,35 @@
 	margin-left:0px;
 }
 </style>
-	<div class="panel">
-		<div class="row">
-			
-			<div class="col-md-12">
-				{% if firstApp%}
-					<div class="alert alert-success">
-						<strong>Welcome to Keosu!</strong>
-						To start, create your first app
-						</div>
-				{% endif %}
-			   <div class="panel">
-			<h1>Edit App</h1>
-			{{ form_start(form) }}
-			    {{ form_errors(form) }}
-			
-			    {{ form_row(form.name) }}
-			    {{ form_row(form.privateApp)}}
-			    <div class="col-lg-9">
-			    <span class="help-block">if the checkbox is checked only logged user can access to this app and a special authentication page is created.</span>
-			    </div>
-			    <div class="imgtheme">
-			    	{{ form_row(form.theme) }}
-				</div>
-
-				<br class="clear"/><br class="clear"/>
-				<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-			{{ form_end(form) }}
-			</div>
-			</div>
-			
+<div class="panel">
+	<div class="row">
 		
+		<div class="col-md-12">
+			{% if firstApp %}
+			<div class="alert alert-success">
+				<strong>Welcome to Keosu!</strong>
+				To start, create your first app
+			</div>
+			{% endif %}
+			<div class="panel">
+				<h1>Edit App</h1>
+				{{ form_start(form) }}
+					{{ form_errors(form) }}
+
+					{{ form_row(form.name) }}
+					{{ form_row(form.privateApp)}}
+					<div class="col-lg-9">
+						<span class="help-block">if the checkbox is checked only logged user can access to this app and a special authentication page is created.</span>
+					</div>
+					<div class="imgtheme">
+						{{ form_row(form.theme) }}
+					</div>
+
+					<br class="clear"/><br class="clear"/>
+					<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+				{{ form_end(form) }}
+			</div>
 		</div>
 	</div>
+</div>
 {% endblock %}

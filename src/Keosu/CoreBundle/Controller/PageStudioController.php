@@ -39,13 +39,18 @@ class PageStudioController extends Controller {
 	public function viewAction($id) {
 		//Curent app id
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-		//Get Curent theme
-		$repo = $this->get('doctrine')->getManager()
-			->getRepository('KeosuCoreBundle:App');
-		$theme = $repo->find($appid);
+		$em = $this->get('doctrine')->getManager();
+
 		//Get the page we want to edit
-		$content = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page')->find($id);
+		$content = $em->getRepository('KeosuCoreBundle:Page')->find($id);
+		
+		// if the page isn't the authentication page of a private page
+		$editableOnly = false;
+		if($content->getTemplateId() == TemplateUtil::getAuthenticationTemplateId() &&
+				$content->getName() == TemplateUtil::getAuthenticationPageName()) {
+			$editableOnly = true;
+		}
+		
 		//Page Template content as String
 		$templateHtml = 
 				file_get_contents(
@@ -55,12 +60,9 @@ class PageStudioController extends Controller {
 		$crawler = new Crawler($templateHtml);
 		$zones = $crawler->filter('.zone')->extract(array('id'));
 		
-		//List of all available gadgets
-		$gadgets = KeosuExtension::$gadgetList;
 		//Initiate an Array to store all gadgets in page
-		$gadgetModelList = Array();
-		$gadgetRepo = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget');
+		$gadgetModelList = array();
+		$gadgetRepo = $em->getRepository('KeosuCoreBundle:Gadget');
 		
 		foreach ($zones as $zone) {
 			//Look if there is a shared gadget in this zone
@@ -68,8 +70,7 @@ class PageStudioController extends Controller {
 			//If there is no share gadget we try to find the specific one
 			if($gadget==null){
 				//Find the gadget associated with page and zone
-				$gadget = $gadgetRepo
-						->findOneBy(array('zone' => $zone, 'page' => $id));
+				$gadget = $gadgetRepo->findOneBy(array('zone' => $zone, 'page' => $id));
 			}
 			//ZoneModel will be used to render the studio page
 			$zoneModel = new ZoneModel();
@@ -99,7 +100,8 @@ class PageStudioController extends Controller {
 						array('content' => $content,
 								'zones' => $gadgetModelList,
 								'templatehtml' => $templateHtml,
-								'gadgets' => $gadgets));
+								'gadgets' => KeosuExtension::$gadgetList,
+								'editableOnly'=> $editableOnly,));
 	}
 
 }

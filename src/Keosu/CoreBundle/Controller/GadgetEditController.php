@@ -42,20 +42,25 @@ class GadgetEditController extends Controller {
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 		$em = $this->get('doctrine')->getManager();
 		
-		//Look if there is a shared gadget in this zone
-		$commonGadget=$em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
-		//If there is no share gadget we try to find the specific one
-		if($commonGadget == null){
-			$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')
-				->findOneBy(array('zone' => $zone, 'page' => $page));
-		}
-		//Delete the gadget
-		$em->remove($commonGadget);
-		$em->flush();
+		$pageObject = $em->getRepository('KeosuCoreBundle:Page')->find($page);
 		
-		//Export app
-		$exporter = $this->container->get('keosu_core.exporter');
-		$exporter->exportApp();
+		// We don't allow to delete authenticationGadget on private app
+		if($pageObject->getTemplateId() != TemplateUtil::getAuthenticationTemplateId() &&
+				$pageObject->getName() != TemplateUtil::getAuthenticationPageName()) {
+			//Look if there is a shared gadget in this zone
+			$commonGadget=$em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
+			//If there is no share gadget we try to find the specific one
+			if($commonGadget == null){
+				$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')
+					->findOneBy(array('zone' => $zone, 'page' => $page));
+			}
+			//Delete the gadget
+			$em->remove($commonGadget);
+			$em->flush();
+		
+			//Export app
+			$this->container->get('keosu_core.exporter')->exportApp();
+		}
 		
 		//Redirect to the last page
 		return $this->redirect(
@@ -69,17 +74,32 @@ class GadgetEditController extends Controller {
 	 * @param $zone where we want to add the gadget
 	 */
 	public function addAction($page, $zone) {
-		//Call the common gadget function with gadget class in parameter
-		//$this->getGadgetClass() is defined in the child object it return the full package of the gadget class
-		// (for exemple Keosu\Gadget\ArticleGadgetBundle\ArticleGadget)
-		$gadgetArray = $this::addGadgetCommonAction($page, $zone,
-				$this->getGadgetClass());
-		//Specific gadget witch is an instance of getGadgetClass
-		$specificGadget = $gadgetArray['specific'];
-		//Common gadget witch is an instance of Gadget Entity
-		$commonGadget = $gadgetArray['common']; 
-		$oldGadget = $gadgetArray['old'];
-		return $this->formGadget($specificGadget, $commonGadget, $oldGadget);//Create form
+	
+		$em = $this->get('doctrine')->getManager();
+		$pageObject = $em->getRepository('KeosuCoreBundle:Page')->find($page);
+		
+		// We don't allow to delete authenticationGadget on private app
+		if($pageObject->getTemplateId() != TemplateUtil::getAuthenticationTemplateId() &&
+				$pageObject->getName() != TemplateUtil::getAuthenticationPageName()) {
+			//Call the common gadget function with gadget class in parameter
+			//$this->getGadgetClass() is defined in the child object it return the full package of the gadget class
+			// (for exemple Keosu\Gadget\ArticleGadgetBundle\ArticleGadget)
+			$gadgetArray = $this::addGadgetCommonAction($page, $zone,
+					$this->getGadgetClass());
+			//Specific gadget witch is an instance of getGadgetClass
+			$specificGadget = $gadgetArray['specific'];
+			//Common gadget witch is an instance of Gadget Entity
+			$commonGadget = $gadgetArray['common']; 
+			$oldGadget = $gadgetArray['old'];
+			return $this->formGadget($specificGadget, $commonGadget, $oldGadget);//Create form
+		}
+		
+		//Redirect to the last page
+		return $this->redirect(
+						$this->generateUrl('keosu_core_views_page',array(
+												'id' => $page))
+							);
+
 	}
 	/**
 	 * Adding gadget process

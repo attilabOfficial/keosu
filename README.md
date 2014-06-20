@@ -10,6 +10,7 @@ Requirement
 
 There is a lot of documentation on the web that explains how to do it.
 
+You can donwload Wamp, Mamp or Xamp to do it easilly.
 Check that date.timezone is set in your php.ini file.
 For example:
 

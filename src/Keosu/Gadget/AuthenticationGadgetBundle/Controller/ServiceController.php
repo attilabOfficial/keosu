@@ -56,6 +56,31 @@ class ServiceController extends Controller {
 		return $response;
 	}
 	
+	public function logoutAction($gadgetId) {
+	
+		$ret['connect'] = false;
+		
+		$securityContext = $this->container->get('security.context');
+		if($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+
+			$securityContext->setToken(NULL);
+
+			$em = $this->getDoctrine();
+			$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+			$page = $gadget->getPage();
+			$app = $em->getRepository('KeosuCoreBundle:App')->find($page->getAppId());
+			
+			$ret['appPrivate'] = false;
+			if($app->isPrivate()) {
+				$ret['appPrivate'] = true;
+			}
+		}
+
+		$response = new JsonResponse();
+		$response->setData($ret);
+		return $response;
+	}
+	
 	
 	public function registerAction($gadgetId,$format,Request $request) {
 

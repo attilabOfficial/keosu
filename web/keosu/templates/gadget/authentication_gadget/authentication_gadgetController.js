@@ -57,7 +57,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 			usSpinnerService.stop('spinner');
 			$scope.token = data.csrf_token;
 			if(data.allReadyLogged) {
-				window.location = $scope.param.pageToGoAfterLogin+'.html';
+				window.location.replace($scope.param.pageToGoAfterLogin+'.html');
 			} else {
 				$scope.routing('login');
 			}

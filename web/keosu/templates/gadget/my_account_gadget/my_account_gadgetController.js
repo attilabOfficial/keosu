@@ -60,8 +60,11 @@ app.controller('my_account_gadgetController',function ($scope, $http, usSpinnerS
 	 **************/
 	$scope.logoutAction = function () {
 	
-		$http.get($scope.param.host + 'logout').success(function(data) {
+		$http.get($scope.param.host + 'service/gadget/authentication/'+$scope.param.gadget+'/logout').success(function(data) {
 			$scope.logged = false;
+			if(data.appPrivate) {
+				window.location.replace("index.html");
+			}
 		})
 	}
 	

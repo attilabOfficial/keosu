@@ -18,6 +18,10 @@ keosu_gadget_authentication_service_login:
     pattern:  /service/gadget/authentication/{gadgetId}/{format}/login
     defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:login }
     
+keosu_gadget_authentication_service_logout:
+    pattern:  /service/gadget/authentication/{gadgetId}/logout
+    defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:logout }
+    
 keosu_gadget_authentication_service_register:
     pattern:  /service/gadget/authentication/{gadgetId}/{format}/register
     defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:register }

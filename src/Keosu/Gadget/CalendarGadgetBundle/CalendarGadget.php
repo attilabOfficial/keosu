@@ -85,6 +85,10 @@ class CalendarGadget extends GadgetParent implements iGadget {
 	public function setEventsPerPage($eventsPerPage) {
 		$this->eventsPerPage = $eventsPerPage;
 	}
+	
+	public function getRequieredPermissions() {
+		return array($this::PERMISSION_NATIVE_CALENDAR,$this::PERMISSION_NATIVE_SOCIAL_SHARING);
+	}
 
 
 

@@ -14,11 +14,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <http://www.gnu.org/licenses,.
 ************************************************************************/
 namespace Keosu\CoreBundle\Service;
 
 use Keosu\CoreBundle\KeosuExtension;
+use Keosu\CoreBundle\GadgetParent;
 
 use Keosu\CoreBundle\Util\ZipUtil;
 use Keosu\CoreBundle\Util\ThemeUtil;
@@ -86,7 +87,7 @@ class Exporter {
 		// list of imported gadgets
 		$importedGadget = array();
 		// list of permissions requiered for the application
-		$permission = array();
+		$permissions = array();
 
 		foreach ($pages as $page) {
 			if ($page->getIsMain()) {
@@ -97,7 +98,7 @@ class Exporter {
 				$isIndexPageImported = true;
 			}
 			$tmp = $this->exportPage($app->getTheme(), $page);
-			$permission = array_merge($permission,$tmp[0]);
+			$permissions = array_merge($permissions,$tmp[0]);
 			$importedGadget = array_merge($importedGadget,$tmp[1]);
 		}
 		
@@ -108,35 +109,168 @@ class Exporter {
 			$path = TemplateUtil::getAbsolutePath().DIRECTORY_SEPARATOR.'gadget'.DIRECTORY_SEPARATOR.$gadget;
 			$dirs = scandir($path);
 			foreach($dirs as $dir) {
-			
-				if($dir != '.' && $dir != '..') {
-			
-					if(is_dir($path. DIRECTORY_SEPARATOR .$dir)) {
-						FilesUtil::copyFolder($path. DIRECTORY_SEPARATOR .$dir,
-							ExporterUtil::getAbsolutePath() . DIRECTORY_SEPARATOR .'simulator'. DIRECTORY_SEPARATOR .'www'. DIRECTORY_SEPARATOR .$dir);
-					}
+				if($dir != '.' && $dir != '..' && is_dir($path. DIRECTORY_SEPARATOR .$dir)) {
+					FilesUtil::copyFolder($path. DIRECTORY_SEPARATOR .$dir,
+						ExporterUtil::getAbsolutePath() . DIRECTORY_SEPARATOR .'simulator'. DIRECTORY_SEPARATOR .'www'. DIRECTORY_SEPARATOR .$dir);
 				}
 			}
 		}
-		
 
-				//config.xml
+		// permission part
+		$permissions = array_unique($permissions);
+
+		//config.xml
 		//TODO generate the file
 		copy(TemplateUtil::getAbsolutePath() . '/main-header/config.xml',
 		ExporterUtil::getAbsolutePath() . '/simulator/www/config.xml');
+
+		$configXml = new \DOMDocument("1.0","UTF-8");
+		$configXml->formatOutput = true;//TODO remove after debug
+		$widget = $configXml->createElement('widget');
+		$widget->setAttribute("xmlns","http://www.w3.org/ns/widgets");
+		$widget->setAttribute("xmlns:gap","http://phonegap.com/ns/1.0");
+		$widget->setAttribute("id","com.keosu.demo"); // TODO get value
+		$widget->setAttribute("version","1.0");
+
+		$configXml->appendChild($widget);
+
+		$widget->appendChild($configXml->createElement("name",$app->getName()));
+		$widget->appendChild($configXml->createElement("description","Keosu Demo"));//TODO
+		$author = $configXml->createElement("author","Keosu team");// TODO
+		$author->setAttribute("href","http://keosu.com");// TODO
+		$author->setAttribute("email","vleborgne@keosu.com");// TODO
+		$widget->appendChild($author);
+
+		//Enable individual API permissions here.
+		//The "device" permission is required for the 'deviceready' event.
+		$device = $configXml->createElement("feature");
+		$device->setAttribute("name","http://api.phonegap.com/1.0/device");
+		$widget->appendChild($device);
+		
+		if( array_search(GadgetParent::PERMISSION_GOOGLE_MAP_API,$permissions) !== false) {
+			$feature = $configXml->createElement("feature");
+			$feature->setAttribute("name","http://api.phonegap.com/1.0/geolocation");
+			$widget->appendChild($feature);
+		}
+		
+		$preferences = array(
+			// If you do not want any permissions to be added to your app, add the
+			// following tag to your config.xml; you will still have the INTERNET
+			// permission on your app, which PhoneGap requires.
+			"permissions"                => "none",
+			"phonegap-version"           => "3.1.0" , // all: current version of PhoneGap 
+			"orientation"                => "default" , // all: default means both landscape and portrait are enabled 
+			"target-device"              => "universal" , // all: possible values handset, tablet, or universal 
+			"Fullscreen"                 => "true" , // all: hides the status bar at the top of the screen 
+			"webviewbounce"              => "true" , // ios: control whether the screen 'bounces' when scrolled beyond the top 
+			"prerendered-icon"           => "true" , // ios: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen 
+			"stay-in-webview"            => "false" , // ios: external links should open in the default browser, 'true' would use the webview the app lives in 
+			"ios-statusbarstyle"         => "black-opaque" , // ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar 
+			"detect-data-types"          => "true" , // ios: controls whether data types (such as phone no. and dates) are automatically turned into links by the system 
+			"exit-on-suspend"            => "true" , // ios: if set to true, app will terminate when home button is pressed 
+			"Show-splash-screen-spinner" => "true" , // ios: if set to false, the spinner won't appear on the splash screen during app loading 
+			"auto-hide-splash-screen"    => "false" , // ios: if set to false, the splash screen must be hidden using a JavaScript API 
+			"disable-cursor"             => "false" , // blackberry: prevents a mouse-icon/cursor from being displayed on the app 
+			"android-minSdkVersion"      => "7" , // android: MIN SDK version supported on the target device. MAX version is blank by default. 
+			"android-installLocation"    => "auto" , // android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. 
+			"DisallowOverscroll"         => "true" ,
+			"splash-screen-duration"     => "10000",
+		);
+		
+		foreach($preferences as $k => $v) {
+			$preference = $configXml->createElement("preference");
+			$preference->setAttribute($k,$v);
+			$widget->appendChild($preference);
+		}
+		
+
+		if( array_search(GadgetParent::PERMISSION_NATIVE_CALENDAR,$permissions) !== false) {
+			$plugin = $configXml->createElement("gap:plugin");
+			$plugin->setAttribute("name","nl.x-services.plugins.calendar");
+			$plugin->setAttribute("version","4.2.2");
+			$widget->appendChild($plugin);
+		}
+		
+		if( array_search(GadgetParent::PERMISSION_NATIVE_SOCIAL_SHARING,$permissions) !== false) {
+			$plugin = $configXml->createElement("gap:plugin");
+			$plugin->setAttribute("name","nl.x-services.plugins.socialsharing");
+			$plugin->setAttribute("version","4.0.8");
+			$widget->appendChild($plugin);
+		}
+		
+		// Define app icon for each platform.
+		$icons = array(
+			array( "src"=>"icon.png"),
+			// ANDROID
+			array( "src"=>"res/icon/android/icon-36-ldpi.png" ,"gap:platform"=>"android","gap:density"=>"ldpi"),
+			array( "src"=>"res/icon/android/icon-48-mdpi.png" ,"gap:platform"=>"android","gap:density"=>"mdpi"),
+			array( "src"=>"res/icon/android/icon-72-hdpi.png" ,"gap:platform"=>"android","gap:density"=>"hdpi"),
+			array( "src"=>"res/icon/android/icon-96-xhdpi.png" ,"gap:platform"=>"android","gap:density"=>"xhdpi"),
+			// IOS
+			array( "src"=>"res/icon/ios/icon-57.png" ,"gap:platform"=>"ios","width"=>"57","height"=>"57"),
+			array( "src"=>"res/icon/ios/icon-72.png" ,"gap:platform"=>"ios","width"=>"72","height"=>"72"),
+			array( "src"=>"res/icon/ios/icon-57-2x.png" ,"gap:platform"=>"ios","width"=>"114","height"=>"114"),
+			array( "src"=>"res/icon/ios/icon-120.png" ,"gap:platform"=>"ios","width"=>"120","height"=>"120"),
+			array( "src"=>"res/icon/ios/icon-76.png" ,"gap:platform"=>"ios","width"=>"76","height"=>"76"),
+			array( "src"=>"res/icon/ios/icon-152.png" ,"gap:platform"=>"ios","width"=>"152","height"=>"152"),
+			array( "src"=>"res/icon/ios/icon-72-2x.png" ,"gap:platform"=>"ios","width"=>"144","height"=>"144"),
+		);
+		
+		foreach($icons as $i) {
+			$icon = $configXml->createElement('icon');
+			foreach($i as $k => $v) {
+				$icon->setAttribute($k,$v);
+			}
+			$widget->appendChild($icon);
+		}
 		
 		
+		// Define app splash screen for each platform.
+		$splashScreen = array(
+			// ANDROID
+			array( "src"=>"res/screen/android/screen320x436.9.png" ,"gap:platform"=>"android" ,"gap:density"=>"ldpi"),
+			array( "src"=>"res/screen/android/screen320x470.9.png" ,"gap:platform"=>"android" ,"gap:density"=>"mdpi"),
+			array( "src"=>"res/screen/android/screen640.9.png" ,"gap:platform"=>"android" ,"gap:density"=>"hdpi"),
+			array( "src"=>"res/screen/android/screen960x720.9.png" ,"gap:platform"=>"android" ,"gap:density"=>"xhdpi"),
+			// IOS
+			array( "src"=>"res/screen/ios/screen320.png" ,"gap:platform"=>"ios" ,"width"=>"320" ,"height"=>"480"),
+			array( "src"=>"res/screen/ios/screen640.png" ,"gap:platform"=>"ios" ,"width"=>"640" ,"height"=>"960"),
+			array( "src"=>"res/screen/ios/screen6401136.png" ,"gap:platform"=>"ios" ,"width"=>"640" ,"height"=>"1136"),
+			array( "src"=>"res/screen/ios/screen1004.png" ,"gap:platform"=>"ios" ,"width"=>"1024" ,"height"=>"748"),
+			array( "src"=>"res/screen/ios/screen768.png" ,"gap:platform"=>"ios" ,"width"=>"768" ,"height"=>"1004"),
+			array( "src"=>"res/screen/ios/screen2048.png" ,"gap:platform"=>"ios" ,"width"=>"2048" ,"height"=>"1496"),
+			array( "src"=>"res/screen/ios/screen1536.png" ,"gap:platform"=>"ios" ,"width"=>"1536" ,"height"=>"2008"),
+		);
 		
-		// $permission part
-		$permission = array_unique($permission);
-
-
+		foreach($splashScreen as $asplash) {
+			$splash = $configXml->createElement("gap:splash");
+			foreach($asplash as $k=>$v)
+				$splash->setAttribute($k,$v);
+			$widget->appendChild($splash);
+		}
+		
+		// Define access to external domains.
+		// <access), - a blank access tag denies access to all external resources.
+		// <access origin="*"), - a wildcard access tag allows access to all external resource.
+		// Otherwise, you can specify specific domains:
+		// <access origin="http://phonegap.com"), - allow any secure requests to http://phonegap.com/
+		// <access origin="http://phonegap.com" subdomains="true"), - same as above, but including subdomains, such as http://build.phonegap.com/
+		// <access origin="http://phonegap.com" browserOnly="true"), - only allows http://phonegap.com to be opened by the child browser.
+		$access = array(
+			array("origin"=>"*")
+		);
+		foreach($access as $a) {
+			$accesses = $configXml->createElement("access");
+			foreach($a as $k => $v)
+				$accesses->setAttribute($k,$v);
+			$widget->appendChild($accesses);
+		}
 		
 
-
+		echo $configXml->saveXML();
 		//die();
 		
-
+		
 
 		/**
 		 * Duplicate Export for ios, android and phonegapbuild

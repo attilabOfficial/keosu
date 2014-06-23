@@ -34,14 +34,15 @@ class GadgetRepository extends EntityRepository {
 		$gadgets = $this->_em
 			->createQuery(
 				'SELECT DISTINCT g FROM Keosu\CoreBundle\Entity\Page a JOIN Keosu\CoreBundle\Entity\Gadget g
-					WITH a.appId='.$appid.' WHERE g.shared=1 AND g.zone=\'' . $zone.'\'')->getResult();	
+					WITH a.appId='.$appid.' WHERE g.shared=1 AND g.zone=\'' . $zone.'\'')->getResult();
 		
 		if (count($gadgets) == 0 ) {
 			return null;
 		}
+		
 		//TODO : fix the query to evoid this
 		foreach($gadgets as $gadget){
-			if($gadget->getPage()->getAppId()==$appid){
+			if($gadget->getPage() != null && $gadget->getPage()->getAppId()==$appid){
 				return $gadget;
 			}
 		}

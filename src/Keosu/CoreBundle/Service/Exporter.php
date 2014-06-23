@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Service;
 
+use Keosu\CoreBundle\KeosuExtension;
+
 use Keosu\CoreBundle\Util\ZipUtil;
 use Keosu\CoreBundle\Util\ThemeUtil;
 use Keosu\CoreBundle\Util\FilesUtil;
@@ -44,28 +46,27 @@ class Exporter {
 
 	public function exportApp() {
 		
-		$manager = $this->doctrine->getManager();
+		$em = $this->doctrine->getManager();
 		$baseurl = $this->container->getParameter('url_base');
 		$param = $this->container->getParameter('url_param');
 		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
 		
 		
-		$pages = $manager->getRepository('KeosuCoreBundle:Page')->findByAppId($appId);
+		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appId);
 		$isIndexPageImported = false;
 
 		$clean=$this->cleanDir();
 
 		//Export theme
-		$theme = $manager->getRepository('KeosuCoreBundle:App')
-				->find($appId);
-		$json = json_encode(array('name' => $theme->getName()));
+		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
+		$json = json_encode(array('name' => $app->getName()));
+		
 		FilesUtil::copyContent($json, ExporterUtil::getAbsolutePath() . '/simulator/www/data/appName.json');
 		
-		
-		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $theme->getTheme().'/style',
+		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/style',
 				ExporterUtil::getAbsolutePath() . '/simulator/www/theme');
 		
-		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $theme->getTheme().'/res',
+		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/res',
 			ExporterUtil::getAbsolutePath() . '/simulator/www/res');
 		
 		//Copy all web/templates/export/js dir to web/export/www/js
@@ -76,60 +77,16 @@ class Exporter {
 		copy(TemplateUtil::getAbsolutePath() . '/main-header/cordova_plugins.js',
 			ExporterUtil::getAbsolutePath() . '/simulator/www/cordova_plugins.js');
 		
-		//config.xml
-		//TODO generate the file
-		copy(TemplateUtil::getAbsolutePath() . '/main-header/config.xml',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/config.xml');
+
 		
 		//Copy all theme/header/js dir to web/export/www/js
-		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $theme->getTheme().'/header/js',
+		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/header/js',
 		ExporterUtil::getAbsolutePath() . '/simulator/www/js');
-		
-		// Needed files for the calendar
-		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls', 0777, true);
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/day.html',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/day.html');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/events-list.html',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/events-list.html');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/modal.html',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/modal.html');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/month-day.html',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/month-day.html');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/month.html',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/month.html');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/week-days.html',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/week-days.html');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/week.html',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/week.html');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/year-month.html',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/year-month.html');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/tmpls/year.html',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/tmpls/year.html');
-			
-		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/css', 0777, true);
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/css/calendar.css',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/css/calendar.css');
-	
-		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/js', 0777, true);
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/bootstrap2/js/bootstrap.min.js',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/components/bootstrap2/js/bootstrap.min.js');
-		
-		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/components/underscore', 0777, true);
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/components/underscore/underscore-min.js',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/components/underscore/underscore-min.js');
-		
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/js/app_calendar.js',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/js/app_calendar.js');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/js/calendar.js',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/js/calendar.js');
-		
-		mkdir(ExporterUtil::getAbsolutePath() . '/simulator/www/img', 0777, true);
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/img/dark_wood.png',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/img/dark_wood.png');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/img/slide-bg.png',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/img/slide-bg.png');
-		copy(TemplateUtil::getAbsolutePath() . '/gadget/calendar_gadget/img/tick.png',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/img/tick.png');
+
+		// list of imported gadgets
+		$importedGadget = array();
+		// list of permissions requiered for the application
+		$permission = array();
 
 		foreach ($pages as $page) {
 			if ($page->getIsMain()) {
@@ -139,9 +96,48 @@ class Exporter {
 				}
 				$isIndexPageImported = true;
 			}
-			$this->exportPage($manager,$theme->getTheme(), $page->getId(), $baseurl, $param, $appId);
+			$tmp = $this->exportPage($app->getTheme(), $page);
+			$permission = array_merge($permission,$tmp[0]);
+			$importedGadget = array_merge($importedGadget,$tmp[1]);
 		}
 		
+		// import folder if they exist
+		$importedGadget = array_unique($importedGadget);
+		foreach($importedGadget as $gadget) {
+		
+			$path = TemplateUtil::getAbsolutePath().DIRECTORY_SEPARATOR.'gadget'.DIRECTORY_SEPARATOR.$gadget;
+			$dirs = scandir($path);
+			foreach($dirs as $dir) {
+			
+				if($dir != '.' && $dir != '..') {
+			
+					if(is_dir($path. DIRECTORY_SEPARATOR .$dir)) {
+						FilesUtil::copyFolder($path. DIRECTORY_SEPARATOR .$dir,
+							ExporterUtil::getAbsolutePath() . DIRECTORY_SEPARATOR .'simulator'. DIRECTORY_SEPARATOR .'www'. DIRECTORY_SEPARATOR .$dir);
+					}
+				}
+			}
+		}
+		
+
+				//config.xml
+		//TODO generate the file
+		copy(TemplateUtil::getAbsolutePath() . '/main-header/config.xml',
+		ExporterUtil::getAbsolutePath() . '/simulator/www/config.xml');
+		
+		
+		
+		// $permission part
+		$permission = array_unique($permission);
+
+
+		
+
+
+		//die();
+		
+
+
 		/**
 		 * Duplicate Export for ios, android and phonegapbuild
 		 */
@@ -170,7 +166,7 @@ class Exporter {
 		
 		
 		//Generate ZIP files for all
-		
+
 		//ios
 		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath() . '/ios/www',
 			ExporterUtil::getAbsolutePath() . '/ios/export.zip');
@@ -180,14 +176,25 @@ class Exporter {
 		//Phonegapbuild
 		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath() . '/phonegapbuild/www',
 			ExporterUtil::getAbsolutePath() . '/phonegapbuild/export.zip');
-		
+
 
 	}
 
-	private function exportPage($manager,$themeValue, $pageid, $baseurl, $param, $appid) {
-		$page = $manager->getRepository('KeosuCoreBundle:Page')
-				->find($pageid);
-		$gadgetRepo = $manager->getRepository('KeosuCoreBundle:Gadget');
+	/**
+	 * Generate html for a page
+	 * @param $themeValue theme used in this page
+	 * @param $page doctrine object page
+	 * @return array[0] list of requiered permission for this page
+	 * @return array[1] list of imported gadget
+	 */
+	private function exportPage($themeValue, $page) {
+	
+		$baseurl = $this->container->getParameter('url_base');
+		$param = $this->container->getParameter('url_param');
+		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
+	
+		$em = $this->doctrine->getManager();
+		$gadgetRepo = $em->getRepository('KeosuCoreBundle:Gadget');
 
 		//All page content will be put in $document
 		$document = new \DOMDocument();
@@ -212,7 +219,7 @@ class Exporter {
 		//Html body element in document
 		$bodyEl = $document->getElementsByTagName("body")->item(0);
 		//History of gadget init file that have already been imported
-		$importedInitFile = Array();
+		$importedInitFile = array();
 
 		//For all zones in page template
 		$classname = "zone";//Find all the zone div in page template
@@ -220,16 +227,18 @@ class Exporter {
 				->query(
 						"//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
 		
-		//TODO Delegate zone import in ExporterUtil
+		$ret = array();
+		$ret[0] = array();
+		$ret[1] = array();
 		foreach ($zones as $zone) {
 			$zoneId = $zone->getAttribute('id');
 			//Look if there is a shared gadget in this zone
-			$gadget=$gadgetRepo->findSharedByZoneAndApp($zoneId,$appid);
+			$gadget=$gadgetRepo->findSharedByZoneAndApp($zoneId,$appId);
 			//If there is no share gadget we try to find the specific one
 			if($gadget==null){
 				//Find the gadget associated with page and zone			
 				$gadget = $gadgetRepo
-					->findOneBy(array('zone' => $zoneId, 'page' => $pageid));
+					->findOneBy(array('zone' => $zoneId, 'page' => $page->getId()));
 			}
 
 			if ($gadget != null) {
@@ -247,23 +256,15 @@ class Exporter {
 				$zone->ownerDocument->saveXML($zone);
 
 				//Check if init file is not already imported
-				if (!array_key_exists($gadget->getGadgetName(),
-						$importedInitFile)) {
+				if (!array_key_exists($gadget->getGadgetName(),$importedInitFile)) {
 					//Add gadget javascript init file
 					$mainIniEl = $document->createElement('script');
-					$mainIniEl
-							->setAttribute('src',
-									'gadget/' . $gadget->getGadgetName()
-											. 'Controller.js');
+					$mainIniEl->setAttribute('src','gadget/' . $gadget->getGadgetName(). 'Controller.js');
 					$headEl->appendChild($mainIniEl);
 					$importedInitFile[$gadget->getGadgetName()] = 1;
 					//Copy js init file to www
-					copy(
-							TemplateUtil::getGadgetAbsolutePath()
-									. $gadget->getGadgetName() . '/'
-									. $gadget->getGadgetName() . 'Controller.js',
-							ExporterUtil::getAbsolutePath() . '/simulator/www/gadget/'
-									. $gadget->getGadgetName() . 'Controller.js');
+					copy(TemplateUtil::getGadgetAbsolutePath(). $gadget->getGadgetName() . '/'. $gadget->getGadgetName() . 'Controller.js',
+							ExporterUtil::getAbsolutePath() . '/simulator/www/gadget/'. $gadget->getGadgetName() . 'Controller.js');
 				}
 			
 				//Gadget name without suffix
@@ -283,16 +284,17 @@ class Exporter {
 					
 				}
 
-				//$initGadgetHtml = 'init' . $safeGadgetName . '("' . $baseurl
-				//		. '","' . $param . '","' .$page->getFileName() . '","' .$gadget->getId() . '", "'
-				//		. $zoneId . '");';
+				// permission part
+				$class = KeosuExtension::$gadgetList[$gadget->getGadgetName()];
+				$instance = new $class();
+				$instance->convertAsExistingCommonGadget($gadget);
+				$ret[0] = array_merge($ret[0],$instance->getRequieredPermissions());
 				
-				//$initGadgetEl->nodeValue=$initGadgetEl->nodeValue.$initGadgetHtml;
-
+				// import folder part
+				$ret[1][] = $gadget->getGadgetName();
+				
 			}
 		}
-		//$initGadgetEl->nodeValue=$initGadgetEl->nodeValue.'}';
-		//$headEl->appendChild($initGadgetEl);
 
 		//Get all the html from document
 		$html = $document->saveHTML();
@@ -300,7 +302,8 @@ class Exporter {
 
 		$this->writeFile($html, $page->getFileName(),"/simulator/www/");
 
-		return $html;
+		$ret[0] = array_unique($ret[0]);
+		return $ret;
 	}
 
 	private function cleanDir() {

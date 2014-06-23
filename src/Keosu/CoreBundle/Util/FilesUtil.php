@@ -45,10 +45,13 @@ class FilesUtil {
 			}
 			rmdir($dir);
 		}
-
 	}
 
 	public static function copyFolder($source, $dest) {
+	
+		if(!is_dir($dest)) {
+			mkdir($dest);
+		}
 
 		foreach ($iterator = new \RecursiveIteratorIterator(
 				new \RecursiveDirectoryIterator($source,
@@ -63,6 +66,7 @@ class FilesUtil {
 			}
 		}
 	}
+
 	public static function  copyContent($string, $file) {
 		$file = fopen ($file, "w");
 		fwrite($file, $string);

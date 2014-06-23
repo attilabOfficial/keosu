@@ -68,8 +68,8 @@
 							<ul class="dropdown-menu">
 								{% for gadget in gadgets %}
 									<li>
-										<a href="{{ path('keosu_gadget_'~gadget~'_add',{'page':content.id, 'zone':zone.zoneId}) }}">
-											Add {{ gadget }}
+										<a href="{{ path('keosu_gadget_'~classToName[gadget]~'_add',{'page':content.id, 'zone':zone.zoneId}) }}">
+											Add {{ classToName[gadget] }}
 										</a>
 									</li>
 								{% endfor %}

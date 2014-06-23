@@ -21,17 +21,17 @@ namespace Keosu\CoreBundle;
 class KeosuExtension {
 
 	public static $gadgetList = array(
-			'article_gadget' => 'article_gadget',
-			'last_article_gadget' => 'last_article_gadget',
-			'chrono_gadget' => 'chrono_gadget',
-			'map_gadget' => 'map_gadget',
-			'menu_gadget' => 'menu_gadget',
-			'picture_gadget' => 'picture_gadget',
-			'pictures_gallery_gadget' => 'pictures_gallery_gadget',
-			'aroundme_gadget'=>'aroundme_gadget',
-			'calendar_gadget'=>'calendar_gadget',
-			'authentication_gadget'=>'authentication_gadget',
-			'my_account_gadget'=> 'my_account_gadget',
+			'article_gadget' => 'Keosu\Gadget\ArticleGadgetBundle\ArticleGadget',
+			'last_article_gadget' => 'Keosu\Gadget\LastArticleGadgetBundle\LastArticleGadget',
+			'chrono_gadget' => 'Keosu\Gadget\ChronoGadgetBundle\ChronoGadget',
+			'map_gadget' => 'Keosu\Gadget\MapGadgetBundle\MapGadget',
+			'menu_gadget' => 'Keosu\Gadget\MenuGadgetBundle\MenuGadget',
+			'picture_gadget' => 'Keosu\Gadget\PictureGadgetBundle\PictureGadget',
+			'pictures_gallery_gadget' => 'Keosu\Gadget\PicturesGalleryBundle\PicturesGalleryGadget',
+			'aroundme_gadget'=>'Keosu\Gadget\AroundMeGadgetBundle\AroundMeGadget',
+			'calendar_gadget'=>'Keosu\Gadget\CalendarGadgetBundle\CalendarGadget',
+			'authentication_gadget'=>'Keosu\Gadget\AuthenticationGadgetBundle\AuthenticationGadget',
+			'my_account_gadget'=> 'Keosu\Gadget\MyAccountGadgetBundle\MyAccountGadget',
 	);
 
 	public static $readerList = array(

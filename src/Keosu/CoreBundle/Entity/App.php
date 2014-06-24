@@ -57,6 +57,55 @@ class App
      * @ORM\Column(name="privateApp", type="boolean")
      */
     private $privateApp;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="packageName", type="string", length=255)
+     */
+    private $packageName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="author", type="string", length=255)
+     */
+    private $author;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="website", type="string", length=255)
+     */
+    private $website;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebookAppId", type="string", length=1024, nullable=true)
+     */
+    private $facebookAppId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebookAppName", type="string", length=1024, nullable=true)
+     */
+    private $facebookAppName;
 
 
     /**
@@ -140,5 +189,166 @@ class App
     
     public function isPrivate() {
         return $this->privateApp;
+    }
+    
+        /**
+     * Set packageName
+     *
+     * @param string $packageName
+     * @return AppTest
+     */
+    public function setPackageName($packageName)
+    {
+        $this->packageName = $packageName;
+    
+        return $this;
+    }
+
+    /**
+     * Get packageName
+     *
+     * @return string 
+     */
+    public function getPackageName()
+    {
+        return $this->packageName;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return AppTest
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     * @return AppTest
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return string 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set website
+     *
+     * @param string $website
+     * @return AppTest
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+    
+        return $this;
+    }
+
+    /**
+     * Get website
+     *
+     * @return string 
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return AppTest
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set facebookAppId
+     *
+     * @param string $facebookAppId
+     * @return AppTest
+     */
+    public function setFacebookAppId($facebookAppId)
+    {
+        $this->facebookAppId = $facebookAppId;
+    
+        return $this;
+    }
+
+    /**
+     * Get facebookAppId
+     *
+     * @return string 
+     */
+    public function getFacebookAppId()
+    {
+        return $this->facebookAppId;
+    }
+
+    /**
+     * Set facebookAppName
+     *
+     * @param string $facebookAppName
+     * @return AppTest
+     */
+    public function setFacebookAppName($facebookAppName)
+    {
+        $this->facebookAppName = $facebookAppName;
+    
+        return $this;
+    }
+
+    /**
+     * Get facebookAppName
+     *
+     * @return string 
+     */
+    public function getFacebookAppName()
+    {
+        return $this->facebookAppName;
     }
 }

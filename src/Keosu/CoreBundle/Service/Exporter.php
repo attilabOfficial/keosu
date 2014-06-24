@@ -120,25 +120,21 @@ class Exporter {
 		$permissions = array_unique($permissions);
 
 		//config.xml
-		//TODO generate the file
-		copy(TemplateUtil::getAbsolutePath() . '/main-header/config.xml',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/config.xml');
-
 		$configXml = new \DOMDocument("1.0","UTF-8");
 		$configXml->formatOutput = true;//TODO remove after debug
 		$widget = $configXml->createElement('widget');
 		$widget->setAttribute("xmlns","http://www.w3.org/ns/widgets");
 		$widget->setAttribute("xmlns:gap","http://phonegap.com/ns/1.0");
-		$widget->setAttribute("id","com.keosu.demo"); // TODO get value
+		$widget->setAttribute("id",$app->getPackageName());
 		$widget->setAttribute("version","1.0");
 
 		$configXml->appendChild($widget);
 
 		$widget->appendChild($configXml->createElement("name",$app->getName()));
-		$widget->appendChild($configXml->createElement("description","Keosu Demo"));//TODO
-		$author = $configXml->createElement("author","Keosu team");// TODO
-		$author->setAttribute("href","http://keosu.com");// TODO
-		$author->setAttribute("email","vleborgne@keosu.com");// TODO
+		$widget->appendChild($configXml->createElement("description",$app->getDescription()));
+		$author = $configXml->createElement("author",$app->getAuthor());
+		$author->setAttribute("href",$app->getWebsite());
+		$author->setAttribute("email",$app->getEmail());
 		$widget->appendChild($author);
 
 		//Enable individual API permissions here.
@@ -195,6 +191,22 @@ class Exporter {
 			$plugin = $configXml->createElement("gap:plugin");
 			$plugin->setAttribute("name","nl.x-services.plugins.socialsharing");
 			$plugin->setAttribute("version","4.0.8");
+			$widget->appendChild($plugin);
+		}
+		
+		if( array_search(GadgetParent::PERMISSION_FACEBOOK_API,$permissions) !== false && $app->getFacebookAppId() != null && $app->getFacebookAppName()) {
+			$plugin = $configXml->createElement("gap:plugin");
+			$plugin->setAttribute("name","com.phonegap.plugins.facebookconnect");
+			$plugin->setAttribute("version","0.4.0");
+				$param = $config->createElement("param");
+				$param->setAttribute("name","APP_ID");
+				$param->setAttribute("value",$app->getFacebookAppId());
+				$plugin->appendChild($param);
+				
+				$param = $config->createElement("param");
+				$param->setAttribute("name","APP_NAME");
+				$param->setAttribute("value",$app->getFacebookAppName());
+				$plugin->appendChild($param);
 			$widget->appendChild($plugin);
 		}
 		
@@ -265,12 +277,8 @@ class Exporter {
 				$accesses->setAttribute($k,$v);
 			$widget->appendChild($accesses);
 		}
-		
 
-		echo $configXml->saveXML();
-		//die();
-		
-		
+		$configXml->save(ExporterUtil::getAbsolutePath().DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR.'config.xml');
 
 		/**
 		 * Duplicate Export for ios, android and phonegapbuild

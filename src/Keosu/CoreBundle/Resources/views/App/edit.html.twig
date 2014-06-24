@@ -66,12 +66,24 @@
 					{{ form_errors(form) }}
 
 					{{ form_row(form.name) }}
-					{{ form_row(form.privateApp)}}
+					{{ form_row(form.packageName) }}
+					{{ form_row(form.description) }}
+					{{ form_row(form.author) }}
+					{{ form_row(form.website) }}
+					{{ form_row(form.email) }}
+
+					{{ form_row(form.privateApp) }}
 					<div class="col-lg-9">
 						<span class="help-block">if the checkbox is checked only logged user can access to this app and a special authentication page is created.</span>
 					</div>
 					<div class="imgtheme">
 						{{ form_row(form.theme) }}
+					</div>
+					
+					{{ form_row(form.facebookAppId) }}
+					{{ form_row(form.facebookAppName) }}
+					<div class="col-lg-9">
+						<span class="help-block">The two facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>.</span>
 					</div>
 
 					<br class="clear"/><br class="clear"/>

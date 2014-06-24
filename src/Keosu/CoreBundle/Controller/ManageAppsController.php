@@ -178,15 +178,37 @@ class ManageAppsController extends Controller {
 	/**
 	 * Edit App form
 	 */
+	// TODO remove default value
 	private function buildAppForm($formBuilder) {
 		$formBuilder->add('name', 'text')
+				->add('packageName','text',array(
+						'empty_data' => 'com.keosu.demo'
+				))
+				->add('description','textarea',array(
+						'empty_data' => 'Keosu demo'
+				))
+				->add('author','text',array(
+						'empty_data' => 'keosu team'
+				))
+				->add('website','url',array(
+						'empty_data' => 'http://keosu.com'
+				))
+				->add('email','email',array(
+						'empty_data' => 'vleborgne@keosu.com'
+				))
+				->add('facebookAppId','text',array(
+						'required' => false
+				))
+				->add('facebookAppName','text',array(
+						'required' => false
+				))
 				->add('privateApp','checkbox', array(
-							'required'=> false
-					)) 
+						'required' => false
+				)) 
 				->add('theme', 'choice', array(
-							'choices' => ThemeUtil::getThemeList(),
-							'required' => true,'expanded'=>true
-					));
+						'choices' => ThemeUtil::getThemeList(),
+						'required' => true,'expanded'=>true
+				));
 	}
 
 }

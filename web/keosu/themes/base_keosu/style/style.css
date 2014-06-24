@@ -66,7 +66,7 @@ body {
 h6.title, h5.title, h4.title, h3.title, h2.title, h1.title {
 	text-align: center;
 	margin-top: 0px;
-	color: #000000 !important;
+	color: #000000!important;
 }
 
 a {
@@ -272,6 +272,10 @@ a {
   	left: -20;
 	height: auto;
 	position:absolute  !important;
+}
+
+img.center, .img-min {
+	width: 100%;
 }
 
 .img-list {

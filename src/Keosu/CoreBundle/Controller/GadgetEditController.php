@@ -207,12 +207,13 @@ class GadgetEditController extends Controller {
 				$commonGadget->setConfig($config);
 				$em->persist($commonGadget);
 				$em->flush();
+				$idPage = $commonGadget->getPage()->getId();
 
 				$exporter = $this->container->get('keosu_core.exporter')->exportApp();
 
 				return $this->redirect(
 							$this->generateUrl('keosu_core_views_page',
-									array('id' => $commonGadget->getPage()->getId())
+									array('id' => $idPage)
 									));
 			}
 		}

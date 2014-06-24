@@ -44,7 +44,7 @@ abstract class ThemeDataModel {
 				return $errorString;
 			}
 		}
-		return 'Error unknown';
+		return 'Error. You must change the variable "upload_max_filesize" in php.ini file';
 	}
 	public function setFile($file) {
 		$this->file = $file;

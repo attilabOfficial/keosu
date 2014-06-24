@@ -64,7 +64,8 @@ class ManageThemesController extends Controller {
 		}
 		$themesData = $this->get ( 'doctrine' )->getManager ()->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
 		return $this->render ( 'KeosuCoreBundle:Theme:manage.html.twig', array (
-				'themes' => $themesData
+				'themes' => $themesData,
+				'msg' => null
 		) );
 	}
 	
@@ -114,13 +115,22 @@ class ManageThemesController extends Controller {
 							'theme' => $theme,
 							'error' => $error
 					) );
-				$em = $this->get ( 'doctrine' )->getManager ();
-				$em->persist ( $theme );
-				$em->flush ();
-				$session = $this->get ( "session" );
-				$session->set ( "themeid", $theme->getId () );
 				$themesData = $this->get ( 'doctrine' )->getManager ()->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
-				return $this->redirect ( $this->generateUrl ( 'keosu_core_theme_manage' ) );
+				$themes = ThemeUtil::getThemeList ();
+				foreach ( $themes as $themetmp ) {
+					if ($this->themeExists ( $themetmp, $themesData, FALSE ) === FALSE) {
+						$theme->setName ( $themetmp );
+						$em = $this->get ( 'doctrine' )->getManager ();
+						$session = $this->get ( "session" );
+						$session->set ( "themeid", $theme->getId () );
+						$em->persist ( $theme );
+						$em->flush ();
+					}
+				}
+				$themesData = $this->get ( 'doctrine' )->getManager ()->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
+				return $this->render ( 'KeosuCoreBundle:Theme:manage.html.twig', array (
+						'themes' => $themesData,
+						'msg' => "Your upload succeeded.") );
 				
 
 			}

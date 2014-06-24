@@ -27,27 +27,32 @@
 			themeName=input.attr('value');
 			input.attr('id',themeName);
 			img='<label for="'+themeName+'"><img alt="'+themeName+'" src="{{url_base}}/{{ themeDir }}'+themeName+'/'+themeName+'.png"/></label>';
-			var div = document.createElement('div');
-			
-			$( div ).append(input);
-			$( div ).append(img);
 			
 			$( this ).text("");
-			$( this ).append(div);
+			$( this ).append(input);
+			$( this ).append(img);
+		});
+
+		$(".imgtheme input[checked=checked]").parent(".radio").find("img").css("border","red solid 3px");
+		
+		// switch border color
+		$(".imgtheme img").click(function(){
+			$(".imgtheme img").css("border","none");
+			$(this).css("border","red solid 3px");
 		});
 	});
 </script>
 <style type="text/css">
 .imgtheme .radio {
 	display:inline;
+	padding-left:0px;
+	padding-right:10px;
 }
 .imgtheme img {
 	height:250px;
 }
 .imgtheme .radio input[type="radio"]{
-	float:none;
-	clear:both;
-	margin-left:0px;
+	display:none;
 }
 </style>
 <div class="panel">
@@ -79,6 +84,7 @@
 					<div class="imgtheme">
 						{{ form_row(form.theme) }}
 					</div>
+					<br class="clear"/><br class="clear"/>
 					
 					{{ form_row(form.facebookAppId) }}
 					{{ form_row(form.facebookAppName) }}
@@ -93,4 +99,5 @@
 		</div>
 	</div>
 </div>
+
 {% endblock %}

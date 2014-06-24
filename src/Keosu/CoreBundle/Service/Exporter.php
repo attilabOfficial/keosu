@@ -437,6 +437,13 @@ class Exporter {
 				
 			}
 		}
+		
+		// add google maps if requiered
+		if( array_search(GadgetParent::PERMISSION_GOOGLE_MAP_API,$ret[0]) !== false) {
+			$script = $document->createElement("script");
+			$script->setAttribute("src","https://maps.googleapis.com/maps/api/js?sensor=false");
+			$headEl->appendChild($script);
+		}
 
 		//Get all the html from document
 		$html = $document->saveHTML();

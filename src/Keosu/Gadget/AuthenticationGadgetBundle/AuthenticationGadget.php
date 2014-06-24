@@ -27,6 +27,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class AuthenticationGadget extends GadgetParent implements iGadget {
 
 	private $pageToGoAfterLogin;
+	private $facebookConnect;
 	/**
 	 * Gadget Name
 	 * Used to find the gadget template path and routs
@@ -48,6 +49,8 @@ class AuthenticationGadget extends GadgetParent implements iGadget {
 		$gadgetConfig = $gadget->getConfig();
 		if (array_key_exists('pageToGoAfterLogin', $gadgetConfig)) 
 			$instance->pageToGoAfterLogin = $gadgetConfig['pageToGoAfterLogin'];
+		if (array_key_exists('facebookConnect', $gadgetConfig))
+			$instance->facebookConnect = $gadgetConfig['facebookConnect'];
 		return $instance;
 	}
 
@@ -56,13 +59,11 @@ class AuthenticationGadget extends GadgetParent implements iGadget {
 	 */
 	public function getAsCommonGadget() {
 		$commonGadget = parent::getAsCommonGadget();
-		if ($this->articleId != null) {
-			$config = array();
-			if ($this->pages != null) {
-				$config['pageToGoAfterLogin'] = $this->pageToGoAfterLogin;
-			}
-			$commonGadget->setConfig($config);
-		}
+		if($this->pageToGoAfterLogin != null)
+			$config['pageToGoAfterLogin'] = $this->pageToGoAfterLogin;
+		if($this->facebookConnect != null)
+			$config['facebookConnect'] = $this->facebookConnect;
+		$commonGadget->setConfig($config);
 		return $commonGadget;
 	}
 
@@ -72,9 +73,10 @@ class AuthenticationGadget extends GadgetParent implements iGadget {
 	public function convertAsExistingCommonGadget($commonGadget) {
 		parent::convertAsExistingCommonGadget($commonGadget);
 		$config = array();
-		if ($this->pageToGoAfterLogin != null) {
+		if ($this->pageToGoAfterLogin != null)
 			$config['pageToGoAfterLogin'] = $this->pageToGoAfterLogin;
-		}
+		if ($this->facebookConnect != null)
+			$config['facebookConnect'] = $this->facebookConnect;
 		$commonGadget->setConfig($config);
 	}
 	
@@ -85,5 +87,23 @@ class AuthenticationGadget extends GadgetParent implements iGadget {
 	public function setpageToGoAfterLogin($page) {
 		$this->pageToGoAfterLogin = $page;
 		return $this;
+	}
+	
+	public function getFacebookConnect() {
+		return $this->facebookConnect;
+	}
+	
+	public function setFacebookConnect($facebookConnect) {
+		$this->facebookConnect = $facebookConnect;
+		return $this;
+	}
+	
+	
+	public function getRequieredPermissions() {
+		$ret = array();
+		if($this->facebookConnect) {
+			$ret[] = $this::PERMISSION_FACEBOOK_API;
+		}
+		return $ret;
 	}
 }

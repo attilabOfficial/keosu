@@ -55,6 +55,9 @@ class EditController extends GadgetEditController implements iGadgetController {
 				->add('pageToGoAfterLogin', 'choice',array(
 						'choices' => $pageList
 				))
+				->add('facebookConnect', 'checkbox',array(
+						'required' => false
+				))
 				->add('gadgetTemplate', 'choice',array(
 							'choices' => TemplateUtil::getTemplateGadgetList(
 									$gadgetName), 'required' => true, 'expanded'=>true))

@@ -198,18 +198,18 @@ class Exporter {
 			$plugin = $configXml->createElement("gap:plugin");
 			$plugin->setAttribute("name","com.phonegap.plugins.facebookconnect");
 			$plugin->setAttribute("version","0.4.0");
-				$param = $config->createElement("param");
+				$param = $configXml->createElement("param");
 				$param->setAttribute("name","APP_ID");
 				$param->setAttribute("value",$app->getFacebookAppId());
 				$plugin->appendChild($param);
 				
-				$param = $config->createElement("param");
+				$param = $configXml->createElement("param");
 				$param->setAttribute("name","APP_NAME");
 				$param->setAttribute("value",$app->getFacebookAppName());
 				$plugin->appendChild($param);
 			$widget->appendChild($plugin);
+			
 		}
-		
 		// Define app icon for each platform.
 		$icons = array(
 			array( "src"=>"icon.png"),
@@ -429,7 +429,7 @@ class Exporter {
 				// permission part
 				$class = KeosuExtension::$gadgetList[$gadget->getGadgetName()];
 				$instance = new $class();
-				$instance->convertAsExistingCommonGadget($gadget);
+				$instance = $instance->constructFromGadget($gadget);
 				$ret[0] = array_merge($ret[0],$instance->getRequieredPermissions());
 				
 				// import folder part

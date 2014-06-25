@@ -59,7 +59,7 @@ class ServiceController extends Controller {
 		$event = $repo->find($eventid);
 		return $this
 			->render(
-				'KeosuGadgetCalendarGadgetBundle:service:view.'
+				'KeosuGadgetCalendarGadgetBundle:Service:view.'
 				. $format . '.twig',
 				array('event' => $event));
 	}

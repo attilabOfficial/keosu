@@ -87,7 +87,10 @@ class CalendarGadget extends GadgetParent implements iGadget {
 	}
 	
 	public function getRequieredPermissions() {
-		return array($this::PERMISSION_NATIVE_CALENDAR,$this::PERMISSION_NATIVE_SOCIAL_SHARING);
+		return array(
+			$this::PERMISSION_NATIVE_CALENDAR,
+			$this::PERMISSION_NATIVE_SOCIAL_SHARING,
+			$this::PERMISSION_GOOGLE_MAP_API);
 	}
 
 

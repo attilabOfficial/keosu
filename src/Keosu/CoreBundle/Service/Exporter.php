@@ -192,6 +192,23 @@ class Exporter {
 		foreach($children as $child) {
 			$document->getElementsByTagName("head")->item(0)->appendChild($document->importNode($child));
 		}
+		
+		// facebook api js part
+		if( array_search(GadgetParent::PERMISSION_FACEBOOK_API,$permissions) !== false && $app->getFacebookAppId() != null && $app->getFacebookAppName()) {
+			$script = $document->createElement("script");
+			$script->setAttribute("src","js/cdv-plugin-fb-connect.js");
+			$document->getElementsByTagName("head")->item(0)->appendChild($script);
+			
+			$script = $document->createElement("script");
+			$script->setAttribute("src","js/facebook-js-sdk.js");
+			$document->getElementsByTagName("head")->item(0)->appendChild($script);
+			
+			copy(TemplateUtil::getAbsolutePath() . '/main-header/plugins/facebook/cdv-plugin-fb-connect.js',
+			ExporterUtil::getAbsolutePath() . '/simulator/www/js/cdv-plugin-fb-connect.js');
+			
+			copy(TemplateUtil::getAbsolutePath() . '/main-header/plugins/facebook/facebook-js-sdk.js',
+			ExporterUtil::getAbsolutePath() . '/simulator/www/js/facebook-js-sdk.js');
+		}
 
 		// import google maps if needed
 		if( array_search(GadgetParent::PERMISSION_GOOGLE_MAP_API,$permissions) !== false) {
@@ -199,8 +216,14 @@ class Exporter {
 			$script->setAttribute("src","https://maps.googleapis.com/maps/api/js?sensor=false");
 			$document->getElementsByTagName("head")->item(0)->appendChild($script);
 		}
+
+		// this should always be at the end
+		$script = $document->createElement("script");
+		$script->setAttribute("src","js/app.js");
+		$document->getElementsByTagName("head")->item(0)->appendChild($script);
+
 		$this->writeFile(StringUtil::decodeString($document->saveHTML()),'index.html','/simulator/www/');
-		
+
 		////////////////////////////////////////////////////
 		// import all gadget requiered controller
 		////////////////////////////////////////////////////

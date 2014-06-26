@@ -1,10 +1,9 @@
 <div ng-controller="menu_gadgetController" class=" row-fluid menu">
-		<div ng-repeat="page in pages"
-			class="menu-elements">
-			<a href="#/Page/{{ page.name }}">
-				<span class="icons-menu glyphicon {{ page.ico }} {{ page.isactive }}"></span>
-			</a>
-		</div>
+	<div ng-repeat="page in pages" class="menu-elements">
+		<a href="#/Page/{{ page.name }}">
+			<span class="icons-menu glyphicon {{ page.ico }}" ng-class="getClass(page.name)"></span>
+		</a>
+	</div>
 </div>
 
 

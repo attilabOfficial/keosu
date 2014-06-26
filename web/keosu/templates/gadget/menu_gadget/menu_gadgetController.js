@@ -15,26 +15,20 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
-
-//Main function
-
-app.controller('menu_gadgetController', function ($scope, $http) {
+app.controller('menu_gadgetController', function ($scope, $http,$location) {
 	$scope.init = function (host, param, page, gadget, zone) {
 		$scope.page = page;
 		$http.get('data/' + gadget + '.json').success( function (data) {
-			var length = data.pages.length;
 			var pages = [];
-			var ico = [];
-			img = ['home', 'news', 'chrono', 'map'];
 			for (var i = 0; i < data.pages.length; i++) {
-				var pageFileName = data.pages[i].name;
-				if (pageFileName.replace(' ', '') == $scope.page) {
-					pages[i] = {name : pageFileName.replace(' ', ''), ico : data.pages[i].icon, isactive:'active' };
-				}
-				else
-					pages[i] = {name : pageFileName.replace(' ', ''), ico : data.pages[i].icon, isactive:''};
+				pages[i] = {name :data.pages[i].name.replace(' ',''), ico : data.pages[i].icon};
 			}
 			$scope.pages = pages;
 		});
 	};
+	
+	// @see https://stackoverflow.com/questions/12592472/how-to-highlight-a-current-menu-item-in-angularjs
+	$scope.getClass = function(page) {
+		return $location.path() == "/Page/"+page ? "active" : ""
+	}
 });

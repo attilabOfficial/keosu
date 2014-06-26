@@ -19,16 +19,16 @@
 //Main function
 
 app.controller('menu_gadgetController', function ($scope, $http) {
-	$scope.init = function (host, param, page, gadget, zone){ 
+	$scope.init = function (host, param, page, gadget, zone) {
 		$scope.page = page;
 		$http.get('data/' + gadget + '.json').success( function (data) {
 			var length = data.pages.length;
 			var pages = [];
 			var ico = [];
 			img = ['home', 'news', 'chrono', 'map'];
-			for (var i = 0; i < data.pages.length; i++){
-				var pageFileName = data.pages[i].name + ".html";
-				if (pageFileName.replace(' ', '') == $scope.page){  
+			for (var i = 0; i < data.pages.length; i++) {
+				var pageFileName = data.pages[i].name;
+				if (pageFileName.replace(' ', '') == $scope.page) {
 					pages[i] = {name : pageFileName.replace(' ', ''), ico : data.pages[i].icon, isactive:'active' };
 				}
 				else

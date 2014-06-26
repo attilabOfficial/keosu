@@ -1,7 +1,7 @@
 <div ng-controller="menu_gadgetController" class=" row-fluid menu">
 		<div ng-repeat="page in pages"
 			class="menu-elements">
-			<a href="{{ page.name }}">
+			<a href="#/Page/{{ page.name }}">
 				<span class="icons-menu glyphicon {{ page.ico }} {{ page.isactive }}"></span>
 			</a>
 		</div>

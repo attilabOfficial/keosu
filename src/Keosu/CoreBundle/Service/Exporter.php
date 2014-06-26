@@ -78,6 +78,8 @@ class Exporter {
 		copy(TemplateUtil::getAbsolutePath() . '/main-header/cordova_plugins.js',
 			ExporterUtil::getAbsolutePath() . '/simulator/www/cordova_plugins.js');
 		
+		copy(TemplateUtil::getAbsolutePath() . '/main-header/index.html',
+			ExporterUtil::getAbsolutePath() . '/simulator/www/index.html');
 
 		
 		//Copy all theme/header/js dir to web/export/www/js
@@ -88,22 +90,139 @@ class Exporter {
 		$importedGadget = array();
 		// list of permissions requiered for the application
 		$permissions = array();
-
+		$mainPage = null;
+		
+		////////////////////////////////////////
+		// Generate view for each page
+		////////////////////////////////////////
 		foreach ($pages as $page) {
-			if ($page->getIsMain()) {
-				if ($isIndexPageImported) {
-					//TODO create custom exception
-					throw new \Exception("Duplicate Index: Only one page can have the isMain attribute");
-				}
-				$isIndexPageImported = true;
+		
+			if($mainPage == null) {
+				$mainPage = $page->getName();
 			}
-			$tmp = $this->exportPage($app->getTheme(), $page);
-			$permissions = array_merge($permissions,$tmp[0]);
-			$importedGadget = array_merge($importedGadget,$tmp[1]);
+			if($page->getIsMain()) {
+				$mainPage = $page->getName();
+			}
+
+			//All page content will be put in $document
+			$document = new \DOMDocument();
+
+			//For all zones in page template
+			$classname = "zone";//Find all the zone div in page template
+			//Disallow errors to allow HTML5 parsing
+			@$document->loadHtmlFile(TemplateUtil::getPageTemplateAbsolutePath().$page->getTemplateId());
+
+			$finder = new \DOMXPath($document);
+			$zones = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
+
+			$gadgetRepo = $em->getRepository('KeosuCoreBundle:Gadget');
+			foreach ($zones as $zone) {
+				$zoneId = $zone->getAttribute('id');
+				//Look if there is a shared gadget in this zone
+				$gadget = $gadgetRepo->findSharedByZoneAndApp($zoneId,$appId);
+				//If there is no share gadget we try to find the specific one
+				if($gadget == null){
+					//Find the gadget associated with page and zone
+					$gadget = $gadgetRepo->findOneBy(array('zone' => $zoneId, 'page' => $page->getId()));
+				}
+
+				if ($gadget != null) {
+					//Add gadget html template
+					$gadgetTemplateHtml = file_get_contents(
+							TemplateUtil::getGadgetAbsolutePath() . '/'
+									. $gadget->getGadgetName() . '/'
+									. $gadget->getGadgetTemplate());
+					$gadgetTemplateHtml = utf8_encode($gadgetTemplateHtml);
+					$zone->nodeValue = $gadgetTemplateHtml;
+					//Add the angularJS directive to zone
+					// TODO keep this ?
+					$zone->setAttribute("ng-controller", $gadget->getGadgetName()."Controller");
+					$zone->setAttribute("ng-init","init('".$baseurl."','".$param."','".$page->getFileName()."','".$gadget->getId() ."','".$zoneId."')");
+					//Saving node
+					$zone->ownerDocument->saveXML($zone);
+
+					//If gadget isStatic we copy static data in a local file
+					if($gadget->isStatic()){
+						//Gadget name without suffix
+						$shortGadgetName = str_replace("_gadget", "", $gadget->getGadgetName());
+						//CURL the gadget service
+						$serviceurl=$baseurl.$param."service/gadget/".$shortGadgetName."/".$gadget->getId()."/json";
+						$curl = curl_init($serviceurl);
+						curl_setopt($curl, CURLOPT_HTTPHEADER,
+							array('Content-Type: text/xml',
+							'User-Agent: Keosu-UA'));
+						curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+						$feedstring = utf8_decode(curl_exec($curl));
+						$this->writeFile($feedstring, $gadget->getId().".json","/simulator/www/data/");
+					}
+
+					// permission part
+					$class = KeosuExtension::$gadgetList[$gadget->getGadgetName()];
+					$instance = new $class();
+					$instance = $instance->constructFromGadget($gadget);
+					$permissions = array_merge($permissions,$instance->getRequieredPermissions());
+
+					// import folder part
+					$importedGadget[] = $gadget->getGadgetName();
+				}
+			}
+
+			$bodyEl = $document->getElementsByTagName("body")->item(0);
+			$html = $this->DomInnerHTML($bodyEl);
+			$html = StringUtil::decodeString($html);
+			$this->writeFile($html, $page->getFileName(),"/simulator/www/");
 		}
 		
-		// import folder if they exist
 		$importedGadget = array_unique($importedGadget);
+		$permissions = array_unique($permissions);
+
+		///////////////////////////////////////////////////
+		// Generate main view index.html
+		///////////////////////////////////////////////////
+
+		// load index.html (main template)
+		$document = new \DOMDocument();
+		@$document->loadHtmlFile(ExporterUtil::getAbsolutePath() . '/simulator/www/index.html');
+
+		// TODO import theme in index.html
+		$tmpthemeHeader = new \DOMDocument();
+		@$tmpthemeHeader->loadHtmlFile(ThemeUtil::getAbsolutePath() .$app->getTheme().'/header/header.html');
+		
+		$children = $tmpthemeHeader->getElementsByTagName("head")->item(0)->childNodes;
+		foreach($children as $child) {
+			$document->getElementsByTagName("head")->item(0)->appendChild($document->importNode($child));
+		}
+
+		// import google maps if needed
+		if( array_search(GadgetParent::PERMISSION_GOOGLE_MAP_API,$permissions) !== false) {
+			$script = $document->createElement("script");
+			$script->setAttribute("src","https://maps.googleapis.com/maps/api/js?sensor=false");
+			$document->getElementsByTagName("head")->item(0)->appendChild($script);
+		}
+		$this->writeFile(StringUtil::decodeString($document->saveHTML()),'index.html','/simulator/www/');
+		
+		////////////////////////////////////////////////////
+		// import all gadget requiered controller
+		////////////////////////////////////////////////////
+		$appJs = \file_get_contents(ExporterUtil::getAbsolutePath() . '/simulator/www/js/app.js');
+		$appJs .= '
+app.config(function($routeProvider,$locationProvider){
+	$routeProvider.when("/Page/:pageName",{
+		templateUrl: function(params) {
+			return params.pageName+".html";
+		}
+	})
+	.otherwise({redirectTo:"/Page/'.$mainPage.'"});
+});';
+
+		foreach($importedGadget as $ig) {
+			$appJs .= "\n".\file_get_contents(TemplateUtil::getGadgetAbsolutePath().$ig .'/'.$ig.'Controller.js');
+		}
+		$this->writeFile($appJs,'app.js','/simulator/www/js/');
+		
+		////////////////////////////////////////////////////
+		// import folder if they exist
+		////////////////////////////////////////////////////
 		foreach($importedGadget as $gadget) {
 		
 			$path = TemplateUtil::getAbsolutePath().DIRECTORY_SEPARATOR.'gadget'.DIRECTORY_SEPARATOR.$gadget;
@@ -116,10 +235,9 @@ class Exporter {
 			}
 		}
 
-		// permission part
-		$permissions = array_unique($permissions);
-
-		//config.xml
+		///////////////////////////////////////////////////
+		// Generate config.xml
+		//////////////////////////////////////////////////
 		$configXml = new \DOMDocument("1.0","UTF-8");
 		$configXml->formatOutput = true;//TODO remove after debug
 		$widget = $configXml->createElement('widget');
@@ -319,140 +437,6 @@ class Exporter {
 		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath() . '/phonegapbuild/www',
 			ExporterUtil::getAbsolutePath() . '/phonegapbuild/export.zip');
 
-
-	}
-
-	/**
-	 * Generate html for a page
-	 * @param $themeValue theme used in this page
-	 * @param $page doctrine object page
-	 * @return array[0] list of requiered permission for this page
-	 * @return array[1] list of imported gadget
-	 */
-	private function exportPage($themeValue, $page) {
-	
-		$baseurl = $this->container->getParameter('url_base');
-		$param = $this->container->getParameter('url_param');
-		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
-	
-		$em = $this->doctrine->getManager();
-		$gadgetRepo = $em->getRepository('KeosuCoreBundle:Gadget');
-
-		//All page content will be put in $document
-		$document = new \DOMDocument();
-		//Template of page content as String
-		$templateHtml = file_get_contents(
-				TemplateUtil::getPageTemplateAbsolutePath()
-						. $page->getTemplateId());
-		$templateHtml = utf8_encode($templateHtml);
-		//Disallow errors to allow HTML5 parsing
-		libxml_use_internal_errors(true);
-		$document->loadHtml($templateHtml);
-		libxml_clear_errors();
-		$finder = new \DOMXPath($document);
-
-		//Add HTMl header and js file import (web/templates/main-header.html + web/themes/xxx/header/header.html)
-		$document = $this->addHeader($document, $themeValue);
-		//Add the main app init in javascript
-		$document = $this->addJsInitApp($document);
-
-		//Html head element in document
-		$headEl = $document->getElementsByTagName("head")->item(0);
-		//Html body element in document
-		$bodyEl = $document->getElementsByTagName("body")->item(0);
-		//History of gadget init file that have already been imported
-		$importedInitFile = array();
-
-		//For all zones in page template
-		$classname = "zone";//Find all the zone div in page template
-		$zones = $finder
-				->query(
-						"//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
-		
-		$ret = array();
-		$ret[0] = array();
-		$ret[1] = array();
-		foreach ($zones as $zone) {
-			$zoneId = $zone->getAttribute('id');
-			//Look if there is a shared gadget in this zone
-			$gadget=$gadgetRepo->findSharedByZoneAndApp($zoneId,$appId);
-			//If there is no share gadget we try to find the specific one
-			if($gadget==null){
-				//Find the gadget associated with page and zone			
-				$gadget = $gadgetRepo
-					->findOneBy(array('zone' => $zoneId, 'page' => $page->getId()));
-			}
-
-			if ($gadget != null) {
-				//Add gadget html template
-				$gadgetTemplateHtml = file_get_contents(
-						TemplateUtil::getGadgetAbsolutePath() . '/'
-								. $gadget->getGadgetName() . '/'
-								. $gadget->getGadgetTemplate());
-				$gadgetTemplateHtml = utf8_encode($gadgetTemplateHtml);
-				$zone->nodeValue = $gadgetTemplateHtml;
-				//Add the angularJS directive to zone
-				$zone->setAttribute("ng-controller", $gadget->getGadgetName()."Controller");
-				$zone->setAttribute("ng-init","init('".$baseurl."','".$param."','".$page->getFileName()."','".$gadget->getId() ."','".$zoneId."')");
-				//Saving node
-				$zone->ownerDocument->saveXML($zone);
-
-				//Check if init file is not already imported
-				if (!array_key_exists($gadget->getGadgetName(),$importedInitFile)) {
-					//Add gadget javascript init file
-					$mainIniEl = $document->createElement('script');
-					$mainIniEl->setAttribute('src','gadget/' . $gadget->getGadgetName(). 'Controller.js');
-					$headEl->appendChild($mainIniEl);
-					$importedInitFile[$gadget->getGadgetName()] = 1;
-					//Copy js init file to www
-					copy(TemplateUtil::getGadgetAbsolutePath(). $gadget->getGadgetName() . '/'. $gadget->getGadgetName() . 'Controller.js',
-							ExporterUtil::getAbsolutePath() . '/simulator/www/gadget/'. $gadget->getGadgetName() . 'Controller.js');
-				}
-			
-				//Gadget name without suffix
-				$shortGadgetName = str_replace("_gadget", "", $gadget->getGadgetName());
-
-				//If gadget isStatic we copy static data in a local file
-				if($gadget->isStatic()){
-					//CURL the gadget service
-					$serviceurl=$baseurl.$param."service/gadget/".$shortGadgetName."/".$gadget->getId()."/json";
-					$curl = curl_init($serviceurl);
-					curl_setopt($curl, CURLOPT_HTTPHEADER,
-						array('Content-Type: text/xml',
-						'User-Agent: Keosu-UA'));
-					curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-					$feedstring = utf8_decode(curl_exec($curl));
-					$this->writeFile($feedstring, $gadget->getId().".json","/simulator/www/data/");
-					
-				}
-
-				// permission part
-				$class = KeosuExtension::$gadgetList[$gadget->getGadgetName()];
-				$instance = new $class();
-				$instance = $instance->constructFromGadget($gadget);
-				$ret[0] = array_merge($ret[0],$instance->getRequieredPermissions());
-				
-				// import folder part
-				$ret[1][] = $gadget->getGadgetName();
-				
-			}
-		}
-		
-		// add google maps if requiered
-		if( array_search(GadgetParent::PERMISSION_GOOGLE_MAP_API,$ret[0]) !== false) {
-			$script = $document->createElement("script");
-			$script->setAttribute("src","https://maps.googleapis.com/maps/api/js?sensor=false");
-			$headEl->appendChild($script);
-		}
-
-		//Get all the html from document
-		$html = $document->saveHTML();
-		$html = StringUtil::decodeString($html);
-
-		$this->writeFile($html, $page->getFileName(),"/simulator/www/");
-
-		$ret[0] = array_unique($ret[0]);
-		return $ret;
 	}
 
 	private function cleanDir() {
@@ -474,38 +458,6 @@ class Exporter {
 		mkdir(ExporterUtil::getAbsolutePath() . '/phonegapbuild/www', 0777, true);
 	}
 
-	//Add HTMl header and js file import
-	private function addHeader($document, $themeValue) {
-
-		//Add the Main header (cordova and javascript import common to all pages)
-		$headerHtmlMain = file_get_contents(
-				TemplateUtil::getAbsolutePath() . '/main-header/header.html');
-		$headerHtmlMain = utf8_encode($headerHtmlMain);
-		//Add the theme header
-		$headerHtml = file_get_contents(
-				ThemeUtil::getAbsolutePath() . $themeValue . '/header/header.html');
-		$headerHtml = utf8_encode($headerHtml);
-		
-		
-		$headerEl = new \DOMElement('head', $headerHtmlMain.$headerHtml);
-		//Insert "head" section before body
-		$document->getElementsByTagName("html")->item(0)
-				->insertBefore($headerEl,
-						$document->getElementsByTagName("body")->item(0));
-		return $document;
-	}
-
-	//Add JS init app
-	private function addJsInitApp($document) {
-		//$mainInitHtml = file_get_contents(
-				//TemplateUtil::getAbsolutePath() . '/export/main-init.html');
-		//$mainInitHtml = utf8_encode($mainInitHtml);
-		//$mainIniEl = new \DOMElement('script', $mainInitHtml);
-		//$document->getElementsByTagName("body")->item(0)
-			//	->appendChild($mainIniEl);
-		return $document;
-	}
-
 	//write a file
 	private function writeFile($html, $fileName, $path) {
 		//Writting the html content in file
@@ -519,6 +471,21 @@ class Exporter {
 		$file = fopen($fileName, "x+");
 		fwrite($file, $html);
 		fclose($file);
+	}
+	
+	/**
+	 * Allow to have innerhtml of a DomNode
+	 * @see https://stackoverflow.com/questions/2087103/innerhtml-in-phps-domdocument
+	 */
+	private function DOMinnerHTML($element) 
+	{ 
+		$innerHTML = ""; 
+		$children = $element->childNodes;
+
+		foreach ($children as $child) 
+			$innerHTML .= $element->ownerDocument->saveHTML($child);
+
+		return $innerHTML; 
 	}
 }
 ?>

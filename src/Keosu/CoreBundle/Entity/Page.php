@@ -162,13 +162,8 @@ class Page {
 	 * @return string
 	 */
 	public function getFileName() {
-		$fileName="";
-		if ($this->getIsMain()) {
-			$fileName = "index.html";
-		} else {
-			$fileName = $this->getName() . '.html';
-			$fileName = str_replace(" ", "", $fileName);
-		}
+		$fileName = $this->getName() . '.html';
+		$fileName = str_replace(" ", "", $fileName);
 		return $fileName;
 	}
 }

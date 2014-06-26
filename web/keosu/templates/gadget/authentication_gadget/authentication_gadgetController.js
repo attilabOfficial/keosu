@@ -1,4 +1,4 @@
-app.controller('authentication_gadgetController',function ($scope, $http, usSpinnerService) {
+app.controller('authentication_gadgetController',function ($scope, $http, usSpinnerService,$location) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -31,17 +31,19 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 	 **************/
 	$scope.init = function(host, param, page, gadget, zone){
 
-		$http.get(host+param + 'service/gadget/authentication/' + gadget + '/json/init').success(function(data) {
-			$scope.param = {
-				'host' :   host+param,
-				'page' :   page,
-				'gadget' : gadget,
-				'zone' :   zone,
-				'pageToGoAfterLogin' : data.pageToGoAfterLogin
-			}
-		
+		if($scope.param == null)
+			$http.get(host+param + 'service/gadget/authentication/' + gadget + '/json/init').success(function(data) {
+				$scope.param = {
+					'host' :   host+param,
+					'page' :   page,
+					'gadget' : gadget,
+					'zone' :   zone,
+					'pageToGoAfterLogin' : data.pageToGoAfterLogin
+				}
+				$scope.loginInit();
+			});
+		else
 			$scope.loginInit();
-		});
 
 	}
 
@@ -57,7 +59,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 			usSpinnerService.stop('spinner');
 			$scope.token = data.csrf_token;
 			if(data.allReadyLogged) {
-				window.location.replace($scope.param.pageToGoAfterLogin+'.html');
+				$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
 			} else {
 				$scope.routing('login');
 			}
@@ -74,7 +76,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		$http.post($scope.param.host + 'login_check',data).success(function(data) {
 			usSpinnerService.stop('spinner');
 			if(data.success) {
-				window.location = $scope.param.pageToGoAfterLogin+'.html';
+				$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
 			} else {
 				$scope.loginInit(data.message);
 			}
@@ -140,7 +142,6 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		$scope.forgotPasswordError = message;
 		usSpinnerService.stop('spinner');
 	}
-	
 	$scope.forgotPasswordAction = function () {
 		$scope.forgotPasswordError = null;
 		if(typeof($scope.username) == "undefined" || $scope.username.length == 0) {
@@ -159,3 +160,64 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		}
 	}
 });
+/*
+document.addEventListener('deviceready', function() {
+	FB.init({
+		appId: '647222965353265',
+		nativeInterface: CDV.FB,
+		useCachedDialogs: false
+	});
+
+	FB.getLoginStatus(handleStatusChange);
+
+	authUser();
+	updateAuthElements();
+});
+function handleStatusChange(session) {
+	console.log('Got the user\'s session: ' + JSON.stringify(session));
+
+	if (session.authResponse) {
+	//document.body.className = 'connected';
+
+		//Fetch user's id, name, and picture
+		FB.api('/me', {
+			fields: 'name, picture'
+		},
+		function(response) {
+			if (!response.error) {
+				document.body.className = 'connected';
+
+				user = response;
+
+				console.log('Got the user\'s name and picture: ' + JSON.stringify(response));
+*
+				//Update display of user name and picture
+				if (document.getElementById('user-name')) {
+					document.getElementById('user-name').innerHTML = user.name;
+				}
+				if (document.getElementById('user-picture')) {
+					document.getElementById('user-picture').src = user.picture.data.url;
+				}*
+			} else {
+				
+				//document.body.className = 'not_connected';
+				console.log('Error getting user info: ' + JSON.stringify(response.error));
+				// Check for errors due to app being unininstalled
+				
+				if (response.error.error_subcode && response.error.error_subcode == "458") {
+					setTimeout(function() {
+						alert("The app was removed. Please log in again.");
+					}, 0);
+				}
+			}
+
+		});
+	}
+	else {
+		document.body.className = 'not_connected';
+	}
+}
+
+function test() {
+	FB.login(null, {scope: 'email'});
+}*/

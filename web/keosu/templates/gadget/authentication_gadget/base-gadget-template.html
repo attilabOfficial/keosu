@@ -1,6 +1,7 @@
 <div ng-controller="authentication_gadgetController" class="row-fluid center">
 
 	<section ng-show="login">
+		<button onclick="test();">facebookConnect</button>
 		<div ng-show="loginSuccess" class="alert alert-success">{{ loginSuccess}}</div>
 		<div ng-show="loginError" class="alert alert-danger">{{ loginError }}</div>
 		<form role="form">

@@ -180,6 +180,7 @@ class ManageAppsController extends Controller {
 	 */
 	// TODO remove default value
 	private function buildAppForm($formBuilder) {
+		$themesKeys = array_keys(ThemeUtil::getThemeList());
 		$formBuilder->add('name', 'text')
 				->add('packageName','text',array(
 						'empty_data' => 'com.keosu.demo'
@@ -206,8 +207,10 @@ class ManageAppsController extends Controller {
 						'required' => false
 				)) 
 				->add('theme', 'choice', array(
-						'choices' => ThemeUtil::getThemeList(),
-						'required' => true,'expanded'=>true
+						'choices'  => ThemeUtil::getThemeList(),
+						'required' => true,
+						'expanded' => true,
+						'data'     => $themesKeys[0],
 				));
 	}
 

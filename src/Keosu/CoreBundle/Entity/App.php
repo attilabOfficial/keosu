@@ -106,7 +106,13 @@ class App
      * @ORM\Column(name="facebookAppName", type="string", length=1024, nullable=true)
      */
     private $facebookAppName;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebookAppSecret", type="string", length=1024, nullable=true)
+     */
+    private $facebookAppSecret;
 
     /**
      * Get id
@@ -191,11 +197,11 @@ class App
         return $this->privateApp;
     }
     
-        /**
+    /**
      * Set packageName
      *
      * @param string $packageName
-     * @return AppTest
+     * @return App
      */
     public function setPackageName($packageName)
     {
@@ -218,7 +224,7 @@ class App
      * Set description
      *
      * @param string $description
-     * @return AppTest
+     * @return App
      */
     public function setDescription($description)
     {
@@ -241,7 +247,7 @@ class App
      * Set author
      *
      * @param string $author
-     * @return AppTest
+     * @return App
      */
     public function setAuthor($author)
     {
@@ -264,7 +270,7 @@ class App
      * Set website
      *
      * @param string $website
-     * @return AppTest
+     * @return App
      */
     public function setWebsite($website)
     {
@@ -287,7 +293,7 @@ class App
      * Set email
      *
      * @param string $email
-     * @return AppTest
+     * @return App
      */
     public function setEmail($email)
     {
@@ -310,7 +316,7 @@ class App
      * Set facebookAppId
      *
      * @param string $facebookAppId
-     * @return AppTest
+     * @return App
      */
     public function setFacebookAppId($facebookAppId)
     {
@@ -333,7 +339,7 @@ class App
      * Set facebookAppName
      *
      * @param string $facebookAppName
-     * @return AppTest
+     * @return App
      */
     public function setFacebookAppName($facebookAppName)
     {
@@ -350,5 +356,28 @@ class App
     public function getFacebookAppName()
     {
         return $this->facebookAppName;
+    }
+    
+    /**
+     * Set facebookAppSecret
+     *
+     * @param string $facebookAppSecret
+     * @return App
+     */
+    public function setFacebookAppSecret($facebookAppSecret)
+    {
+        $this->facebookAppSecret = $facebookAppSecret;
+    
+        return $this;
+    }
+
+    /**
+     * Get facebookAppSecret
+     *
+     * @return string 
+     */
+    public function getFacebookAppSecret()
+    {
+        return $this->facebookAppSecret;
     }
 }

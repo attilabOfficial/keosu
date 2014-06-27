@@ -203,6 +203,9 @@ class ManageAppsController extends Controller {
 				->add('facebookAppName','text',array(
 						'required' => false
 				))
+				->add('facebookAppSecret','text',array(
+						'required' => false
+				))
 				->add('privateApp','checkbox', array(
 						'required' => false
 				)) 

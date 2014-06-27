@@ -26,7 +26,8 @@
 		"twbs/bootstrap" : "v3.0.0",
 		"leafo/lessphp" : "0.4.0",
 		"friendsofsymfony/user-bundle" : "*",
-		"stfalcon/tinymce-bundle" : "dev-master"
+		"stfalcon/tinymce-bundle" : "dev-master",
+		"facebook/php-sdk-v4" : "4.0.*"
 	},
 	"scripts" : {
 		"post-install-cmd" : [

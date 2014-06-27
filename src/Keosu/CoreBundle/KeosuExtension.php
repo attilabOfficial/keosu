@@ -27,7 +27,7 @@ class KeosuExtension {
 			'map_gadget' => 'Keosu\Gadget\MapGadgetBundle\MapGadget',
 			'menu_gadget' => 'Keosu\Gadget\MenuGadgetBundle\MenuGadget',
 			'picture_gadget' => 'Keosu\Gadget\PictureGadgetBundle\PictureGadget',
-			'pictures_gallery_gadget' => 'Keosu\Gadget\PicturesGalleryBundle\PicturesGalleryGadget',
+			'pictures_gallery_gadget' => 'Keosu\Gadget\PicturesGalleryGadgetBundle\PicturesGalleryGadget',
 			'aroundme_gadget'=>'Keosu\Gadget\AroundMeGadgetBundle\AroundMeGadget',
 			'calendar_gadget'=>'Keosu\Gadget\CalendarGadgetBundle\CalendarGadget',
 			'authentication_gadget'=>'Keosu\Gadget\AuthenticationGadgetBundle\AuthenticationGadget',

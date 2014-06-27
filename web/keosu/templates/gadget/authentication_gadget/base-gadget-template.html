@@ -6,8 +6,8 @@
 		<div ng-show="loginError" class="alert alert-danger">{{ loginError }}</div>
 		<form role="form">
 			<div class="form-group">
-				<label for="inputUsernameLogin">Username</label>
-				<input type="text" class="form-control" id="inputUsernameLogin" placeholder="Enter your username" ng-model="username">
+				<label for="inputEmailLogin">Username</label>
+				<input type="mail" class="form-control" id="inputEmailLogin" placeholder="Enter your username" ng-model="email">
 			</div>
 			<div class="form-group">
 				<label for="inputPasswordLogin">Password</label>
@@ -36,10 +36,6 @@
 		<a ng-click="loginInit()"> < Go back to login</a>
 		<div ng-show="registerError" class="alert alert-danger">{{ registerError }}</div>
 		<form role="form" ng-submit="registerAction()">
-			<div class="form-group">
-				<label for="inputUsernameRegister">Username</label>
-				<input type="text" class="form-control" id="inputUsernameRegister" placeholder="Enter your username" ng-model="username">
-			</div>
 			<div class="form-group">
 				<label for="inputMailRegister">Email</label>
 				<input type="mail" class="form-control" id="inputMailRegister" placeholder="Enter your email" ng-model="email">

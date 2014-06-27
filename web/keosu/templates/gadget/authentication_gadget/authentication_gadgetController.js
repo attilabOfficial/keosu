@@ -69,7 +69,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 	
 		usSpinnerService.spin('spinner');
 		$scope.loginError = null;
-		var data = '_csrf_token='+$scope.token+'&_username='+$scope.username+'&_password='+$scope.password+'&ajax=true';
+		var data = '_csrf_token='+$scope.token+'&_username='+$scope.email+'&_password='+$scope.password+'&ajax=true';
 		if($scope.rememberMe) {
 			data+='&_remember_me='+$scope.rememberMe;
 		}
@@ -120,7 +120,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 			window.scrollTo(0, 0);
 		} else {
 			usSpinnerService.spin('spinner');
-			var data = 'csrf_token='+$scope.token+'&username='+$scope.username+'&password='+$scope.password+'&password2='+$scope.password2+'&email='+$scope.email;
+			var data = 'csrf_token='+$scope.token+'&password='+$scope.password+'&email='+$scope.email;
 			$http.post($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/register',data).success(function(data) {
 				usSpinnerService.stop('spinner');
 				if(data.success) {
@@ -160,64 +160,30 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		}
 	}
 });
-/*
+
 document.addEventListener('deviceready', function() {
 	FB.init({
 		appId: '647222965353265',
 		nativeInterface: CDV.FB,
 		useCachedDialogs: false
 	});
-
 	FB.getLoginStatus(handleStatusChange);
-
-	authUser();
-	updateAuthElements();
 });
 function handleStatusChange(session) {
 	console.log('Got the user\'s session: ' + JSON.stringify(session));
-
-	if (session.authResponse) {
-	//document.body.className = 'connected';
-
-		//Fetch user's id, name, and picture
-		FB.api('/me', {
-			fields: 'name, picture'
-		},
-		function(response) {
-			if (!response.error) {
-				document.body.className = 'connected';
-
-				user = response;
-
-				console.log('Got the user\'s name and picture: ' + JSON.stringify(response));
-*
-				//Update display of user name and picture
-				if (document.getElementById('user-name')) {
-					document.getElementById('user-name').innerHTML = user.name;
-				}
-				if (document.getElementById('user-picture')) {
-					document.getElementById('user-picture').src = user.picture.data.url;
-				}*
-			} else {
-				
-				//document.body.className = 'not_connected';
-				console.log('Error getting user info: ' + JSON.stringify(response.error));
-				// Check for errors due to app being unininstalled
-				
-				if (response.error.error_subcode && response.error.error_subcode == "458") {
-					setTimeout(function() {
-						alert("The app was removed. Please log in again.");
-					}, 0);
-				}
-			}
-
-		});
-	}
-	else {
-		document.body.className = 'not_connected';
-	}
 }
 
+FB.Event.subscribe('auth.login', function(response) {
+					console.log('login event');
+                   console.log(response);
+                   });
+
+FB.Event.subscribe('auth.logout', function(response) {
+					console.log('logout event');
+                   console.log(response);
+                   });
+
 function test() {
+	console.log("test login");
 	FB.login(null, {scope: 'email'});
-}*/
+}

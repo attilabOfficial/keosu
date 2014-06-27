@@ -21,29 +21,29 @@ namespace Keosu\CoreBundle;
 class KeosuExtension {
 
 	public static $gadgetList = array(
-			'article_gadget' => 'Keosu\Gadget\ArticleGadgetBundle\ArticleGadget',
-			'last_article_gadget' => 'Keosu\Gadget\LastArticleGadgetBundle\LastArticleGadget',
-			'chrono_gadget' => 'Keosu\Gadget\ChronoGadgetBundle\ChronoGadget',
-			'map_gadget' => 'Keosu\Gadget\MapGadgetBundle\MapGadget',
-			'menu_gadget' => 'Keosu\Gadget\MenuGadgetBundle\MenuGadget',
-			'picture_gadget' => 'Keosu\Gadget\PictureGadgetBundle\PictureGadget',
+			'article_gadget'          => 'Keosu\Gadget\ArticleGadgetBundle\ArticleGadget',
+			'last_article_gadget'     => 'Keosu\Gadget\LastArticleGadgetBundle\LastArticleGadget',
+			'chrono_gadget'           => 'Keosu\Gadget\ChronoGadgetBundle\ChronoGadget',
+			'map_gadget'              => 'Keosu\Gadget\MapGadgetBundle\MapGadget',
+			'menu_gadget'             => 'Keosu\Gadget\MenuGadgetBundle\MenuGadget',
+			'picture_gadget'          => 'Keosu\Gadget\PictureGadgetBundle\PictureGadget',
 			'pictures_gallery_gadget' => 'Keosu\Gadget\PicturesGalleryGadgetBundle\PicturesGalleryGadget',
-			'aroundme_gadget'=>'Keosu\Gadget\AroundMeGadgetBundle\AroundMeGadget',
-			'calendar_gadget'=>'Keosu\Gadget\CalendarGadgetBundle\CalendarGadget',
-			'authentication_gadget'=>'Keosu\Gadget\AuthenticationGadgetBundle\AuthenticationGadget',
-			'my_account_gadget'=> 'Keosu\Gadget\MyAccountGadgetBundle\MyAccountGadget',
+			'aroundme_gadget'         => 'Keosu\Gadget\AroundMeGadgetBundle\AroundMeGadget',
+			'calendar_gadget'         => 'Keosu\Gadget\CalendarGadgetBundle\CalendarGadget',
+			'authentication_gadget'   => 'Keosu\Gadget\AuthenticationGadgetBundle\AuthenticationGadget',
+			'my_account_gadget'       => 'Keosu\Gadget\MyAccountGadgetBundle\MyAccountGadget',
 	);
 
 	public static $readerList = array(
-			'RssReader' => 'RSS',
+			'RssReader'      => 'RSS',
 			'RssEventReader' => 'Event RSS',
-			'icsReader' => 'iCalendar',
+			'icsReader'      => 'iCalendar',
 	);
 	
 	public static $dataModelList = array(
 			'article' => 'article',
-			'map'=>'map',
+			'map'     =>'map',
 			'picture' => 'picture',
-			'event' => 'event',
+			'event'   => 'event',
 	);
 }

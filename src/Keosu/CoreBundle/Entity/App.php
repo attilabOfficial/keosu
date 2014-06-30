@@ -113,6 +113,13 @@ class App
      * @ORM\Column(name="facebookAppSecret", type="string", length=1024, nullable=true)
      */
     private $facebookAppSecret;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="debugMode", type="boolean")
+     */
+    private $debugMode;
 
     /**
      * Get id
@@ -379,5 +386,28 @@ class App
     public function getFacebookAppSecret()
     {
         return $this->facebookAppSecret;
+    }
+    
+    /**
+     * Set debugMode
+     *
+     * @param boolean $debugMode
+     * @return App
+     */
+    public function setDebugMode($debugMode)
+    {
+        $this->debugMode = $debugMode;
+    
+        return $this;
+    }
+
+    /**
+     * Get debugMode
+     *
+     * @return string 
+     */
+    public function getDebugMode()
+    {
+        return $this->debugMode;
     }
 }

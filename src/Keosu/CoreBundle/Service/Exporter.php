@@ -217,6 +217,14 @@ class Exporter {
 			$script->setAttribute("src","https://maps.googleapis.com/maps/api/js?sensor=false");
 			$document->getElementsByTagName("head")->item(0)->appendChild($script);
 		}
+		
+		// import weinre if the app is in debug mode
+		// @see https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html
+		if($app->getDebugMode() == true) {
+			$script = $document->createElement("script");
+			$script->setAttribute("src",\substr($baseurl,0,\strlen($baseurl)-10).":8080/target/target-script-min.js#anonymous");
+			$document->getElementsByTagName("head")->item(0)->appendChild($script);
+		}
 
 		// this should always be at the end
 		$script = $document->createElement("script");

@@ -44,5 +44,12 @@ class AroundMeGadget extends GadgetParent implements iGadget {
 		return $instance;
 		
 	}
+	
+	public function getRequieredPermissions() {
+		$ret = array();
+		$ret[] = $this::PERMISSION_GOOGLE_MAP_API;
+		$ret[] = $this::PERMISSION_GEOLOCATION;
+		return $ret;
+	}
 
 }

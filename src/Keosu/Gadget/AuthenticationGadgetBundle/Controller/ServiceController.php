@@ -84,6 +84,7 @@ class ServiceController extends Controller {
 	
 	public function registerAction($gadgetId,$format,Request $request) {
 
+		// for csrf token
 		$action = "register";
 
 		/** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
@@ -98,34 +99,29 @@ class ServiceController extends Controller {
 			$message = "";
 		
 			if($this->checkCsrfToken($action,$request->request->get('csrf_token'))) {
-			
-				if($request->request->get('password') == $request->request->get('password2')) {
 				
-					if(strlen($request->request->get('password'))> 5) {
+				if(strlen($request->request->get('password'))> 5) {
 
-						// check email
-						$emailConstraint = new EmailConstraint();
-						$errors = $this->get('validator')->validateValue($request->request->get('email'),$emailConstraint);
+					// check email
+					$emailConstraint = new EmailConstraint();
+					$errors = $this->get('validator')->validateValue($request->request->get('email'),$emailConstraint);
 
-						if($errors == "") {
-						
-							$user->setUsername($request->request->get('username'));
-							$user->setPlainPassword($request->request->get('password'));
-							$user->setEmail($request->request->get('email'));
-							try {
-								$userManager->updateUser($user);
-								$success = true;
-							} catch(\Exception $e) {
-								$message = "Username or User mail already exist";
-							}
-						} else {
-							$message = "Invalid email";
+					if($errors == "") {
+					
+						$user->setPlainPassword($request->request->get('password'));
+						$user->setEmail($request->request->get('email'));
+						$user->setAccountType('keosu');
+						try {
+							$userManager->updateUser($user);
+							$success = true;
+						} catch(\Exception $e) {
+							$message = "Your email is allready used";
 						}
 					} else {
-						$message = "a password must contain at least 6 characters";
+						$message = "Invalid email";
 					}
 				} else {
-					$message = "passwords don't match";
+					$message = "a password must contain at least 6 characters";
 				}
 			} else {
 				$message = "invalid csrf token";

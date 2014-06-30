@@ -1,4 +1,4 @@
-app.controller('authentication_gadgetController',function ($scope, $http, usSpinnerService) {
+app.controller('authentication_gadgetController',function ($scope, $http, usSpinnerService,$location) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -31,17 +31,19 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 	 **************/
 	$scope.init = function(host, param, page, gadget, zone){
 
-		$http.get(host+param + 'service/gadget/authentication/' + gadget + '/json/init').success(function(data) {
-			$scope.param = {
-				'host' :   host+param,
-				'page' :   page,
-				'gadget' : gadget,
-				'zone' :   zone,
-				'pageToGoAfterLogin' : data.pageToGoAfterLogin
-			}
-		
+		if($scope.param == null)
+			$http.get(host+param + 'service/gadget/authentication/' + gadget + '/json/init').success(function(data) {
+				$scope.param = {
+					'host' :   host+param,
+					'page' :   page,
+					'gadget' : gadget,
+					'zone' :   zone,
+					'pageToGoAfterLogin' : data.pageToGoAfterLogin
+				}
+				$scope.loginInit();
+			});
+		else
 			$scope.loginInit();
-		});
 
 	}
 
@@ -57,7 +59,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 			usSpinnerService.stop('spinner');
 			$scope.token = data.csrf_token;
 			if(data.allReadyLogged) {
-				window.location.replace($scope.param.pageToGoAfterLogin+'.html');
+				$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
 			} else {
 				$scope.routing('login');
 			}
@@ -67,14 +69,14 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 	
 		usSpinnerService.spin('spinner');
 		$scope.loginError = null;
-		var data = '_csrf_token='+$scope.token+'&_username='+$scope.username+'&_password='+$scope.password+'&ajax=true';
+		var data = '_csrf_token='+$scope.token+'&_username='+$scope.email+'&_password='+$scope.password+'&ajax=true';
 		if($scope.rememberMe) {
 			data+='&_remember_me='+$scope.rememberMe;
 		}
 		$http.post($scope.param.host + 'login_check',data).success(function(data) {
 			usSpinnerService.stop('spinner');
 			if(data.success) {
-				window.location = $scope.param.pageToGoAfterLogin+'.html';
+				$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
 			} else {
 				$scope.loginInit(data.message);
 			}
@@ -118,7 +120,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 			window.scrollTo(0, 0);
 		} else {
 			usSpinnerService.spin('spinner');
-			var data = 'csrf_token='+$scope.token+'&username='+$scope.username+'&password='+$scope.password+'&password2='+$scope.password2+'&email='+$scope.email;
+			var data = 'csrf_token='+$scope.token+'&password='+$scope.password+'&email='+$scope.email;
 			$http.post($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/register',data).success(function(data) {
 				usSpinnerService.stop('spinner');
 				if(data.success) {
@@ -140,7 +142,6 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		$scope.forgotPasswordError = message;
 		usSpinnerService.stop('spinner');
 	}
-	
 	$scope.forgotPasswordAction = function () {
 		$scope.forgotPasswordError = null;
 		if(typeof($scope.username) == "undefined" || $scope.username.length == 0) {
@@ -159,3 +160,30 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		}
 	}
 });
+
+document.addEventListener('deviceready', function() {
+	FB.init({
+		appId: '647222965353265',
+		nativeInterface: CDV.FB,
+		useCachedDialogs: false
+	});
+	FB.getLoginStatus(handleStatusChange);
+});
+function handleStatusChange(session) {
+	console.log('Got the user\'s session: ' + JSON.stringify(session));
+}
+
+FB.Event.subscribe('auth.login', function(response) {
+					console.log('login event');
+                   console.log(response);
+                   });
+
+FB.Event.subscribe('auth.logout', function(response) {
+					console.log('logout event');
+                   console.log(response);
+                   });
+
+function test() {
+	console.log("test login");
+	FB.login(null, {scope: 'email'});
+}

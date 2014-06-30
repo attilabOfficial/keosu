@@ -19,12 +19,7 @@
 { "pages": [
 	{% for page in pages %}
 		{
-			"name":
-				{% if page.getIsMain %}
-					"index"
-				{% else %}
-					"{{page.name}}"
-				{% endif %}
+			"name":"{{page.name}}"
 			,
 			"icon":"{{page.icon}}"
 		}

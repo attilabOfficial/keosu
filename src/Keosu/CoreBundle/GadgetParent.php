@@ -18,12 +18,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle;
 
-class GadgetParent{
+class GadgetParent {
+
 	private $page;
 	private $zone;
 	private $gadgetTemplate;
 	private $shared;
-	
+
+	/****************
+	 * Part permission for gadgets
+	 ****************/
+	const PERMISSION_FACEBOOK_API = 1;
+	const PERMISSION_GOOGLE_MAP_API = 2;
+	const PERMISSION_NATIVE_CALENDAR = 3;
+	const PERMISSION_GEOLOCATION = 4;
+	const PERMISSION_NATIVE_SOCIAL_SHARING = 5;
+
 	/**
 	 * Gadget Name (call to child function)
 	 * Used to find the gadget template path and routs
@@ -31,6 +41,7 @@ class GadgetParent{
 	public function getChildGadgetName() {
 		return $this->getGadgetName();
 	}
+
 	/**
 	 * Construct a specific Gadget from a common Gadget (Keosu\CoreBundle\Entity\Gadget)
 	 */
@@ -43,6 +54,7 @@ class GadgetParent{
 		}
 		return $instance;
 	}
+
 	/**
 	 * Get a specific gadget as a new common gadget (Keosu\CoreBundle\Entity\Gadget)
 	 */
@@ -52,6 +64,7 @@ class GadgetParent{
 		$commonGadget->setConfig($config);
 		return $commonGadget;
 	}
+
 	/**
 	 * Convert a specificGadget to existing common one
 	 */
@@ -63,31 +76,37 @@ class GadgetParent{
 		$commonGadget->setGadgetName($this->getChildGadgetName());
 	}
 	
+	public function getRequieredPermissions() {
+		return array();
+	}
+
 	public function getPage() {
 		return $this->page;
 	}
 	public function setPage($page) {
 		$this->page = $page;
+		return $this;
 	}
 	public function getZone() {
 		return $this->zone;
 	}	
 	public function setZone($zone) {
 		$this->zone = $zone;
+		return $this;
 	}
 	public function setGadgetTemplate($gadgetTemplate) {
 		$this->gadgetTemplate = $gadgetTemplate;
+		return $this;
 	}
 	public function getGadgetTemplate() {
 		return $this->gadgetTemplate;
 	}
 	public function setShared($shared) {
 		$this->shared = $shared;
-	
 		return $this;
 	}
 	public function isShared() {
 		return $this->shared;
 	}
-	
+
 }

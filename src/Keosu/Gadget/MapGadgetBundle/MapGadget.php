@@ -84,4 +84,8 @@ class MapGadget extends GadgetParent implements iGadget {
 	public function setPoiId($poiId) {
 		$this->poiId = $poiId;
 	}
+	
+	public function getRequieredPermissions() {
+		return array($this::PERMISSION_GOOGLE_MAP_API,$this::PERMISSION_GEOLOCATION);
+	}
 }

@@ -44,8 +44,6 @@
 		$('.templatepreview').css('width',width);
 		$('#iframepreview').attr('height',height);
 		$('#iframepreview').attr('width',width);
-		//$("iframe").contents().find("#zone-corps").css('background-color','red');
-		//$('#iframepreview #zone-corps').css('background-color','red');
 	}
 </script>
 	
@@ -68,8 +66,8 @@
 							<ul class="dropdown-menu">
 								{% for gadget in gadgets %}
 									<li>
-										<a href="{{ path('keosu_gadget_'~gadget~'_add',{'page':content.id, 'zone':zone.zoneId}) }}">
-											Add {{ gadget }}
+										<a href="{{ path('keosu_gadget_'~classToName[gadget]~'_add',{'page':content.id, 'zone':zone.zoneId}) }}">
+											Add {{ classToName[gadget] }}
 										</a>
 									</li>
 								{% endfor %}
@@ -98,14 +96,12 @@
 					}
 				);
 				</script>
-				
 			{% endfor %}
-
 	</div>
 
 	<div class="col-md-7">
 		<center>
-			<iframe id="iframepreview" width="320px" height="480px" src="{{url_base}}/keosu/export/simulator/www/{{ content.fileName }}?enableripple=cordova"></iframe>
+			<iframe id="iframepreview" width="320px" height="480px" src="{{url_base}}/keosu/export/simulator/www/index.html#/Page/{{ content.name }}"></iframe>
 		</center>
 	</div>
 </div>

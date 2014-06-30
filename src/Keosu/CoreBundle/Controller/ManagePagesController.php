@@ -91,10 +91,11 @@ class ManagePagesController extends Controller {
 				$cannotEdit[] = $content->getId();
 			}
 		}
+
 		return $this
 				->render('KeosuCoreBundle:Page:manage.html.twig',
-						array('contents'   => $contents,
-							  'cannotEdit' => $cannotEdit));
+						array('contents'    => $contents,
+							  'cannotEdit'  => $cannotEdit,));
 	}
 	
 	/**

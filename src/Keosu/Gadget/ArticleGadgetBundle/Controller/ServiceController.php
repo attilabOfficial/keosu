@@ -37,9 +37,6 @@ class ServiceController extends Controller {
 				->getRepository(
 						'KeosuDataModelArticleModelBundle:ArticleBody')
 				->find($gadgetConfig["article-id"]);
-		$article
-				->setBody(
-						TemplateUtil::formatTemplateString($article->getBody()));
 		return $this
 				->render(
 						'KeosuGadgetArticleGadgetBundle:Service:viewone.'

@@ -55,7 +55,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		usSpinnerService.spin('spinner');
 		$scope.loginError = message;
 		$scope.loginSuccess = success;
-		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/login').success(function(data) {
+		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/loginInit').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.token = data.csrf_token;
 			if(data.allReadyLogged) {

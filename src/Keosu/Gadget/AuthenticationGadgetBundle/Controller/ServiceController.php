@@ -63,7 +63,10 @@ class ServiceController extends Controller {
 	
 	public function loginFacebookAction($gadgetId,Request $request) {
 
-		$ret = array('success' => false);
+		$ret = array(
+			'success' => false,
+			'message' => 'unable to login with facebook'
+		);
 	
 		if ($request->request->get('facebook_token') != null && 'POST' === $request->getMethod()) {
 
@@ -101,7 +104,6 @@ class ServiceController extends Controller {
 					$this->get('session')->set('_security_main',serialize($token));
 					$ret['success'] = true;
 				} else {
-					$ret['error'] = true;
 					$ret['message'] = "This email is allready used with an other account";
 				}
 				

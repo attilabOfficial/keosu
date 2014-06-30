@@ -2,9 +2,9 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
-	/**************
-	 * Routing part
-	 **************/
+	/////////////////////////////////////
+	// Routing part
+	/////////////////////////////////////
 	$scope.routing = function (page) {
 
 		$scope.login = false;
@@ -26,9 +26,9 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		}
 	}
 	
-	/**************
-	 * Init part
-	 **************/
+	//////////////////////////////////////
+	// Init part
+	//////////////////////////////////////
 	$scope.init = function(host, param, page, gadget, zone){
 
 		if($scope.param == null)
@@ -38,21 +38,70 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 					'page' :   page,
 					'gadget' : gadget,
 					'zone' :   zone,
-					'pageToGoAfterLogin' : data.pageToGoAfterLogin
+					'pageToGoAfterLogin' : data.pageToGoAfterLogin,
+					'facebookConnect' : data.facebookConnect
 				}
+
+				// Facebook login part
+				if($scope.param.facebookConnect) {
+				
+					FB.getLoginStatus(function(response) {
+						if (response.status === 'connected') {
+							usSpinnerService.spin('spinner');
+							var data = 'facebook_token='+$scope.token;
+							$http.post($scope.param.host + '/service/gadget/authentication/'+$scope.param.gadget+'/loginFacebook',data).success(function(data) {
+								usSpinnerService.stop('spinner');
+								console.log(data);
+								if(data.success) {
+									$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
+								} else {
+									$scope.loginInit(data.message);
+								}
+							});
+							$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
+						}
+					});
+				
+					FB.Event.subscribe('auth.login', function(response) {
+						if(response.status === 'connected') {
+							usSpinnerService.spin('spinner');
+							var data = 'facebook_token='+$scope.token;
+							$http.post($scope.param.host + '/service/gadget/authentication/'+$scope.param.gadget+'/loginFacebook',data).success(function(data) {
+								usSpinnerService.stop('spinner');
+								console.log(data);
+								if(data.success) {
+									$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
+								} else {
+									$scope.loginInit(data.message);
+								}
+							});
+							$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
+						}
+					});
+
+					FB.Event.subscribe('auth.logout', function(response) {
+						$http.get($scope.param.host + 'service/gadget/authentication/'+$scope.param.gadget+'/logout').success(function(data) {
+							$scope.logged = false;
+							if(data.appPrivate) {
+								window.location.replace("index.html");
+							}
+						})
+					});
+				}
+
 				$scope.loginInit();
 			});
 		else
 			$scope.loginInit();
-
 	}
 
-	/**************
-	 * Login part
-	 **************/
+	/////////////////////////////////
+	// Login part
+	/////////////////////////////////
 	$scope.loginInit = function(message,success) {
 	
 		usSpinnerService.spin('spinner');
+		
 		$scope.loginError = message;
 		$scope.loginSuccess = success;
 		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/loginInit').success(function(data) {
@@ -82,10 +131,14 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 			}
 		});
 	}
+	$scope.loginFacebookAction = function() {
+		console.log("Login action facebook");
+		FB.login(null, {scope: 'email'});
+	}
 	
-	/**************
-	 * Register part
-	 **************/
+	///////////////////////////////
+	// Register part
+	///////////////////////////////
 	$scope.registerInit = function(message) {
 		usSpinnerService.spin('spinner');
 		$scope.routing('register');
@@ -133,9 +186,9 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		}
 	}
 	
-	/*************
-	 * Forgot password part
-	 *************/
+	/////////////////////////////////////
+	// Forgot password part
+	/////////////////////////////////////
 	$scope.forgotPasswordInit = function(message) {
 		usSpinnerService.spin('spinner');
 		$scope.routing('forgotPassword');
@@ -160,30 +213,3 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		}
 	}
 });
-
-document.addEventListener('deviceready', function() {
-	FB.init({
-		appId: '647222965353265',
-		nativeInterface: CDV.FB,
-		useCachedDialogs: false
-	});
-	FB.getLoginStatus(handleStatusChange);
-});
-function handleStatusChange(session) {
-	console.log('Got the user\'s session: ' + JSON.stringify(session));
-}
-
-FB.Event.subscribe('auth.login', function(response) {
-					console.log('login event');
-                   console.log(response);
-                   });
-
-FB.Event.subscribe('auth.logout', function(response) {
-					console.log('logout event');
-                   console.log(response);
-                   });
-
-function test() {
-	console.log("test login");
-	FB.login(null, {scope: 'email'});
-}

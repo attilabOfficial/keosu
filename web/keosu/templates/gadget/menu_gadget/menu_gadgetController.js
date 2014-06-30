@@ -19,11 +19,7 @@ app.controller('menu_gadgetController', function ($scope, $http,$location) {
 	$scope.init = function (host, param, page, gadget, zone) {
 		$scope.page = page;
 		$http.get('data/' + gadget + '.json').success( function (data) {
-			var pages = [];
-			for (var i = 0; i < data.pages.length; i++) {
-				pages[i] = {name :data.pages[i].name.replace(' ',''), ico : data.pages[i].icon};
-			}
-			$scope.pages = pages;
+			$scope.pages = data.pages;
 		});
 	};
 	

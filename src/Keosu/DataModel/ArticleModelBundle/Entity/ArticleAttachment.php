@@ -34,14 +34,6 @@ class ArticleAttachment extends MediaDataModel{
 	public function __construct() {
 		$this->remote = false;
 	}
-	/**
-	 * @var integer $id
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
 
 	/**
 	 * @var string $name
@@ -71,15 +63,6 @@ class ArticleAttachment extends MediaDataModel{
 	 * @ORM\Column(name="idext", type="string", length=255, nullable=true)
 	 */
 	private $idext;
-
-	/**
-	 * Get id
-	 *
-	 * @return integer 
-	 */
-	public function getId() {
-		return $this->id;
-	}
 
 	/**
 	 * Set name

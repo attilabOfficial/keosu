@@ -98,10 +98,10 @@ class Exporter {
 		foreach ($pages as $page) {
 		
 			if($mainPage == null) {
-				$mainPage = $page->getName();
+				$mainPage = $page->getId();
 			}
 			if($page->getIsMain()) {
-				$mainPage = $page->getName();
+				$mainPage = $page->getId();
 			}
 
 			//All page content will be put in $document

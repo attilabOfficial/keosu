@@ -94,5 +94,5 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
 			}	
 			navigator.geolocation.getCurrentPosition(onGpsSuccess, onGpsError);
 		}
-	};
+	});
 });

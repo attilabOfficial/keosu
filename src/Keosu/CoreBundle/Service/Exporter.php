@@ -90,6 +90,7 @@ class Exporter {
 		$importedGadget = array();
 		// list of permissions requiered for the application
 		$permissions = array();
+		$jsToImport = array();
 		$mainPage = null;
 		
 		////////////////////////////////////////
@@ -161,7 +162,10 @@ class Exporter {
 					$instance = new $class();
 					$instance = $instance->constructFromGadget($gadget);
 					$permissions = array_merge($permissions,$instance->getRequieredPermissions());
-
+					
+					//JS file to import
+					$jsToImport=array_merge($jsToImport,$instance->getExtraJsToImport());
+					
 					// import folder part
 					$importedGadget[] = $gadget->getGadgetName();
 				}
@@ -175,6 +179,7 @@ class Exporter {
 		
 		$importedGadget = array_unique($importedGadget);
 		$permissions = array_unique($permissions);
+		$jsToImport = array_unique($jsToImport);
 
 		///////////////////////////////////////////////////
 		// Generate main view index.html
@@ -211,13 +216,13 @@ class Exporter {
 			ExporterUtil::getAbsolutePath() . '/simulator/www/js/facebook-js-sdk.js');
 		}
 
-		// import google maps if needed
-		if( array_search(GadgetParent::PERMISSION_GOOGLE_MAP_API,$permissions) !== false) {
+		//Ading the script TAG in document head
+		//This is used to import custom JS file for gadgets
+		foreach ($jsToImport as $jsURl){
 			$script = $document->createElement("script");
-			$script->setAttribute("src","https://maps.googleapis.com/maps/api/js?sensor=false");
+			$script->setAttribute("src",$jsURl);
 			$document->getElementsByTagName("head")->item(0)->appendChild($script);
 		}
-		
 		// import weinre if the app is in debug mode
 		// @see https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html
 		if($app->getDebugMode() == true) {

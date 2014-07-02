@@ -88,4 +88,7 @@ class MapGadget extends GadgetParent implements iGadget {
 	public function getRequieredPermissions() {
 		return array($this::PERMISSION_GOOGLE_MAP_API,$this::PERMISSION_GEOLOCATION);
 	}
+	public function getExtraJsToImport() {
+		return array("https://maps.googleapis.com/maps/api/js?sensor=false");
+	}
 }

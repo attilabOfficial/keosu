@@ -1,8 +1,6 @@
 function init_calendar(source) {
 (function($) {
-
 	"use strict";
-
 	var options = {
 		events_source: source,
 		view: 'month',

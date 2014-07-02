@@ -38,13 +38,6 @@ class ArticleBody extends DataModel {
 	private $idext;
 
 	/**
-	 * @var int $likes
-	 *
-	 * @ORM\Column(name="likes", type="integer", nullable=true)
-	 */
-	private $likes;
-
-	/**
 	 * @var string $title
 	 *
 	 * @ORM\Column(name="title", type="string", length=255)
@@ -113,26 +106,6 @@ class ArticleBody extends DataModel {
 	 */
 	public function getIdext() {
 		return $this->idext;
-	}
-
-	/**
-	 * Set idext
-	 *
-	 * @param string $idext
-	 * @return ArticleBody
-	 */
-	public function setLikes($likes) {
-		$this->likes = $likes;
-
-		return $this;
-	}
-	/**
-	 * Get likes
-	 *
-	 * @return string
-	 */
-	public function getLikes() {
-		return $this->likes;
 	}
 
 	/**

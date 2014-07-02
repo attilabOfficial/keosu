@@ -16,22 +16,24 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-function parts(isList, isArticle, $scope) {
-	$scope.isList = isList;
-	$scope.isArticle = isArticle;
-}
+
 
 //Main function
 app.controller('last_article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {	
-	parts(true, false, $scope);
+
+	$scope.parts = function (isList, isArticle, $scope) {
+		$scope.isList = isList;
+		$scope.isArticle = isArticle;
+	}
 	$scope.close = function () {
-		parts(true, false, $scope);
+		$scope.parts(true, false, $scope);
 	};
 	$scope.open = function (page) {
 		$scope.article = page;
-		parts(false, true, $scope);
+		$scope.parts(false, true, $scope);
 	};
 	$scope.init = function (host, param, page, gadget, zone){ 
+		$scope.parts(true, false, $scope);
 		var offset = (0);
 		$scope.activePage = {
 				page:0

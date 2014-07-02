@@ -39,9 +39,9 @@ class Comment extends DataModel
     /**
      * @var string
      *
-     * @ORM\Column(name="dataModelObjet", type="string", length=255)
+     * @ORM\Column(name="dataModelObject", type="string", length=255)
      */
-    private $objetDataModel;
+    private $dataModelObject;
     
     /**
      * @ORM\OneToOne(targetEntity="Keosu\UserBundle\Entity\User")
@@ -124,26 +124,26 @@ class Comment extends DataModel
     }
     
     /**
-     * Set objetDataModel
+     * Set dataModelObject
      *
-     * @param \DateTime $date
+     * @param string $dataModelObject
      * @return Comment
      */
-    public function setObjectDataModel($objetDataModel)
+    public function setDataModelObject($dataModelObject)
     {
-        $this->objetDataModel = $objetDataModel;
+        $this->dataModelObject = $dataModelObject;
     
         return $this;
     }
 
     /**
-     * Get objetDataModel
+     * Get dataModelObject
      *
-     * @return \DateTime 
+     * @return string 
      */
-    public function getObjectDataModel()
+    public function getDataModelObject()
     {
-        return $this->objetDataModel;
+        return $this->dataModelObject;
     }
     
         /**

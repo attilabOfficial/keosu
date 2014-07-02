@@ -113,7 +113,25 @@ class App
      * @ORM\Column(name="facebookAppSecret", type="string", length=1024, nullable=true)
      */
     private $facebookAppSecret;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="debugMode", type="boolean")
+     */
+    private $debugMode;
 
+    /**
+     * Set default data for the form.
+     */
+    public function __construct(){
+    	$this->packageName = 'com.keosu.demo';
+    	$this->description = 'Keosu demo';
+    	$this->author = 'keosu team';
+    	$this->website = 'http://keosu.com';
+    	$this->email = 'vleborgne@keosu.com';
+    }
+    
     /**
      * Get id
      *

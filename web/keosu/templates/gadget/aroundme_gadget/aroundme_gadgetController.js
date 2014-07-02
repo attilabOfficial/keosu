@@ -16,28 +16,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-function parts(isList, isMap, $scope) {
-	$scope.isList = isList;
-	$scope.isMap = isMap;
-}
-
-
-//Main function
-
+//Main controller
 app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
-	parts(true, false, $scope);
+	//Functions
+	$scope.parts=function(isList, isMap, $scope) {
+		$scope.isList = isList;
+		$scope.isMap = isMap;
+	}
+	//Init google gadget
+	$scope.initialize=function() {
+		var mapOptions = {
+				center: new google.maps.LatLng(47.21677,-1.553307),
+				zoom: 8,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		$('#map_canvas').html('');
+		var map = new google.maps.Map(document.getElementById("map_canvas"),
+				mapOptions);
+		return map;
+	}
 	$scope.open = function (page) {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		$http.get($scope.host + $scope.param + 'service/gadget/aroundme/view/'
 				+ page.id + '/json').success(function (data){
 					usSpinnerService.stop('spinner');
 					$scope.myMap = data[0];
-					var decodedContent = data[0].description;
-					decodedContent = $('<div/>').html(decodedContent).text();
-					decodedContent = decodedContent.replace(/[/\\*]/g, "");
-					$scope.myMap.description = $sce.trustAsHtml(decodedContent);
+					$scope.myMap.description = $sce.trustAsHtml(decodedContent(data[0].description));
 					$scope.myMap.nom = $('<div/>').html(data[0].nom).text();
-					var map=initialize();
+					var map=$scope.initialize();
 					google.maps.event.trigger($("#map_canvas")[0], 'resize');
 					var latitudeAndLongitude = new google.maps.LatLng(data[0].lat,data[0].lng);
 					map.setCenter(latitudeAndLongitude);
@@ -50,48 +56,35 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
                         map.setCenter(latitudeAndLongitude);
                         },100);
 
-					parts(false, true, $scope);
+					$scope.parts(false, true, $scope);
 				});
 	};
 	$scope.close = function () {
-		parts(true, false, $scope);
+		$scope.parts(true, false, $scope);
 	};
 	$scope.init = function (host, param, page, gadget, zone) {
-		$scope.host = host;
-		$scope.param = param;
-
-		var onGpsSuccess = function(position) {
+			$scope.parts(true, false, $scope);
 			usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-			$http.get(host +param + 'service/gadget/aroundme/' + gadget +'/'
-					+ position.coords.latitude + '/'
-					+ position.coords.longitude + '/0/' + '10' + '/json').success(function (data) {
-						usSpinnerService.stop('spinner');
-						$tmp = [];		
-						for (i = 0; i < data.data.length; i++) {
-							$tmp[i] = data.data[i];
-							decodedContent = data.data[i].title;
-							decodedContent = $('<div/>').html(decodedContent).text();
-							decodedContent = decodedContent.replace(/[/\\*]/g, "");
-							$tmp[i].title = decodedContent;
-						}
-						$scope.pages = $tmp;
-					});
-		};
-		function onGpsError(error) {
-			alert('Impossible de vous localiser.');
-		}	
-		navigator.geolocation.getCurrentPosition(onGpsSuccess, onGpsError);
-	};
+			$scope.host = host;
+			$scope.param = param;
+	
+			var onGpsSuccess = function(position) {
+				$http.get(host +param + 'service/gadget/aroundme/' + gadget +'/'
+						+ position.coords.latitude + '/'
+						+ position.coords.longitude + '/0/' + '10' + '/json').success(function (data) {
+							usSpinnerService.stop('spinner');
+							$tmp = [];		
+							for (i = 0; i < data.data.length; i++) {
+								$tmp[i] = data.data[i];
+								$tmp[i].title = decodedContent(data.data[i].title);
+							}
+							$scope.pages = $tmp;
+							usSpinnerService.stop('spinner');
+						});
+			};
+			function onGpsError(error) {
+				alert('Impossible de vous localiser.');
+			}	
+			navigator.geolocation.getCurrentPosition(onGpsSuccess, onGpsError);
+		}
 });
-
-function initialize() {
-	var mapOptions = {
-			center: new google.maps.LatLng(47.21677,-1.553307),
-			zoom: 8,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
-	$('#map_canvas').html('');
-	var map = new google.maps.Map(document.getElementById("map_canvas"),
-			mapOptions);
-	return map;
-}

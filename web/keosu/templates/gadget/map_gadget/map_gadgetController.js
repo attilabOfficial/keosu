@@ -26,9 +26,7 @@ app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerS
 					usSpinnerService.stop('spinner');
 					var map=initialize();
 					$scope.title = $('<div/>').html(data[0].name).text();
-					var decodedContent = data[0].description;
-					decodedContent = $('<div/>').html(decodedContent).text();
-					$scope.content = $sce.trustAsHtml(decodedContent);
+					$scope.content = $sce.trustAsHtml(decodedContent(data[0].description));
 					map.setZoom(8);
 					google.maps.event.trigger($("#map_canvas")[0], 'resize');
 					var latitudeAndLongitude = new google.maps.LatLng(data[0].lat,data[0].lng);

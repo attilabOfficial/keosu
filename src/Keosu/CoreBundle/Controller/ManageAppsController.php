@@ -156,12 +156,12 @@ class ManageAppsController extends Controller {
 						$em->remove($authenticationPage);
 					}
 				}
-
-				
 				$em->flush();
 
 				$session = $this->get("session");
 				$session->set("appid",$app->getId());
+				// export the app
+				$this->container->get('keosu_core.exporter')->exportApp();
 
 				return $this->redirect(
 							$this->generateUrl('keosu_core_app_manage')
@@ -182,20 +182,20 @@ class ManageAppsController extends Controller {
 	private function buildAppForm($formBuilder) {
 		$themesKeys = array_keys(ThemeUtil::getThemeList());
 		$formBuilder->add('name', 'text')
-				->add('packageName','text',array(
-						'empty_data' => 'com.keosu.demo'
+				->add('packageName','text',array( 
+						'required' => true,
 				))
 				->add('description','textarea',array(
-						'empty_data' => 'Keosu demo'
+						'required' => true
 				))
 				->add('author','text',array(
-						'empty_data' => 'keosu team'
+						'required' => false
 				))
 				->add('website','url',array(
-						'empty_data' => 'http://keosu.com'
+						'required' => false
 				))
 				->add('email','email',array(
-						'empty_data' => 'vleborgne@keosu.com'
+						'required' => false
 				))
 				->add('facebookAppId','text',array(
 						'required' => false
@@ -208,7 +208,10 @@ class ManageAppsController extends Controller {
 				))
 				->add('privateApp','checkbox', array(
 						'required' => false
-				)) 
+				))
+				->add('debugMode','checkbox', array(
+						'required' => false
+				))
 				->add('theme', 'choice', array(
 						'choices'  => ThemeUtil::getThemeList(),
 						'required' => true,

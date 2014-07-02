@@ -1,0 +1,15 @@
+keosu_comment_viewlist:
+    path:     /content/comments/
+    defaults: { _controller: KeosuDataModelCommentModelBundle:View:view }
+    
+keosu_comment_delete:
+    pattern:  /content/comment/delete/{id}
+    defaults: { _controller: KeosuDataModelCommentModelBundle:Edit:delete }
+    
+keosu_comment_edit:
+    pattern:  /content/comment/edit/{id}
+    defaults: { _controller: KeosuDataModelCommentModelBundle:Edit:edit }
+    
+keosu_comment_add:
+    pattern:  /content/comment/add
+    defaults: { _controller: KeosuDataModelCommentModelBundle:Edit:add }

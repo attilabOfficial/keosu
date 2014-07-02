@@ -92,6 +92,11 @@
 					<div class="col-lg-9">
 						<span class="help-block">The three facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>.</span>
 					</div>
+					
+					{{ form_row(form.debugMode) }}
+					<div class="col-lg-9">
+						<span class="help-block">This param allow to debug your app with <a href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
+					</div>
 
 					<br class="clear"/><br class="clear"/>
 					<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>

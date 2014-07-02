@@ -162,7 +162,7 @@ class Page {
 	 * @return string
 	 */
 	public function getFileName() {
-		$fileName = $this->getName() . '.html';
+		$fileName = $this->getId() . '.html';
 		$fileName = str_replace(" ", "", $fileName);
 		return $fileName;
 	}

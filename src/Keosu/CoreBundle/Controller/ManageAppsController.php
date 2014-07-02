@@ -156,12 +156,12 @@ class ManageAppsController extends Controller {
 						$em->remove($authenticationPage);
 					}
 				}
-
-				
 				$em->flush();
 
 				$session = $this->get("session");
 				$session->set("appid",$app->getId());
+				// export the app
+				$this->container->get('keosu_core.exporter')->exportApp();
 
 				return $this->redirect(
 							$this->generateUrl('keosu_core_app_manage')
@@ -208,7 +208,10 @@ class ManageAppsController extends Controller {
 				))
 				->add('privateApp','checkbox', array(
 						'required' => false
-				)) 
+				))
+				->add('debugMode','checkbox', array(
+						'required' => false
+				))
 				->add('theme', 'choice', array(
 						'choices'  => ThemeUtil::getThemeList(),
 						'required' => true,

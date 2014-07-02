@@ -42,8 +42,9 @@ class KeosuExtension {
 	
 	public static $dataModelList = array(
 			'article' => 'article',
-			'map'     =>'map',
+			'map'     => 'map',
 			'picture' => 'picture',
 			'event'   => 'event',
+			'comment' => 'comment',
 	);
 }

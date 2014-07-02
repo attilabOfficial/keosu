@@ -1,11 +1,11 @@
 keosu_gadget_authentication_gadget_add:
     pattern:  /views/page/gadget/authenticationgadget/add/{page}/{zone}
     defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Edit:add }
-    
+
 keosu_gadget_authentication_gadget_edit:
     pattern:  /views/page/gadget/authenticationgadget/edit/{page}/{zone}
     defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Edit:edit }
-    
+
 keosu_gadget_authentication_reset_success:
     pattern:  /resetting/success
     defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Reset:success }
@@ -14,14 +14,18 @@ keosu_gadget_authentication_service_init:
     pattern:  /service/gadget/authentication/{gadgetId}/{format}/init
     defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:init }
 
-keosu_gadget_authentication_service_login:
-    pattern:  /service/gadget/authentication/{gadgetId}/{format}/login
-    defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:login }
-    
+keosu_gadget_authentication_service_loginInit:
+    pattern:  /service/gadget/authentication/{gadgetId}/{format}/loginInit
+    defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:loginInit }
+
+keosu_gadget_authentication_service_loginFacebook:
+    pattern:  /service/gadget/authentication/{gadgetId}/loginFacebook
+    defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:loginFacebook }
+
 keosu_gadget_authentication_service_logout:
     pattern:  /service/gadget/authentication/{gadgetId}/logout
     defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:logout }
-    
+
 keosu_gadget_authentication_service_register:
     pattern:  /service/gadget/authentication/{gadgetId}/{format}/register
     defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:register }

@@ -122,6 +122,17 @@ class App
     private $debugMode;
 
     /**
+     * Set default data for the form.
+     */
+    public function __construct(){
+    	$this->packageName = 'com.keosu.demo';
+    	$this->description = 'Keosu demo';
+    	$this->author = 'keosu team';
+    	$this->website = 'http://keosu.com';
+    	$this->email = 'vleborgne@keosu.com';
+    }
+    
+    /**
      * Get id
      *
      * @return integer 

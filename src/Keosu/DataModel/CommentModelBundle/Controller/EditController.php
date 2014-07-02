@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Keosu\DataModel\CommentModelBundle\Controller;
 
+use Keosu\CoreBundle\KeosuExtension;
 use Keosu\DataModel\CommentModelBundle\Entity\Comment;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -38,11 +39,11 @@ class EditController extends Controller {
 		$em = $this->get('doctrine')->getManager();
 		$comment = $em->getRepository('KeosuDataModelCommentModelBundle:Comment')->find($id);
 
-		if ($comment === null) {
+		if ($comment !== null) {
 			$em->remove($comment);
 			$em->flush();
 		}
-		return $this>redirect($this->generateUrl('keosu_comment_viewlist'));
+		return $this->redirect($this->generateUrl('keosu_comment_viewlist'));
 	}
 
 	/**
@@ -79,6 +80,10 @@ class EditController extends Controller {
 			$form->bind($request);
 			if ($form->isValid()) {
 			
+				$val = explode("-",$comment->getIdDataModel());
+				$comment->setDataModelObject($val[0]);
+				$comment->setIdDataModel($val[1]);
+			
 				// the comment is made by current user
 				$comment->setUser($this->get('security.context')->getToken()->getUser());
 				
@@ -96,8 +101,33 @@ class EditController extends Controller {
 	 * Specific form
 	 */
 	private function buildCommentForm($formBuilder) {
+
+		$em = $this->get('doctrine')->getManager();
+
+		$models = KeosuExtension::$dataModelList;
+		// override
+		$override = $models;
+		$override['article'] = 'ArticleBody';
+		$override['map'] = 'PointOfInterest';
+		$choises = array();
+
+		foreach($models as $model) {
+		
+			$choices[$model] = array();
+			$datas = $em->getRepository('KeosuDataModel'.\ucfirst($model).'ModelBundle:'.\ucfirst($override[$model]))->findAll();
+			
+			foreach($datas as $data) {
+				$choices[$model][$model."-".$data->getId()] = $data->getId();
+			}
+		}
+
 		$formBuilder->add('message', 'textarea', array(
-						'attr' => array('class' => 'tinymce')));
+								'attr' => array('class' => 'tinymce')))
+					->add('idDataModel','choice',array(
+						'expanded' => false,
+						'multiple' => false,
+						'choices'  => $choices
+					));
 
 	}
 }

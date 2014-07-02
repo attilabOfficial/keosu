@@ -182,20 +182,20 @@ class ManageAppsController extends Controller {
 	private function buildAppForm($formBuilder) {
 		$themesKeys = array_keys(ThemeUtil::getThemeList());
 		$formBuilder->add('name', 'text')
-				->add('packageName','text',array(
-						'empty_data' => 'com.keosu.demo'
+				->add('packageName','text',array( 
+						'required' => true,
 				))
 				->add('description','textarea',array(
-						'empty_data' => 'Keosu demo'
+						'required' => true
 				))
 				->add('author','text',array(
-						'empty_data' => 'keosu team'
+						'required' => false
 				))
 				->add('website','url',array(
-						'empty_data' => 'http://keosu.com'
+						'required' => false
 				))
 				->add('email','email',array(
-						'empty_data' => 'vleborgne@keosu.com'
+						'required' => false
 				))
 				->add('facebookAppId','text',array(
 						'required' => false

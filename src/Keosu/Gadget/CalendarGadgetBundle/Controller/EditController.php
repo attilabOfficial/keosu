@@ -46,7 +46,7 @@ class EditController extends GadgetEditController implements iGadgetController{
 										$gadgetName), 'required' => true,'expanded'=>true));
 		
 		// Hide the options when you choose the list template
-		echo "	<script>
+		/*echo "	<script>
 					setTimeout( function() {
 					document.getElementById('form_gadgetTemplate').onclick = 
 						function() {
@@ -56,7 +56,7 @@ class EditController extends GadgetEditController implements iGadgetController{
 					document.getElementsByClassName('form_eventsPerPage_form_group')[0].hidden = 
 								!document.getElementById('form_gadgetTemplate_0').checked;	// Initializing with the good option
 					}, 1000);
-				</script>";
+				</script>";*/
 
 	}
 

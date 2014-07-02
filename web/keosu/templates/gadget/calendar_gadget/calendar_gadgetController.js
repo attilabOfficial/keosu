@@ -297,7 +297,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 		var test_init = document.getElementById('init_calendar');
 		if (test_init!=null){
 			// This is the table calendar, send the information
-			test_init.innerHTML = 'init_calendar("' + host + param + 'service/gadget/calendar/1/json");';
+			init_calendar( host + param + 'service/gadget/calendar/1/json');
 		} else {
 			// This is the list calendar, load the file with the events informations
 			$http.get(host + param + 'service/gadget/calendar/' + gadget + '/' + offset + '/' + 'json', {timeout: 10000}).success( function (data) {

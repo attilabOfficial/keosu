@@ -23,15 +23,9 @@ app.controller('article_gadgetController', function ($scope, $http, $sce, usSpin
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		$http.get(host + param + 'service/gadget/article/' + gadget + '/json').success(function(data) {
 			usSpinnerService.stop('spinner');
-			var decodedContent = data[0].content;
-			decodedContent = $('<div/>').html(decodedContent).text();
-			decodedContent = decodedContent.replace(/[/\\*]/g, "");
 			$scope.article = data[0];
-			$scope.article.content = decodedContent;
-			decodedContent = data[0].title;
-			decodedContent = $('<div/>').html(decodedContent).text();
-			decodedContent = decodedContent.replace(/[/\\*]/g, "");
-			$scope.article.title = decodedContent;
+			$scope.article.content = decodedContent(data[0].content);
+			$scope.article.title = decodedContent(data[0].title);
 			$scope.article.content = $sce.trustAsHtml($scope.article.content);
 		});
 	};

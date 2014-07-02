@@ -75,8 +75,16 @@ class GadgetParent {
 		$commonGadget->setShared($this->shared);
 		$commonGadget->setGadgetName($this->getChildGadgetName());
 	}
-	
+	/**
+	 * Required Cordova plugin to use the gadget
+	 */
 	public function getRequieredPermissions() {
+		return array();
+	}
+	/**
+	 * Required JS file to use the gadget
+	*/
+	public function getExtraJsToImport() {
 		return array();
 	}
 

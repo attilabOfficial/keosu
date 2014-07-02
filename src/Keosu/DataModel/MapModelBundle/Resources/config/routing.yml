@@ -1,4 +1,4 @@
-keosu_map_viewlist:
+keosu_location_viewlist:
     pattern:  /content/poi/
     defaults: { _controller: KeosuDataModelMapModelBundle:View:view }
     

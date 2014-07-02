@@ -41,10 +41,7 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
 				+ page.id + '/json').success(function (data){
 					usSpinnerService.stop('spinner');
 					$scope.myMap = data[0];
-					var decodedContent = data[0].description;
-					decodedContent = $('<div/>').html(decodedContent).text();
-					decodedContent = decodedContent.replace(/[/\\*]/g, "");
-					$scope.myMap.description = $sce.trustAsHtml(decodedContent);
+					$scope.myMap.description = $sce.trustAsHtml(decodedContent(data[0].description));
 					$scope.myMap.nom = $('<div/>').html(data[0].nom).text();
 					var map=$scope.initialize();
 					google.maps.event.trigger($("#map_canvas")[0], 'resize');
@@ -80,10 +77,7 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
 							$tmp = [];		
 							for (i = 0; i < data.data.length; i++) {
 								$tmp[i] = data.data[i];
-								decodedContent = data.data[i].title;
-								decodedContent = $('<div/>').html(decodedContent).text();
-								decodedContent = decodedContent.replace(/[/\\*]/g, "");
-								$tmp[i].title = decodedContent;
+								$tmp[i].title = decodedContent(data.data[i].title);
 							}
 							$scope.pages = $tmp;
 							usSpinnerService.stop('spinner');

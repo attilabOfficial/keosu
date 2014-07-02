@@ -92,6 +92,12 @@ class CalendarGadget extends GadgetParent implements iGadget {
 			$this::PERMISSION_NATIVE_SOCIAL_SHARING,
 			$this::PERMISSION_GOOGLE_MAP_API);
 	}
+	public function getExtraJsToImport() {
+		return array("components/underscore/underscore-min.js",
+						"components/bootstrap2/js/bootstrap.min.js",
+						"js/calendar.js",
+						"js/app_calendar.js");
+	}
 
 
 

@@ -44,15 +44,8 @@ app.controller('last_article_gadgetController', function ($scope, $http, $sce, u
 			$tmp = [];		
 			for (i = 0; i < data.data.length; i++) {
 				$tmp[i] = data.data[i];
-				var decodedContent = data.data[i].content;
-				decodedContent = $('<div/>').html(decodedContent).text();
-				decodedContent = decodedContent.replace(/[/\\*]/g, "");
-				$tmp[i] = data.data[i];
-				$tmp[i].content = $sce.trustAsHtml(decodedContent);
-				decodedContent = data.data[i].title;
-				decodedContent = $('<div/>').html(decodedContent).text();
-				decodedContent = decodedContent.replace(/[/\\*]/g, "");
-				$tmp[i].title = decodedContent;
+				$tmp[i].content = $sce.trustAsHtml(decodedContent(data.data[i].content));
+				$tmp[i].title = decodedContent(data.data[i].title);
 			}
 			nb = 0;
 			pages = new Array();

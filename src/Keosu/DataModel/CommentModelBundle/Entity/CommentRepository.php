@@ -33,7 +33,16 @@ class CommentRepository extends EntityRepository {
 	 */
 	public function findCommentForModel(DataModel $dataModel) {
 
-		// TODO
-		return null; 
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('a')
+			->from($this->_entityName, 'a')
+			->where('a.dataModelObject = :dataModelObject')
+			->andWhere('a.idDataModel = :idDataModel')
+			->setParameter('dataModelObject',$dataModel->getDataModelObjectName())
+			->setParameter('idDataModel',$dataModel->getId());
+
+		return $qb->getQuery()
+				  ->getResult(); 
 	}
 }

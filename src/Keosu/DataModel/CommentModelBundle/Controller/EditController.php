@@ -105,16 +105,18 @@ class EditController extends Controller {
 		$em = $this->get('doctrine')->getManager();
 
 		$models = KeosuExtension::$dataModelList;
+		unset($models['location']);
+		$models['map'] = 'map';
 		// override
 		$override = $models;
 		$override['article'] = 'ArticleBody';
 		$override['map'] = 'PointOfInterest';
 		$choises = array();
 
-		foreach($models as $model) {
+		foreach($models as $k => $model) {
 		
 			$choices[$model] = array();
-			$datas = $em->getRepository('KeosuDataModel'.\ucfirst($model).'ModelBundle:'.\ucfirst($override[$model]))->findAll();
+			$datas = $em->getRepository('KeosuDataModel'.\ucfirst($k).'ModelBundle:'.\ucfirst($override[$model]))->findAll();
 			
 			foreach($datas as $data) {
 				$choices[$model][$model."-".$data->getId()] = $data->getId();

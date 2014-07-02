@@ -32,7 +32,7 @@ class Comment extends DataModel
     /**
      * @var integer
      *
-     * @ORM\Column(name="idDataModel", type="integer")
+     * @ORM\Column(name="idDataModel", unique=false, type="integer")
      **/
     private $idDataModel;
     
@@ -44,7 +44,7 @@ class Comment extends DataModel
     private $dataModelObject;
     
     /**
-     * @ORM\OneToOne(targetEntity="Keosu\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Keosu\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -166,5 +166,9 @@ class Comment extends DataModel
     public function getUser()
     {
         return $this->user;
+    }
+    
+    public function getDataModelObjectName() {
+        return "Comment";
     }
 }

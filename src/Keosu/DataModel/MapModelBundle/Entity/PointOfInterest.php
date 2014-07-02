@@ -153,4 +153,7 @@ class PointOfInterest extends DataModel{
 		return $this;;
 	}
 	
+	public function getDataModelObjectName() {
+		return "location";
+	}
 }

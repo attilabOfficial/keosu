@@ -124,4 +124,7 @@ class Picture extends MediaDataModel
         return $this->idext;
     }
     
+    public function getDataModelObjectName() {
+        return 'picture';
+    }
 }

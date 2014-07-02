@@ -242,7 +242,9 @@ class Event extends DataModel{
 	 	return $this;
 	 }
 	 
-	 
+	public function getDataModelObjectName() {
+		return 'event';
+	}
 	 
 	 
 }

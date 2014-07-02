@@ -241,4 +241,8 @@ class ArticleBody extends DataModel {
 	public function getAttachments() {
 		return $this->attachments;
 	}
+	
+	public function getDataModelObjectName() {
+		return 'article';
+	}
 }

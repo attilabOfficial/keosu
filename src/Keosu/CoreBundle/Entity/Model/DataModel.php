@@ -40,15 +40,6 @@ abstract class DataModel {
 	 */
 	private $reader;
 
-	/*
-	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\CommentModelBundle\Entity\Comment", mappedBy="DataModel")
-	 *
-	private $comment;
-
-	public function __construct() {
-		$this->comment = new ArrayCollection();
-	}*/
-
 	/**
 	 * Get id
 	 *
@@ -78,5 +69,7 @@ abstract class DataModel {
 	public function getReader() {
 		return $this->reader;
 	}
+	
+	abstract public function getDataModelObjectName();
 
 }

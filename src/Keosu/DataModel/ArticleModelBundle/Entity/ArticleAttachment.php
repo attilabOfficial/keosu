@@ -135,5 +135,9 @@ class ArticleAttachment extends MediaDataModel{
 	public function getIdext() {
 		return $this->idext;
 	}
+	
+	public function getDataModelObjectName() {
+		return "articleattachment";
+	}
 
 }

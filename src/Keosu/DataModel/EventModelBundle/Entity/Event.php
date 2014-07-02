@@ -31,15 +31,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Event extends DataModel{
 	 /**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	 private $id;
-	 
-	 /**
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255)
@@ -81,17 +72,7 @@ class Event extends DataModel{
 	  * @ORM\Column(name="longitude", type="float")
 	  */
 	 private $longitude;
-	 	
-	   	
-	 /**
-	  * Get Id
-	  * 
-	  * @return integer
-	  */  	
-	 public function getId(){
-	 	return $this->id;
-	 }
-	 
+
 	 /**
 	  * Get name
 	  *

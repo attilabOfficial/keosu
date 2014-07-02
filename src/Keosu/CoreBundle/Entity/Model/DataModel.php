@@ -25,13 +25,39 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class DataModel {
 
 	/**
+	 * @var integer $id
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
+
+	/**
 	 * @var integer $reader
 	 *
 	 * @ORM\ManyToOne(targetEntity="Keosu\CoreBundle\Entity\Reader")
 	 */
 	private $reader;
 
-	
+	/*
+	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\CommentModelBundle\Entity\Comment", mappedBy="DataModel")
+	 *
+	private $comment;
+
+	public function __construct() {
+		$this->comment = new ArrayCollection();
+	}*/
+
+	/**
+	 * Get id
+	 *
+	 * @return integer 
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
 	/**
 	 * Set reader
 	 *
@@ -52,7 +78,5 @@ abstract class DataModel {
 	public function getReader() {
 		return $this->reader;
 	}
-
-	
 
 }

@@ -31,7 +31,7 @@ class InstallController extends Controller {
 	 */
 	public function checkAction() {
 		$phpversion=phpversion();
-		$isPhpVersion=version_compare(phpversion(),'5.3.0');
+		$isPhpVersion=version_compare(phpversion(),'5.4.0');
 		$isCurlInstall=function_exists('curl_version');
 		$isJsonInstall=phpversion('json');
 		$isCtypeInstall=function_exists('ctype_print');

@@ -98,10 +98,10 @@ class Exporter {
 		foreach ($pages as $page) {
 		
 			if($mainPage == null) {
-				$mainPage = $page->getName();
+				$mainPage = $page->getId();
 			}
 			if($page->getIsMain()) {
-				$mainPage = $page->getName();
+				$mainPage = $page->getId();
 			}
 
 			//All page content will be put in $document
@@ -194,7 +194,8 @@ class Exporter {
 		}
 		
 		// facebook api js part
-		if( array_search(GadgetParent::PERMISSION_FACEBOOK_API,$permissions) !== false && $app->getFacebookAppId() != null && $app->getFacebookAppName()) {
+		if( array_search(GadgetParent::PERMISSION_FACEBOOK_API,$permissions) !== false 
+					&& $app->getFacebookAppId() != null && $app->getFacebookAppName() && $app->getFacebookAppSecret() != null) {
 			$script = $document->createElement("script");
 			$script->setAttribute("src","js/cdv-plugin-fb-connect.js");
 			$document->getElementsByTagName("head")->item(0)->appendChild($script);
@@ -214,6 +215,14 @@ class Exporter {
 		if( array_search(GadgetParent::PERMISSION_GOOGLE_MAP_API,$permissions) !== false) {
 			$script = $document->createElement("script");
 			$script->setAttribute("src","https://maps.googleapis.com/maps/api/js?sensor=false");
+			$document->getElementsByTagName("head")->item(0)->appendChild($script);
+		}
+		
+		// import weinre if the app is in debug mode
+		// @see https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html
+		if($app->getDebugMode() == true) {
+			$script = $document->createElement("script");
+			$script->setAttribute("src",\substr($baseurl,0,\strlen($baseurl)-10).":8080/target/target-script-min.js#anonymous");
 			$document->getElementsByTagName("head")->item(0)->appendChild($script);
 		}
 
@@ -237,6 +246,18 @@ app.config(function($routeProvider,$locationProvider){
 	})
 	.otherwise({redirectTo:"/Page/'.$mainPage.'"});
 });';
+
+		if( array_search(GadgetParent::PERMISSION_FACEBOOK_API,$permissions) !== false 
+					&& $app->getFacebookAppId() != null && $app->getFacebookAppName() && $app->getFacebookAppSecret() != null) {
+			$appJs .= "
+document.addEventListener('deviceready', function() {
+	FB.init({
+		appId: '".$app->getFacebookAppId()."',
+		nativeInterface: CDV.FB,
+		useCachedDialogs: false
+	});
+});";
+		}
 
 		foreach($importedGadget as $ig) {
 			$appJs .= "\n".\file_get_contents(TemplateUtil::getGadgetAbsolutePath().$ig .'/'.$ig.'Controller.js');
@@ -335,7 +356,8 @@ app.config(function($routeProvider,$locationProvider){
 			$widget->appendChild($plugin);
 		}
 		
-		if( array_search(GadgetParent::PERMISSION_FACEBOOK_API,$permissions) !== false && $app->getFacebookAppId() != null && $app->getFacebookAppName()) {
+		if( array_search(GadgetParent::PERMISSION_FACEBOOK_API,$permissions) !== false 
+			&& $app->getFacebookAppId() != null && $app->getFacebookAppName() && $app->getFacebookAppSecret() != null) {
 			$plugin = $configXml->createElement("gap:plugin");
 			$plugin->setAttribute("name","com.phonegap.plugins.facebookconnect");
 			$plugin->setAttribute("version","0.4.0");

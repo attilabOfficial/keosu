@@ -29,14 +29,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Keosu\DataModel\ArticleModelBundle\Entity\ArticleBodyRepository")
  */
 class ArticleBody extends DataModel {
-	/**
-	 * @var integer $id
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
 
 	/**
 	 * @var string $idext
@@ -91,15 +83,6 @@ class ArticleBody extends DataModel {
 	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment", mappedBy="articleBody", cascade={"persist","remove"})
 	 */
 	private $attachments;
-
-	/**
-	 * Get id
-	 *
-	 * @return integer 
-	 */
-	public function getId() {
-		return $this->id;
-	}
 
 	/**
 	 * Set title

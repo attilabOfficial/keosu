@@ -1,6 +1,6 @@
 /************************************************************************
 	Keosu is an open source CMS for mobile app
-	Copyright (C) 2014  Vincent Le Borgne
+	Copyright (C) 2014  Vincent Le Borgne, Keosu
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
@@ -15,81 +15,39 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
-
-/*-------------------------------
- * Some functions that are needed
- * ------------------------------ */
-// interpret_with_car and interpret tranform an html text like '<p>abc</p>' in is equivalent in plain text : 'abc'
-function interpret_with_car(string,car){
-	if (string.indexOf('<')==-1){
-		// There is not any html tag
-		return '';
-	} else {
-		// There is an html tag
-		if (string.indexOf('<') == string.indexOf('<ul')) {
-			// There is a unordonned list, we display it
-			car = '- ';
-		} else if (string.indexOf('<') == string.indexOf('<ol')) {
-			// There is an ordonned list, it counts the elements
-			car = 0;
-		}
-		if (string.indexOf('<') == string.indexOf('<li')) {
-			// It is a list item, we display it like an item ('- Abc' or '1Abc')
-			if (isFinite(parseInt(car))) {
-				// It is a number, we increment it
-				car = parseInt(car) + 1;
-			}
-			return string.substr(0,string.indexOf('<'))+'\n'+car+interpret_with_car(string.substr(string.indexOf('>')+1),car);
-		} else if (string.indexOf('<') != string.indexOf('</h') 
-				&& string.indexOf('<') != string.indexOf('</p')
-				&& string.indexOf('<') != string.indexOf('<br') 
-				&& string.indexOf('<') != string.indexOf('</b') 
-				&& string.indexOf('<') != string.indexOf('</div')
-				&& string.indexOf('<') != string.indexOf('</ul')
-				&& string.indexOf('<') != string.indexOf('</ol')
-				){
-			// Those are the tags for a block, if this is not one, we continue on the same line
-			return string.substr(0,string.indexOf('<'))+interpret_with_car(string.substr(string.indexOf('>')+1),car);
-		} else {
-			// We use a new line
-			return string.substr(0,string.indexOf('<'))+'\n'+interpret_with_car(string.substr(string.indexOf('>')+1),car);
-		}
-	}
-}
-
-function interpret(string){
-	// It initializes the function
-	return interpret_with_car(string,'');
-}
-
-// The function 'parts' enables to display the calendar or a single event
-function parts(isCalendar, isEvent, $scope) {
-	$scope.isCalendar = isCalendar;
-	$scope.isEvent = isEvent;
-}
-
-//Initializing the map
-function initialize() {
-	var mapOptions = {
-			center: new google.maps.LatLng(47.21677,-1.553307),
-			zoom: 8,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
-	$('#calendar_map_canvas').html('');
-	var map_c = new google.maps.Map(document.getElementById("calendar_map_canvas"),
-			mapOptions);
-	return map_c;
-}
+/*
+ * Author: Flavien Lecuyer
+ */
 
 //Main function
-app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpinnerService) {	
-	
-	// At the beginning, we display the calendar
-	parts(true, false, $scope);	
+app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
+	/*Functions*/
+	$scope.strip =function(html){
+		   var tmp = document.createElement("DIV");
+		   tmp.innerHTML = html;
+		   return tmp.textContent || tmp.innerText || "";
+	};
+	// The function 'parts' enables to display the calendar or a single event
+	$scope.parts=function (isCalendar, isEvent, $scope) {
+		$scope.isCalendar = isCalendar;
+		$scope.isEvent = isEvent;
+	}
+	//Initializing the map
+	$scope.initialize=function() {
+		var mapOptions = {
+				center: new google.maps.LatLng(47.21677,-1.553307),
+				zoom: 8,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		$('#calendar_map_canvas').html('');
+		var map_c = new google.maps.Map(document.getElementById("calendar_map_canvas"),
+				mapOptions);
+		return map_c;
+	}	
 	
 	// If you close an event, the app displays the calendar
 	$scope.close = function () {
-		parts(true, false, $scope);
+		$scope.parts(true, false, $scope);
 	};
 	
 	// The app makes a test to know if it is possible to find or delete an event (not possible on Android before Android 4)
@@ -98,39 +56,31 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	
 	if (!window.plugins){
 		window.plugins = {};
-
-		if (!window.plugins.calendar) {
-		//	window.plugins.calendar = new Calendar();
-		}
-		
 	} else {
-			
-		if (!window.plugins.calendar) {
-			//	window.plugins.calendar = new Calendar();			
-		} else {
+		if (window.plugins.calendar) {
 			test_startDate = new Date(2014,2,15,18,30,0,0,0); // beware: month 0 = january, 11 = december
 			test_endDate = new Date(2014,2,15,19,30,0,0,0);
 			test_title = "My nice event";
 			test_location = "Home";
 			test_notes = "Some notes about this event.";
 			test_success = function(message) { find_ok = true; };
-			test_error = function(message) {	if (message=="Invalid action"){
-													find_ok = false;
-												} else {
-													find_ok = true;
-												} 
-											};
-			
-			window.plugins.calendar.findEvent(test_title,test_location,test_notes,test_startDate,test_endDate,test_success,test_error);
-			
+			test_error = function(message) {	
+				if (message=="Invalid action"){
+					find_ok = false;
+				} else {
+					find_ok = true;
+				} 
+			};
+			window.plugins.calendar.findEvent(test_title,test_location,test_notes,test_startDate,test_endDate,test_success,test_error);		
 			// Test for deleting
 			test_success = function(message) { delete_ok = true; };
-			test_error = function(message) {	if (message=="Invalid action"){
-													delete_ok = false;	// It is not possible to delete an event (ex: on Android 3-)
-												} else {
-													delete_ok = true;
-												} 
-											};
+			test_error = function(message) {	
+				if (message=="Invalid action"){
+					delete_ok = false;	// It is not possible to delete an event (ex: on Android 3-)
+				} else {
+					delete_ok = true;
+				} 
+			};
 			window.plugins.calendar.deleteEvent(test_title,test_location,test_notes,test_startDate,test_endDate,test_success,test_error);
 		}
 	}
@@ -166,7 +116,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				$scope.anEvent.description = decodedContent;
 				$scope.anEvent.description = $sce.trustAsHtml($scope.anEvent.description);
 				// Here, we use the data for the phone's calendar
-				notes = interpret(description_html);
+				notes = $scope.strip(description_html);
 				date_ms = data[0].date_ms;
 				startDate = new Date(parseInt(date_ms));
 				endDate = new Date();
@@ -177,7 +127,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 					if ($scope.anEvent.lieu.substring($scope.anEvent.lieu.length-27)!='(location can not be found)'){
 						document.getElementById('calendar_map_canvas').style.height = '400px';
 						// If there is no location, nothing is displayed
-						var map_c=initialize();
+						var map_c=$scope.initialize();
 						google.maps.event.trigger($("#calendar_map_canvas")[0], 'resize');
 						var latitudeAndLongitude = new google.maps.LatLng(data[0].latitude,data[0].longitude);
 						map_c.setCenter(latitudeAndLongitude);
@@ -200,7 +150,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				}				
 						
 				// Then, we hide the calendar and display the event
-				parts(false, true, $scope);
+				$scope.parts(false, true, $scope);
 				
 				
 				// These are the arguments for adding/deleting the event
@@ -229,8 +179,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 						bouton.innerHTML='Add event to my calendar';
 					}
 				}
-				
-				
+
 				// Function used to add the event
 				function calendarDemoAdd() {
 					// Change the button data
@@ -330,7 +279,9 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	}
 	
 	// When the page is loaded, this function is called
-	$scope.init = function (host, param, page, gadget, zone){ 	
+	$scope.init = function (host, param, page, gadget, zone){ 
+		// At the beginning, we display the calendar
+		$scope.parts(true, false, $scope);
 		
 		// We store the parameters information, we need it the functions
 		$scope.host = host;

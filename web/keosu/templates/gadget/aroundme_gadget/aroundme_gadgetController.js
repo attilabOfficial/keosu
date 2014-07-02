@@ -62,6 +62,7 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
 	$scope.close = function () {
 		$scope.parts(true, false, $scope);
 	};
+	
 	$scope.init = function (host, param, page, gadget, zone) {
 			$scope.parts(true, false, $scope);
 			usSpinnerService.spin('spinner'); // While loading, there will be a spinner

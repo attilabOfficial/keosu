@@ -1,7 +1,9 @@
 <div ng-controller="authentication_gadgetController" class="row-fluid center">
 
 	<section ng-show="login">
-		<button onclick="test();">facebookConnect</button>
+		<div ng-show="param.facebookConnect">
+			<button ng-click="loginFacebookAction()">facebookConnect</button>
+		</div>
 		<div ng-show="loginSuccess" class="alert alert-success">{{ loginSuccess}}</div>
 		<div ng-show="loginError" class="alert alert-danger">{{ loginError }}</div>
 		<form role="form">
@@ -31,7 +33,7 @@
 		<a ng-click="forgotPasswordInit()">You forget your username or password ?</a>
 		</div>
 	</section>
-	
+
 	<section ng-show="register" id="register">
 		<a ng-click="loginInit()"> < Go back to login</a>
 		<div ng-show="registerError" class="alert alert-danger">{{ registerError }}</div>
@@ -54,7 +56,7 @@
 		<!-- Fix keyboard bug on smartphone (can't see field') -->
 		</div>
 	</section>
-	
+
 	<section ng-show="forgotPassword">
 		<a ng-click="loginInit()"> < Go back to login</a>
 		<div ng-show="forgotPasswordError" class="alert alert-danger">{{ forgotPasswordError }}</div>

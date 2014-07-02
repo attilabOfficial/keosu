@@ -42,6 +42,7 @@ class AppKernel extends Kernel
         	new Keosu\Gadget\CalendarGadgetBundle\KeosuGadgetCalendarGadgetBundle(),
             new Keosu\Gadget\AuthenticationGadgetBundle\KeosuGadgetAuthenticationGadgetBundle(),
             new Keosu\Gadget\MyAccountGadgetBundle\KeosuGadgetMyAccountGadgetBundle(),
+            new Keosu\DataModel\CommentModelBundle\KeosuDataModelCommentModelBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {
@@ -58,7 +59,7 @@ class AppKernel extends Kernel
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
     
-    /* for virtual machine*
+    /* for virtual machine *
     public function getCacheDir()
     {
         if (in_array($this->environment, array('dev', 'test'))) {

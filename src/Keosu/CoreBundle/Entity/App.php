@@ -398,4 +398,27 @@ class App
     {
         return $this->facebookAppSecret;
     }
+    
+    /**
+     * Set debugMode
+     *
+     * @param boolean $debugMode
+     * @return App
+     */
+    public function setDebugMode($debugMode)
+    {
+        $this->debugMode = $debugMode;
+    
+        return $this;
+    }
+
+    /**
+     * Get debugMode
+     *
+     * @return string 
+     */
+    public function getDebugMode()
+    {
+        return $this->debugMode;
+    }
 }

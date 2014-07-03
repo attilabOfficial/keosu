@@ -67,7 +67,6 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 							var data = 'facebook_token='+$scope.token;
 							$http.post($scope.param.host + '/service/gadget/authentication/'+$scope.param.gadget+'/loginFacebook',data).success(function(data) {
 								usSpinnerService.stop('spinner');
-								console.log(data);
 								if(data.success) {
 									$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
 								} else {
@@ -131,7 +130,6 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		});
 	}
 	$scope.loginFacebookAction = function() {
-		console.log("Login action facebook");
 		FB.login(null, {scope: 'email'});
 	}
 	

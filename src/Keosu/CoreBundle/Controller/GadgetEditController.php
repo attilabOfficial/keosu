@@ -24,6 +24,7 @@ use Keosu\CoreBundle\Entity\Page;
 
 use Keosu\CoreBundle\Util\TemplateUtil;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -177,7 +178,6 @@ class GadgetEditController extends Controller {
 		//Build gadget form is defined in child class (the specific controller one)
 		$this->buildGadgetForm($formBuilder, $specificGadget->getChildGadgetName());
 		$form = $formBuilder->getForm();
-	
 		return $this::formCommonGadget($form, $specificGadget, $commonGadget,
 				$oldGadget);
 	}
@@ -216,12 +216,11 @@ class GadgetEditController extends Controller {
 									array('id' => $idPage)
 									));
 			}
-		}
+		}	
 		return $this
 				->render($this->getRenderEditTemplate(),
 						array('form' => $form->createView(),
 							  'gadgetDir'=>TemplateUtil::getTemplatePath($gadget->getGadgetName())));
-
 	}
 	
 	/**

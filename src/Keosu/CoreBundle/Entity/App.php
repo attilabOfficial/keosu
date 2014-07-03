@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Keosu\CoreBundle\Util\ThemeUtil;
 
 /**
  * App
@@ -130,6 +131,7 @@ class App
     	$this->author = 'keosu team';
     	$this->website = 'http://keosu.com';
     	$this->email = 'vleborgne@keosu.com';
+    	$this->theme = array_keys(ThemeUtil::getThemeList())[0];
     }
     
     /**

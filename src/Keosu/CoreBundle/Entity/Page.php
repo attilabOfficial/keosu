@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Keosu\CoreBundle\Util\TemplateUtil;
 
 /**
  * Keosu\CoreBundle\Entity\Page
@@ -68,6 +69,13 @@ class Page {
 	 * @ORM\Column(name="templateId", type="string", length=255)
 	 */
 	private $templateId;
+	
+	/**
+	 * Set default data for the form.
+	 */
+	public function __construct(){
+		$this->templateId = array_keys(TemplateUtil::getTemplateList())[0];
+	}
 
 	/**
 	 * Get id

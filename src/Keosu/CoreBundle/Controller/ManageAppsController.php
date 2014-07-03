@@ -216,7 +216,6 @@ class ManageAppsController extends Controller {
 						'choices'  => ThemeUtil::getThemeList(),
 						'required' => true,
 						'expanded' => true,
-						'data'     => $themesKeys[0],
 				));
 	}
 

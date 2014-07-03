@@ -181,36 +181,48 @@ class ManageAppsController extends Controller {
 	// TODO remove default value
 	private function buildAppForm($formBuilder) {
 		$themesKeys = array_keys(ThemeUtil::getThemeList());
-		$formBuilder->add('name', 'text')
+		$formBuilder->add('name', 'text',array(
+							'label' => false
+				))
 				->add('packageName','text',array( 
 						'required' => true,
+						'label' => false
 				))
 				->add('description','textarea',array(
-						'required' => true
+						'required' => true,
+						'label' => false
 				))
 				->add('author','text',array(
-						'required' => false
+						'required' => false,
+						'label' => false
 				))
 				->add('website','url',array(
-						'required' => false
+						'required' => false,
+						'label' => false
 				))
 				->add('email','email',array(
-						'required' => false
+						'required' => false,
+						'label' => false
 				))
 				->add('facebookAppId','text',array(
-						'required' => false
+						'required' => false,
+						'label' => false
 				))
 				->add('facebookAppName','text',array(
-						'required' => false
+						'required' => false,
+						'label' => false
 				))
 				->add('facebookAppSecret','text',array(
-						'required' => false
+						'required' => false,
+						'label' => false
 				))
 				->add('privateApp','checkbox', array(
-						'required' => false
+						'required' => false,
+						'label' => false
 				))
 				->add('debugMode','checkbox', array(
-						'required' => false
+						'required' => false,
+						'label' => false
 				))
 				->add('theme', 'choice', array(
 						'choices'  => ThemeUtil::getThemeList(),

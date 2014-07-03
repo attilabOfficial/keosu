@@ -75,38 +75,36 @@ Edit article
 		});
 		
 	});
-	</script>
-	<div id="articleform">
-			{{ form_start(form) }}
-			    {{ form_errors(form) }}
-			
-			    {{ form_row(form.title) }}
-			    {{ form_row(form.body) }}
-			    {{ form_row(form.author) }}
-			    {{ form_row(form.date) }}
-			    <br class="clear"/>
-			   
-			   <a href="#" id="add_image" class="btn btn-info">Add a new picture</a>
-			    
-			    <div class="article-images" 
-			    	data-prototype="{{ form_widget(form.attachments.vars.prototype)|e }}">
-				        {% for attachment in form.attachments %}
-					        <div class="image-collection-entry">
-								<a class="badge remove-button">
-									<span class="glyphicon glyphicon-remove"></span>
-								</a>
-								<span class="clear"/>
-				           		{{ form_row(attachment) }}
-				           	</div>
-				        {% endfor %}
-			    </div>
-			    <br class="clear"/>
-			    <br class="clear"/>
-			
-	    		<input type="submit" class="btn btn-success" /><span>&nbsp;</span><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-			 {{ form_end(form) }}
-	    		    	
-	    </form>
-	    
-	</div>
+</script>
+<div id="articleform">
+	{{ form_start(form) }}
+		{{ form_errors(form) }}
+		
+		{{ form_row(form.title) }}
+		{{ form_row(form.body) }}
+		{{ form_row(form.author) }}
+		{{ form_row(form.date) }}
+		{{ form_row(form.enableComments )}}
+		<br class="clear"/>
+		
+		<a href="#" id="add_image" class="btn btn-info">Add a new picture</a>
+		
+		<div class="article-images" data-prototype="{{ form_widget(form.attachments.vars.prototype)|e }}">
+		{% for attachment in form.attachments %}
+			<div class="image-collection-entry">
+				<a class="badge remove-button">
+					<span class="glyphicon glyphicon-remove"></span>
+				</a>
+				<span class="clear"/>
+				{{ form_row(attachment) }}
+			</div>
+		{% endfor %}
+		</div>
+		<br class="clear"/>
+		<br class="clear"/>
+		
+		<input type="submit" class="btn btn-success" /><span>&nbsp;</span>
+		<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+	{{ form_end(form) }}
+</div>
 {% endblock %}

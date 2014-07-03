@@ -71,7 +71,7 @@ doctrine:
                     KeosuDataModelMapModelBundle: ~
                     KeosuDataModelPictureModelBundle: ~
                     KeosuDataModelEventModelBundle: ~
-                    KeosuDataModelCommentModelBundle: ~
+                    KeosuGadgetCommentGadgetBundle: ~
                     KeosuCoreBundle: ~
                     KeosuUserBundle: ~
                     FOSUserBundle: ~

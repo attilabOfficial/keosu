@@ -21,7 +21,7 @@ class ServiceController extends Controller
 			$ret["connect"] = true;
 		}
 
-		if($request->getMethod() === 'POST' && $request->request->get('message') && $securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+		if($request->getMethod() === 'POST' && $request->request->get('message') != "undefined" && $securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
 			$comment = new Comment();
 			$comment->setMessage($request->request->get('message'));
 			$comment->setDataModelObject($dataModelObjectName);

@@ -64,6 +64,7 @@ app.controller('article_gadgetController', function ($scope, $http, $sce, usSpin
 	
 	$scope.commentAddAction = function() {
 		var data = "message="+$scope.messageComment;
+		$scope.messageComment = "";
 		$http.post($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id,data).success(function(data){
 			$scope.comments = data.comments;
 			$scope.connect = data.connect;

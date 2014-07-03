@@ -76,6 +76,11 @@ class ArticleBody extends DataModel {
 	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment", mappedBy="articleBody", cascade={"persist","remove"})
 	 */
 	private $attachments;
+	
+	/**
+	 * @ORM\Column(name="enableComments", type="boolean")
+	 */
+	private $enableComments;
 
 	/**
 	 * Set title
@@ -193,7 +198,7 @@ class ArticleBody extends DataModel {
 
 		return $this;
 	}
-
+	
 	/**
 	 * Get version
 	 *
@@ -202,11 +207,35 @@ class ArticleBody extends DataModel {
 	public function getVersion() {
 		return $this->version;
 	}
+
+	/**
+	 * Get enableComments
+	 *
+	 * @return boolean 
+	 */
+	public function getEnableComments() {
+		return $this->enableComments;
+	}
+	
+	/**
+	 * Set enableComments
+	 *
+	 * @param boolean $enableComments
+	 * @return ArticleBody
+	 */
+	public function setEnableComments($enableComments) {
+		$this->enableComments = $enableComments;
+
+		return $this;
+	}
+
+
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		$this->attachments = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->enableComments = false;
 	}
 
 	/**

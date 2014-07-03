@@ -48,7 +48,7 @@ class EditController extends GadgetEditController implements iGadgetController {
 				->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
 		$pageList = Array();
 		foreach ($pages as $page) {
-			$pageList[$page->getName()] = $page->getName();
+			$pageList[$page->getId()] = $page->getName();
 		}
 	
 		$formBuilder

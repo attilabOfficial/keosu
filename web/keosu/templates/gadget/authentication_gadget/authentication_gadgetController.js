@@ -34,12 +34,12 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		if($scope.param == null)
 			$http.get(host+param + 'service/gadget/authentication/' + gadget + '/json/init').success(function(data) {
 				$scope.param = {
-					'host' :   host+param,
-					'page' :   page,
-					'gadget' : gadget,
-					'zone' :   zone,
+					'host'               : host+param,
+					'page'               : page,
+					'gadget'             : gadget,
+					'zone'               : zone,
 					'pageToGoAfterLogin' : data.pageToGoAfterLogin,
-					'facebookConnect' : data.facebookConnect
+					'facebookConnect'    : data.facebookConnect
 				}
 
 				// Facebook login part
@@ -51,7 +51,6 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 							var data = 'facebook_token='+$scope.token;
 							$http.post($scope.param.host + '/service/gadget/authentication/'+$scope.param.gadget+'/loginFacebook',data).success(function(data) {
 								usSpinnerService.stop('spinner');
-								console.log(data);
 								if(data.success) {
 									$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
 								} else {

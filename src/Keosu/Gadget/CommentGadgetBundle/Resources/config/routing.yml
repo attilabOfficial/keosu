@@ -1,3 +1,3 @@
-keosu_gadget_comment_gadget_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: KeosuGadgetCommentGadgetBundle:Default:index }
+keosu_gadget_comment_service:
+    pattern:  /service/gadget/comment/{dataModelObjectName}/{idDataModel}
+    defaults: { _controller: KeosuGadgetCommentGadgetBundle:Service:comment }

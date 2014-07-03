@@ -1,6 +1,6 @@
 <?php
 
-namespace Keosu\DataModel\CommentModelBundle\Entity;
+namespace Keosu\Gadget\CommentGadgetBundle\Entity;
 
 use Keosu\CoreBundle\Entity\Model\DataModel;
 use Keosu\UserBundle\Entity\User;
@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Keosu\DataModel\CommentModelBundle\Entity\Comment
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Keosu\DataModel\CommentModelBundle\Entity\CommentRepository")
+ * @ORM\Entity(repositoryClass="Keosu\Gadget\CommentGadgetBundle\Entity\CommentRepository")
  */
 class Comment extends DataModel
 {

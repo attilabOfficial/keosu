@@ -16,7 +16,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-namespace Keosu\DataModel\CommentModelBundle\Entity;
+namespace Keosu\Gadget\CommentGadgetBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Keosu\CoreBundle\Entity\Model\DataModel;
@@ -31,7 +31,7 @@ class CommentRepository extends EntityRepository {
 	/***
 	 * Find all shared gadget in a zone for an app
 	 */
-	public function findCommentForModel(DataModel $dataModel) {
+	public function findCommentForModel($idDataModel,$dataModelObjectName) {
 
 		$qb = $this->_em->createQueryBuilder();
 
@@ -39,8 +39,8 @@ class CommentRepository extends EntityRepository {
 			->from($this->_entityName, 'a')
 			->where('a.dataModelObject = :dataModelObject')
 			->andWhere('a.idDataModel = :idDataModel')
-			->setParameter('dataModelObject',$dataModel->getDataModelObjectName())
-			->setParameter('idDataModel',$dataModel->getId());
+			->setParameter('dataModelObject',$dataModelObjectName)
+			->setParameter('idDataModel',$idDataModel);
 
 		return $qb->getQuery()
 				  ->getResult(); 

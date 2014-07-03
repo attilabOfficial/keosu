@@ -19,14 +19,54 @@
 //Main function
 
 app.controller('article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
+
+	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+
+	/////////////////////////
+	// Init part
+	/////////////////////////
 	$scope.init = function(host, param, page, gadget, zone){
+		$scope.param = {
+			'host'   : host+param,
+			'page'   : page,
+			'gadget' : gadget,
+			'zone'   : zone
+		}
+		$scope.articleInit();
+
+	};
+	
+	/////////////////////////
+	// Article part
+	/////////////////////////
+	$scope.articleInit = function() {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		$http.get(host + param + 'service/gadget/article/' + gadget + '/json').success(function(data) {
+		$http.get($scope.param.host+ 'service/gadget/article/' + $scope.param.gadget + '/json').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.article = data[0];
 			$scope.article.content = decodedContent(data[0].content);
 			$scope.article.title = decodedContent(data[0].title);
 			$scope.article.content = $sce.trustAsHtml($scope.article.content);
+			console.log($scope.article);
+			$scope.commentListAction();
+		});
+	};
+	
+	/////////////////////////
+	// Comment part
+	/////////////////////////
+	$scope.commentListAction = function() {
+		$http.get($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id).success(function(data){
+			$scope.comments = data.comments;
+			$scope.connect = data.connect;
+		});
+	};
+	
+	$scope.commentAddAction = function() {
+		var data = "message="+$scope.messageComment;
+		$http.post($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id,data).success(function(data){
+			$scope.comments = data.comments;
+			$scope.connect = data.connect;
 		});
 	};
 });

@@ -19,7 +19,10 @@
 {% spaceless %}
 [
 	{
+		"id":"{{article.id}}",
+		"dataModelObjectName" : "{{article.dataModelObjectName}}",
 		"title" :"{{article.title|escape('html_attr')}}",
+		"enableComments" : "{{ article.enableComments}}",
 		"content" :"{{article.body|escape('html_attr')}}"
 		{% if article.attachments|length > 0 %}
 			,

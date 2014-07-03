@@ -70,29 +70,89 @@
 				{{ form_start(form) }}
 					{{ form_errors(form) }}
 
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Name
+					</div>
 					{{ form_row(form.name) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Package Name
+					</div>
 					{{ form_row(form.packageName) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Description
+					</div>
 					{{ form_row(form.description) }}
+					<br class="clear"/><br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Author (optional)
+					</div>
 					{{ form_row(form.author) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Website (optional)
+					</div>
 					{{ form_row(form.website) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Email (optional)
+					</div>
 					{{ form_row(form.email) }}
+					<br class="clear"/>
 
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Private app (optional)
+					</div>
 					{{ form_row(form.privateApp) }}
 					<div class="col-lg-9">
 						<span class="help-block">if the checkbox is checked only logged user can access to this app and a special authentication page is created.</span>
+					</div>
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Theme
 					</div>
 					<div class="imgtheme">
 						{{ form_row(form.theme) }}
 					</div>
 					<br class="clear"/><br class="clear"/>
 					
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Facebook app id (optional)
+					</div>
 					{{ form_row(form.facebookAppId) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Facebook app name(optional)
+					</div>
 					{{ form_row(form.facebookAppName) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Facebook app secret (optional)
+					</div>
 					{{ form_row(form.facebookAppSecret) }}
 					<div class="col-lg-9">
 						<span class="help-block">The three facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>.</span>
 					</div>
+					<br class="clear"/>
 
+					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+						Debug mode (optional)
+					</div>
+					{{ form_row(form.debugMode) }}
+					<div class="col-lg-9">
+						<span class="help-block">This param allow to debug your app with <a href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
+					</div>
+					<br class="clear"/>
+					
 					<br class="clear"/><br class="clear"/>
 					<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
 				{{ form_end(form) }}

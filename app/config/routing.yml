@@ -1,5 +1,5 @@
-keosu_data_model_comment_model:
-    resource: "@KeosuDataModelCommentModelBundle/Resources/config/routing.yml"
+keosu_gadget_comment_gadget:
+    resource: "@KeosuGadgetCommentGadgetBundle/Resources/config/routing.yml"
     prefix:   /
 
 keosu_gadget_my_account_gadget:

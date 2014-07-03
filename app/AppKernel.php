@@ -42,7 +42,7 @@ class AppKernel extends Kernel
         	new Keosu\Gadget\CalendarGadgetBundle\KeosuGadgetCalendarGadgetBundle(),
             new Keosu\Gadget\AuthenticationGadgetBundle\KeosuGadgetAuthenticationGadgetBundle(),
             new Keosu\Gadget\MyAccountGadgetBundle\KeosuGadgetMyAccountGadgetBundle(),
-            new Keosu\DataModel\CommentModelBundle\KeosuDataModelCommentModelBundle(),
+            new Keosu\Gadget\CommentGadgetBundle\KeosuGadgetCommentGadgetBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {

@@ -45,6 +45,5 @@ class KeosuExtension {
 			'location'=> 'location',
 			'picture' => 'picture',
 			'event'   => 'event',
-			'comment' => 'comment',
 	);
 }

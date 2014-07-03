@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Gadget
  *
@@ -84,7 +85,8 @@ class Gadget {
 	 * @ORM\Column(name="gadgetTemplate", type="string", length=255)
 	 */
 	private $gadgetTemplate;
-
+	
+	
 	/**
 	 * Get id
 	 *

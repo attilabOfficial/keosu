@@ -209,7 +209,8 @@ class ManagePagesController extends Controller {
 				->add('isMain', 'checkbox', array('required' => false)) //Main is index page
 				->add('templateId', 'choice',
 						array('choices' => TemplateUtil::getTemplateList(),
-								'required'  => true, 'expanded'=>true ));
+								'required'  => true, 
+								'expanded'=>true));
 	}
 	
 	/**

@@ -33,37 +33,30 @@ class EditController extends Controller {
 	 * add map object action
 	 */
 	public function addAction() {
-		$article = new PointOfInterest();
-		return $this->editPointOfInterest($article);
+		$poi = new PointOfInterest();
+		return $this->editPointOfInterest($poi);
 	}
 
 	/**
-	 * Edit amp object action
+	 * Edit map object action
 	 */
 	public function editAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelMapModelBundle:PointOfInterest');
-		$poi = $repo->find($id);
-
+		$em = $this->getDoctrine()->getManager();
+		$poi = $em->getRepository('KeosuDataModelMapModelBundle:PointOfInterest')->find($id);
 		return $this->editPointOfInterest($poi);
-
 	}
 	/**
 	 * delete map object action
 	 */
 	public function deleteAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelMapModelBundle:PointOfInterest');
-
-		$poi = $repo->find($id);
+		$em = $this->getDoctrine()->getManager();
+		$poi = $em->getRepository('KeosuDataModelMapModelBundle:PointOfInterest')->find($id);
 
 		if ($poi->getReader() === null) {
-			$this->get('doctrine')->getManager()->remove($poi);
-			$this->get('doctrine')->getManager()->flush();
+			$em->remove($poi);
+			$em->flush();
 		}
-		return $this->redirect($this->generateUrl('keosu_map_viewlist'));
+		return $this->redirect($this->generateUrl('keosu_location_viewlist'));
 	}
 
 	/**
@@ -83,15 +76,14 @@ class EditController extends Controller {
 				$em = $this->get('doctrine')->getManager();
 				$em->persist($poi);
 				$em->flush();
-				return $this
-						->redirect($this->generateUrl('keosu_map_viewlist'));
+				return $this->redirect(
+							$this->generateUrl('keosu_location_viewlist'));
 			}
 		}
 		return $this
 				->render('KeosuDataModelMapModelBundle:Edit:edit.html.twig',
 						array('form' => $form->createView(),
 								'poiid' => $poi->getId()));
-
 	}
 
 	/**

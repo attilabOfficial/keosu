@@ -228,6 +228,86 @@ class ManageAppsController extends Controller {
 						'choices'  => ThemeUtil::getThemeList(),
 						'required' => true,
 						'expanded' => true,
+						'label' => false
+				))
+				->add('permissions', 'text', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('phonegap_version','text', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('orientation','choice', array(
+					'required' => false,
+					'label' => false,
+					'choices'=> array('default' => 'default',
+									  'landscape' => 'landscape',
+									  'portrait' => 'portrait'),
+				))
+				->add('fullscreen','checkbox', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('target_device','choice', array(
+					'required' => false,
+					'label' => false,
+					'choices' => array('universal' => 'unviversal',
+									   'handset' => 'handset',
+								       'tablet' => 'tablet')
+				))
+				->add('webviewbounce','checkbox', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('prerendered_icon','checkbox', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('stay_in_webview','checkbox', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('ios_statusbarstyle','text', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('detect_data_types','checkbox', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('exit_on_suspend','checkbox', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('show_splash_screen_spinner','checkbox', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('auto_hide_splash_screen','checkbox', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('disable_cursor','checkbox', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('android_minSdkVersion','text', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('android_installLocation','choice', array(
+					'required' => false,
+					'label' => false,
+					'choices' => array('auto', 'internalOnly', 'preferExternal')
+				))
+				->add('disallowOverscroll','checkbox', array(
+					'required' => false,
+					'label' => false
+				))
+				->add('splash_screen_duration','text', array(
+					'required' => false,
+					'label' => false
 				));
 	}
 

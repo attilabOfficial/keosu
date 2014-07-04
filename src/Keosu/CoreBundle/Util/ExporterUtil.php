@@ -46,5 +46,10 @@ class ExporterUtil {
 	public static function getUploadRootDir() {
 		return __DIR__ . '/../../../../web/';
 	}
+	
+	public static function boolToString($bool){
+		//return $bool;
+		return var_export($bool, true);
+	}
 
 }

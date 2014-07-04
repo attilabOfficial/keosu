@@ -59,6 +59,11 @@ class PointOfInterest extends DataModel{
 	private $lng;
 
 	/**
+	 * @ORM\Column(name="enableComments", type="boolean")
+	 */
+	private $enableComments;
+
+	/**
 	 * Set name
 	 *
 	 * @param string $name
@@ -151,6 +156,27 @@ class PointOfInterest extends DataModel{
 	{
 		$this->distance =$dist;
 		return $this;;
+	}
+	
+	/**
+	 * Get enableComments
+	 *
+	 * @return boolean 
+	 */
+	public function getEnableComments() {
+		return $this->enableComments;
+	}
+	
+	/**
+	 * Set enableComments
+	 *
+	 * @param boolean $enableComments
+	 * @return ArticleBody
+	 */
+	public function setEnableComments($enableComments) {
+		$this->enableComments = $enableComments;
+
+		return $this;
 	}
 	
 	public function getDataModelObjectName() {

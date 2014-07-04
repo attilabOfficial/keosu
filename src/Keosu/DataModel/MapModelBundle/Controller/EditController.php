@@ -95,6 +95,9 @@ class EditController extends Controller {
 				->add('description', 'text')
 				->add('lat', 'text')
 				->add('lng', 'text')
+				->add('enableComments','checkbox',array(
+						'required' => false,
+				))
 				->getForm();
 	}
 }

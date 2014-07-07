@@ -47,7 +47,6 @@ app.controller('article_gadgetController', function ($scope, $http, $sce, usSpin
 			$scope.article.content = decodedContent(data[0].content);
 			$scope.article.title = decodedContent(data[0].title);
 			$scope.article.content = $sce.trustAsHtml($scope.article.content);
-			console.log($scope.article);
 			$scope.commentListAction();
 		});
 	};

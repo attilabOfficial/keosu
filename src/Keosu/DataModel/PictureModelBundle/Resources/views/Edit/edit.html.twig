@@ -48,19 +48,24 @@ Edit picture
 		
 		
 	});
-	</script>
-	<div class="picture-edit">
-			{{ form_start(form) }}
-		    {{ form_errors(form) }}
-		    {{ form_row(form.name) }}
-		    {{ form_row(form.description) }}
-			    <div class="picture-upload image-collection-entry col-lg-12">
-			    	{{ form_row(form.file) }}
-			    	<center><button type="button" class="btn btn-info uploader">Upload new File</button></center>
-			    </div>
-		    <br class="clear"/>
-	    	
-	    	<input type="submit" class="btn btn-success" /><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-			 {{ form_end(form) }}	    
-	</div>
+</script>
+<div class="picture-edit">
+	{{ form_start(form) }}
+		{{ form_errors(form) }}
+		{{ form_row(form.name) }}
+		{{ form_row(form.description) }}
+		{{ form_row(form.enableComments) }}
+		<div class="picture-upload image-collection-entry col-lg-12">
+			{{ form_row(form.file) }}
+			<center>
+				<button  type="button" class="btn btn-info uploader">Upload new File</button>
+			</center>
+		</div>
+		<br class="clear"/>
+		<input type="submit" class="btn btn-success" />
+		<a class="confirmModal" href="javascript:history.go(-1);" >
+			<button type="button" class="btn btn-danger">Cancel</button>
+		</a>
+	{{ form_end(form) }}
+</div>
 {% endblock %}

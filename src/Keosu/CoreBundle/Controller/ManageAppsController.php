@@ -252,7 +252,7 @@ class ManageAppsController extends Controller {
 				->add('target_device','choice', array(
 					'required' => false,
 					'label' => false,
-					'choices' => array('universal' => 'unviversal',
+					'choices' => array('universal' => 'universal',
 									   'handset' => 'handset',
 								       'tablet' => 'tablet')
 				))
@@ -299,7 +299,10 @@ class ManageAppsController extends Controller {
 				->add('android_installLocation','choice', array(
 					'required' => false,
 					'label' => false,
-					'choices' => array('auto', 'internalOnly', 'preferExternal')
+					'choices' => array(
+							'auto' => 'auto',
+							'internalOnly'=> 'internalOnly',
+							'preferExternal' => 'preferExternal')
 				))
 				->add('disallowOverscroll','checkbox', array(
 					'required' => false,

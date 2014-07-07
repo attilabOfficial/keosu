@@ -71,7 +71,7 @@ app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerS
 	// Comment part
 	////////////////////////////////
 	$scope.commentListAction = function() {
-		$http.get($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id).success(function(data){
+		$http.get($scope.param.host+'service/gadget/comment/'+$scope.map.dataModelObjectName+'/'+$scope.map.id).success(function(data){
 			$scope.comments = data.comments;
 			$scope.connect = data.connect;
 		});
@@ -80,7 +80,7 @@ app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerS
 	$scope.commentAddAction = function() {
 		var data = "message="+$scope.messageComment;
 		$scope.messageComment = "";
-		$http.post($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id,data).success(function(data){
+		$http.post($scope.param.host+'service/gadget/comment/'+$scope.map.dataModelObjectName+'/'+$scope.map.id,data).success(function(data){
 			$scope.comments = data.comments;
 			$scope.connect = data.connect;
 		});

@@ -26,67 +26,54 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ServiceController extends Controller {
 
 	public function viewListAction($gadgetId, $format, $offset) {
-		$gadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+		$em = $this->get('doctrine')->getManager();
+	
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
 		$eventsperpage=$gadgetConfig['events-per-page'];
 
-		$qb = $this->get('doctrine')->getManager()->createQueryBuilder();
+		$qb = $em->createQueryBuilder();
 		$qb->add('select', 'p')
-				->add('from',
-						'Keosu\DataModel\EventModelBundle\Entity\Event p')
+				->add('from','Keosu\DataModel\EventModelBundle\Entity\Event p')
 				->add('orderBy', 'p.date DESC')
 				->setFirstResult($offset)
 				->setMaxResults(15);
-		//max result 15?
 		$query = $qb->getQuery();
 		$eventsList = $query->execute();
 
-		
-		$queryCount = $this->get('doctrine')->getManager()->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\EventModelBundle\Entity\Event p");
+		$queryCount = $em->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\EventModelBundle\Entity\Event p");
 		$count = $queryCount->getSingleScalarResult();
 	
-		return $this
-				->render(
-						'KeosuGadgetCalendarGadgetBundle:Service:viewlist.'
-								. $format . '.twig',
-						array('events' => $eventsList, 'eventsperpage' => $eventsperpage));
+		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewlist.'. $format . '.twig',array(
+									'events'        => $eventsList,
+									'eventsperpage' => $eventsperpage
+				));
 	}
 	
 	public function viewOneAction($eventid,$format){
-		$repo = $this->get('doctrine')->getManager()
-			->getRepository('KeosuDataModelEventModelBundle:Event');
-		$event = $repo->find($eventid);
-		return $this
-			->render(
-				'KeosuGadgetCalendarGadgetBundle:Service:view.'
-				. $format . '.twig',
-				array('event' => $event));
+		$em = $this->get('doctrine')->getManager();
+		$event = $em->getRepository('KeosuDataModelEventModelBundle:Event')->find($eventid);
+		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:view.'. $format . '.twig',array(
+									'event' => $event
+				));
 	}
 		
 	public function viewTableAction($gadgetId, $format) {
-		//$gadget = $this->get('doctrine')->getManager()
-		//		->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
-		//$gadgetConfig = $gadget->getConfig();
-		//$eventsperpage=$gadgetConfig['events-per-page'];
 
-		$qb = $this->get('doctrine')->getManager()->createQueryBuilder();
+		$em = $this->get('doctrine')->getManager();
+		$qb = $em->createQueryBuilder();
 		$qb->add('select', 'p')
-				->add('from',
-						'Keosu\DataModel\EventModelBundle\Entity\Event p')
+				->add('from','Keosu\DataModel\EventModelBundle\Entity\Event p')
 				->add('orderBy', 'p.date DESC');
 		$query = $qb->getQuery();
 		$eventsList = $query->execute();
 
-		
-		$queryCount = $this->get('doctrine')->getManager()->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\EventModelBundle\Entity\Event p");
+		$queryCount = $em->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\EventModelBundle\Entity\Event p");
 		$count = $queryCount->getSingleScalarResult();
 	
-		return $this
-				->render(
-						'KeosuGadgetCalendarGadgetBundle:Service:viewtable.'
-								. $format . '.twig',
-						array('events' => $eventsList));
+		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewtable.'. $format . '.twig',array(
+									'events' => $eventsList
+				));
 	}
 	
 }

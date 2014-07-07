@@ -2,6 +2,7 @@
 
 namespace Keosu\Gadget\CommentGadgetBundle\Controller;
 
+use Keosu\CoreBundle\KeosuExtension;
 use Keosu\Gadget\CommentGadgetBundle\Entity\Comment;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,8 +21,10 @@ class ServiceController extends Controller
 		if($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
 			$ret["connect"] = true;
 		}
+		$dataModel = $em->getRepository(KeosuExtension::$dataModelList[$dataModelObjectName])->find($idDataModel);
 
-		if($request->getMethod() === 'POST' && $request->request->get('message') != "undefined" && $securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+		if($request->getMethod() === 'POST' && $request->request->get('message') != "undefined"
+				&& $securityContext->isGranted('IS_AUTHENTICATED_FULLY') && $dataModel != null && $dataModel->getEnableComments()) {
 			$comment = new Comment();
 			$comment->setMessage($request->request->get('message'));
 			$comment->setDataModelObject($dataModelObjectName);

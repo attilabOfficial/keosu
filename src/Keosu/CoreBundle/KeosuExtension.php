@@ -41,9 +41,9 @@ class KeosuExtension {
 	);
 	
 	public static $dataModelList = array(
-			'article' => 'article',
-			'location'=> 'location',
-			'picture' => 'picture',
-			'event'   => 'event',
+			'article'  => 'KeosuDataModelArticleModelBundle:ArticleBody',
+			'location' => 'KeosuDataModelMapModelBundle:PointOfInterest',
+			'picture'  => 'KeosuDataModelPictureModelBundle:Picture',
+			'event'    => 'KeosuDataModelEventModelBundle:Event',
 	);
 }

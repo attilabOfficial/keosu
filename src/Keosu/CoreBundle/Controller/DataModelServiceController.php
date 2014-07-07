@@ -31,6 +31,6 @@ class DataModelServiceController extends Controller {
 		return $this
 				->render(
 						'KeosuCoreBundle:Content/Service:list.' . $format
-								. '.twig', array('contents' => KeosuExtension::$dataModelList));
+								. '.twig', array('contents' => array_keys(KeosuExtension::$dataModelList)));
 	}
 }

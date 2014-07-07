@@ -93,7 +93,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 			};
 			window.plugins.calendar.deleteEvent(test_title,test_location,test_notes,test_startDate,test_endDate,test_success,test_error);
 		}
-	}///////////////////////////
+	}
 	
 	// $scope.open is called when an event is choosen
 	$scope.open = function (page_id) {
@@ -158,16 +158,15 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 					// If it is not possible, we display it
 					var map_canvas = document.getElementById('calendar_map_canvas');
 					map_canvas.innerHTML = "<i>Unable to load Google Map</i>";
-				}				
-						
+				}
+
 				// Then, we hide the calendar and display the event
 				$scope.parts(false, true, $scope);
-				
-				
+
 				// These are the arguments for adding/deleting the event
 				var calSuccess = function(message) { };
 				var calError = function(message) { };
-				
+
 				// When an event is added/deleted, we propose the other action
 				function change(present) {
 					// First, we need to handle the button
@@ -178,7 +177,6 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 							bouton.onclick=function(){calendarDemoRemove();};
 							bouton.innerHTML='Delete from my calendar';
 						} else { // It is not possible to delete : display that it is added and block the button
-						
 							bouton.onclick=null;
 							bouton.disabled=true;
 							bouton.innerHTML='Event added in my calendar';
@@ -352,7 +350,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 		}
 		usSpinnerService.stop('spinner');
 	};
-	
+
 	/////////////////////////
 	// Comment part
 	/////////////////////////

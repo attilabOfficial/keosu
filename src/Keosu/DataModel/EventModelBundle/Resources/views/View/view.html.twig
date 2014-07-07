@@ -45,8 +45,8 @@ $(document).ready(function() {
 		<div id="dynamic" class="table">
 			<fieldset>
 				<div class="clearfix">
-		    		<h1 class="pull-left">Events</h1>
-		    		<a class="right-button pull-right" href="{{ path('keosu_event_add') }}">
+					<h1 class="pull-left">Events</h1>
+					<a class="right-button pull-right" href="{{ path('keosu_event_add') }}">
 						<button class="btn btn-success" title="Create an article">
 							New event
 						</button>
@@ -72,9 +72,8 @@ $(document).ready(function() {
 								<td>{{ event.lieu }}</td>
 								<td>{% if event.reader == false or (event.reader and event.reader.allowupdate == false)  %} <a href={{ path('keosu_event_edit',{'id':event.id}) }}><i class='glyphicon glyphicon-edit'></i></a>{% endif %}</td>
 								<td>{% if event.reader == false or (event.reader and event.reader.allowupdate == false) %} <a href={{ path('keosu_event_delete',{'id':event.id}) }}><i class='glyphicon glyphicon-remove'></i></a>{% endif %}</td>
-
 							</tr>
-    					{% endfor %}
+						{% endfor %}
 					</tbody>
 					<tfoot>
 						<tr>

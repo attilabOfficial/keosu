@@ -279,7 +279,7 @@ class App
     	$this->disable_cursor = false ;
     	$this->android_minSdkVersion = '7' ;
     	$this->android_installLocation = 'auto' ;
-    	$this->DisallowOverscroll = true ;
+    	$this->disallowOverscroll = true ;
     	$this->splash_screen_duration ='10000' ;
 
     	

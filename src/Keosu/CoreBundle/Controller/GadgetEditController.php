@@ -85,8 +85,7 @@ class GadgetEditController extends Controller {
 			//Call the common gadget function with gadget class in parameter
 			//$this->getGadgetClass() is defined in the child object it return the full package of the gadget class
 			// (for exemple Keosu\Gadget\ArticleGadgetBundle\ArticleGadget)
-			$gadgetArray = $this::addGadgetCommonAction($page, $zone,
-					$this->getGadgetClass());
+			$gadgetArray = $this::addGadgetCommonAction($page, $zone,$this->getGadgetClass());
 			//Specific gadget witch is an instance of getGadgetClass
 			$specificGadget = $gadgetArray['specific'];
 			//Common gadget witch is an instance of Gadget Entity
@@ -140,8 +139,7 @@ class GadgetEditController extends Controller {
 	 */
 	public function editAction($page, $zone) {
 		//Call the common gadget function with gadget class in parameter
-		$gadgetArray = $this::editGadgetCommonAction($page, $zone,
-				$this->getGadgetClass());
+		$gadgetArray = $this::editGadgetCommonAction($page, $zone,$this->getGadgetClass());
 		$specificGadget = $gadgetArray['specific'];
 		$commonGadget = $gadgetArray['common'];
 		return $this->formGadget($specificGadget, $commonGadget, null);
@@ -186,12 +184,12 @@ class GadgetEditController extends Controller {
 	 * Store the gadget in database
 	 */
 	public function formCommonGadget($form, $gadget, $commonGadget, $oldGadget) {
+		$em = $this->get('doctrine')->getManager();
 		$request = $this->get('request');
 		//If we are in POST method, form is submit
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
-				$em = $this->get('doctrine')->getManager();
 				//If there is an existing gadget in the same page/zone we delete it
 				if ($oldGadget != null) {
 					$em->remove($oldGadget);
@@ -209,18 +207,17 @@ class GadgetEditController extends Controller {
 				$em->flush();
 				$idPage = $commonGadget->getPage()->getId();
 
-				$exporter = $this->container->get('keosu_core.exporter')->exportApp();
+				$this->container->get('keosu_core.exporter')->exportApp();
 
-				return $this->redirect(
-							$this->generateUrl('keosu_core_views_page',
-									array('id' => $idPage)
+				return $this->redirect($this->generateUrl('keosu_core_views_page',array(
+													'id' => $idPage)
 									));
 			}
 		}	
-		return $this
-				->render($this->getRenderEditTemplate(),
-						array('form' => $form->createView(),
-							  'gadgetDir'=>TemplateUtil::getTemplatePath($gadget->getGadgetName())));
+		return $this->render($this->getRenderEditTemplate(), array(
+								'form'     => $form->createView(),
+								'gadgetDir'=>TemplateUtil::getTemplatePath($gadget->getGadgetName())
+							));
 	}
 	
 	/**

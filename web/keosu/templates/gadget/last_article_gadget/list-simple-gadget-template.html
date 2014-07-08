@@ -1,9 +1,6 @@
 <div ng-controller="last_article_gadgetController">
 	<div ng-show="isList">
-
-		<li
-			ng-class="{active: activePage.page == $index, 
-    inactive: activePage.page != $index}"
+		<li ng-class="{active: activePage.page == $index, inactive: activePage.page != $index}"
 			ng-repeat="page in pages track by $index">
 			<div class="panel list">
 				<div class="panel-body list-content">
@@ -16,12 +13,13 @@
 						<hr>
 					</div>
 				</div>
-			</div> <a ng-show="pages[$index - 1]" ng-click="activePage.page = $index-1"
-			class="previous" href="#"><button
-					class="btn btn-default btn-page">Previous</button></a> <a
-			ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1"
-			class="next" href="#"><button
-					class="btn btn-default btn-page pull-right">Next</button></a>
+			</div>
+			<a ng-show="pages[$index - 1]" ng-click="activePage.page = $index-1" class="previous">
+				<button class="btn btn-default btn-page">Previous</button>
+			</a>
+			<a ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1" class="next">
+				<button class="btn btn-default btn-page pull-right">Next</button>
+			</a>
 		</li>
 
 	</div>

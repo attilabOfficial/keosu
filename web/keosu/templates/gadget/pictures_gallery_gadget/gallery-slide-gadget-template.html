@@ -25,7 +25,10 @@
 	</div>
 	<div ng-show="isPicture">
 		<div class="full">
-			<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a> <img class="photo-full" src="{{images[index].path}}" alt=""
+			<div ng-click="close()">
+				<i class="fui-cross basic-icon-cross" style="position:absolute;z-index:2"></i>
+			</div> 
+			<img class="photo-full" src="{{images[index].path}}" alt=""
 			ng-swipe-left="swipeLeft()" ng-swipe-right="swipeRight()"></img>
 		</div>
 	</div>

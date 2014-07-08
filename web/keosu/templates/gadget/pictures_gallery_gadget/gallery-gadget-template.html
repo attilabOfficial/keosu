@@ -25,9 +25,10 @@
 	</div>
 	<div ng-show="isPicture">
 		<div class="full">
-			<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a> <img
-				class="photo-full" src="{{image.path}}" alt=""
-				ng-click="open(apage)"></img>
+			<div ng-click="close()"><i class="fui-cross basic-icon-cross" style="position:absolute;z-index:2"></i></div>
+			<div>
+			 	<img class="photo-full" src="{{image.path}}" alt="" style="position:absolute;z-index:1"></img>
+			</div>
 		</div>
 	</div>
 </div>

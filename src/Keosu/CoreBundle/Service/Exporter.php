@@ -236,6 +236,7 @@ class Exporter {
 		$script->setAttribute("src","js/app.js");
 		$document->getElementsByTagName("head")->item(0)->appendChild($script);
 
+
 		$this->writeFile(StringUtil::decodeString($document->saveHTML()),'index.html','/simulator/www/');
 
 		////////////////////////////////////////////////////
@@ -487,6 +488,21 @@ document.addEventListener('deviceready', function() {
 		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath() . '/phonegapbuild/www',
 			ExporterUtil::getAbsolutePath() . '/phonegapbuild/export.zip');
 
+		// Remove cache for simulator
+		$document = new \DOMDocument();
+		@$document->loadHtmlFile(ExporterUtil::getAbsolutePath() . '/simulator/www/index.html');
+
+		$meta = $document->createElement("meta");
+		$meta->setAttribute("http-equiv","Pragma");
+		$meta->setAttribute("content","no-cache");
+		$document->getElementsByTagName("head")->item(0)->appendChild($meta);
+		
+		$meta = $document->createElement("meta");
+		$meta->setAttribute("http-equiv","Expires");
+		$meta->setAttribute("content","-1");
+		$document->getElementsByTagName("head")->item(0)->appendChild($meta);
+		
+		$this->writeFile(StringUtil::decodeString($document->saveHTML()),'index.html','/simulator/www/');
 	}
 
 	private function cleanDir() {

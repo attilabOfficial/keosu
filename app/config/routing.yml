@@ -1,3 +1,7 @@
+keosu_plugin_push_plugin:
+    resource: "@KeosuPluginPushPluginBundle/Resources/config/routing.yml"
+    prefix:   /
+
 keosu_gadget_comment_gadget:
     resource: "@KeosuGadgetCommentGadgetBundle/Resources/config/routing.yml"
     prefix:   /

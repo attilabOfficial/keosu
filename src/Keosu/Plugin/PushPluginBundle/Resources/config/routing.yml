@@ -1,0 +1,3 @@
+keosu_plugin_push_plugin_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: KeosuPluginPushPluginBundle:Default:index }

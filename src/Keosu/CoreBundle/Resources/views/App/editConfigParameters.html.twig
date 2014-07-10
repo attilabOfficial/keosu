@@ -1,0 +1,184 @@
+{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+    
+    
+    				<div class="col-lg-3 configurelabel">
+						Permissions
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title ="Permissions for your app"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.permissions) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Phonegap version
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="Current version of PhoneGap"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.phonegap_version) }}	
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Orientation
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="Default means both landscape and portrait are enabled"></span>
+						</a>
+					</div>		
+					{{ form_row(form.configParam.orientation) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Target device
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="For targeting a specific device"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.target_device) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Fullscreen
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="Hides the status bar at the top of the screen"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.fullscreen) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Webviewbounce
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="IOS: control whether the screen 'bounces' when scrolled beyond the top"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.webviewbounce) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Prerendered icon
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="IOS: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.prerendered_icon) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Stay in webview
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="IOS: external links should open in the default browser, 'true' would use the webview the app lives in"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.stay_in_webview) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						IOS status barstyle
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="IOS: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.ios_statusbarstyle) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel" >
+						Detect data types
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="IOS: controls whether data types (such as phone no. and dates) are automatically turned into links by the system "></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.detect_data_types) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Exit on suspend
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="IOS: if set to true, app will terminate when home button is pressed"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.exit_on_suspend) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Show splash screen spinner
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="IOS: if set to false, the spinner won't appear on the splash screen during app loading"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.show_splash_screen_spinner) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Auto hide splash screen
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="IOS: if set to false, the splash screen must be hidden using a JavaScript API"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.auto_hide_splash_screen) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Disable cursor
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="Blackberry: prevents a mouse-icon/cursor form being displayed on the app"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.disable_cursor) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Android min SDK version
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="Android: MIN SDK version supported on the target device. MAX version is blank by default."></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.android_minSdkVersion) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Android install location
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="Android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. "></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.android_installLocation) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Disable overscroll
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.disallowOverscroll) }}
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						Splash screen duration
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign"></span>
+						</a>
+					</div>
+					{{ form_row(form.configParam.splash_screen_duration) }}
+					<br class="clear"/>
+					
+					<br class="clear"/><br class="clear"/>
+					<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+				{{ form_end(form) }}

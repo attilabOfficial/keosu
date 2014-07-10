@@ -93,16 +93,22 @@ swiftmailer:
     
 # Friends of Symfony User Configuration
 fos_user:
-  db_driver: orm
-  firewall_name: main
-  user_class: Keosu\UserBundle\Entity\User
+    db_driver: orm
+    firewall_name: main
+    user_class: Keosu\UserBundle\Entity\User
   
 # TinyMCE Configuration
 stfalcon_tinymce:
-  include_jquery: true
-  tinymce_jquery: true
-  selector: ".tinymce"
-  language: %locale%
-  theme:
-    simple:
-      theme: "modern"
+    include_jquery: true
+    tinymce_jquery: true
+    selector: ".tinymce"
+    language: %locale%
+    theme:
+      simple:
+        theme: "modern"
+
+# push notif config
+rms_push_notifications:
+    android:
+        gcm:
+            api_key: articulate-life-599

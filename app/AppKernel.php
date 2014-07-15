@@ -61,7 +61,7 @@ class AppKernel extends Kernel
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
     
-    /* for virtual machine *
+    /* for virtual machine */
     public function getCacheDir()
     {
         if (in_array($this->environment, array('dev', 'test'))) {

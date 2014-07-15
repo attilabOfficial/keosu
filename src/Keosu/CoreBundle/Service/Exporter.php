@@ -46,15 +46,12 @@ class Exporter {
 	}
 
 	public function exportApp() {
-		
 		$em = $this->doctrine->getManager();
 		$baseurl = $this->container->getParameter('url_base');
 		$param = $this->container->getParameter('url_param');
 		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
 		
-		
 		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appId);
-		$isIndexPageImported = false;
 
 		$clean=$this->cleanDir();
 
@@ -189,7 +186,7 @@ class Exporter {
 		$document = new \DOMDocument();
 		@$document->loadHtmlFile(ExporterUtil::getAbsolutePath() . '/simulator/www/index.html');
 
-		// TODO import theme in index.html
+		// import theme in index.html
 		$tmpthemeHeader = new \DOMDocument();
 		@$tmpthemeHeader->loadHtmlFile(ThemeUtil::getAbsolutePath() .$app->getTheme().'/header/header.html');
 		
@@ -216,7 +213,7 @@ class Exporter {
 			ExporterUtil::getAbsolutePath() . '/simulator/www/js/facebook-js-sdk.js');
 		}
 
-		//Ading the script TAG in document head
+		//Adding the script TAG in document head
 		//This is used to import custom JS file for gadgets
 		foreach ($jsToImport as $jsURl){
 			$script = $document->createElement("script");
@@ -449,44 +446,45 @@ document.addEventListener('deviceready', function() {
 
 		$configXml->save(ExporterUtil::getAbsolutePath().DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR.'config.xml');
 
+
 		/**
 		 * Duplicate Export for ios, android and phonegapbuild
 		 */
 		//For ios
-		FilesUtil::copyFolder(ExporterUtil::getAbsolutePath() . '/simulator/www',
-			ExporterUtil::getAbsolutePath() . '/ios/www');
+		FilesUtil::copyFolder(ExporterUtil::getAbsolutePath().'/simulator/www',
+			ExporterUtil::getAbsolutePath().'/ios/www');
 		
-		copy(TemplateUtil::getAbsolutePath() . '/main-header/ios/cordova.js',
-			ExporterUtil::getAbsolutePath() . '/ios/www/cordova.js');
+		copy(TemplateUtil::getAbsolutePath().'/main-header/ios/cordova.js',
+			ExporterUtil::getAbsolutePath().'/ios/www/cordova.js');
 		
 		//For Android
 		
-		FilesUtil::copyFolder(ExporterUtil::getAbsolutePath() . '/simulator/www',
-			ExporterUtil::getAbsolutePath() . '/android/www');
+		FilesUtil::copyFolder(ExporterUtil::getAbsolutePath().'/simulator/www',
+			ExporterUtil::getAbsolutePath().'/android/www');
 		
-		copy(TemplateUtil::getAbsolutePath() . '/main-header/android/cordova.js',
-		ExporterUtil::getAbsolutePath() . '/android/www/cordova.js');
+		copy(TemplateUtil::getAbsolutePath().'/main-header/android/cordova.js',
+			ExporterUtil::getAbsolutePath().'/android/www/cordova.js');
 		
 		//For phonegapbuild
-		FilesUtil::copyFolder(ExporterUtil::getAbsolutePath() . '/simulator/www',
-			ExporterUtil::getAbsolutePath() . '/phonegapbuild/www');
+		FilesUtil::copyFolder(ExporterUtil::getAbsolutePath().'/simulator/www',
+			ExporterUtil::getAbsolutePath().'/phonegapbuild/www');
 		//No cordova.js in phonegapbuild
 		
-		copy(TemplateUtil::getAbsolutePath() . '/main-header/ios/cordova.js',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/cordova.js');
+		copy(TemplateUtil::getAbsolutePath().'/main-header/ios/cordova.js',
+			ExporterUtil::getAbsolutePath().'/simulator/www/cordova.js');
 		
 		
 		//Generate ZIP files for all
 
 		//ios
-		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath() . '/ios/www',
-			ExporterUtil::getAbsolutePath() . '/ios/export.zip');
+		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath().'/ios/www',
+			ExporterUtil::getAbsolutePath().'/ios/export.zip');
 		//android
-		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath() . '/android/www',
-			ExporterUtil::getAbsolutePath() . '/android/export.zip');
+		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath().'/android/www',
+			ExporterUtil::getAbsolutePath().'/android/export.zip');
 		//Phonegapbuild
-		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath() . '/phonegapbuild/www',
-			ExporterUtil::getAbsolutePath() . '/phonegapbuild/export.zip');
+		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath().'/phonegapbuild/www',
+			ExporterUtil::getAbsolutePath().'/phonegapbuild/export.zip');
 
 		// Remove cache for simulator
 		$document = new \DOMDocument();

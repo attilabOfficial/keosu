@@ -1,0 +1,12 @@
+{
+   "name" : "jQuery",
+   "description" : "The JQuery librairy and some extensions",
+   "param" : [],
+   "require" : [],
+   "configCordova" : {},
+   "libJs" : [
+      "jquery-2.1.1.min.js",
+      "utilString.js"
+   ],
+   "appParam" : []
+}

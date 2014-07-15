@@ -1,0 +1,19 @@
+{
+   "name" : "angularJs",
+   "description" : "init AngularJs in a var app with some packages",
+   "param" : [],
+   "require" : [],
+   "configCordova" : {},
+   "libJs" : [
+      "angular.min.js",
+      "angular-chrono.js",
+      "angular-inview.js",
+      "angular-resource.js",
+      "angular-route.js",
+      "angular-sanitize.min.js",
+      "angular-spinner.js",
+      "angular-touch.js",
+      "spin.js"
+   ],
+   "appParam" : []
+}

@@ -68,8 +68,8 @@
 							<ul class="dropdown-menu">
 								{% for gadget in gadgets %}
 									<li>
-										<a href="{{ path('keosu_gadget_'~classToName[gadget]~'_add',{'page':content.id, 'zone':zone.zoneId}) }}">
-											Add {{ classToName[gadget] }}
+										<a href="{{ path('keosu_gadget_add',{'page':content.id, 'zone':zone.zoneId, 'gadget':gadget}) }}">
+											Add {{ gadget }}
 										</a>
 									</li>
 								{% endfor %}
@@ -77,7 +77,7 @@
 						</div>
 						{% endif %}
 						{% if zone.gadgetName %}
-							<a class="btn btn-info editgadget" href="{{ path('keosu_gadget_'~ zone.gadgetName~'_edit',{'page':content.id, 'zone':zone.zoneId}) }}">
+							<a class="btn btn-info editgadget" href="{{ path('keosu_gadget_edit',{'page':content.id, 'zone':zone.zoneId, 'gadget':zone.gadgetName}) }}">
 								Edit {{ zone.gadgetName }}
 							</a>
 							

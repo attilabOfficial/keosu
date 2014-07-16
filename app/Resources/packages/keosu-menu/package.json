@@ -1,8 +1,8 @@
 {
-   "name" : "keosu-comments",
-   "description" : "Create a form to comments items",
+   "name" : "keosu-menu",
+   "description" : "Create a menu gadget",
    "version" : "0.1",
-   "type" : "plugin",
+   "type" : "gadget",
    "param" : [
       {"objectId" : "integer"},
       {"dataModelObjectName": "string"},

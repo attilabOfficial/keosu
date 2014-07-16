@@ -1,6 +1,8 @@
 {
    "name" : "keosu-article",
    "description" : "Display an article in your app",
+   "version" : "0.1",
+   "type" : "gadget",
    "param" : [
       {"articleId" : "integer"}
    ],

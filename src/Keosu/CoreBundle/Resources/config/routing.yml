@@ -2,6 +2,7 @@ keosu_core_mainhomepage:
     pattern:  /
     defaults: { _controller: KeosuCoreBundle:MainViews:content }
 
+# install part
 keosu_core_install_check:
     pattern:  /install
     defaults: { _controller: KeosuCoreBundle:Install:check }
@@ -90,7 +91,16 @@ keosu_core_views_content_service_list:
 keosu_core_views_page_service_list:
     pattern:  /service/views/page/list/{format}
     defaults: { _controller: KeosuCoreBundle:PageService:list }
- 
+
+# CRUD gadget
+keosu_gadget_add:
+    pattern: /views/page/gadget/add/{gadget}/{page}/{zone}
+    defaults: { _controller: KeosuCoreBundle:GadgetEdit:add}
+
+keosu_gadget_edit:
+    pattern: /views/page/gadget/edit/{gadget}/{page}/{zone}
+    defaults: { _controller: KeosuCoreBundle:GadgetEdit:edit}
+
 keosu_gadget_delete:
     pattern:  /views/page/gadget/delete/{page}/{zone}
     defaults: { _controller: KeosuCoreBundle:GadgetEdit:delete }

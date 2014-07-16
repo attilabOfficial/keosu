@@ -2,6 +2,7 @@
    "name" : "angularJs",
    "description" : "init AngularJs in a var app with some packages",
    "version" : "1.2.14",
+   "type" : "lib",
    "param" : [],
    "require" : {},
    "configCordova" : {},

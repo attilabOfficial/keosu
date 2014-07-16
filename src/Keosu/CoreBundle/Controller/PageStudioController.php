@@ -82,37 +82,25 @@ class PageStudioController extends Controller {
 						TemplateUtil::getGadgetAbsolutePath() . '/'
 								. $gadget->getGadgetName() . '/'
 								. $gadget->getGadgetTemplate());
-				//$configString = json_encode($gadget->getConfig());
-				//$configString = str_replace('"', '\"', $configString);
 
 				$zoneModel->setGadgetName($gadget->getGadgetName());
-				$zoneModel
-						->setTemplate(
-								TemplateUtil::formatTemplateString(
-										$gadgetTemplateHtml));
+				$zoneModel->setTemplate(TemplateUtil::formatTemplateString($gadgetTemplateHtml));
 				$zoneModel->setZoneId($zone);
 			} else {
 				$zoneModel->setZoneId($zone);
 			}
 			$gadgetModelList[] = $zoneModel;
 		}
-		
-		$classToName = array();
-		foreach(KeosuExtension::$gadgetList as $k => $v)
-			$classToName[$v]=$k;
-			
-		$ret = $this->get('keosu_core.package_manager')->getList(PackageManager::TYPE_PACKAGE_LIB);
-		print_r($ret);
-		die();
+
+		$gadgetList = $this->get('keosu_core.package_manager')->getList(PackageManager::TYPE_PACKAGE_GADGET);
 
 		return $this
 				->render('KeosuCoreBundle:Page:studio.html.twig',
 						array('content'      => $content,
 							  'zones'        => $gadgetModelList,
 							  'templatehtml' => $templateHtml,
-							  'gadgets'      => KeosuExtension::$gadgetList,
-							  'editableOnly' => $editableOnly,
-							  'classToName'  => $classToName,));
+							  'gadgets'      => $gadgetList,
+							  'editableOnly' => $editableOnly));
 	}
 
 }

@@ -213,7 +213,7 @@ class GadgetEditController extends Controller {
 													'id' => $idPage)
 									));
 			}
-		}	
+		}
 		return $this->render($this->getRenderEditTemplate(), array(
 								'form'     => $form->createView(),
 								'gadgetDir'=>TemplateUtil::getTemplatePath($gadget->getGadgetName())

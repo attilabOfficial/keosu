@@ -18,37 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Util;
 
-use Keosu\CoreBundle\Util\StringUtil;
+class PathUtil {
 
-use Keosu\CoreBundle\Model\ZoneModel;
-
-use Keosu\CoreBundle\Util\TemplateUtil;
-
-use Keosu\CoreBundle\Entity\Page;
-use Symfony\Component\DomCrawler\Crawler;
-
-class ExporterUtil {
-	public static function getExportPath() {
-		return "keosu/export";
+	public static function getRootDir() {
+		return __DIR__ . '/../../../../web/';
 	}
 
-	public static function getAbsolutePath() {
-		return null === ExporterUtil::getExportPath() ? null
-				: PathUtil::getRootDir() 
-						. ExporterUtil::getExportPath();
-	}
-
-	public static function getWebPath() {
-		return null === ExporterUtil::getExportPath() ? null
-				: '/web/' . ExporterUtil::getExportPath();
-	}
-	
-	public static function boolToString($bool){
-		//return $bool;
-		return var_export($bool, true);
-	}
-
-	public static function getSplashsIconesDir($appId){
-		return PathUtil::getRootDir().'keosu/res/'.$appId."/";
-	}
 }

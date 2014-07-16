@@ -48,17 +48,13 @@ class ThemeUtil {
 
 	public static function getAbsolutePath() {
 		return null === ThemeUtil::getThemeDir() ? null
-				: ThemeUtil::getUploadRootDir() . '/'
+				: PathUtil::getRootDir() . '/'
 						. ThemeUtil::getThemeDir();
 	}
 
 	public static function getWebPath() {
 		return null === ThemeUtil::getThemeDir() ? null
 				: ThemeUtil::getThemeDir();
-	}
-
-	public static function getUploadRootDir() {
-		return __DIR__ . '/../../../../web/';
 	}
 
 }

@@ -66,10 +66,7 @@ class Exporter {
 		
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/style',
 				ExporterUtil::getAbsolutePath() . '/simulator/www/theme');
-		
-		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/res',
-			ExporterUtil::getAbsolutePath() . '/simulator/www/res');
-		
+				
 		//Copy all web/templates/export/js dir to web/export/www/js
 		FilesUtil::copyFolder(TemplateUtil::getAbsolutePath() . '/main-header/js',
 				ExporterUtil::getAbsolutePath() . '/simulator/www/js');
@@ -86,6 +83,12 @@ class Exporter {
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/header/js',
 		ExporterUtil::getAbsolutePath() . '/simulator/www/js');
 
+		
+		//Copy Splashcreens and icons
+		FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir($app->getId()), ExporterUtil::getAbsolutePath().'/simulator/www/res/');	
+		
+		
+		
 		// list of imported gadgets
 		$importedGadget = array();
 		// list of permissions requiered for the application
@@ -383,18 +386,18 @@ document.addEventListener('deviceready', function() {
 		$icons = array(
 			array( "src"=>"icon.png"),
 			// ANDROID
-			array( "src"=>"res/icon/android/icon-36-ldpi.png" ,"gap:platform"=>"android","gap:density"=>"ldpi"),
-			array( "src"=>"res/icon/android/icon-48-mdpi.png" ,"gap:platform"=>"android","gap:density"=>"mdpi"),
-			array( "src"=>"res/icon/android/icon-72-hdpi.png" ,"gap:platform"=>"android","gap:density"=>"hdpi"),
-			array( "src"=>"res/icon/android/icon-96-xhdpi.png" ,"gap:platform"=>"android","gap:density"=>"xhdpi"),
+			array( "src"=>"res/icons/android/iconA36.png" ,"gap:platform"=>"android","gap:density"=>"ldpi"),
+			array( "src"=>"res/icons/android/iconA48.png" ,"gap:platform"=>"android","gap:density"=>"mdpi"),
+			array( "src"=>"res/icons/android/iconA72.png" ,"gap:platform"=>"android","gap:density"=>"hdpi"),
+			array( "src"=>"res/icons/android/iconA96.png" ,"gap:platform"=>"android","gap:density"=>"xhdpi"),
 			// IOS
-			array( "src"=>"res/icon/ios/icon-57.png" ,"gap:platform"=>"ios","width"=>"57","height"=>"57"),
-			array( "src"=>"res/icon/ios/icon-72.png" ,"gap:platform"=>"ios","width"=>"72","height"=>"72"),
-			array( "src"=>"res/icon/ios/icon-57-2x.png" ,"gap:platform"=>"ios","width"=>"114","height"=>"114"),
-			array( "src"=>"res/icon/ios/icon-120.png" ,"gap:platform"=>"ios","width"=>"120","height"=>"120"),
-			array( "src"=>"res/icon/ios/icon-76.png" ,"gap:platform"=>"ios","width"=>"76","height"=>"76"),
-			array( "src"=>"res/icon/ios/icon-152.png" ,"gap:platform"=>"ios","width"=>"152","height"=>"152"),
-			array( "src"=>"res/icon/ios/icon-72-2x.png" ,"gap:platform"=>"ios","width"=>"144","height"=>"144"),
+			array( "src"=>"res/icons/ios/iconI57.png" ,"gap:platform"=>"ios","width"=>"57","height"=>"57"),
+			array( "src"=>"res/icons/ios/iconI72.png" ,"gap:platform"=>"ios","width"=>"72","height"=>"72"),
+			array( "src"=>"res/icons/ios/iconI114.png" ,"gap:platform"=>"ios","width"=>"114","height"=>"114"),
+			array( "src"=>"res/icons/ios/iconI120.png" ,"gap:platform"=>"ios","width"=>"120","height"=>"120"),
+			array( "src"=>"res/icons/ios/iconI76.png" ,"gap:platform"=>"ios","width"=>"76","height"=>"76"),
+			array( "src"=>"res/icons/ios/iconI152.png" ,"gap:platform"=>"ios","width"=>"152","height"=>"152"),
+			array( "src"=>"res/icons/ios/iconI144.png" ,"gap:platform"=>"ios","width"=>"144","height"=>"144"),
 		);
 		
 		foreach($icons as $i) {
@@ -409,18 +412,18 @@ document.addEventListener('deviceready', function() {
 		// Define app splash screen for each platform.
 		$splashScreen = array(
 			// ANDROID
-			array( "src"=>"res/screen/android/screen320x436.9.png" ,"gap:platform"=>"android" ,"gap:density"=>"ldpi"),
-			array( "src"=>"res/screen/android/screen320x470.9.png" ,"gap:platform"=>"android" ,"gap:density"=>"mdpi"),
-			array( "src"=>"res/screen/android/screen640.9.png" ,"gap:platform"=>"android" ,"gap:density"=>"hdpi"),
-			array( "src"=>"res/screen/android/screen960x720.9.png" ,"gap:platform"=>"android" ,"gap:density"=>"xhdpi"),
+			array( "src"=>"res/screen/android/splashscreenA320x436.png" ,"gap:platform"=>"android" ,"gap:density"=>"ldpi"),
+			array( "src"=>"res/screen/android/splashscreenA320x470.png" ,"gap:platform"=>"android" ,"gap:density"=>"mdpi"),
+			array( "src"=>"res/screen/android/splashscreenA640x480.png" ,"gap:platform"=>"android" ,"gap:density"=>"hdpi"),
+			array( "src"=>"res/screen/android/splashscreenA960x720.png" ,"gap:platform"=>"android" ,"gap:density"=>"xhdpi"),
 			// IOS
-			array( "src"=>"res/screen/ios/screen320.png" ,"gap:platform"=>"ios" ,"width"=>"320" ,"height"=>"480"),
-			array( "src"=>"res/screen/ios/screen640.png" ,"gap:platform"=>"ios" ,"width"=>"640" ,"height"=>"960"),
-			array( "src"=>"res/screen/ios/screen6401136.png" ,"gap:platform"=>"ios" ,"width"=>"640" ,"height"=>"1136"),
-			array( "src"=>"res/screen/ios/screen1004.png" ,"gap:platform"=>"ios" ,"width"=>"1024" ,"height"=>"748"),
-			array( "src"=>"res/screen/ios/screen768.png" ,"gap:platform"=>"ios" ,"width"=>"768" ,"height"=>"1004"),
-			array( "src"=>"res/screen/ios/screen2048.png" ,"gap:platform"=>"ios" ,"width"=>"2048" ,"height"=>"1496"),
-			array( "src"=>"res/screen/ios/screen1536.png" ,"gap:platform"=>"ios" ,"width"=>"1536" ,"height"=>"2008"),
+			array( "src"=>"res/screen/ios/splashscreenI320x480.png" ,"gap:platform"=>"ios" ,"width"=>"320" ,"height"=>"480"),
+			array( "src"=>"res/screen/ios/splashscreenI640x960.png" ,"gap:platform"=>"ios" ,"width"=>"640" ,"height"=>"960"),
+			array( "src"=>"res/screen/ios/splashscreenI640x1136.png" ,"gap:platform"=>"ios" ,"width"=>"640" ,"height"=>"1136"),
+			array( "src"=>"res/screen/ios/splashscreenI1024x748.png" ,"gap:platform"=>"ios" ,"width"=>"1024" ,"height"=>"748"),
+			array( "src"=>"res/screen/ios/splashscreenI768x1004.png" ,"gap:platform"=>"ios" ,"width"=>"768" ,"height"=>"1004"),
+			array( "src"=>"res/screen/ios/splashscreenI2048x1496.png" ,"gap:platform"=>"ios" ,"width"=>"2048" ,"height"=>"1496"),
+			array( "src"=>"res/screen/ios/splashscreenI1536x2008.png" ,"gap:platform"=>"ios" ,"width"=>"1536" ,"height"=>"2008"),
 		);
 		
 		foreach($splashScreen as $asplash) {

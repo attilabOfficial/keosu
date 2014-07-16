@@ -85,7 +85,7 @@ class TemplateUtil {
 
 	public static function getAbsolutePath() {
 		return null === TemplateUtil::getTemplateDir() ? null
-				: TemplateUtil::getUploadRootDir() . '/'
+				: PathUtil::getRootDir() . '/'
 						. TemplateUtil::getTemplateDir();
 	}
 	
@@ -103,10 +103,6 @@ class TemplateUtil {
 	public static function getWebPath() {
 		return null === TemplateUtil::getTemplateDir() ? null
 				: TemplateUtil::getTemplateDir();
-	}
-
-	public static function getUploadRootDir() {
-		return __DIR__ . '/../../../../web/';
 	}
 	
 	/**

@@ -148,6 +148,10 @@ class App
      */
     private $configParam;
     
+    private $splashscreens;
+    
+    private $icons;
+    
     
     /**
      * Get id
@@ -457,54 +461,49 @@ class App
      */
     public function setConfigParam(ConfigParameters $configParam){
     	$this->configParam = $configParam;
-    	return this;
+    	return $this;
     }
     
-	
-	/**
-	 * Set path
-	 *
-	 * @param string $path
-	 * @return ArticleAttachment
-	 */
-	public function setPath($path) {
-		$this->path = $path;
-	
-		return $this;
-	}
-	
-	/**
-	 * Get path
-	 *
-	 * @return string
-	 */
-	public function getPath() {
-		return $this->path;
-	}
-	
-	public function getAbsolutePath() {
-		return null === $this->path ? null
-		: $this->getUploadRootDir() . '/' . $this->path;
-	}
-	
-	public function getWebPath() {
-		return null === $this->path ? null
-		: '/' . $this->getUploadDir() . '/' . $this->path;
-	}
-	
-	public function getUploadRootDir() {
-		// the absolute directory path where uploaded
-		// documents should be saved
-		return __DIR__ .'/../../../../web/' . $this->getUploadDir();
-	}
-	
-	protected function getUploadDir() {
-		// get rid of the __DIR__ so it doesn't screw up
-		// when displaying uploaded doc/image in the view.
-		return 'uploads/splashscreen';
-	}
-	
-	
-	
+    /**
+     * Get splashscreens
+     *
+     * @return Splashscreens
+     */
+    public function getSplashscreens(){
+    	return $this->splashscreens;
+    }
+    
+    
+    /**
+     * Set splashscreens
+     *
+     * @param Splashscreens $splashscreens
+     * @return App
+     */
+    public function setSplashscreens(Splashscreens $splashscreens){
+    	$this->splashscreens = $splashscreens;
+    	return $this;
+    }
+    
+    /**
+     * Get icons
+     *
+     * @return Icons
+     */
+    public function getIcons(){
+    	return $this->icons;
+    }
+    
+    
+    /**
+     * Set icons
+     *
+     * @param Icons $icons
+     * @return App
+     */
+    public function setIcons(Icons $icons){
+    	$this->icons = $icons;
+    	return $this;
+    }
 	
 }

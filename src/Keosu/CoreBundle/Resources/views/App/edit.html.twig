@@ -20,6 +20,7 @@
 {% block title %}Edit App{% endblock %}
 
 {% block body %}
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$( ".radio" ).each(function( index ) {
@@ -41,33 +42,36 @@
 			$(this).css("border","red solid 3px");
 		});
 	});
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		
-		function openInput($el){
-			$el.parent().parent().find('input[type="file"]')[ 0 ].click();
-		}
-		 
-		$(document).on("click",'.uploader',function() {
-			 	openInput($(this));
-			    return false;
-		 });
-
-		$(document).on("change",'input[type="file"]',function() {
-			if (this.files &&  this.files[0]) {
-	            var reader = new FileReader();
-	            el= $(this);
-	            reader.onload = function (e) {
-	            	$('#img-preview').attr('src', e.target.result).show();
+	
+	var _URL = window.URL || window.webkitURL;
+	
+	function check(files,width,height){
+		var file, img;		
+	    if ((file = files[0])) {
+	        img = new Image();	  
+	        img.onload = function () {     
+	            if(this.width!=width || this.height!=height){
+	            	alert("Warning: Width "+ width +" / Height "+ height +" expected");
 	            }
-	            reader.readAsDataURL(this.files[0]);
+	        };
+	       }
+	    img.src = _URL.createObjectURL(file);
+	}
+	
+	
+	function readURL(input,preview) {
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+	
+	        reader.onload = function (e) {
+	            $('#'+preview).attr('src', e.target.result);
 	        }
-		});
-		
-		
-	});
-	</script>
+	
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+</script>
+
 <style type="text/css">
 .imgtheme .radio {
 	display:inline;
@@ -170,47 +174,76 @@
 					</div>
 					<br class="clear"/><br class="clear"/>
 					
-					<div class="col-lg-3 configurelabel">
-						Facebook app id (optional)
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
-					</div>
-					{{ form_row(form.facebookAppId) }}
-					<br class="clear"/>
 					
-					<div class="col-lg-3 configurelabel">
-						Facebook app name(optional)
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
-					</div>
-					{{ form_row(form.facebookAppName) }}
-					<br class="clear"/>
+					<!-- Trigger Button HTML -->
+					<input type="button" class="btn" data-toggle="collapse" data-target="#advanced" value="Advanced">
+					<div id="advanced" class="collapse">
 					
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
-						Facebook app secret (optional)
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
+						<div class="col-lg-3 configurelabel">
+							Facebook app id (optional)
+							<a title="">
+								<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+							</a>
+						</div>
+						{{ form_row(form.facebookAppId) }}
+						<br class="clear"/>
+						
+						<div class="col-lg-3 configurelabel">
+							Facebook app name(optional)
+							<a title="">
+								<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+							</a>
+						</div>
+						{{ form_row(form.facebookAppName) }}
+						<br class="clear"/>
+						
+						<div class="col-lg-3 configurelabel" title="This is my tooltip">
+							Facebook app secret (optional)
+							<a title="">
+								<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+							</a>
+						</div>
+						{{ form_row(form.facebookAppSecret) }}
+						<div class="col-lg-9">
+							<span class="help-block">The three facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>.</span>
+						</div>
+						<br class="clear"/>
+	
+						<div class="col-lg-3 configurelabel">
+							Debug mode (optional)
+						</div>
+						{{ form_row(form.debugMode) }}
+						<div class="col-lg-9">
+							<span class="help-block">This param allow to debug your app with <a href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
+						</div>
+						<br class="clear"/>
+	
+						<!-- Trigger Button HTML -->
+						<input type="button" class="btn" data-toggle="collapse" data-target="#icons" value="Icons">
+						<div id="icons" class="collapse">
+						
+							{% include 'KeosuCoreBundle:App:editIcones.html.twig' %}
+							
+						</div>
+						<br class="clear"/><br class="clear"/>
+						
+						<!-- Trigger Button HTML -->
+						<input type="button" class="btn" data-toggle="collapse" data-target="#splashscreens" value="Splashscreens">
+						<div id="splashscreens" class="collapse">
+						
+							{% include 'KeosuCoreBundle:App:editSplashscreens.html.twig' %}
+							
+						</div></div>
+						<br class="clear"/>
+						
+						{% include 'KeosuCoreBundle:App:editConfigParameters.html.twig' %}
+						
 					</div>
-					{{ form_row(form.facebookAppSecret) }}
-					<div class="col-lg-9">
-						<span class="help-block">The three facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>.</span>
-					</div>
-					<br class="clear"/>
-
-					<div class="col-lg-3 configurelabel">
-						Debug mode (optional)
-					</div>
-					{{ form_row(form.debugMode) }}
-					<div class="col-lg-9">
-						<span class="help-block">This param allow to debug your app with <a href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
-					</div>
-					<br class="clear"/>
 					
-					{% include 'KeosuCoreBundle:App:editConfigParameters.html.twig' %}
-					
+					<br class="clear"/><br class="clear"/>
+					<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+				{{ form_end(form) }}
+				
 			</div>
 		</div>
 	</div>

@@ -31,6 +31,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
 use Keosu\CoreBundle\Form\ConfigParametersType;
 use Keosu\CoreBundle\Entity\ConfigParameters;
+use Keosu\CoreBundle\Form\SplashscreensType;
+use Keosu\CoreBundle\Form\IconsType;
+use Keosu\CoreBundle\Util\FilesUtil;
+use Keosu\CoreBundle\Util\ExporterUtil;
 
 class ManageAppsController extends Controller {
 
@@ -55,6 +59,10 @@ class ManageAppsController extends Controller {
 	 */
 	public function addAction() {
 		$app = new App();
+		
+		//Copy default splashscreens and icons in a temp repertory
+		FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir("keosu"), ExporterUtil::getSplashsIconesDir("tmp"));
+		
 		//Form and store action are shared with editAction
 		return $this->editApp($app);
 	}
@@ -66,6 +74,10 @@ class ManageAppsController extends Controller {
 		$repo = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:App');
 		$app = $repo->find($id);
+		
+		//Copy older splashscreens and icons in a temp repertory
+		FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir($app->getId()), ExporterUtil::getSplashsIconesDir("tmp"));
+		
 		//Form and store action are shared with editAction
 		return $this->editApp($app);
 
@@ -76,6 +88,10 @@ class ManageAppsController extends Controller {
 	 * Shared function to edit/add an app
 	 */
 	private function editApp($app) {
+		
+		
+		
+		
 		//Find existing app to know if it's the first one
 		$apps = $this->get('doctrine')->getManager()
 			->getRepository('KeosuCoreBundle:App')->findAll();
@@ -162,6 +178,14 @@ class ManageAppsController extends Controller {
 
 				$session = $this->get("session");
 				$session->set("appid",$app->getId());
+				
+				//Delete older splashscreens and icons
+				//FilesUtil::deleteDir(ExporterUtil::getSplashsIconesDir($app->getId()));
+				//Copy splashscreens and icons
+				FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir("tmp"), ExporterUtil::getSplashsIconesDir($app->getId()));
+				//Delete temp repertory
+				//FilesUtil::deleteDir(ExporterUtil::getSplashsIconesDir("tmp"));
+				
 				// export the app
 				$this->container->get('keosu_core.exporter')->exportApp();
 
@@ -230,8 +254,11 @@ class ManageAppsController extends Controller {
 						'choices'  => ThemeUtil::getThemeList(),
 						'required' => true,
 						'expanded' => true,
-						'label' => false))
-				->add('configParam', new ConfigParametersType());
+						'label' => false
+				))
+				->add('splashscreens', new SplashscreensType())
+				->add('configParam', new ConfigParametersType())
+				->add('icons', new IconsType());
 	}
 
 }

@@ -35,7 +35,6 @@ class User extends BaseUser {
 	 */
 	public function setEmail($email)
 	{
-		$this->setUsername($email);
 		return parent::setEmail($email);
 	}
 	

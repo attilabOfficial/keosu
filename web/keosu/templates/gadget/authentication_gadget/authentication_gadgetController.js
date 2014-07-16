@@ -170,7 +170,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 			window.scrollTo(0, 0);
 		} else {
 			usSpinnerService.spin('spinner');
-			var data = 'csrf_token='+$scope.token+'&password='+$scope.password+'&email='+$scope.email;
+			var data = 'csrf_token='+$scope.token+'&password='+$scope.password+'&email='+$scope.email+'&username='+$scope.username;
 			$http.post($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/register',data).success(function(data) {
 				usSpinnerService.stop('spinner');
 				if(data.success) {

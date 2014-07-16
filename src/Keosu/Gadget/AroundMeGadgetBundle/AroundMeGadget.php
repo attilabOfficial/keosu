@@ -51,5 +51,8 @@ class AroundMeGadget extends GadgetParent implements iGadget {
 		$ret[] = $this::PERMISSION_GEOLOCATION;
 		return $ret;
 	}
+	public function getExtraJsToImport() {
+		return array("https://maps.googleapis.com/maps/api/js?sensor=false");
+	}
 
 }

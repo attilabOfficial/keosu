@@ -18,18 +18,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Controller;
 
-use Keosu\CoreBundle\Util\ThemeUtil;
-
-use Keosu\CoreBundle\Model\ZoneModel;
+use Keosu\CoreBundle\Entity\Page;
 
 use Keosu\CoreBundle\KeosuExtension;
 
+use Keosu\CoreBundle\Model\ZoneModel;
+
+use Keosu\CoreBundle\Service\PackageManager;
+
+use Keosu\CoreBundle\Util\ThemeUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Entity\Page;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PageStudioController extends Controller {
 
@@ -98,6 +100,10 @@ class PageStudioController extends Controller {
 		$classToName = array();
 		foreach(KeosuExtension::$gadgetList as $k => $v)
 			$classToName[$v]=$k;
+			
+		$ret = $this->get('keosu_core.package_manager')->getList(PackageManager::TYPE_PACKAGE_LIB);
+		print_r($ret);
+		die();
 
 		return $this
 				->render('KeosuCoreBundle:Page:studio.html.twig',

@@ -46,10 +46,14 @@ class Exporter {
 	}
 
 	public function exportApp() {
+		$this->export($this->container->get('keosu_core.curapp')->getCurApp());
+	}
+	
+	public function export($appId) {
+
 		$em = $this->doctrine->getManager();
 		$baseurl = $this->container->getParameter('url_base');
 		$param = $this->container->getParameter('url_param');
-		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
 		
 		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appId);
 
@@ -133,7 +137,6 @@ class Exporter {
 					$gadgetTemplateHtml = utf8_encode($gadgetTemplateHtml);
 					$zone->nodeValue = $gadgetTemplateHtml;
 					//Add the angularJS directive to zone
-					// TODO keep this ?
 					$zone->setAttribute("ng-controller", $gadget->getGadgetName()."Controller");
 					$zone->setAttribute("ng-init","init('".$baseurl."','".$param."','".$page->getFileName()."','".$gadget->getId() ."','".$zoneId."')");
 					//Saving node

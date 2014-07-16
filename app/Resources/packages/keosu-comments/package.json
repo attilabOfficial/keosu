@@ -1,0 +1,16 @@
+{
+   "name" : "keosu-comments",
+   "description" : "Create a form to comments items",
+   "param" : [
+      {"objectId" : "integer"},
+      {"dataModelObjectName": "string"},
+      {"enableComments" : "boolean"},
+      {"templateName" : "string"}
+   ],
+   "require" : {
+      "angularJS" : ">=1.2"
+   },
+   "configCordova" : {},
+   "libJs" : [],
+   "appParam" : []
+}

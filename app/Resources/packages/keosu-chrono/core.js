@@ -40,5 +40,5 @@ app.controller('chrono_gadgetController', function ($scope, chronoService) {
 function initTimer($scope) {
 	$scope.hours = '00';
 	$scope.minutes = '00';
-	$scope.seconds = '00';	
+	$scope.seconds = '00';
 }

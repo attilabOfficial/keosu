@@ -15,7 +15,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
-
 //Main function
 
 app.controller('article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
@@ -51,22 +50,4 @@ app.controller('article_gadgetController', function ($scope, $http, $sce, usSpin
 		});
 	};
 	
-	/////////////////////////
-	// Comment part
-	/////////////////////////
-	$scope.commentListAction = function() {
-		$http.get($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id).success(function(data){
-			$scope.comments = data.comments;
-			$scope.connect = data.connect;
-		});
-	};
-	
-	$scope.commentAddAction = function() {
-		var data = "message="+$scope.messageComment;
-		$scope.messageComment = "";
-		$http.post($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id,data).success(function(data){
-			$scope.comments = data.comments;
-			$scope.connect = data.connect;
-		});
-	};
 });

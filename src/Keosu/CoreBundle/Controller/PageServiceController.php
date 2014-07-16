@@ -27,12 +27,12 @@ class PageServiceController extends Controller {
 	 */
 	public function listAction($format) {
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-		
-		$contents = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
-		return $this
-				->render(
-						'KeosuCoreBundle:Page/Service:list.' . $format
-								. '.twig', array('contents' => $contents));
+
+		$em = $this->get('doctrine')->getManager();
+		$contents = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
+
+		return $this->render('KeosuCoreBundle:Page/Service:list.' . $format. '.twig', array(
+									'contents' => $contents
+							));
 	}
 }

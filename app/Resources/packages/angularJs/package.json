@@ -1,8 +1,9 @@
 {
    "name" : "angularJs",
    "description" : "init AngularJs in a var app with some packages",
+   "version" : "1.2.14",
    "param" : [],
-   "require" : [],
+   "require" : {},
    "configCordova" : {},
    "libJs" : [
       "angular.min.js",

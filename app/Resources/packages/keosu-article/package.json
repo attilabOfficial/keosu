@@ -1,0 +1,14 @@
+{
+   "name" : "keosu-article",
+   "description" : "Display an article in your app",
+   "param" : [
+      {"articleId" : "integer"}
+   ],
+   "require" : {
+      "angularJS" : ">=1.2",
+      "jQuery"    : ">=2"
+   },
+   "configCordova" : {},
+   "libJs" : [],
+   "appParam" : []
+}

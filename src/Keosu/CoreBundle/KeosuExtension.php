@@ -20,6 +20,7 @@ namespace Keosu\CoreBundle;
 
 class KeosuExtension {
 
+	// TODO deprecated ?
 	public static $gadgetList = array(
 			'article_gadget'          => 'Keosu\Gadget\ArticleGadgetBundle\ArticleGadget',
 			'last_article_gadget'     => 'Keosu\Gadget\LastArticleGadgetBundle\LastArticleGadget',

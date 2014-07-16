@@ -236,6 +236,7 @@ class Exporter {
 		$script->setAttribute("src","js/app.js");
 		$document->getElementsByTagName("head")->item(0)->appendChild($script);
 
+
 		$this->writeFile(StringUtil::decodeString($document->saveHTML()),'index.html','/simulator/www/');
 
 		////////////////////////////////////////////////////
@@ -320,24 +321,24 @@ document.addEventListener('deviceready', function() {
 			// If you do not want any permissions to be added to your app, add the
 			// following tag to your config.xml; you will still have the INTERNET
 			// permission on your app, which PhoneGap requires.
-			"permissions"                => "none",
-			"phonegap-version"           => "3.1.0" , // all: current version of PhoneGap 
-			"orientation"                => "default" , // all: default means both landscape and portrait are enabled 
-			"target-device"              => "universal" , // all: possible values handset, tablet, or universal 
-			"Fullscreen"                 => "true" , // all: hides the status bar at the top of the screen 
-			"webviewbounce"              => "true" , // ios: control whether the screen 'bounces' when scrolled beyond the top 
-			"prerendered-icon"           => "true" , // ios: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen 
-			"stay-in-webview"            => "false" , // ios: external links should open in the default browser, 'true' would use the webview the app lives in 
-			"ios-statusbarstyle"         => "black-opaque" , // ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar 
-			"detect-data-types"          => "true" , // ios: controls whether data types (such as phone no. and dates) are automatically turned into links by the system 
-			"exit-on-suspend"            => "true" , // ios: if set to true, app will terminate when home button is pressed 
-			"Show-splash-screen-spinner" => "true" , // ios: if set to false, the spinner won't appear on the splash screen during app loading 
-			"auto-hide-splash-screen"    => "false" , // ios: if set to false, the splash screen must be hidden using a JavaScript API 
-			"disable-cursor"             => "false" , // blackberry: prevents a mouse-icon/cursor from being displayed on the app 
-			"android-minSdkVersion"      => "7" , // android: MIN SDK version supported on the target device. MAX version is blank by default. 
-			"android-installLocation"    => "auto" , // android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. 
-			"DisallowOverscroll"         => "true" ,
-			"splash-screen-duration"     => "10000",
+			"permissions"                => $app->getConfigParam()->getPermissions(),
+			"phonegap-version"           => $app->getConfigParam()->getPhonegapVersion() , // all: current version of PhoneGap 
+			"orientation"                => $app->getConfigParam()->getOrientation() , // all: default means both landscape and portrait are enabled 
+			"target-device"              => $app->getConfigParam()->getTargetDevice() , // all: possible values handset, tablet, or universal 
+			"Fullscreen"                 => ExporterUtil::boolToString($app->getConfigParam()->getFullscreen()) , // all: hides the status bar at the top of the screen 
+			"webviewbounce"              => ExporterUtil::boolToString($app->getConfigParam()->getWebviewbounce()) , // ios: control whether the screen 'bounces' when scrolled beyond the top 
+			"prerendered-icon"           => ExporterUtil::boolToString($app->getConfigParam()->getPrerenderedIcon()) , // ios: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen 
+			"stay-in-webview"            => ExporterUtil::boolToString($app->getConfigParam()->getStayInWebview()) , // ios: external links should open in the default browser, 'true' would use the webview the app lives in 
+			"ios-statusbarstyle"         => $app->getConfigParam()->getIosStatusbarstyle() , // ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar 
+			"detect-data-types"          => ExporterUtil::boolToString($app->getConfigParam()->getDetectDataTypes()) , // ios: controls whether data types (such as phone no. and dates) are automatically turned into links by the system 
+			"exit-on-suspend"            => ExporterUtil::boolToString($app->getConfigParam()->getExitOnSuspend()) , // ios: if set to true, app will terminate when home button is pressed 
+			"Show-splash-screen-spinner" => ExporterUtil::boolToString($app->getConfigParam()->getShowSplashScreenSpinner()) , // ios: if set to false, the spinner won't appear on the splash screen during app loading 
+			"auto-hide-splash-screen"    => ExporterUtil::boolToString($app->getConfigParam()->getAutoHideSplashScreen()) , // ios: if set to false, the splash screen must be hidden using a JavaScript API 
+			"disable-cursor"             => ExporterUtil::boolToString($app->getConfigParam()->getDisableCursor()) , // blackberry: prevents a mouse-icon/cursor from being displayed on the app 
+			"android-minSdkVersion"      => $app->getConfigParam()->getAndroidMinSdkVersion() , // android: MIN SDK version supported on the target device. MAX version is blank by default. 
+			"android-installLocation"    => $app->getConfigParam()->getAndroidInstallLocation() , // android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. 
+			"DisallowOverscroll"         => ExporterUtil::boolToString($app->getConfigParam()->getDisallowOverscroll()) ,
+			"splash-screen-duration"     => $app->getConfigParam()->getSplashScreenDuration(),
 		);
 		
 		foreach($preferences as $k => $v) {
@@ -487,6 +488,21 @@ document.addEventListener('deviceready', function() {
 		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath() . '/phonegapbuild/www',
 			ExporterUtil::getAbsolutePath() . '/phonegapbuild/export.zip');
 
+		// Remove cache for simulator
+		$document = new \DOMDocument();
+		@$document->loadHtmlFile(ExporterUtil::getAbsolutePath() . '/simulator/www/index.html');
+
+		$meta = $document->createElement("meta");
+		$meta->setAttribute("http-equiv","Pragma");
+		$meta->setAttribute("content","no-cache");
+		$document->getElementsByTagName("head")->item(0)->appendChild($meta);
+		
+		$meta = $document->createElement("meta");
+		$meta->setAttribute("http-equiv","Expires");
+		$meta->setAttribute("content","-1");
+		$document->getElementsByTagName("head")->item(0)->appendChild($meta);
+		
+		$this->writeFile(StringUtil::decodeString($document->saveHTML()),'index.html','/simulator/www/');
 	}
 
 	private function cleanDir() {

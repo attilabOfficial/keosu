@@ -1,3 +1,7 @@
+keosu_data_model_z_model:
+    resource: "@KeosuDataModelZModelBundle/Resources/config/routing.yml"
+    prefix:   /
+
 keosu_gadget_comment_gadget:
     resource: "@KeosuGadgetCommentGadgetBundle/Resources/config/routing.yml"
     prefix:   /

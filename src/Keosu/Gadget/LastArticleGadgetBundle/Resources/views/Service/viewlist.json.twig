@@ -22,7 +22,8 @@
 			"id" :"{{ content.id|escape('html_attr') }}",
 			"title" :"{{ content.title|escape('html_attr') }}",
 			"content" :"{{ content.body|escape('html_attr')}}",
-			"likes" :"{{ content.likes |escape('html_attr') }}",
+			"dataModelObjectName" : "{{content.dataModelObjectName}}",
+			"enableComments" : "{{ content.enableComments}}",
 			"originalurl":"{{ content.idext |escape('html_attr') }}"
 			{% if content.attachments|length > 0 %}
 				,

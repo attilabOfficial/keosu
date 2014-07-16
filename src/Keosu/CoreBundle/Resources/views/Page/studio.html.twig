@@ -22,6 +22,7 @@
 <div class="pageinfo">
 	<h4>{{ content.name }}</h4>
 
+	
 	<div class="btn-group">
 		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 			Screen size
@@ -49,6 +50,7 @@
 	
 <div class="row">
 	<div class="col-md-5">
+	
 			{% for zone in zones %}
 				<div id="panel{{ zone.zoneId }}" class="panel panel-info">
 					<div class="panel-heading">
@@ -99,8 +101,15 @@
 			{% endfor %}
 	</div>
 
-	<div class="col-md-7">
+	
+	
+
+	<div class="col-md-7">	
 		<center>
+			<div class="alert alert-info" role="alert">
+				<strong>Heads up!</strong>
+				Use the simulator for more fiability
+			</div>
 			<iframe id="iframepreview" width="320px" height="480px" src="{{url_base}}/keosu/export/simulator/www/index.html#/Page/{{ content.id }}"></iframe>
 		</center>
 	</div>

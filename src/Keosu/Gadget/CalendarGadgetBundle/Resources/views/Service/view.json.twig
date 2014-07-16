@@ -17,7 +17,10 @@
     #}
 [
 	{
+		"id" : {{event.id}},
 		"name" :"{{event.name |escape('html_attr') }}",
+		"dataModelObjectName" : "{{event.dataModelObjectName}}",
+		"enableComments" : "{{event.enableComments}}",
 		"date" :"{{event.getDateString() |escape('html_attr') }}",
 		"date_ms" :"{{event.getDateMs() |escape('html_attr') }}",
 		"description" :"{{event.description |escape('html_attr')}}",

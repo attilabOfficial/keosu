@@ -1,14 +1,12 @@
 <span id="cal-slide-tick" style="display: none"></span>
 <script src="js/calendar.js"></script>
 <div id="cal-slide-content" class="cal-event-list">
-	<a href='#'>
-		<ul class="unstyled list-unstyled">
-			<% _.each(events, function(event, index) { %>
-				<li onmousedown='change_selection(<%= event.id %>)' style='<%= (index < events.length -1) ? "border-bottom:2px solid #333333;" : "" %> padding-bottom:5px; padding-top:5px; color:#FFFFFF'>
-					<span class="pull-left event <%= event['class'] %>"></span>&nbsp;
-					<%= event.title %>
-				</li>
-			<% }) %>
-		</ul>
-	</a>
+	<ul class="unstyled list-unstyled" style="cursor:pointer;">
+		<% _.each(events, function(event, index) { %>
+			<li onmousedown='change_selection(<%= event.id %>)' style='<%= (index < events.length -1) ? "border-bottom:2px solid #333333;" : "" %> padding-bottom:5px; padding-top:5px; color:#FFFFFF'>
+				<span class="pull-left event <%= event['class'] %>"></span>&nbsp;
+				<%= event.title %>
+			</li>
+		<% }) %>
+	</ul>
 </div>

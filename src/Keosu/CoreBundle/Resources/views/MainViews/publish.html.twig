@@ -30,13 +30,14 @@
 {% endblock %}
 
 {% block body %}
+
 	<div class="col-md-3">
 		<div class="wellcustom">
 			<h3>Export App</h3>
 			<p>
 				Export App before download the last version
 			</p>
-			<a href="{{ path('keosu_core_exporter_export') }}"><button type="button" class="btn btn-default">Export</button></a>
+			<a href="{{ path('keosu_core_exporter_export') }}"><button id="spinner-load" type="button" class="btn btn-default">Export</button></a>
 		</div>
 	</div>
 	
@@ -68,5 +69,6 @@
 			<a href="{{url_base}}/keosu/export/android/export.zip"><button type="button" class="btn btn-default">Download</button></a>
 		</div>
 	</div>
+	<center><img id="spinner-loading" src="{{url_base}}/img/loading.gif" alt="Loading"/></center>
 	
 {% endblock %}

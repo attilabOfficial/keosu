@@ -29,6 +29,8 @@ use Keosu\Gadget\AuthenticationGadgetBundle\AuthenticationGadget;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
+use Keosu\CoreBundle\Form\ConfigParametersType;
+use Keosu\CoreBundle\Entity\ConfigParameters;
 
 class ManageAppsController extends Controller {
 
@@ -228,7 +230,8 @@ class ManageAppsController extends Controller {
 						'choices'  => ThemeUtil::getThemeList(),
 						'required' => true,
 						'expanded' => true,
-				));
+						'label' => false))
+				->add('configParam', new ConfigParametersType());
 	}
 
 }

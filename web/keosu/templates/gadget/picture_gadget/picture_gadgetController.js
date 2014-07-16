@@ -19,14 +19,48 @@
 //Main function
 
 app.controller('picture_gadgetController', function ($scope, $http, usSpinnerService) {
-	$scope.init = function(host, param, page, gadget, zone){
-		usSpinnerService.spin('spinner');
-		$http.get(host + param +
-				'service/gadget/picture/' + gadget + '/json').success( function (data) {
-					usSpinnerService.stop('spinner');
-					$scope.image = data[0].path;
-					$scope.title = $('<div/>').html(data[0].name).text();
-					$scope.description = data[0].description;
-				});
+
+	/////////////////////
+	// init part
+	/////////////////////
+	$scope.init = function(host, param, page, gadget, zone) {
+		$scope.param = {
+			'host'   : host+param,
+			'page'   : page,
+			'gadget' : gadget,
+			'zone'   : zone
+		};
+		$scope.showPictureAction();
 	};
+
+	$scope.showPictureAction = function() {
+		usSpinnerService.spin('spinner');
+		$http.get($scope.param.host+'service/gadget/picture/'+$scope.param.gadget+'/json').success( function (data) {
+				usSpinnerService.stop('spinner');
+				$scope.picture = data[0];
+				$scope.title = $('<div/>').html(data[0].name).text();
+				$scope.image = data[0].path;
+				$scope.commentListAction();
+		});
+	};
+
+	/////////////////////////
+	// Comment part
+	/////////////////////////
+	$scope.commentListAction = function() {
+		$http.get($scope.param.host+'service/gadget/comment/'+$scope.picture.dataModelObjectName+'/'+$scope.picture.id).success(function(data){
+			$scope.comments = data.comments;
+			$scope.connect = data.connect;
+		});
+	};
+
+	$scope.commentAddAction = function() {
+		var data = "message="+$scope.messageComment;
+		$scope.messageComment = "";
+		$http.post($scope.param.host+'service/gadget/comment/'+$scope.picture.dataModelObjectName+'/'+$scope.picture.id,data).success(function(data){
+			$scope.comments = data.comments;
+			$scope.connect = data.connect;
+		});
+	};
+
 });

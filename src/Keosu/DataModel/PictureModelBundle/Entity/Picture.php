@@ -50,6 +50,11 @@ class Picture extends MediaDataModel
      */
     private $idext;
     
+    /**
+     * @ORM\Column(name="enableComments", type="boolean")
+     */
+    private $enableComments;
+    
     //By default remote is false
     public function __construct() {
     	$this->remote = false;
@@ -124,6 +129,27 @@ class Picture extends MediaDataModel
         return $this->idext;
     }
     
+    /**
+     * Get enableComments
+     *
+     * @return boolean 
+     */
+    public function getEnableComments() {
+        return $this->enableComments;
+    }
+
+    /**
+     * Set enableComments
+     *
+     * @param boolean $enableComments
+     * @return Picture
+     */
+    public function setEnableComments($enableComments) {
+        $this->enableComments = $enableComments;
+
+        return $this;
+    }
+
     public function getDataModelObjectName() {
         return 'picture';
     }

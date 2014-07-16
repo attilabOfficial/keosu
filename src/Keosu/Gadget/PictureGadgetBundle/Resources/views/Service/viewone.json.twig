@@ -18,10 +18,12 @@
 {% spaceless %}
 [
 	{
-		"name" :"{{picture.name  }}",
-		"description" :"{{picture.description}}",
-		"path" : "{{url_base}}{{picture.webPath}}"
-		
+		"id" : "{{picture.id}}",
+		"dataModelObjectName" : "{{picture.dataModelObjectName}}",
+		"name" : "{{picture.name}}",
+		"description" : "{{picture.description}}",
+		"path" : "{{url_base}}{{picture.webPath}}",
+		"enableComments" : {% if picture.enableComments == 1 %}1{% else %}0{% endif %}
 	}
 ]
 {% endspaceless %}

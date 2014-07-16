@@ -42,6 +42,32 @@
 		});
 	});
 </script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		function openInput($el){
+			$el.parent().parent().find('input[type="file"]')[ 0 ].click();
+		}
+		 
+		$(document).on("click",'.uploader',function() {
+			 	openInput($(this));
+			    return false;
+		 });
+
+		$(document).on("change",'input[type="file"]',function() {
+			if (this.files &&  this.files[0]) {
+	            var reader = new FileReader();
+	            el= $(this);
+	            reader.onload = function (e) {
+	            	$('#img-preview').attr('src', e.target.result).show();
+	            }
+	            reader.readAsDataURL(this.files[0]);
+	        }
+		});
+		
+		
+	});
+	</script>
 <style type="text/css">
 .imgtheme .radio {
 	display:inline;
@@ -70,73 +96,103 @@
 				{{ form_start(form) }}
 					{{ form_errors(form) }}
 
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+					<div class="col-lg-3 configurelabel">
 						Name
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="Name of your application"></span>
+						</a>
 					</div>
 					{{ form_row(form.name) }}
 					<br class="clear"/>
 					
 					<div class="col-lg-3 configurelabel" title="This is my tooltip">
 						Package Name
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign"></span>
+						</a>
 					</div>
 					{{ form_row(form.packageName) }}
 					<br class="clear"/>
 					
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+					<div class="col-lg-3 configurelabel">
 						Description
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+						</a>
 					</div>
 					{{ form_row(form.description) }}
 					<br class="clear"/><br class="clear"/>
 					
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+					<div class="col-lg-3 configurelabel">
 						Author (optional)
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+						</a>
 					</div>
 					{{ form_row(form.author) }}
 					<br class="clear"/>
 					
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+					<div class="col-lg-3 configurelabel">
 						Website (optional)
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+						</a>
 					</div>
 					{{ form_row(form.website) }}
 					<br class="clear"/>
 					
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+					<div class="col-lg-3 configurelabel">
 						Email (optional)
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+						</a>
 					</div>
 					{{ form_row(form.email) }}
 					<br class="clear"/>
 
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+					<div class="col-lg-3 configurelabel">
 						Private app (optional)
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="if the checkbox is checked only logged user can access to this app and a special authentication page is created."></span>
+						</a>
 					</div>
 					{{ form_row(form.privateApp) }}
-					<div class="col-lg-9">
-						<span class="help-block">if the checkbox is checked only logged user can access to this app and a special authentication page is created.</span>
-					</div>
 					<br class="clear"/>
 					
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+					<div class="col-lg-3 configurelabel">
 						Theme
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+						</a>
 					</div>
 					<div class="imgtheme">
 						{{ form_row(form.theme) }}
 					</div>
 					<br class="clear"/><br class="clear"/>
 					
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+					<div class="col-lg-3 configurelabel">
 						Facebook app id (optional)
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+						</a>
 					</div>
 					{{ form_row(form.facebookAppId) }}
 					<br class="clear"/>
 					
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+					<div class="col-lg-3 configurelabel">
 						Facebook app name(optional)
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+						</a>
 					</div>
 					{{ form_row(form.facebookAppName) }}
 					<br class="clear"/>
 					
 					<div class="col-lg-3 configurelabel" title="This is my tooltip">
 						Facebook app secret (optional)
+						<a title="">
+							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
+						</a>
 					</div>
 					{{ form_row(form.facebookAppSecret) }}
 					<div class="col-lg-9">
@@ -144,7 +200,7 @@
 					</div>
 					<br class="clear"/>
 
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
+					<div class="col-lg-3 configurelabel">
 						Debug mode (optional)
 					</div>
 					{{ form_row(form.debugMode) }}
@@ -153,9 +209,8 @@
 					</div>
 					<br class="clear"/>
 					
-					<br class="clear"/><br class="clear"/>
-					<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-				{{ form_end(form) }}
+					{% include 'KeosuCoreBundle:App:editConfigParameters.html.twig' %}
+					
 			</div>
 		</div>
 	</div>

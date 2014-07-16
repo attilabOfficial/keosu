@@ -41,27 +41,21 @@ class EditController extends Controller {
 	 * Edit Event object action
 	 */
 	public function editAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelEventModelBundle:Event');
-		$event = $repo->find($id);
-
+		$em = $this->get('doctrine')->getManager();
+		$event = $em->getRepository('KeosuDataModelEventModelBundle:Event')->find($id);
 		return $this->editEvent($event);
-
 	}
+
 	/**
 	 * delete Event object action
 	 */
 	public function deleteAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelEventModelBundle:Event');
-
-		$event = $repo->find($id);
+		$em = $this->get('doctrine')->getManager();
+		$event = $em->getRepository('KeosuDataModelEventModelBundle:Event')->find($id);
 
 		if ($event->getReader() === null || $event->getReader()->allowupdate !== false) {
-			$this->get('doctrine')->getManager()->remove($event);
-			$this->get('doctrine')->getManager()->flush();
+			$em->remove($event);
+			$em->flush();
 		}
 		return $this->redirect($this->generateUrl('keosu_event_viewlist'));
 	}
@@ -83,14 +77,13 @@ class EditController extends Controller {
 				$em = $this->get('doctrine')->getManager();
 				$em->persist($event);
 				$em->flush();
-				return $this
-						->redirect($this->generateUrl('keosu_event_viewlist'));
+				return $this->redirect($this->generateUrl('keosu_event_viewlist'));
 			}
 		}
-		return $this
-				->render('KeosuDataModelEventModelBundle:Edit:edit.html.twig',
-						array('form' => $form->createView(),
-								'eventid' => $event->getId()));
+		return $this->render('KeosuDataModelEventModelBundle:Edit:edit.html.twig',array(
+									'form' => $form->createView(),
+									'eventid' => $event->getId()
+				));
 
 	}
 
@@ -100,18 +93,24 @@ class EditController extends Controller {
 	private function getEventForm($event) {
 		return $this->createFormBuilder($event)
 				->add('name', 'text')
-				->add('description', 'textarea', array('attr' => array('class' => 'tinymce')))
+				->add('description', 'textarea', array(
+						'attr' => array('class' => 'tinymce')
+				))
 				->add('lieu', 'text')
 				->add('latitude','hidden')
 				->add('longitude','hidden')
-				->add('date', 'date', 
-					array(
-						'input' => 'datetime',
+				->add('date', 'date', array(
+						'input'  => 'datetime',
 						'widget' => 'single_text',
 						'format' => 'dd-MM-yy',
-						'attr' => array('class' => 'date')
-					))
-				->add('hour', 'time', array('label'=>'Hour (HH:MM)'))
+						'attr'   => array('class' => 'date'),
+				))
+				->add('hour', 'time', array(
+						'label' => 'Hour (HH:MM)'
+				))
+				->add('enableComments','checkbox', array(
+						'required' => false,
+				))
 				->getForm();
 	}
 }

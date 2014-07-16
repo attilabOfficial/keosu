@@ -21,6 +21,8 @@
 //Main function
 app.controller('last_article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {	
 
+	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+
 	$scope.parts = function (isList, isArticle, $scope) {
 		$scope.isList = isList;
 		$scope.isArticle = isArticle;
@@ -30,9 +32,19 @@ app.controller('last_article_gadgetController', function ($scope, $http, $sce, u
 	};
 	$scope.open = function (page) {
 		$scope.article = page;
+		$scope.commentListAction();
 		$scope.parts(false, true, $scope);
 	};
-	$scope.init = function (host, param, page, gadget, zone){ 
+	$scope.init = function (host, param, page, gadget, zone){
+	
+		$scope.param = {
+			'host'   : host+param,
+			'page'   : page,
+			'gadget' : gadget,
+			'zone'   : zone
+		};
+	
+	
 		$scope.parts(true, false, $scope);
 		var offset = (0);
 		$scope.activePage = {
@@ -41,7 +53,7 @@ app.controller('last_article_gadgetController', function ($scope, $http, $sce, u
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		$http.get(host + param + 'service/gadget/lastarticle/' + gadget + '/' + offset + '/' + 'json').success( function (data) {
 			usSpinnerService.stop('spinner');
-			$tmp = [];		
+			$tmp = [];
 			for (i = 0; i < data.data.length; i++) {
 				$tmp[i] = data.data[i];
 				$tmp[i].content = $sce.trustAsHtml(decodedContent(data.data[i].content));
@@ -62,6 +74,27 @@ app.controller('last_article_gadgetController', function ($scope, $http, $sce, u
 				nb++;
 			}
 			$scope.pages = pages;
+		});
+	};
+	
+	/////////////////////////
+	// Comment part
+	/////////////////////////
+	$scope.commentListAction = function() {
+		$http.get($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id).success(function(data){
+			$scope.comments = data.comments;
+			$scope.connect = data.connect;
+		});
+	};
+	
+	$scope.commentAddAction = function() {
+	
+		var data = "message="+$scope.messageComment;
+		$scope.messageComment = "";
+		$http.post($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id,data).success(function(data){
+			console.log(data)
+			$scope.comments = data.comments;
+			$scope.connect = data.connect;
 		});
 	};
 });

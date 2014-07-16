@@ -20,6 +20,9 @@ namespace Keosu\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Keosu\CoreBundle\Util\ThemeUtil;
+use Keosu\CoreBundle\Entity\Model\MediaDataModel;
+use Keosu\CoreBundle\Entity\ConfigParameters;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * App
@@ -29,6 +32,21 @@ use Keosu\CoreBundle\Util\ThemeUtil;
  */
 class App
 {
+	
+	/**
+	 * Set default data for the form.
+	 */
+	public function __construct(){
+		$this->packageName = 'com.keosu.demo';
+		$this->description = 'Keosu demo';
+		$this->author = 'keosu team';
+		$this->website = 'http://keosu.com';
+		$this->email = 'vleborgne@keosu.com';
+		$this->theme = array_keys(ThemeUtil::getThemeList())[0];
+		$this->configParam = new ConfigParameters();
+	}
+	
+	
     /**
      * @var integer
      *
@@ -120,19 +138,16 @@ class App
      *
      * @ORM\Column(name="debugMode", type="boolean")
      */
-    private $debugMode;
+    private $debugMode;   
 
+    
     /**
-     * Set default data for the form.
+     * @var ConfigParameters
+     * 
+     * @ORM\OneToOne(targetEntity="Keosu\CoreBundle\Entity\ConfigParameters", cascade={"persist"})
      */
-    public function __construct(){
-    	$this->packageName = 'com.keosu.demo';
-    	$this->description = 'Keosu demo';
-    	$this->author = 'keosu team';
-    	$this->website = 'http://keosu.com';
-    	$this->email = 'vleborgne@keosu.com';
-    	$this->theme = array_keys(ThemeUtil::getThemeList())[0];
-    }
+    private $configParam;
+    
     
     /**
      * Get id
@@ -423,4 +438,73 @@ class App
     {
         return $this->debugMode;
     }
+	
+    /**
+     * Get configParam
+     *
+     * @return ConfigParam
+     */
+    public function getConfigParam(){
+    	return $this->configParam;
+    }
+    
+    
+    /**
+     * Set configParam
+     *
+     * @param ConfigParam $configParam
+     * @return App
+     */
+    public function setConfigParam(ConfigParameters $configParam){
+    	$this->configParam = $configParam;
+    	return this;
+    }
+    
+	
+	/**
+	 * Set path
+	 *
+	 * @param string $path
+	 * @return ArticleAttachment
+	 */
+	public function setPath($path) {
+		$this->path = $path;
+	
+		return $this;
+	}
+	
+	/**
+	 * Get path
+	 *
+	 * @return string
+	 */
+	public function getPath() {
+		return $this->path;
+	}
+	
+	public function getAbsolutePath() {
+		return null === $this->path ? null
+		: $this->getUploadRootDir() . '/' . $this->path;
+	}
+	
+	public function getWebPath() {
+		return null === $this->path ? null
+		: '/' . $this->getUploadDir() . '/' . $this->path;
+	}
+	
+	public function getUploadRootDir() {
+		// the absolute directory path where uploaded
+		// documents should be saved
+		return __DIR__ .'/../../../../web/' . $this->getUploadDir();
+	}
+	
+	protected function getUploadDir() {
+		// get rid of the __DIR__ so it doesn't screw up
+		// when displaying uploaded doc/image in the view.
+		return 'uploads/splashscreen';
+	}
+	
+	
+	
+	
 }

@@ -7,7 +7,7 @@
 						<div class="list">
 				<div class="list-content">
 					<div class="media list-elements" ng-repeat="apage in page">
-						<a href="#" class="row" ng-click="open(apage)">
+						<div class="row" ng-click="open(apage)">
 							<div class="col-xs-4 vcenter">
 								<div class="img-min-list">
 									<span ng-if="apage.attachments[0].path"> <img
@@ -24,16 +24,17 @@
 								</span>
 								</span>
 							</div>
-						</a>
+						</div>
 						<hr>
 					</div>
 							</div>
-				</div> <a ng-show="pages[$index - 1]"
-				ng-click="activePage.page = $index-1" class="previous" href="#"><button
-						class="btn btn-default btn-page">Previous</button></a> <a
-				ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1"
-				class="next" href="#"><button
-						class="btn btn-default btn-page pull-right">Next</button></a>
+				</div>
+				<a ng-show="pages[$index - 1]" ng-click="activePage.page = $index-1" class="previous">
+					<button class="btn btn-default btn-page">Previous</button>
+				</a>
+				<a ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1" class="next">
+					<button class="btn btn-default btn-page pull-right">Next</button>
+				</a>
 			</li>
 
 	</div>
@@ -54,5 +55,27 @@
 			<li ng-repeat="img in article.attachments"><img class="center"
 				ng-if="img" src="{{ img.path }}" alt=""></li>
 		</ul>
+		<div style="clear:both;" class="comment row-fluid" ng-show="article.enableComments == 1">
+			<div ng-repeat="comment in comments" class="comment-list">
+				<dl>
+					<dt>{{comment.user}} - {{comment.date}}</dt>
+					<dd>{{comment.message}}</dd>
+				</dl>
+			</div>
+			<div ng-show="connect">
+				<div class="comment-box">
+					<form role="form" ng-submit="commentAddAction()">
+						<fieldset>
+							<legend>Add a new comment</legend>
+							<textarea class="form-control" rows="3" ng-model="messageComment"></textarea>
+							<button type="submit" class="btn btn-default">Add a new Comment</button>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div ng-hide="connect">
+				<div class="alert alert-warning" role="alert">You must be connected to add a new comment</div>
+			</div>
+		</div>
 	</div>
 </div>

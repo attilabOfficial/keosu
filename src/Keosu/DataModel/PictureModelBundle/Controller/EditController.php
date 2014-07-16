@@ -33,31 +33,23 @@ class EditController extends Controller {
 	 * Delete action
 	 */
 	public function deleteAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelPictureModelBundle:Picture');
-
-		$picture = $repo->find($id);
+		$em = $this->get('doctrine')->getManager();
+		$picture = $em->getRepository('KeosuDataModelPictureModelBundle:Picture')->find($id);
 
 		if ($picture->getReader() === null) {
-			$this->get('doctrine')->getManager()->remove($picture);
-			$this->get('doctrine')->getManager()->flush();
+			$em->remove($picture);
+			$em->flush();
 		}
-		return $this
-				->redirect($this->generateUrl('keosu_picture_viewlist'));
+		return $this->redirect($this->generateUrl('keosu_picture_viewlist'));
 	}
 
 	/**
 	 * Edit picture action
 	 */
 	public function editAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelPictureModelBundle:Picture');
-		$picture = $repo->find($id);
-
+		$em = $this->get('doctrine')->getManager();
+		$picture = $em->getRepository('KeosuDataModelPictureModelBundle:Picture')->find($id);
 		return $this->editPicture($picture);
-
 	}
 	/**
 	 * Add picture action
@@ -71,6 +63,8 @@ class EditController extends Controller {
 	 * Manage and store
 	 */
 	private function editPicture($picture) {
+		$em = $this->get('doctrine')->getManager();
+		
 		$formBuilder = $this->createFormBuilder($picture);
 		$this->buildPictureForm($formBuilder);
 		$form = $formBuilder->getForm();
@@ -79,22 +73,15 @@ class EditController extends Controller {
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
-				//$picture->upload();
-				$em = $this->get('doctrine')->getManager();
 				$em->persist($picture);
 				$em->flush();
-				return $this
-						->redirect(
-								$this
-									->generateUrl(
-										'keosu_picture_viewlist'));
+				return $this->redirect($this->generateUrl('keosu_picture_viewlist'));
 			}
 		}
-		return $this
-				->render(
-						'KeosuDataModelPictureModelBundle:Edit:edit.html.twig',
-						array('form' => $form->createView(),
-								'pictureid' => $picture->getId()));
+		return $this->render('KeosuDataModelPictureModelBundle:Edit:edit.html.twig',array(
+									'form' => $form->createView(),
+									'pictureid' => $picture->getId()
+							));
 	}
 	/**
 	 * Specific form
@@ -102,13 +89,17 @@ class EditController extends Controller {
 	private function buildPictureForm($formBuilder) {
 		$formBuilder->add('name', 'text')
 					->add('description', 'textarea')
-					->add('file', 'file', array('required'=>false, 
-												'image_path' => 'webPath',
-												'label'=>false,
-												"attr" => array(
-                									"accept" => "image/*"
-												))
-		);
+					->add('enableComments','checkbox',array(
+							'required' => false,
+					))
+					->add('file', 'file', array(
+							'required'   => false, 
+							'image_path' => 'webPath',
+							'label'      => false,
+							'attr'       => array(
+									'accept' => 'image/*'
+							)
+					));
 
 	}
 }

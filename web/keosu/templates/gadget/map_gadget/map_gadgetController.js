@@ -19,12 +19,30 @@
 //Main function
 
 app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
-	$scope.init = function (host, param, page, gadget, zone){ 
+
+	////////////////////////////
+	// init part
+	////////////////////////////
+	$scope.init = function (host, param, page, gadget, zone){
+		$scope.param = {
+			'host'   : host+param,
+			'page'   : page,
+			'gadget' : gadget,
+			'zone'   : zone,
+		};
+		$scope.showMapAction();
+	};
+	
+	/////////////////////////////
+	// Map part
+	/////////////////////////////
+	$scope.showMapAction = function () {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		$http.get(host + param + 'service/gadget/mapgadget/'
-				+ gadget + '/json').success( function (data) {
+
+		$http.get($scope.param.host+'service/gadget/mapgadget/'+$scope.param.gadget+ '/json').success( function (data) {
 					usSpinnerService.stop('spinner');
-					var map=initialize();
+					$scope.map = data[0];
+					var map = $scope.initialize();
 					$scope.title = $('<div/>').html(data[0].name).text();
 					$scope.content = $sce.trustAsHtml(decodedContent(data[0].description));
 					map.setZoom(8);
@@ -35,18 +53,36 @@ app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerS
 						position: latitudeAndLongitude,
 						map: map
 					});
-
 				});
 	};
-});
-
-function initialize() {
-	var mapOptions = {
+	
+	$scope.initialize = function() {
+		var mapOptions = {
 			center: new google.maps.LatLng(47.21677,-1.553307),//Default lat and lng
 			zoom: 8,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		var map = new google.maps.Map(document.getElementById("map_canvas"),
+				mapOptions);
+		return map;
 	};
-	var map = new google.maps.Map(document.getElementById("map_canvas"),
-			mapOptions);
-	return map;
-}
+	
+	////////////////////////////////
+	// Comment part
+	////////////////////////////////
+	$scope.commentListAction = function() {
+		$http.get($scope.param.host+'service/gadget/comment/'+$scope.map.dataModelObjectName+'/'+$scope.map.id).success(function(data){
+			$scope.comments = data.comments;
+			$scope.connect = data.connect;
+		});
+	};
+	
+	$scope.commentAddAction = function() {
+		var data = "message="+$scope.messageComment;
+		$scope.messageComment = "";
+		$http.post($scope.param.host+'service/gadget/comment/'+$scope.map.dataModelObjectName+'/'+$scope.map.id,data).success(function(data){
+			$scope.comments = data.comments;
+			$scope.connect = data.connect;
+		});
+	};
+});

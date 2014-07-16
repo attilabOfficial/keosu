@@ -120,23 +120,27 @@ class EditController extends Controller {
 	 */
 	private function buildArticleForm($formBuilder) {
 		$formBuilder->add('title', 'text')
-					->add('body', 'textarea', array('attr' => array('class' => 'tinymce')))
+					->add('body', 'textarea', array(
+							'attr' => array('class' => 'tinymce')
+					))
 					->add('author', 'text')
-					->add('date', 'date', 
-							array(
-									'input' => 'datetime',
-									'widget' => 'single_text',
-									'format' => 'dd-MM-yy',
-									'attr' => array('class' => 'date')
-						))
-					->add('attachments', 'collection',
-							array('type' => new ArticleAttachmentType(),
-								'allow_add' => true, 
-								'allow_delete' => true,
-								'by_reference' => false, 
-								'required' => false,
-								'label' => false
-						));
+					->add('date', 'date', array(
+							'input'  => 'datetime',
+							'widget' => 'single_text',
+							'format' => 'dd-MM-yy',
+							'attr'   => array('class' => 'date')
+					))
+					->add('attachments', 'collection', array(
+							'type'         => new ArticleAttachmentType(),
+							'allow_add'    => true, 
+							'allow_delete' => true,
+							'by_reference' => false, 
+							'required'     => false,
+							'label'        => false
+					))
+					->add('enableComments','checkbox',array(
+							'required' => false,
+					));
 
 	}
 }

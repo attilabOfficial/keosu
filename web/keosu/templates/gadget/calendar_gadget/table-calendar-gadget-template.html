@@ -15,15 +15,12 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  -->
- 
 <link rel="stylesheet" href="css/calendar.css">
 <div ng-controller="calendar_gadgetController">
 	<div ng-show="isCalendar">
 		<span style='display:none' my-current-time='format'></span>
 		<div class="page-header" style="border:none; margin-top:-35px">
 			<h3 style='font-size:20px'></h3>
-
-	
 			<div class="btn-group" style="margin-left: auto; margin-right: auto; display: block; width: auto">
 				<button class="btn btn-default btn-page" data-calendar-view="year" style="width: 25%;">Year</button>
 				<button class="btn btn-default btn-page active" data-calendar-view="month" style="width: 25%;">Month</button>
@@ -34,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		
 		<div id="calendar"></div>
 	
-		<input type='hidden' id="selection" ng-model='name' value=0></input>
+		<input type='hidden' id="selection" ng-model='name' value=0 />
 			
 		<br/>
 		
@@ -48,9 +45,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<br/>
 		
 		<div class="span3"></div>
-		<script id="init_calendar" type="text/javascript">
-		</script>
-	</div>	
+		<script id="init_calendar" type="text/javascript"></script>
+	</div>
 	<div ng-show="isEvent">
 		<a ng-click="close()"><i class="fui-cross"></i></a>
 		<div class="row-fluid">
@@ -78,7 +74,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</div>
 		<div>
 			{{ anEvent.lieu }}
-			<div id="calendar_map_canvas" style="height: 400px; margin: 0; width: 100%;">
+			<div id="calendar_map_canvas" style="height: 400px; margin: 0; width: 100%;"></div>
+		</div>
+		<div class="comment row-fluid" ng-show="anEvent.enableComments == 1">
+			<div ng-repeat="comment in comments" class="comment-list">
+				<dl>
+					<dt>{{comment.user}} - {{comment.date}}</dt>
+					<dd>{{comment.message}}</dd>
+				</dl>
+			</div>
+			<div ng-show="connect">
+				<div class="comment-box">
+					<form role="form" ng-submit="commentAddAction()">
+						<fieldset>
+							<legend>Add a new comment</legend>
+							<textarea class="form-control" rows="3" ng-model="messageComment"></textarea>
+							<button type="submit" class="btn btn-default">Add a new Comment</button>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div ng-hide="connect">
+				<div class="alert alert-warning" role="alert">You must be connected to add a new comment</div>
 			</div>
 		</div>
 	</div>

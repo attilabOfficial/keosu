@@ -72,6 +72,15 @@ class Event extends DataModel{
 	  * @ORM\Column(name="longitude", type="float")
 	  */
 	 private $longitude;
+	 
+	 /**
+	  * @ORM\Column(name="enableComments", type="boolean")
+	  */
+	 private $enableComments;
+	 
+	 public function __construct() {
+	 	$this->enableComments = false;
+	 }
 
 	 /**
 	  * Get name
@@ -245,6 +254,25 @@ class Event extends DataModel{
 	public function getDataModelObjectName() {
 		return 'event';
 	}
-	 
+	 	/**
+	 * Get enableComments
+	 *
+	 * @return boolean 
+	 */
+	public function getEnableComments() {
+		return $this->enableComments;
+	}
+	
+	/**
+	 * Set enableComments
+	 *
+	 * @param boolean $enableComments
+	 * @return ArticleBody
+	 */
+	public function setEnableComments($enableComments) {
+		$this->enableComments = $enableComments;
+
+		return $this;
+	}
 	 
 }

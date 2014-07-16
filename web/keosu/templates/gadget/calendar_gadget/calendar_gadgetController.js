@@ -1,6 +1,6 @@
 /************************************************************************
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2014  Vincent Le Borgne, Keosu
+    Keosu is an open source CMS for mobile app
+    Copyright (C) 2014  Vincent Le Borgne, Keosu
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
@@ -21,35 +21,45 @@
 
 //Main function
 app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
-	/*Functions*/
+
+	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+
+	///////////////////////
+	// function part
+	///////////////////////
 	$scope.strip =function(html){
-		   var tmp = document.createElement("DIV");
-		   tmp.innerHTML = html;
-		   return tmp.textContent || tmp.innerText || "";
+		var tmp = document.createElement("DIV");
+		tmp.innerHTML = html;
+		return tmp.textContent || tmp.innerText || "";
 	};
+
 	// The function 'parts' enables to display the calendar or a single event
 	$scope.parts=function (isCalendar, isEvent, $scope) {
 		$scope.isCalendar = isCalendar;
 		$scope.isEvent = isEvent;
 	}
+
 	//Initializing the map
 	$scope.initialize=function() {
 		var mapOptions = {
-				center: new google.maps.LatLng(47.21677,-1.553307),
-				zoom: 8,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
+			center    : new google.maps.LatLng(47.21677,-1.553307),
+			zoom      : 8,
+			mapTypeId : google.maps.MapTypeId.ROADMAP
 		};
 		$('#calendar_map_canvas').html('');
 		var map_c = new google.maps.Map(document.getElementById("calendar_map_canvas"),
 				mapOptions);
 		return map_c;
-	}	
+	}
 	
 	// If you close an event, the app displays the calendar
 	$scope.close = function () {
 		$scope.parts(true, false, $scope);
 	};
 	
+	//////////////////////////////
+	// Calendar part
+	//////////////////////////////
 	// The app makes a test to know if it is possible to find or delete an event (not possible on Android before Android 4)
 	var delete_ok = false;
 	var find_ok = false;
@@ -96,6 +106,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				usSpinnerService.stop('spinner');
 				// The data is stored in variables which can be readed from the html (with $scope)
 				$scope.anEvent = data[0];
+				$scope.commentListAction();
 				decodedContent = data[0].name;
 				decodedContent = $('<div/>').html(decodedContent).text();
 				decodedContent = decodedContent.replace(/[/\\*]/g, "");
@@ -147,16 +158,15 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 					// If it is not possible, we display it
 					var map_canvas = document.getElementById('calendar_map_canvas');
 					map_canvas.innerHTML = "<i>Unable to load Google Map</i>";
-				}				
-						
+				}
+
 				// Then, we hide the calendar and display the event
 				$scope.parts(false, true, $scope);
-				
-				
+
 				// These are the arguments for adding/deleting the event
 				var calSuccess = function(message) { };
 				var calError = function(message) { };
-				
+
 				// When an event is added/deleted, we propose the other action
 				function change(present) {
 					// First, we need to handle the button
@@ -167,7 +177,6 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 							bouton.onclick=function(){calendarDemoRemove();};
 							bouton.innerHTML='Delete from my calendar';
 						} else { // It is not possible to delete : display that it is added and block the button
-						
 							bouton.onclick=null;
 							bouton.disabled=true;
 							bouton.innerHTML='Event added in my calendar';
@@ -261,12 +270,11 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 			// If the file could not have been loaded, we alert it an stop the spinner
 			usSpinnerService.stop('spinner');
 			alert('Failed to load file...');
-        });
-		
+		});
 	};
 	
 	// On the table calendar, we have to check when the event is selected with this function 
-	$scope.update = function (){ 	
+	$scope.update = function (){
 		// There is an element which gives the event id information
 		var event_id=document.getElementById('selection');
 		if (event_id!=null){	// There is not such element : stop
@@ -276,7 +284,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				$scope.open(id_number);
 			}
 		}
-	}
+	};
 	
 	// When the page is loaded, this function is called
 	$scope.init = function (host, param, page, gadget, zone){ 
@@ -314,9 +322,9 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 					decodedContent = data.data[i].date;
 					decodedContent = $('<div/>').html(decodedContent).text();
 					decodedContent = decodedContent.replace(/[/\\*]/g, "");
-					$tmp[i].date = decodedContent;						
+					$tmp[i].date = decodedContent;
 				}
-	
+
 				nb = 0;
 				pages = new Array();
 				// Display the good informations
@@ -338,10 +346,31 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				// The file could not have been loaded
 				usSpinnerService.stop('spinner');
 				alert('Failed to load file...');
-	        });
+			});
 		}
 		usSpinnerService.stop('spinner');
 	};
+
+	/////////////////////////
+	// Comment part
+	/////////////////////////
+	$scope.commentListAction = function() {
+		$http.get($scope.host + $scope.param +'service/gadget/comment/'+$scope.anEvent.dataModelObjectName+'/'+$scope.anEvent.id).success(function(data){
+			$scope.comments = data.comments;
+			$scope.connect = data.connect;
+		});
+	};
+	
+	$scope.commentAddAction = function() {
+		var data = "message="+$scope.messageComment;
+		$scope.messageComment = "";
+		$http.post($scope.host + $scope.param +'service/gadget/comment/'+$scope.anEvent.dataModelObjectName+'/'+$scope.anEvent.id,data).success(function(data){
+			$scope.comments = data.comments;
+			$scope.connect = data.connect;
+		});
+	};
+	
+	
 }).directive('myCurrentTime', ['$interval', 'dateFilter', function($interval, dateFilter) {
 	// This is used to update the time every 0.1 sec
 	function link(scope, element, attrs) {

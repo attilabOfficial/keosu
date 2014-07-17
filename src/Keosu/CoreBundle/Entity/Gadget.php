@@ -39,9 +39,9 @@ class Gadget {
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="gadgetName", type="string", length=255)
+	 * @ORM\Column(name="name", type="string", length=255)
 	 */
-	private $gadgetName;
+	private $name;
 	
 	/**
 	 * @var boolean
@@ -74,9 +74,9 @@ class Gadget {
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="gadgetTemplate", type="string", length=255)
+	 * @ORM\Column(name="template", type="string", length=255)
 	 */
-	private $gadgetTemplate;
+	private $template;
 	
 	
 	/**
@@ -88,22 +88,22 @@ class Gadget {
 		return $this->id;
 	}
 
-	public function setGadgetName($name) {
-		$this->gadgetName = $name;
+	public function setName($name) {
+		$this->name = $name;
 		return $this;
 	}
 
-	public function getGadgetName() {
-		return $this->gadgetName;
+	public function getName() {
+		return $this->name;
 	}
 
-	public function setGadgetTemplate($name) {
-		$this->gadgetTemplate = $name;
+	public function setTemplate($name) {
+		$this->template = $name;
 		return $this;
 	}
 
-	public function getGadgetTemplate() {
-		return $this->gadgetTemplate;
+	public function getTemplate() {
+		return $this->template;
 	}
 
 	/**

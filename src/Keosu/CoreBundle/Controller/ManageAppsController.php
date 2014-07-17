@@ -75,8 +75,15 @@ class ManageAppsController extends Controller {
 				->getRepository('KeosuCoreBundle:App');
 		$app = $repo->find($id);
 		
-		//Copy older splashscreens and icons in a temp repertory
-		FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir($app->getId()), ExporterUtil::getSplashsIconesDir("tmp"));
+		
+		if(!is_dir(ExporterUtil::getSplashsIconesDir($app->getId()))) {
+			//Copy default splashscreens and icons in a temp repertory
+			FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir("keosu"), ExporterUtil::getSplashsIconesDir("tmp"));
+	
+		}else{
+			//Copy older splashscreens and icons in a temp repertory
+			FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir($app->getId()), ExporterUtil::getSplashsIconesDir("tmp"));
+		}
 		
 		//Form and store action are shared with editAction
 		return $this->editApp($app);
@@ -179,12 +186,10 @@ class ManageAppsController extends Controller {
 				$session = $this->get("session");
 				$session->set("appid",$app->getId());
 				
-				//Delete older splashscreens and icons
-				//FilesUtil::deleteDir(ExporterUtil::getSplashsIconesDir($app->getId()));
+
 				//Copy splashscreens and icons
 				FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir("tmp"), ExporterUtil::getSplashsIconesDir($app->getId()));
-				//Delete temp repertory
-				//FilesUtil::deleteDir(ExporterUtil::getSplashsIconesDir("tmp"));
+
 				
 				// export the app
 				$this->container->get('keosu_core.exporter')->exportApp();

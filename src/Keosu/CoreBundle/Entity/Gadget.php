@@ -46,14 +46,6 @@ class Gadget {
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="static", type="boolean")
-	 * Static gadget copy all data in local app to evoid network call
-	 */
-	private $static;
-	
-	/**
-	 * @var boolean
-	 *
 	 * @ORM\Column(name="shared", type="boolean")
 	 * Shared gadget with all the pages
 	 */
@@ -175,17 +167,7 @@ class Gadget {
 	public function getConfig() {
 		return $this->config;
 	}
-	
-	public function setStatic($static) {
-		$this->static = $static;
-	
-		return $this;
-	}
-	
-	public function isStatic() {
-		return $this->static;
-	}
-	
+
 	public function setShared($shared) {
 		$this->shared = $shared;
 	

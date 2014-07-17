@@ -23,7 +23,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Splashscreens
  *
- * @ORM\Entity
  */
 class Splashscreens{
 	

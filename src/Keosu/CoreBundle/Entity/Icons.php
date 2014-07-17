@@ -22,8 +22,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Icons
- *
- * @ORM\Entity
  */
 class Icons{
 	

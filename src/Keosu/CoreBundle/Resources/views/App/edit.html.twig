@@ -45,20 +45,35 @@
 	
 	var _URL = window.URL || window.webkitURL;
 	
-	function check(files,width,height){
+	
+	/*
+	*Test the size of an image uploaded
+	*@param input : tag input controler
+	*@param width : width expected
+	*@param height : height expected
+	*@param callback : function who upload the image if it's ok
+	*/
+	function check(input,width,height,callback){
 		var file, img;		
-	    if ((file = files[0])) {
+	    if ((file = input.files[0])) {
 	        img = new Image();	  
 	        img.onload = function () {     
 	            if(this.width!=width || this.height!=height){
 	            	alert("Warning: Width "+ width +" / Height "+ height +" expected");
+	            	callback(0,input);	            	
+	            }else{
+	            	callback(1,input);
 	            }
 	        };
 	       }
 	    img.src = _URL.createObjectURL(file);
 	}
 	
-	
+	/*
+	*Change the preview with the image uploaded
+	*@param input : tag input controler
+	*@param preview : string who contain the name of the balise "preview".
+	*/
 	function readURL(input,preview) {
 	    if (input.files && input.files[0]) {
 	        var reader = new FileReader();

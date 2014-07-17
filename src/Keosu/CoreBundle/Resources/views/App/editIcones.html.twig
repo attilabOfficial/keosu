@@ -30,6 +30,7 @@
 						{{ form_row(form.icons.iconA36) }}
 					</div>
 					<br class="clear"/>
+					<hr />
 					
 					<div class="col-lg-3 configurelabel">
 						48x48
@@ -39,6 +40,7 @@
 						{{ form_row(form.icons.iconA48) }}
 					</div>
 					<br class="clear"/>
+					<hr />
 					
 					<div class="col-lg-3 configurelabel">
 						72x72
@@ -48,6 +50,7 @@
 						{{ form_row(form.icons.iconA72) }}
 					</div>	
 					<br class="clear"/>
+					<hr />
 					
 					<div class="col-lg-3 configurelabel">
 						96x96
@@ -57,6 +60,7 @@
 						{{ form_row(form.icons.iconA96) }}
 					</div>	
 					<br class="clear"/>
+					<hr />
 
 
 					<h4>Icons IOS</h4>
@@ -69,6 +73,7 @@
 						{{ form_row(form.icons.iconI57) }}
 					</div>
 					<br class="clear"/>
+					<hr />
 					
 					<div class="col-lg-3 configurelabel">
 						72x72
@@ -78,6 +83,7 @@
 						{{ form_row(form.icons.iconI72) }}
 					</div>	
 					<br class="clear"/>
+					<hr />
 														
 					<div class="col-lg-3 configurelabel">
 						76x76
@@ -87,6 +93,7 @@
 						{{ form_row(form.icons.iconI76) }}
 					</div>	
 					<br class="clear"/>
+					<hr />
 					
 					<div class="col-lg-3 configurelabel">
 						114x114
@@ -96,6 +103,7 @@
 						{{ form_row(form.icons.iconI114) }}
 					</div>	
 					<br class="clear"/>
+					<hr />
 					
 					<div class="col-lg-3 configurelabel">
 						120x120
@@ -105,6 +113,7 @@
 						{{ form_row(form.icons.iconI120) }}
 					</div>	
 					<br class="clear"/>
+					<hr />
 					
 					<div class="col-lg-3 configurelabel">
 						144x144
@@ -114,6 +123,7 @@
 						{{ form_row(form.icons.iconI144) }}
 					</div>	
 					<br class="clear"/>
+					<hr />
 					
 					<div class="col-lg-3 configurelabel">
 						152x152
@@ -123,63 +133,120 @@
 						{{ form_row(form.icons.iconI152) }}
 					</div>	
 					<br class="clear"/>
+					<hr />
 					
 					
 <script type="text/javascript">
 	
 	$("#A3636").on("change",'input[type="file"]',function() {
-		check(this.files,36,36);
-		readURL(this,"previewA36");
+		var x = check(this,36,36,function(ok,x){
+			if(ok){
+				readURL(x,"previewA36");
+			}else{
+				x.value="";
+			}
+		});
+		
 	});
 	
 	$("#A4848").on("change",'input[type="file"]',function() {
-		check(this.files,48,48);
-		readURL(this,"previewA48");
+		check(this,48,48,function(ok,x){
+			if(ok){
+				readURL(x,"previewA48");
+			}else{
+				x.value="";
+			}
+		});
 	});
 	
 	$("#A7272").on("change",'input[type="file"]',function() {
-		check(this.files,72,72);
-		readURL(this,"previewA72");
+		check(this,72,72,function(ok,x){
+			if(ok){
+				readURL(x,"previewA72");
+			}else{
+				x.value="";
+			}
+		});
 	});
 	
 	$("#A9696").on("change",'input[type="file"]',function() {
-		check(this.files,96,96);
-		readURL(this,"previewA96");
+		check(this,96,96,function(ok,x){
+			if(ok){
+				readURL(x,"previewA96");
+			}else{
+				x.value="";
+			}
+		});
 	});
 	
 	$("#I5757").on("change",'input[type="file"]',function() {
-		check(this.files,57,57);
-		readURL(this,"previewI57");
+		check(this,57,57,function(ok,x){
+			if(ok){
+				readURL(x,"previewI57");
+			}else{
+				x.value="";
+			}
+		});
 	});
 	
 	$("#I7272").on("change",'input[type="file"]',function() {
-		check(this.files,72,72);
-		readURL(this,"previewI72");
+		check(this,72,72,function(ok,x){
+			if(ok){
+				readURL(x,"previewI72");
+			}else{
+				x.value="";
+			}
+		});
 	});
 	
 	$("#I7676").on("change",'input[type="file"]',function() {
-		check(this.files,76,76);
-		readURL(this,"previewI76");
+		check(this,76,76,function(ok,x){
+			if(ok){
+				readURL(x,"previewI76");
+			}else{
+				x.value="";
+			}
+		});
 	});
 	
 	$("#I114114").on("change",'input[type="file"]',function() {
-		check(this.files,114,114);
-		readURL(this,"previewI114");
+		check(this,114,114,function(ok,x){
+			if(ok){
+				readURL(x,"previewI114");
+			}else{
+				x.value="";
+			}
+		});
 	});
 	
 	$("#I120120").on("change",'input[type="file"]',function() {
-		check(this.files,120,120);
-		readURL(this,"previewI120");
+		check(this,120,120,function(ok,x){
+			if(ok){
+				readURL(x,"previewI120");
+			}else{
+				x.value="";
+			}
+		});
 	});
 	
 	$("#I144144").on("change",'input[type="file"]',function() {
-		check(this.files,144,144);
-		readURL(this,"previewI144");
+		check(this,144,144,function(ok,x){
+			if(ok){
+				readURL(x,"previewI144");
+			}else{
+				x.value="";
+			}
+		});
 	});
 	
 	$("#I152152").on("change",'input[type="file"]',function() {
-		check(this.files,152,152);
-		readURL(this,"previewI152");
+		check(this,152,152,function(ok,x){
+			if(ok){
+				readURL(x,"previewI152");
+			}else{
+				x.value="";
+			}
+		});
 	});
 	
 </script>

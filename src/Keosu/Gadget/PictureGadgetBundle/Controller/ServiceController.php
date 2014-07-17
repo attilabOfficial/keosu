@@ -45,5 +45,3 @@ class ServiceController extends Controller {
 	}
 }
 
-?>
-

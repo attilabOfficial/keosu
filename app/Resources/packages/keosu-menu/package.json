@@ -4,10 +4,11 @@
    "version" : "0.1",
    "type" : "gadget",
    "param" : [
-      {"objectId" : "integer"},
-      {"dataModelObjectName": "string"},
-      {"enableComments" : "boolean"},
-      {"templateName" : "string"}
+      { "pages" : [{
+                    "id"   : "integer",
+                    "icon" : "text"
+                 }]
+      }
    ],
    "require" : {
       "angularJS" : ">=1.2"

@@ -18,11 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses,.
 ************************************************************************/
 namespace Keosu\CoreBundle\Service;
 
+use Keosu\CoreBundle\Entity\Package;
+
 use Keosu\CoreBundle\Util\StringUtil;
 
 class PackageManager {
 
 	// TODO find, add, remove, new
+	// TODO add package theme support
 
 	const ROOT_DIR_PACKAGE = __DIR__."/../../../../app/Resources/packages/";
 
@@ -44,7 +47,7 @@ class PackageManager {
 	 * @param $type (optionnal) TYPE_PACKAGE_GADGET or TYPE_PACKAGE_LIB or TYPE_PACKAGE_PLUGIN
 	 * @return array
 	 */
-	public function getList($type = null) {
+	public function getPackageList($type = null) {
 	
 		if($type != null
 			and $type != $this::TYPE_PACKAGE_GADGET
@@ -53,19 +56,18 @@ class PackageManager {
 			throw new \LogicException("Wrong parameter for getList");
 
 		$this->checkAllPackages();
-
+		
+		$em = $this->doctrine->getManager();
+		$listPackage = array();
+		if($type === null)
+			$listPackage = $em->getRepository("KeosuCoreBundle:Package")->findAll();
+		else
+			$listPackage = $em->getRepository("KeosuCoreBundle:Package")->findByType($type);
+		
 		$ret = array();
-		$dir = scandir($this::ROOT_DIR_PACKAGE);
-		foreach($dir as $folder) {
-			if($folder === "." or $folder === "..")
-				continue;
+		foreach($listPackage as $p)
+			$ret[] = $p->getName();
 
-			$config = \json_decode(\file_get_contents($this::ROOT_DIR_PACKAGE.$folder."/package.json"),true);
-
-			if($type === $config["type"] or $type === null)
-				$ret[] = $config["name"];
-
-		}
 		return $ret;
 	}
 	
@@ -74,6 +76,7 @@ class PackageManager {
 	 * @return void
 	 */
 	public function checkAllPackages() {
+		// TODO check link to bdd
 		$dir = scandir($this::ROOT_DIR_PACKAGE);
 		foreach($dir as $folder) {
 			if($folder === "." or $folder === "..")
@@ -89,14 +92,8 @@ class PackageManager {
 	 * @return boolean
 	 */
 	public function checkPackage($packageLocation) {
-		// TODO lock php execution
-		// TODO test json
-	
-		// check package.json existance
-		if(!is_file($packageLocation."/package.json"))
-			throw new \LogicException("package.json not found for ".$packageLocation);
-		
-		$config = \json_decode(\file_get_contents($packageLocation."/package.json"),true);
+
+		$config = $this->getConfigPackage($packageLocation);
 		
 		$requiredKeys = array("name","description","version","type");
 		$optionnalKeys = array("param","require","configCordova","libJs","appParam");
@@ -131,6 +128,76 @@ class PackageManager {
 					throw new \LogicException("Missing previsualisation for template ".$t." to your gadget ".$packageName." located at ".$packageLocation);
 			}
 		}
+	}
+	
+	/**
+	 * Return the config of a package
+	 * @param $packageLocation location of the package
+	 * @return config of the package in an array.
+	 */
+	private function getConfigPackage($packageLocation) {
+		// TODO lock php execution
+		// TODO test json
+
+		// check package.json existance
+		if(!is_file($packageLocation."/package.json"))
+			throw new \LogicException("package.json not found for ".$packageLocation);
+		
+		return \json_decode(\file_get_contents($packageLocation."/package.json"),true);
+	}
+	
+	/**
+	 * Return the path of the package
+	 * @param $packageName name of the package
+	 * @return string
+	 */
+	public function getPath($packageName) {
+	
+		// TODO change to bdd
+		$dir = scandir($this::ROOT_DIR_PACKAGE);
+		foreach($dir as $folder) {
+			if($folder === "." or $folder === "..")
+				continue;
+
+			$config = \json_decode(\file_get_contents($this::ROOT_DIR_PACKAGE.$folder."/package.json"),true);
+
+			if($packageName === $config["name"])
+				return $this::ROOT_DIR_PACKAGE."/".$folder;
+
+		}
+		throw new \LogicException("Package not found");
+	}
+	
+	/**
+	 * install a new package
+	 * @param $pathTopackage path where to find the package
+	 * @return void
+	 */
+	public function install($pathToPackage) {
+		// TODO make all step to install a package
+		// TODO manage update
+		// TODO manage version
+		
+		$this->checkPackage($pathToPackage);
+		$config = $this->getConfigPackage($pathToPackage);
+
+		$em = $this->doctrine->getManager();
+		
+		$allReadyInstalled = $em->getRepository("KeosuCoreBundle:Package")->findOneBy(array(
+											"name" => $config["name"]
+							));
+
+		if($allReadyInstalled !== null)
+			throw new \LogicException("The package ".$config["name"]." is allReadyInstalled");
+
+		$package = new Package();
+		$package->setName($config["name"]);
+		$package->setPath($pathToPackage); // TODO mv + name generation
+		$package->setVersion($config["version"]);
+		$package->setType($config["type"]);
+		
+		$em->persist($package);
+		$em->flush();
 	}
 }
 ?>

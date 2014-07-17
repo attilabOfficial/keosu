@@ -77,7 +77,7 @@
 						</div>
 						{% endif %}
 						{% if zone.gadgetName %}
-							<a class="btn btn-info editgadget" href="{{ path('keosu_gadget_edit',{'page':content.id, 'zone':zone.zoneId, 'gadget':zone.gadgetName}) }}">
+							<a class="btn btn-info editgadget" href="{{ path('keosu_gadget_edit',{'page':content.id, 'zone':zone.zoneId}) }}">
 								Edit {{ zone.gadgetName }}
 							</a>
 							
@@ -100,9 +100,6 @@
 				</script>
 			{% endfor %}
 	</div>
-
-	
-	
 
 	<div class="col-md-7">	
 		<center>

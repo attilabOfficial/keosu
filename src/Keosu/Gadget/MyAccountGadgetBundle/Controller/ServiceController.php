@@ -36,7 +36,7 @@ class ServiceController extends Controller {
 		if($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
 			$ret = array(
 				'connect' => true,
-				'type'    => $suer->getAccountType(),
+				'type'    => $user->getAccountType(),
 				'email'   => $user->getemail(),
 				'username'=> $user->getUsername(),
 			);

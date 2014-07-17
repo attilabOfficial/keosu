@@ -92,7 +92,7 @@ class PageStudioController extends Controller {
 			$gadgetModelList[] = $zoneModel;
 		}
 
-		$gadgetList = $this->get('keosu_core.package_manager')->getList(PackageManager::TYPE_PACKAGE_GADGET);
+		$gadgetList = $this->get('keosu_core.package_manager')->getPackageList(PackageManager::TYPE_PACKAGE_GADGET);
 
 		return $this
 				->render('KeosuCoreBundle:Page:studio.html.twig',

@@ -142,21 +142,6 @@ class Exporter {
 					//Saving node
 					$zone->ownerDocument->saveXML($zone);
 
-					//If gadget isStatic we copy static data in a local file
-					if($gadget->isStatic()){
-						//Gadget name without suffix
-						$shortGadgetName = str_replace("_gadget", "", $gadget->getGadgetName());
-						//CURL the gadget service
-						$serviceurl=$baseurl.$param."service/gadget/".$shortGadgetName."/".$gadget->getId()."/json";
-						$curl = curl_init($serviceurl);
-						curl_setopt($curl, CURLOPT_HTTPHEADER,
-							array('Content-Type: text/xml',
-							'User-Agent: Keosu-UA'));
-						curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-						$feedstring = utf8_decode(curl_exec($curl));
-						$this->writeFile($feedstring, $gadget->getId().".json","/simulator/www/data/");
-					}
-
 					// permission part
 					$class = KeosuExtension::$gadgetList[$gadget->getGadgetName()];
 					$instance = new $class();

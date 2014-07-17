@@ -98,7 +98,7 @@ keosu_gadget_add:
     defaults: { _controller: KeosuCoreBundle:GadgetEdit:add}
 
 keosu_gadget_edit:
-    pattern: /views/page/gadget/edit/{gadget}/{page}/{zone}
+    pattern: /views/page/gadget/edit/{page}/{zone}
     defaults: { _controller: KeosuCoreBundle:GadgetEdit:edit}
 
 keosu_gadget_delete:

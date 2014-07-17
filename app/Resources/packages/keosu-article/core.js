@@ -24,13 +24,8 @@ app.controller('article_gadgetController', function ($scope, $http, $sce, usSpin
 	/////////////////////////
 	// Init part
 	/////////////////////////
-	$scope.init = function(host, param, page, gadget, zone){
-		$scope.param = {
-			'host'   : host+param,
-			'page'   : page,
-			'gadget' : gadget,
-			'zone'   : zone
-		}
+	$scope.init = function(params){
+		$scope.param = params;
 		$scope.articleInit();
 
 	};

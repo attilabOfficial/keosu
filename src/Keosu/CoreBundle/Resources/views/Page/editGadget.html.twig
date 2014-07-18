@@ -22,11 +22,11 @@
 	Edit gadget
 {% endblock %}
 {% block content %}
-</script>
 <h1>Edit gadget</h1>
 <br/>
 <div>
 	<script type="text/javascript">
+	/*
 	$(document).ready(function() {
 
 		if($( ".radio" ).length==1){
@@ -46,15 +46,14 @@
 				$( this ).append(img);
 			});
 		}
-	});
+	});*/
 	</script>
 	{% block gadgetform %}
-    <form method="post" {{ form_enctype(form) }}>
-    	{{ form_widget(form) }}
-    	    	
-    	<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-    </form>
-    {% endblock %}
-    
+	<form method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+	</form>
+	{% endblock %}
+
 </div>
 {% endblock %}

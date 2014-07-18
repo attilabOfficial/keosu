@@ -20,7 +20,6 @@ namespace Keosu\CoreBundle\Model;
 
 class ZoneModel {
 	private $gadgetName;
-	private $template;
 	private $zoneId;
 
 	public function getGadgetName() {
@@ -28,12 +27,6 @@ class ZoneModel {
 	}
 	public function setGadgetName($zone) {
 		$this->gadgetName = $zone;
-	}
-	public function getTemplate() {
-		return $this->template;
-	}
-	public function setTemplate($zone) {
-		$this->template = $zone;
 	}
 	public function getZoneId() {
 		return $this->zoneId;

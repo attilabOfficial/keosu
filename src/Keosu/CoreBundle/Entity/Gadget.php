@@ -17,8 +17,10 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
+use Keosu\CoreBundle\Service\PackageManager;
 
 /**
  * Gadget
@@ -77,6 +79,10 @@ class Gadget {
 	 * @ORM\Column(name="template", type="string", length=255)
 	 */
 	private $template;
+	
+	public function __construct() {
+		$this->template = PackageManager::DEFAULT_TEMPLATE_GADGET_NAME;
+	}
 	
 	
 	/**

@@ -77,14 +77,7 @@ class PageStudioController extends Controller {
 			//ZoneModel will be used to render the studio page
 			$zoneModel = new ZoneModel();
 			if ($gadget != null) {
-				//Html template of gadget (to put in zone)
-				$gadgetTemplateHtml = file_get_contents(
-						TemplateUtil::getGadgetAbsolutePath() . '/'
-								. $gadget->getGadgetName() . '/'
-								. $gadget->getGadgetTemplate());
-
-				$zoneModel->setGadgetName($gadget->getGadgetName());
-				$zoneModel->setTemplate(TemplateUtil::formatTemplateString($gadgetTemplateHtml));
+				$zoneModel->setGadgetName($gadget->getName());
 				$zoneModel->setZoneId($zone);
 			} else {
 				$zoneModel->setZoneId($zone);

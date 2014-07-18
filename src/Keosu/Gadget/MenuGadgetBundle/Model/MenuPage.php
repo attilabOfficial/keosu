@@ -33,4 +33,8 @@ class MenuPage{
 		$this->pageId = $page;
 		return $this;
 	}
+	
+	public function __toString() {
+		return $this->pageId;
+	}
 }

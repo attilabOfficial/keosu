@@ -28,10 +28,13 @@ class PackageManager {
 	// TODO add package theme support
 
 	const ROOT_DIR_PACKAGE = __DIR__."/../../../../app/Resources/packages/";
+	const ROOT_DIR_TEMPLATE = __DIR__."/../../../../web/keosu/templates/gadget/";
 
 	const TYPE_PACKAGE_LIB = "lib";
 	const TYPE_PACKAGE_GADGET = "gadget";
 	const TYPE_PACKAGE_PLUGIN = "plugin";
+
+	const DEFAULT_TEMPLATE_GADGET_NAME = "default.html";
 
 	private $doctrine;
 
@@ -124,7 +127,7 @@ class PackageManager {
 			foreach($templates as $t) {
 				if($t == "." or $t == "..")
 					continue;
-				if($t != "default.html" and StringUtil::endsWith($t,".html") and array_search($t.".png",$templates) === false)
+				if($t != $this::DEFAULT_TEMPLATE_GADGET_NAME and StringUtil::endsWith($t,".html") and array_search($t.".png",$templates) === false)
 					throw new \LogicException("Missing previsualisation for template ".$t." to your gadget ".$packageName." located at ".$packageLocation);
 			}
 		}
@@ -151,7 +154,7 @@ class PackageManager {
 	 * @param $packageName name of the package
 	 * @return string
 	 */
-	public function getPath($packageName) {
+	private function getPath($packageName) {
 	
 		// TODO change to bdd
 		$dir = scandir($this::ROOT_DIR_PACKAGE);
@@ -177,6 +180,7 @@ class PackageManager {
 		// TODO make all step to install a package
 		// TODO manage update
 		// TODO manage version
+		// TODO moveTo good destination
 		
 		$this->checkPackage($pathToPackage);
 		$config = $this->getConfigPackage($pathToPackage);
@@ -196,8 +200,49 @@ class PackageManager {
 		$package->setVersion($config["version"]);
 		$package->setType($config["type"]);
 		
+		// install template
+		if($package->getType() === $this::TYPE_PACKAGE_GADGET) {
+			$templates = $this->getListTemplateForGadget($gadgetName);
+			foreach($templates as $t) {
+				copy($pathToPackage."/templates/".$t.".png",$this::ROOT_DIR_TEMPLATE.$t.".png");
+				// unlink($pathToPackage."/templates/".$t.".png"); TODO in final version
+			}
+		}
+
+
 		$em->persist($package);
 		$em->flush();
+	}
+	
+	/**
+	 * This work for gadget only
+	 * @param $gadgetName name of the gadget
+	 * @return array with list of html template
+	 */
+	public function getListTemplateForGadget($gadgetName) {
+	
+		$pathToGadget = $this->getPath($gadgetName);
+		
+		// test good gadget type
+		$config = $this->getConfigPackage($pathToGadget);
+		if($config["type"] !== $this::TYPE_PACKAGE_GADGET)
+			throw new \LogicException("This action works only on gadget type package");
+
+		// get list of template
+		$ret = array();
+		$templates = scandir($pathToGadget."/templates");
+		$templatesGadgetFolder = $this::ROOT_DIR_TEMPLATE."/".$gadgetName."/";
+		if(!is_dir($templatesGadgetFolder))
+			mkdir($templatesGadgetFolder);
+
+		foreach($templates as $t) {
+			if($t == "." or $t == "..")
+				continue;
+			if(StringUtil::endsWith($t,".html")) {
+				$ret[$t] = $t;
+			}
+		}
+		return $ret;
 	}
 }
 ?>

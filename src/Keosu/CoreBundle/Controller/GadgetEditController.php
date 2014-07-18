@@ -28,6 +28,7 @@ use Keosu\Gadget\MenuGadgetBundle\Form\MenuPageType;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 /**
  * Common class for editing gadget
@@ -52,18 +53,21 @@ class GadgetEditController extends Controller {
 		if($pageObject->getTemplateId() != TemplateUtil::getAuthenticationTemplateId() &&
 				$pageObject->getName() != TemplateUtil::getAuthenticationPageName()) {
 			//Look if there is a shared gadget in this zone
-			$commonGadget=$em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
+			$gadget=$em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
 			//If there is no share gadget we try to find the specific one
-			if($commonGadget == null){
-				$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')
+			if($gadget == null){
+				$gadget = $em->getRepository('KeosuCoreBundle:Gadget')
 					->findOneBy(array('zone' => $zone, 'page' => $page));
 			}
+			
 			//Delete the gadget
-			$em->remove($commonGadget);
-			$em->flush();
+			if($gadget !== null) {
+				$em->remove($gadget);
+				$em->flush();
+			}
 
 			//Export app
-			$this->container->get('keosu_core.exporter')->exportApp();
+			// TODO $this->container->get('keosu_core.exporter')->exportApp();
 		}
 
 		//Redirect to the last page
@@ -126,45 +130,33 @@ class GadgetEditController extends Controller {
 	 * Same process as Add
 	 */
 	public function editAction($page, $zone) {
+		try {
+			$this->get('patate');
+		} catch(ServiceNotFoundException $e) {
+			echo "not found";
+		}
 		//Call the common gadget function with gadget class in parameter
-		$gadgetArray = $this::editGadgetCommonAction($page, $zone,$this->getGadgetClass());
-		$specificGadget = $gadgetArray['specific'];
-		$commonGadget = $gadgetArray['common'];
-		return $this->formGadget($specificGadget, $commonGadget, null);
+		$gadget = $this::editGadgetCommonAction($page, $zone);
+		return $this->formGadget($gadget);
 	}
 
 	/**
 	 * Editing gadget process
 	 */
-	private function editGadgetCommonAction($page, $zone, $gadgetClass) {
+	private function editGadgetCommonAction($page, $zone) {
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 		$em = $this->get('doctrine')->getManager();
+		
 		//Look if there is a shared gadget in this zone
-		$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
 		//If there is no share gadget we try to find the specific one
-		if($commonGadget == null){
-			$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')
-				->findOneBy(array('zone' => $zone, 'page' => $page));
+		if($gadget == null){
+			$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findOneBy(array(
+				'zone' => $zone,
+				'page' => $page
+			));
 		}
-
-		//Convert the common gadget to a specific gadget object
-		$gadget = $gadgetClass::constructfromGadget($commonGadget);
-		$gadgetArray = Array();
-		$gadgetArray['specific'] = $gadget;
-		$gadgetArray['common'] = $commonGadget;
-		return $gadgetArray;
-	}
-
-	private function getTemplateList($gadgetName) {
-		$ret = array();
-		$pathTemplate = $this->get('keosu_core.packagemanager')->getpath($gadgetName);
-		$templates = scandir($pathTemplate);
-
-		foreach($templates as $t)
-			if(StringUtil::endsWith($t, ".html"))
-				$ret[$t] = $t;
-
-		return $ret;
+		return $gadget;
 	}
 
 	/**
@@ -174,41 +166,45 @@ class GadgetEditController extends Controller {
 		$formBuilder = $this->createFormBuilder($gadget);
 
 		$formBuilder->add('template', 'choice',array(
-							'choices'  => $this->getTemplateList($gadget->getName()),
+							'choices'  => $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName()),
 							'required' => true,
 							'expanded' => true))
 					->add('shared', 'checkbox', array(
-							'label'     => 'Shared with all pages',
-							'required'  => false,));
+							'label'    => 'Shared with all pages',
+							'required' => false,));
 
 		//Build gadget form is defined in child class (the specific controller one)
-		$this->buildGadgetForm($formBuilder, $gadget->getName());
+		$this->buildGadgetForm($formBuilder);
 		$form = $formBuilder->getForm();
 		return $this->formCommonGadget($form,$gadget);
 	}
 
 	//Specific form for the gadget
-	public function buildGadgetForm($formBuilder, $gadgetName) {
+	public function buildGadgetForm($formBuilder) {
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 
 
 		$em = $this->get('doctrine')->getManager();
 		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
 
-		$pageList = Array();
+		$pageList = array();
+		$value = array();
 		foreach ($pages as $page) {
-			$pageList[$page->getId()] = $page->getName();
+			$value['id'] = $page->getId();
+			$value['icon'] = $page->getIcon();
+			$pageList[\json_encode($value)] = $page->getName();
 		}
 
 		$formBuilder->add('config', 'collection',array(
-						'type'         => new MenuPageType($pageList),
+						'type'         => 'choice',
 						'required'     => false,
-						'label'        => false,
+						'label'        => true,
 						'allow_add'    => true,
 						'allow_delete' => true,
 						'by_reference' => true,
 						'options'      => array(
-							'label'  => false,
+							'choices' => $pageList,
+							'label'   => false
 						)
 				));
 	}
@@ -220,24 +216,25 @@ class GadgetEditController extends Controller {
 	public function formCommonGadget($form, $gadget) {
 		$em = $this->get('doctrine')->getManager();
 		$request = $this->get('request');
-		//If we are in POST method, form is submit
+
+
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
 
-				$em->persist($commonGadget);
+				$em->persist($gadget);
 				$em->flush();
-
-				$this->container->get('keosu_core.exporter')->exportApp();
+				//TODO
+				//$this->container->get('keosu_core.exporter')->exportApp();
 
 				return $this->redirect($this->generateUrl('keosu_core_views_page',array(
-													'id' => $idPage)
+													'id' => $gadget->getPage()->getId())
 									));
 			}
 		}
 		return $this->render($this->getRenderEditTemplate(), array(
 								'form'      => $form->createView(),
-								'gadgetDir' => $this->getTemplateList($gadget->getName())
+								'gadgetDir' => $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName())
 							));
 	}
 

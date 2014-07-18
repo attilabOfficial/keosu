@@ -22,6 +22,14 @@
 
 {% block publishmenu %}
 
+<style>
+	.loader{
+		display: block; 
+		margin: 0 auto;
+	}
+</style>
+
+
 	<div class="activesidebartitle">
 		<a href="{{ path('keosu_core_publish') }}"> 
 				<span class="glyphicon glyphicon-cloud-upload"></span> Publish
@@ -69,6 +77,6 @@
 			<a href="{{url_base}}/keosu/export/android/export.zip"><button type="button" class="btn btn-default">Download</button></a>
 		</div>
 	</div>
-	<center><img id="spinner-loading" src="{{url_base}}/img/loading.gif" alt="Loading"/></center>
+	<img id="spinner-loading" class="loader" src="{{url_base}}/img/loading.gif" alt="Loading"/>
 	
 {% endblock %}

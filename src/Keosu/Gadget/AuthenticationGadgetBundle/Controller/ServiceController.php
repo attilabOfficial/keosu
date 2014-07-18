@@ -160,7 +160,7 @@ class ServiceController extends Controller {
 		
 			if($this->checkCsrfToken($action,$request->request->get('csrf_token'))) {
 				
-				if(strlen($request->request->get('password'))> 5) {
+				if(strlen($request->request->get('password'))> 5 && strlen($request->request->get('password'))> 3) {
 
 					// check email
 					$emailConstraint = new EmailConstraint();

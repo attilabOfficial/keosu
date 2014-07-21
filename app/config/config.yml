@@ -106,9 +106,3 @@ stfalcon_tinymce:
     theme:
       simple:
         theme: "modern"
-
-# push notif config
-rms_push_notifications:
-    android:
-        gcm:
-            api_key: articulate-life-599

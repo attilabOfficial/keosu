@@ -21,6 +21,7 @@ namespace Keosu\CoreBundle;
 class KeosuExtension {
 
 	// TODO deprecated ?
+	/*
 	public static $gadgetList = array(
 			'article_gadget'          => 'Keosu\Gadget\ArticleGadgetBundle\ArticleGadget',
 			'last_article_gadget'     => 'Keosu\Gadget\LastArticleGadgetBundle\LastArticleGadget',
@@ -33,7 +34,7 @@ class KeosuExtension {
 			'calendar_gadget'         => 'Keosu\Gadget\CalendarGadgetBundle\CalendarGadget',
 			'authentication_gadget'   => 'Keosu\Gadget\AuthenticationGadgetBundle\AuthenticationGadget',
 			'my_account_gadget'       => 'Keosu\Gadget\MyAccountGadgetBundle\MyAccountGadget',
-	);
+	);*/
 
 	public static $readerList = array(
 			'RssReader'      => 'RSS',

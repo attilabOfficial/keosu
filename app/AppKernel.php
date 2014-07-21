@@ -43,8 +43,6 @@ class AppKernel extends Kernel
             new Keosu\Gadget\AuthenticationGadgetBundle\KeosuGadgetAuthenticationGadgetBundle(),
             new Keosu\Gadget\MyAccountGadgetBundle\KeosuGadgetMyAccountGadgetBundle(),
             new Keosu\Gadget\CommentGadgetBundle\KeosuGadgetCommentGadgetBundle(),
-            new Keosu\Plugin\PushPluginBundle\KeosuPluginPushPluginBundle(),
-            new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {

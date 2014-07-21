@@ -36,9 +36,10 @@
 								false: true;
 
 				scope.spin = function () {
-					if (scope.spinner) {
-						scope.spinner.spin(element[0]);
+					if (scope.spinner == null) {
+                        scope.spinner = new $window.Spinner(attr.usSpinner);
 					}
+                    scope.spinner.spin(element[0]);
 				};
 
 				scope.stop = function () {

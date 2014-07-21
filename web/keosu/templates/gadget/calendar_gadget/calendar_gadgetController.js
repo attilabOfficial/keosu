@@ -107,24 +107,12 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				// The data is stored in variables which can be readed from the html (with $scope)
 				$scope.anEvent = data[0];
 				$scope.commentListAction();
-				decodedContent = data[0].name;
-				decodedContent = $('<div/>').html(decodedContent).text();
-				decodedContent = decodedContent.replace(/[/\\*]/g, "");
-				$scope.anEvent.name = decodedContent;
+				$scope.anEvent.name = decodedContent(data[0].name);
 				title = $scope.anEvent.name;
-				decodedContent = data[0].date;
-				decodedContent = $('<div/>').html(decodedContent).text();
-				decodedContent = decodedContent.replace(/[/\\*]/g, "");
-				$scope.anEvent.date = decodedContent;
-				decodedContent = data[0].lieu;
-				decodedContent = $('<div/>').html(decodedContent).text();
-				decodedContent = decodedContent.replace(/[/\\*]/g, "");
-				$scope.anEvent.lieu = decodedContent;
+				$scope.anEvent.date = decodedContent(data[0].date);
+				$scope.anEvent.lieu = decodedContent(data[0].lieu);
 				location = $scope.anEvent.lieu;
-				decodedContent = data[0].description;
-				decodedContent = $('<div/>').html(decodedContent).text();
-				var description_html = decodedContent;
-				$scope.anEvent.description = decodedContent;
+				$scope.anEvent.description = decodedContent(data[0].description);
 				$scope.anEvent.description = $sce.trustAsHtml($scope.anEvent.description);
 				// Here, we use the data for the phone's calendar
 				notes = $scope.strip(description_html);
@@ -348,6 +336,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				alert('Failed to load file...');
 			});
 		}
+		
 		usSpinnerService.stop('spinner');
 	};
 

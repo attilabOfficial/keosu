@@ -25,6 +25,7 @@
 		"twitter/bootstrap" : "v3.0.0",
 		"twbs/bootstrap" : "v3.0.0",
 		"leafo/lessphp" : "0.4.0",
+		"symfony/event-dispatcher": "*",
 		"friendsofsymfony/user-bundle" : "*",
 		"stfalcon/tinymce-bundle" : "dev-master",
 		"facebook/php-sdk-v4" : "4.0.*",

@@ -82,47 +82,28 @@ class GadgetEditController extends Controller {
 	 * @param $zone where we want to add the gadget
 	 * @param $gadget name of the gadget
 	 */
-	public function addAction($page, $zone, $gadget) {
-
-		$em = $this->get('doctrine')->getManager();
-		$pageObject = $em->getRepository('KeosuCoreBundle:Page')->find($page);
-
-		// We don't allow to delete authenticationGadget on private app
-		if($pageObject->getTemplateId() != TemplateUtil::getAuthenticationTemplateId() &&
-				$pageObject->getName() != TemplateUtil::getAuthenticationPageName()) {
-
-			$gadget = $this->addGadgetAction($page, $zone,$gadget);
-			return $this->formGadget($gadget);//Create form
-		}
-
-		//Redirect to the last page
-		return $this->redirect(
-						$this->generateUrl('keosu_core_views_page',array(
-												'id' => $page))
-							);
-	}
-	/**
-	 * Adding gadget process
-	 */
-	private function addGadgetAction($page, $zone, $gadgetName) {
+	public function addAction($pageId, $zoneId, $gadgetName) {
 
 		$em = $this->get('doctrine')->getManager();
 
 		// search if there is allready a gadget
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findOneBy(array(
-																				'zone' => $zone,
-																				'page' => $page)
+																				'zone' => $zoneId,
+																				'page' => $pageId)
 																			);
 
 		if($gadget == null) {
 			$gadget = new Gadget();
-			$pageObject = $em->getRepository('KeosuCoreBundle:Page')->find($page);
-			$gadget->setPage($pageObject);
+			$page = $em->getRepository('KeosuCoreBundle:Page')->find($pageId);
+			$gadget->setPage($page);
 			$gadget->setZone($zone);
 		}
-
+		
+		if(!$this->get('keosu_core.packagemanager')->isGadgetExist($gadgetName))
+			throw new \LogicException("Gadget : ".$gadgetName." Not Found");
+		
 		$gadget->setName($gadgetName);
-		return $gadget;
+		return $this->formGadget($gadget);
 	}
 
 	/**
@@ -130,20 +111,7 @@ class GadgetEditController extends Controller {
 	 * Same process as Add
 	 */
 	public function editAction($page, $zone) {
-		try {
-			$this->get('patate');
-		} catch(ServiceNotFoundException $e) {
-			echo "not found";
-		}
-		//Call the common gadget function with gadget class in parameter
-		$gadget = $this::editGadgetCommonAction($page, $zone);
-		return $this->formGadget($gadget);
-	}
-
-	/**
-	 * Editing gadget process
-	 */
-	private function editGadgetCommonAction($page, $zone) {
+	
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 		$em = $this->get('doctrine')->getManager();
 		
@@ -156,7 +124,7 @@ class GadgetEditController extends Controller {
 				'page' => $page
 			));
 		}
-		return $gadget;
+		return $this->formGadget($gadget);
 	}
 
 	/**

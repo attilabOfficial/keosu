@@ -68,7 +68,7 @@
 							<ul class="dropdown-menu">
 								{% for gadget in gadgets %}
 									<li>
-										<a href="{{ path('keosu_gadget_add',{'page':content.id, 'zone':zone.zoneId, 'gadget':gadget}) }}">
+										<a href="{{ path('keosu_gadget_add',{'pageId':content.id, 'zoneId':zone.zoneId, 'gadgetName':gadget}) }}">
 											Add {{ gadget }}
 										</a>
 									</li>
@@ -77,12 +77,12 @@
 						</div>
 						{% endif %}
 						{% if zone.gadgetName %}
-							<a class="btn btn-info editgadget" href="{{ path('keosu_gadget_edit',{'page':content.id, 'zone':zone.zoneId}) }}">
+							<a class="btn btn-info editgadget" href="{{ path('keosu_gadget_edit',{'pageId':content.id, 'zoneId':zone.zoneId}) }}">
 								Edit {{ zone.gadgetName }}
 							</a>
 							
 							{% if not(editableOnly) %}
-							<a class="badge" href="{{ path('keosu_gadget_delete',{'page':content.id, 'zone':zone.zoneId}) }}" title="Clean zone">
+							<a class="badge" href="{{ path('keosu_gadget_delete',{'pageId':content.id, 'zoneId':zone.zoneId}) }}" title="Clean zone">
 								<span class="glyphicon glyphicon-minus"></span>
 							</a>
 							{% endif %}

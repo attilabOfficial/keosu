@@ -16,16 +16,24 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-namespace Keosu\CoreBundle\Controller;
+
+namespace Keosu\CoreBundle;
 
 /**
- * Interface for gadgets controller
- * @author vleborgne
- *
+ * Contains all events thrown in the Keosu framework
  */
-interface iGadgetController{
-	public function getGadgetClass();
+final class KeosuEvents
+{
 
-	public function buildGadgetForm($formBuilder, $gadgetName);
-
+	const GADGET_ADD = 'keosu.gadget.add.';
+	
+	const GADGET_EDIT = 'keosu.gadget.edit.';
+	
+	const GADGET_DELETE = 'keosu.gadget.delete.';
+	
+	const GADGET_CONF_BUILD = 'keosu.gadget.conf.build.';
+	
+	const GADGET_CONF_SAV = 'keosu.gadget.conf.sav.';
+	
+	const GADGET_CONF_VIEW = 'keosu.gadget.conf.view.';
 }

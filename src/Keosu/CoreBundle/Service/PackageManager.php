@@ -244,5 +244,19 @@ class PackageManager {
 		}
 		return $ret;
 	}
+	
+	/**
+	 * @param name of the gadget
+	 * @return boolean true if the gadget exist
+	 */
+	public function isGadgetExist($gadgetName) {
+		$em = $this->doctrine->getManager();
+		
+		$gadget = $em->getRepository("KeosuCoreBundle:Package")->findOneBy(array(
+											"name" => $gadgetName,
+											"type" => $this::TYPE_PACKAGE_GADGET,
+							));
+		return $gadget !== null;
+	}
 }
 ?>

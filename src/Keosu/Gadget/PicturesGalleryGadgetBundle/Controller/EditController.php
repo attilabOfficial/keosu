@@ -18,12 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\Gadget\PicturesGalleryGadgetBundle\Controller;
 
-use Keosu\CoreBundle\Controller\iGadgetController;
-use Keosu\CoreBundle\Controller\GadgetEditController;
-use Keosu\Gadget\PicturesGalleryGadgetBundle\PicturesGalleryGadget;
 use Keosu\CoreBundle\Util\TemplateUtil;
-use Keosu\CoreBundle\Entity\Gadget;
-use Keosu\Gadget\PictureGadgetBundle\PictureGadget;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -33,7 +29,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @author jdequeant
  *
  */
-class EditController extends GadgetEditController implements iGadgetController{
+class EditController extends Controller {
 	public function getGadgetClass(){
 		return "Keosu\Gadget\PicturesGalleryGadgetBundle\PicturesGalleryGadget";
 	}

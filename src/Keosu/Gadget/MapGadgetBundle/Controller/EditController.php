@@ -17,15 +17,10 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\Gadget\MapGadgetBundle\Controller;
-use Keosu\CoreBundle\Controller\iGadgetController;
-
-use Keosu\CoreBundle\Controller\GadgetEditController;
 
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Entity\Gadget;
-
-use Keosu\DataModel\MapModelBundle\Entity;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Specific gadget controller
@@ -34,7 +29,7 @@ use Keosu\DataModel\MapModelBundle\Entity;
  * @author vleborgne
  *
  */
-class EditController extends GadgetEditController implements iGadgetController {
+class EditController extends Controller {
 	
 	public function getGadgetClass(){
 		return "Keosu\Gadget\MapGadgetBundle\MapGadget";

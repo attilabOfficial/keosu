@@ -18,15 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\Gadget\ChronoGadgetBundle\Controller;
 
-use Keosu\CoreBundle\Controller\iGadgetController;
-
-use Keosu\CoreBundle\Controller\GadgetEditController;
-
 use Keosu\CoreBundle\Util\TemplateUtil;
-
-use Keosu\CoreBundle\Entity\Gadget;
-
-use Keosu\Gadget\ArticleGadgetBundle\ArticleGadget;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -37,7 +29,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @author vleborgne
  *
  */
-class EditController extends GadgetEditController implements iGadgetController {
+class EditController extends Controller {
 	
 	public function getGadgetClass(){
 		return "Keosu\Gadget\ChronoGadgetBundle\ChronoGadget";

@@ -51,6 +51,9 @@
 	{% block gadgetform %}
 	<form method="post" {{ form_enctype(form) }}>
 		{{ form_widget(form) }}
+		<br class="clear"/>
+		<br class="clear"/>
+		<br class="clear"/>
 		<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
 	</form>
 	{% endblock %}

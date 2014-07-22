@@ -1,0 +1,6 @@
+services:
+    keosu_gadget.menu:
+        class: Keosu\Gadget\MenuGadgetBundle\EventListener\GadgetListener
+        arguments: [@service_container]
+        tags:
+            - { name: kernel.event_subscriber }

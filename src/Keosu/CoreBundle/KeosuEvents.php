@@ -31,6 +31,12 @@ final class KeosuEvents
 	
 	const GADGET_DELETE = 'keosu.gadget.delete.';
 	
+	/**
+	 * The GADGET_CONF_BUILD[Name of the gadget] event occurs when the form config is created
+	 *
+	 * This event allows to modify the config field
+	 * The event listener methd receives a FOS\UserBundle\Event\GadgetFormBuilderEvent instance
+	 */
 	const GADGET_CONF_BUILD = 'keosu.gadget.conf.build.';
 	
 	const GADGET_CONF_SAV = 'keosu.gadget.conf.sav.';

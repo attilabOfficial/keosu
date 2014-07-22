@@ -18,46 +18,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
 namespace Keosu\CoreBundle\Form;
+
+use Keosu\CoreBundle\KeosuEvents;
+use Keosu\CoreBundle\Entity\Gadget;
+use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
+
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ConfigType extends AbstractType {
 
-	private $container;
+	private $dispatcher;
+
+	private $request;
 
 	private $gadget;
 
-	public function __construct($container,$gadget) {
-		$this->container = $container;
+	public function __construct(ContainerAwareEventDispatcher $dispatcher,Request $request,Gadget $gadget) {
+		$this->dispatcher = $dispatcher;
+		$this->request = $request;
 		$this->gadget = $gadget;
 	}
 
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 
+		$event = new GadgetFormBuilderEvent($builder,$this->request,$this->gadget);
+		$this->dispatcher->dispatch(KeosuEvents::GADGET_CONF_BUILD.$this->gadget->getName(),$event);
 
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-
-		$em = $this->container->get('doctrine')->getManager();
-		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
-
-		$pageList = array();
-		foreach ($pages as $page) {
-			$pageList[$page->getId()] = $page->getName();
-		}
-
-		$builder->add('page', 'collection',array(
-						'type'         => 'choice',
-						'required'     => false,
-						'label'        => "Choose a page",
-						'allow_add'    => true,
-						'allow_delete' => true,
-						'by_reference' => true,
-						'options'      => array(
-							'choices' => $pageList,
-							'label'   => false,
-						)
-				));
 	}
 
 	public function getName() {

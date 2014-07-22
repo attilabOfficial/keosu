@@ -76,8 +76,8 @@ class ManageReadersController extends Controller {
 		foreach ($linkedArticles as $article){
 			$article->setReader(null);
 			$em->persist($article);
-			$em->flush();
 		}
+        $em->flush();
 		$this->get('doctrine')->getManager()->remove($reader);
 		$this->get('doctrine')->getManager()->flush();
 		return $this

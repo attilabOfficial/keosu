@@ -1,0 +1,15 @@
+		/*
+		For authentication bundle
+		
+				// We don't allow to delete authenticationGadget on private app
+		if($pageObject->getTemplateId() != TemplateUtil::getAuthenticationTemplateId() &&
+				$pageObject->getName() != TemplateUtil::getAuthenticationPageName()) {
+		
+		}
+		
+		//Redirect to the last page
+		return $this->redirect(
+						$this->generateUrl('keosu_core_views_page',array(
+												'id' => $page))
+							);
+		*/

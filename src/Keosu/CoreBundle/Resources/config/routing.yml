@@ -94,15 +94,15 @@ keosu_core_views_page_service_list:
 
 # CRUD gadget
 keosu_gadget_add:
-    pattern: /views/page/gadget/add/{gadgetName}/{pageId}/{zoneId}
+    pattern: /views/page/gadget/add/{gadgetName}/{pageId}/{zoneName}
     defaults: { _controller: KeosuCoreBundle:ManageGadgets:add}
 
 keosu_gadget_edit:
-    pattern: /views/page/gadget/edit/{pageId}/{zoneId}
+    pattern: /views/page/gadget/edit/{pageId}/{zoneName}
     defaults: { _controller: KeosuCoreBundle:ManageGadgets:edit}
 
 keosu_gadget_delete:
-    pattern:  /views/page/gadget/delete/{pageId}/{zoneId}
+    pattern:  /views/page/gadget/delete/{pageId}/{zoneName}
     defaults: { _controller: KeosuCoreBundle:ManageGadgets:delete }
 # /CRUD gadget
 

@@ -20,7 +20,7 @@
 
 {% block gadgetform %}
 
-   	{{ form_start(form) }}
+	{{ form_start(form) }}
 		{{ form_errors(form) }}
 		<div class="pagelist">
 			<h4>Page list</h4>
@@ -30,6 +30,6 @@
 		{{ form_row(form.gadgetTemplate) }}
 		<br class="clear"/>
 		<br class="clear"/>
-    	<input type="submit" class="btn btn-success" /><span>&nbsp;</span><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+		<input type="submit" class="btn btn-success" /><span>&nbsp;</span><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
 	{{ form_end(form) }}
 {% endblock %}

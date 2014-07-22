@@ -19,12 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Controller;
 
 use Keosu\CoreBundle\Entity\Gadget;
-use Keosu\CoreBundle\Entity\Page;
+
+use Keosu\CoreBundle\Form\ConfigType;
 
 use Keosu\CoreBundle\Util\TemplateUtil;
 use Keosu\CoreBundle\Util\StringUtil;
-
-use Keosu\Gadget\MenuGadgetBundle\Form\MenuPageType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
@@ -36,20 +35,20 @@ class ManageGadgetsController extends Controller {
 
 	/**
 	 * Clean a zone and delete all the gadgets inside
-	 * @param  $page where we want to delete the gadget
-	 * @param $zone where we want to delete the gadget
+	 * @param  $pageId where we want to delete the gadget
+	 * @param $zoneName where we want to delete the gadget
 	 */
-	public function deleteAction($pageId, $zoneId) {
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
+	public function deleteAction($pageId, $zoneName) {
+		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
 		$em = $this->get('doctrine')->getManager();
 
 		//Look if there is a shared gadget in this zone
-		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zoneName,$appId);
 		//If there is no share gadget we try to find the specific one
 		if($gadget == null){
 			$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findOneBy(array(
-																			'zone' => $zone,
-																			'page' => $page
+																			'zone' => $zoneName,
+																			'page' => $pageId
 																			));
 		}
 		
@@ -67,22 +66,22 @@ class ManageGadgetsController extends Controller {
 		//Redirect to the last page
 		return $this->redirect(
 						$this->generateUrl('keosu_core_views_page',array(
-												'id' => $page))
+												'id' => $pageId))
 							);
 	}
 	/**
 	 * Ading a new Gadget in a zone
-	 * @param $page where we want to add the gadget
-	 * @param $zone where we want to add the gadget
-	 * @param $gadget name of the gadget
+	 * @param $pageId where we want to add the gadget
+	 * @param $zoneName where we want to add the gadget
+	 * @param $gadgetName name of the gadget
 	 */
-	public function addAction($pageId, $zoneId, $gadgetName) {
+	public function addAction($pageId, $zoneName, $gadgetName) {
 
 		$em = $this->get('doctrine')->getManager();
 
 		// search if there is allready a gadget
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findOneBy(array(
-																				'zone' => $zoneId,
+																				'zone' => $zoneName,
 																				'page' => $pageId
 																			));
 
@@ -90,7 +89,7 @@ class ManageGadgetsController extends Controller {
 			$gadget = new Gadget();
 			$page = $em->getRepository('KeosuCoreBundle:Page')->find($pageId);
 			$gadget->setPage($page);
-			$gadget->setZone($zone);
+			$gadget->setZone($zoneName);
 		}
 		
 		if(!$this->get('keosu_core.packagemanager')->isGadgetExist($gadgetName))
@@ -107,17 +106,17 @@ class ManageGadgetsController extends Controller {
 	 * Edit an existing gadget
 	 * Same process as Add
 	 */
-	public function editAction($pageId, $zoneId) {
+	public function editAction($pageId, $zoneName) {
 	
 		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
 		$em = $this->get('doctrine')->getManager();
 		
 		//Look if there is a shared gadget in this zone
-		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zoneId,$appId);
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zoneName,$appId);
 		//If there is no share gadget we try to find the specific one
 		if($gadget == null){
 			$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findOneBy(array(
-				'zone' => $zoneId,
+				'zone' => $zoneName,
 				'page' => $pageId
 			));
 		}
@@ -137,18 +136,16 @@ class ManageGadgetsController extends Controller {
 
 		$formBuilder = $this->createFormBuilder($gadget);
 
+		$configType = new ConfigType($this->container,$gadget);
 		$formBuilder->add('template', 'choice',array(
 							'choices'  => $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName()),
 							'required' => true,
 							'expanded' => true))
 					->add('shared', 'checkbox', array(
 							'label'    => 'Shared with all pages',
-							'required' => false));
+							'required' => false))
+					->add('config',$configType);
 
-		// TODO event
-
-		//Build gadget form is defined in child class (the specific controller one)
-		//$this->buildGadgetForm($formBuilder);
 		$form = $formBuilder->getForm();
 
 		if ($request->getMethod() == 'POST') {
@@ -176,35 +173,5 @@ class ManageGadgetsController extends Controller {
 								'gadgetDir' => $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName())
 							));
 	}
-
-	//Specific form for the gadget
-	/* For menu gadget
-	public function buildGadgetForm($formBuilder) {
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-
-		$em = $this->get('doctrine')->getManager();
-		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
-
-		$pageList = array();
-		$value = array();
-		foreach ($pages as $page) {
-			$value['id'] = $page->getId();
-			$value['icon'] = $page->getIcon();
-			$pageList[\json_encode($value)] = $page->getName();
-		}
-
-		$formBuilder->add('config', 'collection',array(
-						'type'         => 'choice',
-						'required'     => false,
-						'label'        => true,
-						'allow_add'    => true,
-						'allow_delete' => true,
-						'by_reference' => true,
-						'options'      => array(
-							'choices' => $pageList,
-							'label'   => false
-						)
-				));
-	}*/
 
 }

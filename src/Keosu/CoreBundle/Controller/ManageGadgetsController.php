@@ -22,6 +22,7 @@ use Keosu\CoreBundle\KeosuEvents;
 
 use Keosu\CoreBundle\Entity\Gadget;
 
+use Keosu\CoreBundle\Event\FormEvent;
 use Keosu\CoreBundle\Event\GadgetActionEvent;
 use Keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 
@@ -44,8 +45,8 @@ class ManageGadgetsController extends Controller {
 	 * @param $zoneName where we want to delete the gadget
 	 */
 	public function deleteAction($pageId, $zoneName) {
-		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
-		$dispatch = $this->container->get('event_dispatcher');
+		$appId = $this->get('keosu_core.curapp')->getCurApp();
+		$dispatch = $this->get('event_dispatcher');
 		$em = $this->get('doctrine')->getManager();
 
 		//Look if there is a shared gadget in this zone
@@ -90,7 +91,7 @@ class ManageGadgetsController extends Controller {
 	public function addAction($pageId, $zoneName, $gadgetName) {
 
 		$em = $this->get('doctrine')->getManager();
-		$dispatch = $this->container->get('event_dispatcher');
+		$dispatch = $this->get('event_dispatcher');
 
 		// search if there is allready a gadget
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findOneBy(array(
@@ -125,9 +126,9 @@ class ManageGadgetsController extends Controller {
 	 */
 	public function editAction($pageId, $zoneName) {
 	
-		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
+		$appId = $this->get('keosu_core.curapp')->getCurApp();
 		$em = $this->get('doctrine')->getManager();
-		$dispatch = $this->container->get('event_dispatcher');
+		$dispatch = $this->get('event_dispatcher');
 		
 		//Look if there is a shared gadget in this zone
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zoneName,$appId);
@@ -175,7 +176,6 @@ class ManageGadgetsController extends Controller {
 			$form->bind($request);
 			if ($form->isValid()) {
 
-				// TODO event
 				$event = new GadgetSaveConfigEvent($form,$request,$gadget);
 				$dispatcher->dispatch(KeosuEvents::GADGET_CONF_SAV.$gadget->getName(),$event);
 				
@@ -195,8 +195,11 @@ class ManageGadgetsController extends Controller {
 			}
 		}
 		
-		// TODO event
+		$event = new FormEvent($form,$request);
+		$dispatcher->dispatch(KeosuEvents::GADGET_CONF_VIEW.$gadget->getName(),$event);
 		
+		if($event->getResponse() !== null)
+			return $event->getResponse();
 		
 		return $this->render('KeosuCoreBundle:Page:editGadget.html.twig', array(
 								'form'      => $form->createView(),

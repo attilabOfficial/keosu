@@ -69,7 +69,7 @@ final class KeosuEvents
 	 * The GADGET_CONF_VIEW[Name of the gadget] event occurs when the form of the gadget is about to be rendered
 	 *
 	 * This event allows to modify the form template
-	 * The event listener method receives a Keosu\CoreBundle\Event\ instance
+	 * The event listener method receives a Keosu\CoreBundle\Event\FormEvent instance
 	 */
 	const GADGET_CONF_VIEW = 'keosu.gadget.conf.view.';
 }

@@ -7,7 +7,6 @@ use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
 use keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Listener responsible to gadget action
@@ -32,7 +31,7 @@ class GadgetListener implements EventSubscriberInterface
 		return array(
 			KeosuEvents::GADGET_CONF_FORM_BUILD.GadgetListener::GADGET_NAME => 'onGadgetConfFormBuild',
 			KeosuEvents::GADGET_CONF_SAV.GadgetListener::GADGET_NAME        => 'onGadgetConfSav',
-	);
+		);
 	}
 
 	public function onGadgetConfFormBuild(GadgetFormBuilderEvent $event)
@@ -61,7 +60,6 @@ class GadgetListener implements EventSubscriberInterface
 							'label'   => false,
 						)
 				));
-				
 	}
 	
 	public function onGadgetConfSav(GadgetSaveConfigEvent $event)

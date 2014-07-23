@@ -26,6 +26,5 @@ namespace Keosu\CoreBundle\Controller;
 interface iGadgetController{
 	public function getGadgetClass();
 
-	public function buildGadgetForm($formBuilder, $gadgetName);
-
+    public function buildGadgetForm($formBuilder, $gadgetName);
 }

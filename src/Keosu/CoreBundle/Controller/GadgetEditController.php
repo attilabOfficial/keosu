@@ -183,7 +183,7 @@ class GadgetEditController extends Controller {
 	 * Form submit process
 	 * Store the gadget in database
 	 */
-	public function formCommonGadget($form, $gadget, $commonGadget, $oldGadget) {
+	protected function formCommonGadget($form, $gadget, $commonGadget, $oldGadget) {
 		$em = $this->get('doctrine')->getManager();
 		$request = $this->get('request');
 		//If we are in POST method, form is submit
@@ -223,7 +223,7 @@ class GadgetEditController extends Controller {
 	/**
 	 * Can be overrided
 	 */
-	public function getRenderEditTemplate(){
+	protected function getRenderEditTemplate(){
 		return 'KeosuCoreBundle:Page:editGadget.html.twig';
 	}
 

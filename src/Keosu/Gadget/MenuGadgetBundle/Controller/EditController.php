@@ -52,7 +52,7 @@ class EditController extends GadgetEditController  implements iGadgetController 
 	}
 	
 	//Specific form for the gadget
-	public function buildGadgetForm($formBuilder, $gadgetName) {	
+	public function buildGadgetForm($formBuilder, $gadgetName) {
 		$appid = $this->container->get('keosu_core.curapp')
 			->getCurApp($this->get('doctrine')->getManager(),
 				$this->get("session"));

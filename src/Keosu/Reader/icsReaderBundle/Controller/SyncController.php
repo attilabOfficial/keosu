@@ -35,13 +35,13 @@ class SyncController extends Controller {
 	 * @param $id of the curent reader
 	 */
 	
-	function dist($lat,$lng){
+	private function dist($lat,$lng){
 		$current_lat = 48.117266;
 		$current_lng = -1.6777926;
 		return ($lat-$current_lat)*($lat-$current_lat)+($lng-$current_lng)*($lng-$current_lng);
 	}
 	
-	function cmpByDist($a,$b){
+	private function cmpByDist($a,$b){
 		if ( $this->dist($a['geometry']['location']['lat'],$a['geometry']['location']['lng'])
 		== $this->dist($b['geometry']['location']['lat'],$b['geometry']['location']['lng']) ) {
 			return 0;

@@ -1,7 +1,0 @@
-keosu_gadget_chrono_gadget_add:
-    pattern:  /views/page/gadget/chronogadget/add/{page}/{zone}
-    defaults: { _controller: KeosuGadgetChronoGadgetBundle:Edit:add }
-    
-keosu_gadget_chrono_gadget_edit:
-    pattern:  /views/page/gadget/chronogadget/edit/{page}/{zone}
-    defaults: { _controller: KeosuGadgetChronoGadgetBundle:Edit:edit }

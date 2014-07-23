@@ -38,11 +38,6 @@ keosu_reader_rss_event_reader:
     resource: "@KeosuReaderRssEventReaderBundle/Resources/config/routing.yml"
     prefix:   /
 
-
-keosu_gadget_chrono_gadget:
-    resource: "@KeosuGadgetChronoGadgetBundle/Resources/config/routing.yml"
-    prefix:   /
-
 keosu_gadget_last_article_gadget:
     resource: "@KeosuGadgetLastArticleGadgetBundle/Resources/config/routing.yml"
     prefix:   /

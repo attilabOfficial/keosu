@@ -43,7 +43,6 @@ class MyAccountGadget extends GadgetParent implements iGadget {
 		$instance = new self();
 		parent::constructParentFromGadget($gadget,$instance);
 		//Specific conf for this gadget
-		$gadgetConfig = $gadget->getConfig();
 		// TODO $instance->articleId = $gadgetConfig['article-id'];
 		return $instance;
 	}

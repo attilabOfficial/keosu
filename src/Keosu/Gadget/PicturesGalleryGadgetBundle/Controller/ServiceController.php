@@ -42,11 +42,6 @@ class ServiceController extends Controller {
 		//max result 15?
 		$query = $qb->getQuery();
 		$picturesList = $query->execute();
-
-		
-		$queryCount = $this->get('doctrine')->getManager()->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\PictureModelBundle\Entity\Picture p");
-		$count = $queryCount->getSingleScalarResult();
-	
 		return $this
 				->render(
 						'KeosuGadgetPicturesGalleryGadgetBundle:Service:viewlist.'

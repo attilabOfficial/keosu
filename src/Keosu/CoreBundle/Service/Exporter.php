@@ -48,9 +48,8 @@ class Exporter {
 		
 		
 		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appId);
-		$isIndexPageImported = false;
 
-		$clean=$this->cleanDir();
+		$this->cleanDir();
 
 		//Export theme
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);

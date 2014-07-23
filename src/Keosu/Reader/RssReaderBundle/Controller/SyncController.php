@@ -43,10 +43,7 @@ class SyncController extends Controller {
 		 * Init Keosu (local) connection and managers
 		 */
 		$Keosu_manager = $this->get('doctrine')->getManager();
-		$Keosu_repository_article = $Keosu_manager
-				->getRepository(
-						'KeosuDataModelArticleModelBundle:ArticleBody');
-		
+
 		/**
 		 * Get the curent reader to initialize  connection
 		 */
@@ -146,8 +143,7 @@ class SyncController extends Controller {
 			$attachment = new ArticleAttachment();
 			$filePath=$this->downloadFile($img,$attachment->getUploadRootDir());
 			$baseName=basename($img);
-			$file=new UploadedFile($filePath,$baseName);
-			$attachment->setName($baseName);		
+			$attachment->setName($baseName);
 			$attachment->setPath($baseName);
 			$article->addAttachment($attachment);
 		}

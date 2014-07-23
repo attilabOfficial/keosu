@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('keosu_data_model_event_model');
+        $treeBuilder->root('keosu_data_model_event_model');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

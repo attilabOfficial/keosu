@@ -100,38 +100,6 @@ class GadgetEditController extends Controller {
 
 	}
 	/**
-	 * Adding gadget process
-	 */
-	private function addGadgetCommonAction($page, $zone, $gadgetClass) {
-	
-		$em = $this->get('doctrine')->getManager();
-
-		$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')
-			->findOneBy(array('zone' => $zone, 'page' => $page));
-	
-		$oldGadget = null;
-		if ($commonGadget != null) {
-			$oldGadget = $commonGadget;
-		}
-		
-		//Create a instance of the common gadget class and the specific one
-		$commonGadget = new Gadget();
-		$gadget = new $gadgetClass();
-		$commonGadget->setStatic($gadget->isStatic());
-		
-		//Finding curent page and zone to store it in gadget object
-		$pageObject = $em->getRepository('KeosuCoreBundle:Page')->find($page);
-		$gadget->setPage($pageObject);
-		$gadget->setZone($zone);
-	
-		//Returning a array of 3 gadgets
-		$gadgetArray = Array();
-		$gadgetArray['specific'] = $gadget;
-		$gadgetArray['common'] = $commonGadget;
-		$gadgetArray['old'] = $oldGadget;
-		return $gadgetArray;
-	}
-	/**
 	 * Edit an existing gadget
 	 * Same process as Add
 	 */
@@ -142,30 +110,6 @@ class GadgetEditController extends Controller {
 		$commonGadget = $gadgetArray['common'];
 		return $this->formGadget($specificGadget, $commonGadget, null);
 	}
-	
-	/**
-	 * Editing gadget process
-	 */
-	private function editGadgetCommonAction($page, $zone, $gadgetClass) {
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-		$em = $this->get('doctrine')->getManager();
-		//Look if there is a shared gadget in this zone
-		$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
-		//If there is no share gadget we try to find the specific one
-		if($commonGadget == null){
-			$commonGadget = $em->getRepository('KeosuCoreBundle:Gadget')
-				->findOneBy(array('zone' => $zone, 'page' => $page));
-		}
-	
-		//Convert the common gadget to a specific gadget object
-		$gadget = $gadgetClass::constructfromGadget($commonGadget);
-		$gadgetArray = Array();
-		$gadgetArray['specific'] = $gadget;
-		$gadgetArray['common'] = $commonGadget;
-		$gadgetArray['old'] = null;
-		return $gadgetArray;
-	}
-	
 	/**
 	 * Create the form to edit/add the gadget
 	 */

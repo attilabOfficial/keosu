@@ -496,18 +496,6 @@ class ConfigParameters
 	}
 	
 	/**
-	 * Set disable_cursor
-	 *
-	 * @param boolean $disable_cursor
-	 * @return App
-	 */
-	public function setDisableCursor($disable_cursor){
-		$this->disable_cursor = $autdisable_cursor;
-	
-		return $this;
-	}
-	
-	/**
 	 * Get disable_cursor
 	 *
 	 * @return boolean

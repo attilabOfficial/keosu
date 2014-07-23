@@ -64,7 +64,6 @@ class ServiceController extends Controller {
 		
 			$ret['connect'] = true;
 			
-			$oldpass = $request->request->get('oldPassword');
 			$newpass = $request->request->get('newPassword');
 
 			if(strlen($newpass) > 5) {

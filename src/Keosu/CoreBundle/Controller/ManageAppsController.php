@@ -210,7 +210,6 @@ class ManageAppsController extends Controller {
 	 */
 	// TODO remove default value
 	private function buildAppForm($formBuilder) {
-		$themesKeys = array_keys(ThemeUtil::getThemeList());
 		$formBuilder->add('name', 'text',array(
 							'label' => false
 				))

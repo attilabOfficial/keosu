@@ -99,10 +99,6 @@ keosu_core_app_service_list:
     pattern:  /service/app/list/{format}
     defaults: { _controller: KeosuCoreBundle:AppService:list }
     
-keosu_core_views_page_service_viewone:
-    pattern:  /service/views/page/{id}/{format}
-    defaults: { _controller: KeosuCoreBundle:PageService:viewOne }
-    
 keosu_ReaderManager_manage:
     pattern:  /content/reader/manage
     defaults: { _controller: KeosuCoreBundle:ManageReaders:add }

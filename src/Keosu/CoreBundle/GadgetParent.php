@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle;
 
+use Keosu\CoreBundle\Entity\Gadget;
+
 class GadgetParent {
 
 	private $page;

@@ -22,8 +22,6 @@ namespace Keosu\Gadget\CalendarGadgetBundle;
 use Keosu\CoreBundle\iGadget;
 use Keosu\CoreBundle\GadgetParent;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 class CalendarGadget extends GadgetParent implements iGadget {
 
 	private $eventsPerPage;

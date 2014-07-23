@@ -21,8 +21,6 @@ use Keosu\CoreBundle\iGadget;
 use Keosu\CoreBundle\GadgetParent;
 use Keosu\Gadget\MenuGadgetBundle\Model\MenuPage;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 class MenuGadget extends GadgetParent implements iGadget {
 
 	private $pages;

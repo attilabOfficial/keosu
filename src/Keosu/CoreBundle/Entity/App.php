@@ -20,8 +20,6 @@ namespace Keosu\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Keosu\CoreBundle\Util\ThemeUtil;
-use Keosu\CoreBundle\Entity\Model\MediaDataModel;
-use Keosu\CoreBundle\Entity\ConfigParameters;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

@@ -80,7 +80,7 @@ class EditController extends Controller {
 				return $this->redirect($this->generateUrl('keosu_event_viewlist'));
 			}
 		}
-		return $this->render('KeosuDataModelEventModelBundle:Edit:edit.html.twig',array(
+		return $this->render('KeosuDataModelEventModelBundle:Edit:edit.html.twig.old',array(
 									'form' => $form->createView(),
 									'eventid' => $event->getId()
 				));

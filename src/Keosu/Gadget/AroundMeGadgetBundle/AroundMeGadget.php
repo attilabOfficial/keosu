@@ -19,9 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\Gadget\AroundMeGadgetBundle;
 use Keosu\CoreBundle\iGadget;
 use Keosu\CoreBundle\GadgetParent;
-
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 class AroundMeGadget extends GadgetParent implements iGadget {
 	/**
 	 * Gadget Name

@@ -22,7 +22,6 @@ use Keosu\DataModel\EventModelBundle\Entity\Event;
 use Keosu\Reader\icsReaderBundle\icsReader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Synchronise a ics feed with Event data model

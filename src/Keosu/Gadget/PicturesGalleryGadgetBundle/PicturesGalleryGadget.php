@@ -20,8 +20,6 @@ namespace Keosu\Gadget\PicturesGalleryGadgetBundle;
 use Keosu\CoreBundle\iGadget;
 use Keosu\CoreBundle\GadgetParent;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 class PicturesGalleryGadget extends GadgetParent implements iGadget {
 	
 	private $picturesPerPage;

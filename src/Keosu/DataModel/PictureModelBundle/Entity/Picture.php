@@ -19,8 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\DataModel\PictureModelBundle\Entity;
 use Keosu\CoreBundle\Entity\Model\MediaDataModel;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * Picture
  *

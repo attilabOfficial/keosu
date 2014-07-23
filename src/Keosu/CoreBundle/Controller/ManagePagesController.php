@@ -18,8 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Controller;
 
-use Keosu\CoreBundle\Util\ThemeUtil;
-
 use Keosu\CoreBundle\Util\TemplateUtil;
 
 use Keosu\CoreBundle\Entity\Page;
@@ -192,7 +190,7 @@ class ManagePagesController extends Controller {
 		}
 		
 		return $this
-				->render('KeosuCoreBundle:Page:edit.html.twig',
+				->render('KeosuCoreBundle:Page:edit.html.twig.old',
 						array('form' => $form->createView(),
 							'theme'=>$theme->getTheme(),
 							'templateDir'=>TemplateUtil::getPageTemplateWebPath()

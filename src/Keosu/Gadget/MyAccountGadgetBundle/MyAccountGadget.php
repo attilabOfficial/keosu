@@ -21,9 +21,6 @@ use Keosu\CoreBundle\GadgetParent;
 
 use Keosu\CoreBundle\iGadget;
 
-use Keosu\CoreBundle\Entity\Reader;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 class MyAccountGadget extends GadgetParent implements iGadget {
 
 	//TODO

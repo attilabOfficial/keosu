@@ -20,13 +20,7 @@ namespace Keosu\Gadget\AroundMeGadgetBundle\Controller;
 
 use Keosu\CoreBundle\Controller\GadgetEditController;
 
-use Keosu\MobileApp\PPDL\PPDLGadgetBundle\PPDLGadget;
-
 use Keosu\CoreBundle\Util\TemplateUtil;
-
-use Keosu\CoreBundle\Entity\Gadget;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class EditController extends GadgetEditController {
 

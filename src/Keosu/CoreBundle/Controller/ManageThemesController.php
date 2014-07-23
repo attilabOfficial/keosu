@@ -21,10 +21,7 @@ namespace Keosu\CoreBundle\Controller;
 
 use Keosu\CoreBundle\Entity\Theme;
 use Keosu\CoreBundle\Util\ThemeUtil;
-use Keosu\CoreBundle\Util\TemplateUtil;
-use Keosu\CoreBundle\Entity\Page;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class ManageThemesController extends Controller {
 	/**
@@ -110,7 +107,7 @@ class ManageThemesController extends Controller {
 			if ($form->isValid ()) {
 				// Storing pag
 				if (($error = $theme->upload()) !== null)
-					return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig', array (
+					return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig.old', array (
 							'form' => $form->createView (),
 							'theme' => $theme,
 							'error' => $error
@@ -135,7 +132,7 @@ class ManageThemesController extends Controller {
 
 			}
 		}
-		return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig', array (
+		return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig.old', array (
 				'form' => $form->createView (),
 				'theme' => $theme,
 				'error' => $error

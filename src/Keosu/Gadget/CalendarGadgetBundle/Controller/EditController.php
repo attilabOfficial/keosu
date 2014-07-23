@@ -22,8 +22,6 @@ namespace Keosu\Gadget\CalendarGadgetBundle\Controller;
 use Keosu\CoreBundle\Controller\iGadgetController;
 use Keosu\CoreBundle\Controller\GadgetEditController;
 use Keosu\CoreBundle\Util\TemplateUtil;
-use Keosu\CoreBundle\Entity\Gadget;
-use Keosu\DataModel\EventModelBundle\Entity;
 
 class EditController extends GadgetEditController implements iGadgetController{
 

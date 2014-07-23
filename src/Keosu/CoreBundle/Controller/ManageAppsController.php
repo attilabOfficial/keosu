@@ -30,7 +30,6 @@ use Keosu\Gadget\AuthenticationGadgetBundle\AuthenticationGadget;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
 use Keosu\CoreBundle\Form\ConfigParametersType;
-use Keosu\CoreBundle\Entity\ConfigParameters;
 use Keosu\CoreBundle\Form\SplashscreensType;
 use Keosu\CoreBundle\Form\IconsType;
 use Keosu\CoreBundle\Util\FilesUtil;
@@ -199,7 +198,7 @@ class ManageAppsController extends Controller {
 						);
 			}
 		}
-		return $this->render('KeosuCoreBundle:App:edit.html.twig',array(
+		return $this->render('KeosuCoreBundle:App:edit.html.twig.old',array(
 							'form' => $form->createView(),
 							'firstApp'=>$isFirstApp,
 							'themeDir'=>ThemeUtil::getThemeDir()

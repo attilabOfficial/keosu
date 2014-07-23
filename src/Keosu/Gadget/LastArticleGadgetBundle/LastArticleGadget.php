@@ -20,8 +20,6 @@ namespace Keosu\Gadget\LastArticleGadgetBundle;
 use Keosu\CoreBundle\iGadget;
 use Keosu\CoreBundle\GadgetParent;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 class LastArticleGadget extends GadgetParent implements iGadget {
 	
 	private $articlesPerPage;

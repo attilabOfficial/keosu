@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
 namespace Keosu\DataModel\ArticleModelBundle\Controller;
-use Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\Reader\RssReaderBundle;
 use Keosu\CoreBundle\Entity\Reader;
 use Keosu\CoreBundle\iReader;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 //Custom properties stecific to this reader
 class RssReader implements iReader {

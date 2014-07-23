@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
 namespace Keosu\DataModel\MapModelBundle\Controller;
-use Keosu\DataModel\MapModelBundle\Entity\PointOfInterest;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

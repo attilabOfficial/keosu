@@ -19,8 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Entity\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use Keosu\CoreBundle\Entity\Model\DataModel;
-use Keosu\CoreBundle\Util\FilesUtil;
 use Keosu\CoreBundle\Util\PathUtil;
 
 /**

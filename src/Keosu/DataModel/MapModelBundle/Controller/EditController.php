@@ -81,7 +81,7 @@ class EditController extends Controller {
 			}
 		}
 		return $this
-				->render('KeosuDataModelMapModelBundle:Edit:edit.html.twig',
+				->render('KeosuDataModelMapModelBundle:Edit:edit.html.twig.old',
 						array('form' => $form->createView(),
 								'poiid' => $poi->getId()));
 	}

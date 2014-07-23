@@ -18,9 +18,10 @@
 
 //Main function
 
-app.controller('chrono_gadgetController', function ($scope, chronoService) {
+app.controller('chrono_gadgetController', function ($scope, usSpinnerService, chronoService) {
 	$scope.isStart = "";
 	$scope.isStop = "";
+    usSpinnerService.stop('spinner');
 	initTimer($scope);
 	chronoService.addTimer('myTimer', { interval: 500 });
 	$scope.start = function() {

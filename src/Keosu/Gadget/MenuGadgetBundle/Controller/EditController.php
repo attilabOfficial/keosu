@@ -26,12 +26,6 @@ use Keosu\Gadget\MenuGadgetBundle\Form\MenuPageType;
 
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Entity\Gadget;
-
-use Keosu\Gadget\LinkGadgetBundle\LinkGadget;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 /**
  * Specific gadget controller
  * extends Keosu\CoreBundle\Controller\GadgetEditController

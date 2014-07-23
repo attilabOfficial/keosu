@@ -4,7 +4,6 @@ namespace Keosu\CoreBundle\Entity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use \ZipArchive;
-use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @ORM\MappedSuperclass

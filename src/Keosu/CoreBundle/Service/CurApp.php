@@ -18,19 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Service;
 
-use Keosu\CoreBundle\Util\ZipUtil;
-use Keosu\CoreBundle\Util\ThemeUtil;
-use Keosu\CoreBundle\Util\FilesUtil;
-use Keosu\CoreBundle\Util\ExporterUtil;
-use Keosu\CoreBundle\Util\StringUtil;
-use Keosu\CoreBundle\Util\TemplateUtil;
-
-use Keosu\CoreBundle\Entity\Page;
-use Keosu\CoreBundle\Delegate\ExporterDelegate;
-use Keosu\CoreBundle\Model\ZoneModel;
-
-use Symfony\Component\DomCrawler\Crawler;
-
 class CurApp {
 
 	private $doctrine;

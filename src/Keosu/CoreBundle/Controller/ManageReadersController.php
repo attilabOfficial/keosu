@@ -65,7 +65,7 @@ class ManageReadersController extends Controller {
 	 */
 	public function deleteAction($id) {
         $em = $this->get('doctrine')->getManager();
-		$repo = $em->getRepository('KeosuCoreBundle:Reader');
+	    $repo = $em->getRepository('KeosuCoreBundle:Reader');
 
 		$reader = $repo->find($id);
 		

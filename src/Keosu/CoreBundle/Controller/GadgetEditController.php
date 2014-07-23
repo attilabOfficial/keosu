@@ -20,8 +20,6 @@ namespace Keosu\CoreBundle\Controller;
 
 use Keosu\CoreBundle\Entity\Gadget;
 
-use Keosu\CoreBundle\Entity\Page;
-
 use Keosu\CoreBundle\Util\TemplateUtil;
 
 

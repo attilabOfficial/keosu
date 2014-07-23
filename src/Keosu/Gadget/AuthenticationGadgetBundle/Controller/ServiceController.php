@@ -18,8 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\Gadget\AuthenticationGadgetBundle\Controller;
 
-use Keosu\CoreBundle\Util\TemplateUtil;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +28,6 @@ use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphUser;
-use Facebook\RequestException;
 use Facebook\FacebookRequestException;
 
 class ServiceController extends Controller {

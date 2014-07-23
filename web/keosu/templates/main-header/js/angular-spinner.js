@@ -55,7 +55,6 @@
 						scope.spinner.spin(element[0]);
 					}
 				}, true);
-
 				scope.$on('us-spinner:spin', function (event, key) {
 					if(key === scope.key){
 						scope.spin();

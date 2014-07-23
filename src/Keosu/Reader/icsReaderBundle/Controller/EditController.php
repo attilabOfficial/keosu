@@ -20,8 +20,6 @@ namespace Keosu\Reader\icsReaderBundle\Controller;
 
 use Keosu\Reader\icsReaderBundle\icsReader;
 
-use Keosu\CoreBundle\Form\ReaderType;
-
 use Keosu\CoreBundle\Entity\Reader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -65,7 +63,7 @@ class EditController extends Controller {
 			}
 		}
 		return $this
-				->render('KeosuReadericsReaderBundle:Edit:edit.html.twig',
+				->render('KeosuReadericsReaderBundle:Edit:edit.html.twig.old',
 						array('form' => $form->createView()));
 
 	}

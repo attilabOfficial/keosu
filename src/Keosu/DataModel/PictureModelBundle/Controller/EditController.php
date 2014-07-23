@@ -78,7 +78,7 @@ class EditController extends Controller {
 				return $this->redirect($this->generateUrl('keosu_picture_viewlist'));
 			}
 		}
-		return $this->render('KeosuDataModelPictureModelBundle:Edit:edit.html.twig',array(
+		return $this->render('KeosuDataModelPictureModelBundle:Edit:edit.html.twig.old',array(
 									'form' => $form->createView(),
 									'pictureid' => $picture->getId()
 							));

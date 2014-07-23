@@ -28,12 +28,6 @@ use Keosu\CoreBundle\Util\ExporterUtil;
 use Keosu\CoreBundle\Util\StringUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Delegate\ExporterDelegate;
-use Keosu\CoreBundle\Model\ZoneModel;
-use Keosu\CoreBundle\Entity\Page;
-
-use Symfony\Component\DomCrawler\Crawler;
-
 class Exporter {
 
 	private $doctrine;

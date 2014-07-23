@@ -20,8 +20,6 @@ namespace Keosu\Gadget\MapGadgetBundle;
 use Keosu\CoreBundle\iGadget;
 use Keosu\CoreBundle\GadgetParent;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 class MapGadget extends GadgetParent implements iGadget {
 
 	private $poiId;

@@ -111,7 +111,7 @@ class EditController extends Controller {
 		}
 		return $this
 				->render(
-						'KeosuDataModelArticleModelBundle:Edit:edit.html.twig',
+						'KeosuDataModelArticleModelBundle:Edit:edit.html.twig.old',
 						array('form' => $form->createView(),
 								'articleid' => $article->getId()));
 	}

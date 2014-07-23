@@ -31,10 +31,17 @@ class GadgetRepository extends EntityRepository {
 	 * Find all shared gadget in a zone for an app
 	 */
 	public function findSharedByZoneAndApp($zone, $appid ) {
-		$gadgets = $this->_em
-			->createQuery(
-				'SELECT DISTINCT g FROM Keosu\CoreBundle\Entity\Page a JOIN Keosu\CoreBundle\Entity\Gadget g
-					WITH a.appId='.$appid.' WHERE g.shared=1 AND g.zone=\'' . $zone.'\'')->getResult();
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('DISTINCT g');
+        $qb->from('Keosu\CoreBundle\Entity\Page', 'a');
+        $qb->join('Keosu\CoreBundle\Entity\Gadget','g','WITH','a.appId=?1');
+        $qb->where('g.shared=1');
+        $qb->andWhere('g.zone=?2');
+
+        $qb->setParameter(1, $appid);
+        $qb->setParameter(2, $zone);
+        $query = $qb->getQuery();
+        $gadgets=$query->getResult();
 		
 		if (count($gadgets) == 0 ) {
 			return null;

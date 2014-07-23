@@ -11,7 +11,7 @@
 			<tr class="article">
 				<td class="hidden articleid">{{ article.id }}</td>
 				<td>{{ article.title }}</td>
-				<td>{{ article.body |striptags | slice(0, 400) |raw  }} (...)</td>
+				<td>{{ article.body |striptags | slice(0, 400)  }} (...)</td>
 			</tr>	
     {% endfor %}	
 	</tbody>

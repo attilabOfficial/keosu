@@ -22,6 +22,7 @@ use Keosu\CoreBundle\KeosuEvents;
 
 use Keosu\CoreBundle\Entity\Gadget;
 
+use Keosu\CoreBundle\Event\GadgetActionEvent;
 use Keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 
 use Keosu\CoreBundle\Form\ConfigType;
@@ -44,6 +45,7 @@ class ManageGadgetsController extends Controller {
 	 */
 	public function deleteAction($pageId, $zoneName) {
 		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
+		$dispatch = $this->container->get('event_dispatcher');
 		$em = $this->get('doctrine')->getManager();
 
 		//Look if there is a shared gadget in this zone
@@ -56,7 +58,13 @@ class ManageGadgetsController extends Controller {
 																			));
 		}
 		
-		// TODO event
+		if($gadget !== null) {
+			$event = new GadgetActionEvent($pageId,$zoneName,$gadget);
+			$dispatch->dispatch(KeosuEvents::GADGET_DELETE.$gadget->getName(),$event);
+			
+			if($event->getResponse() !== null)
+				return $event->getResponse();
+		}
 
 		//Delete the gadget
 		if($gadget !== null) {
@@ -82,6 +90,7 @@ class ManageGadgetsController extends Controller {
 	public function addAction($pageId, $zoneName, $gadgetName) {
 
 		$em = $this->get('doctrine')->getManager();
+		$dispatch = $this->container->get('event_dispatcher');
 
 		// search if there is allready a gadget
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findOneBy(array(
@@ -101,7 +110,11 @@ class ManageGadgetsController extends Controller {
 		
 		$gadget->setName($gadgetName);
 		
-		// TODO event
+		$event = new GadgetActionEvent($pageId,$zoneName,$gadget);
+		$dispatch->dispatch(KeosuEvents::GADGET_ADD.$gadget->getName(),$event);
+		
+		if($event->getResponse() !== null)
+			return $event->getResponse();
 		
 		return $this->formGadget($gadget);
 	}
@@ -114,6 +127,7 @@ class ManageGadgetsController extends Controller {
 	
 		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
 		$em = $this->get('doctrine')->getManager();
+		$dispatch = $this->container->get('event_dispatcher');
 		
 		//Look if there is a shared gadget in this zone
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zoneName,$appId);
@@ -125,7 +139,11 @@ class ManageGadgetsController extends Controller {
 			));
 		}
 		
-		// TODO event
+		$event = new GadgetActionEvent($pageId,$zoneName,$gadget);
+		$dispatch->dispatch(KeosuEvents::GADGET_EDIT.$gadget->getName(),$event);
+		
+		if($event->getResponse() !== null)
+			return $event->getResponse();
 		
 		return $this->formGadget($gadget);
 	}

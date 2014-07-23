@@ -29,7 +29,7 @@ final class KeosuEvents
 	 * The GADGET_ADD[Name of the gadget] event occurs when a new gadget will be added
 	 *
 	 * This event allows to add action when the gadget is about to be added
-	 * The event listener method receives a Keosu\CoreBundle\Event\ instance
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetActionEvent instance
 	 */
 	const GADGET_ADD = 'keosu.gadget.add.';
 
@@ -37,7 +37,7 @@ final class KeosuEvents
 	 * The GADGET_EDIT[Name of the gadget] event occurs when a gadget is about to be edited
 	 *
 	 * This event allows to add action when the gadget is about to be edited
-	 * The event listener method receives a Keosu\CoreBundle\Event\ instance
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetActionEvent instance
 	 */
 	const GADGET_EDIT = 'keosu.gadget.edit.';
 
@@ -45,7 +45,7 @@ final class KeosuEvents
 	 * The GADGET_DELETE[Name of the gadget] event occurs when a gadget will be deleted
 	 *
 	 * This event allows to add action when the gadget is about to be deleted
-	 * The event listener method receives a Keosu\CoreBundle\Event\ instance
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetActionEvent instance
 	 */
 	const GADGET_DELETE = 'keosu.gadget.delete.';
 

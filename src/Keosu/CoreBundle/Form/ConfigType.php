@@ -28,6 +28,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * This class allow to personalise the config of a gadget
+ */
 class ConfigType extends AbstractType {
 
 	private $dispatcher;

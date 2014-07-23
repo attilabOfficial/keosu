@@ -190,8 +190,8 @@ class ManageGadgetsController extends Controller {
 				//$this->container->get('keosu_core.exporter')->exportApp();
 
 				return $this->redirect($this->generateUrl('keosu_core_views_page',array(
-													'id' => $gadget->getPage()->getId())
-									));
+													'id' => $gadget->getPage()->getId()
+													)));
 			}
 		}
 		

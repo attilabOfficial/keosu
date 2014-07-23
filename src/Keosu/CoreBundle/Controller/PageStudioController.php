@@ -22,8 +22,6 @@ use Keosu\CoreBundle\Entity\Page;
 
 use Keosu\CoreBundle\KeosuExtension;
 
-use Keosu\CoreBundle\Model\ZoneModel;
-
 use Keosu\CoreBundle\Service\PackageManager;
 
 use Keosu\CoreBundle\Util\ThemeUtil;
@@ -44,56 +42,44 @@ class PageStudioController extends Controller {
 		$em = $this->get('doctrine')->getManager();
 
 		//Get the page we want to edit
-		$content = $em->getRepository('KeosuCoreBundle:Page')->find($id);
-		
-		// if the page isn't the authentication page of a private page
-		$editableOnly = false;
-		if($content->getTemplateId() == TemplateUtil::getAuthenticationTemplateId() &&
-				$content->getName() == TemplateUtil::getAuthenticationPageName()) {
-			$editableOnly = true;
-		}
+		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
 		
 		//Page Template content as String
 		$templateHtml = 
 				file_get_contents(
 					TemplateUtil::getPageTemplateAbsolutePath()
-						. $content->getTemplateId());
+						. $page->getTemplateId());
 		//Get all the elements of class "zone" in template dom
 		$crawler = new Crawler($templateHtml);
 		$zones = $crawler->filter('.zone')->extract(array('id'));
 		
-		//Initiate an Array to store all gadgets in page
-		$gadgetModelList = array();
-		$gadgetRepo = $em->getRepository('KeosuCoreBundle:Gadget');
+		//Initiate an Array to store all zone in page
+		$zoneModelList = array();
 		
 		foreach ($zones as $zone) {
 			//Look if there is a shared gadget in this zone
-			$gadget=$gadgetRepo->findSharedByZoneAndApp($zone,$appid);
+			$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zone,$appid);
 			//If there is no share gadget we try to find the specific one
-			if($gadget==null){
+			if($gadget == null){
 				//Find the gadget associated with page and zone
-				$gadget = $gadgetRepo->findOneBy(array('zone' => $zone, 'page' => $id));
+				$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findOneBy(array('zone' => $zone, 'page' => $id));
 			}
-			//ZoneModel will be used to render the studio page
-			$zoneModel = new ZoneModel();
+
+			$zoneModel = array();
 			if ($gadget != null) {
-				$zoneModel->setGadgetName($gadget->getName());
-				$zoneModel->setZoneId($zone);
-			} else {
-				$zoneModel->setZoneId($zone);
+				$zoneModel['gadget'] = $gadget;
 			}
-			$gadgetModelList[] = $zoneModel;
+			$zoneModel['zoneId'] = $zone;
+			$zoneModelList[] = $zoneModel;
 		}
 
 		$gadgetList = $this->get('keosu_core.package_manager')->getPackageList(PackageManager::TYPE_PACKAGE_GADGET);
 
-		return $this
-				->render('KeosuCoreBundle:Page:studio.html.twig',
-						array('content'      => $content,
-							  'zones'        => $gadgetModelList,
+		return $this->render('KeosuCoreBundle:Page:studio.html.twig',
+						array('page'         => $page,
+							  'zones'        => $zoneModelList,
 							  'templatehtml' => $templateHtml,
-							  'gadgets'      => $gadgetList,
-							  'editableOnly' => $editableOnly));
+							  'gadgets'      => $gadgetList));
 	}
 
 }

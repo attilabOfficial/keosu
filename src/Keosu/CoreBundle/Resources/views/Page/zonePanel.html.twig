@@ -1,0 +1,42 @@
+<div id="panel{{ zoneId }}" class="panel panel-info">
+	<div class="panel-heading">
+		<h3 class="panel-title">{{ zoneId }}</h3>
+	</div>
+	<div class="panel-body">
+		{% block pageAddActionGadget %}
+			<div class="btn-group">
+				<button class="btn btn-success dropdown-toggle" data-toggle="dropdown" type="button">
+					Add gadget
+					<span class="caret"></span>
+				</button>
+		
+				<ul class="dropdown-menu">
+					{% for gadgetName in gadgetList %}
+						<li>
+							<a href="{{ path('keosu_gadget_add',{'pageId':pageId, 'zoneName':zoneId, 'gadgetName':gadgetName}) }}">
+								Add {{ gadgetName }}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endblock pageAddActionGadget %}
+
+		{% if gadget %}
+
+			{% block pageEditActionGadget %}
+				<a class="btn btn-info editgadget" href="{{ path('keosu_gadget_edit',{'pageId':pageId, 'zoneName':zoneId}) }}">
+					Edit {{ gadget.name }}
+				</a>
+			{% endblock pageEditActionGadget %}
+
+			{% block pageDeleteActionGadget %}
+				<a class="badge" href="{{ path('keosu_gadget_delete',{'pageId':pageId, 'zoneName':zoneId}) }}" title="Clean zone">
+					<span class="glyphicon glyphicon-minus"></span>
+				</a>
+			{% endblock pageDeleteActionGadget %}
+		{% endif %}
+		{% block pageExtensionActionGadget %}
+		{% endblock pageExtensionActionGadget%}
+	</div>
+</div>

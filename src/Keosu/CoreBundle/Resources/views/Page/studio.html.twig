@@ -20,7 +20,7 @@
 {% block content %}
 
 <div class="pageinfo">
-	<h4>{{ content.name }}</h4>
+	<h4>{{ page.name }}</h4>
 
 	
 	<div class="btn-group">
@@ -50,67 +50,17 @@
 	
 <div class="row">
 	<div class="col-md-5">
-	
-			{% for zone in zones %}
-				<div id="panel{{ zone.zoneId }}" class="panel panel-info">
-					<div class="panel-heading">
-						<h3 class="panel-title">{{ zone.zoneId }}</h3>
-					</div>
-					<div class="panel-body">
-						{% if not(editableOnly) %}
-						<div class="btn-group">
-						
-							<button class="btn btn-success dropdown-toggle" data-toggle="dropdown" type="button">
-								Add gadget
-								<span class="caret"></span>
-							</button>
-						
-							<ul class="dropdown-menu">
-								{% for gadget in gadgets %}
-									<li>
-										<a href="{{ path('keosu_gadget_add',{'pageId':content.id, 'zoneName':zone.zoneId, 'gadgetName':gadget}) }}">
-											Add {{ gadget }}
-										</a>
-									</li>
-								{% endfor %}
-							</ul>
-						</div>
-						{% endif %}
-						{% if zone.gadgetName %}
-							<a class="btn btn-info editgadget" href="{{ path('keosu_gadget_edit',{'pageId':content.id, 'zoneName':zone.zoneId}) }}">
-								Edit {{ zone.gadgetName }}
-							</a>
-							
-							{% if not(editableOnly) %}
-							<a class="badge" href="{{ path('keosu_gadget_delete',{'pageId':content.id, 'zoneName':zone.zoneId}) }}" title="Clean zone">
-								<span class="glyphicon glyphicon-minus"></span>
-							</a>
-							{% endif %}
-						{% endif %}
-					</div>
-				</div>
-				<script>
-				$( "#panel{{ zone.zoneId }}" ).hover(
-					function() {
-						$("iframe").contents().find("#{{ zone.zoneId }}").css("border","5px solid red");
-					}, function() {
-						$("iframe").contents().find("#{{ zone.zoneId }}").css("border","none");
-					}
-				);
-				</script>
-			{% endfor %}
+		{% for zone in zones %}
+			{{ includePanel(zone.zoneId,page.id,zone.gadget,gadgets) }}
+		{% endfor %}
 	</div>
 
-	<div class="col-md-7">	
-		<center>
-			<div class="alert alert-warning" role="alert">
-				<strong>Heads up!</strong>
-				Use the simulator for more fiability
-			</div>
-			<iframe id="iframepreview" width="320px" height="480px" src="{{url_base}}/keosu/export/simulator/www/index.html#/Page/{{ content.id }}"></iframe>
-		</center>
+	<div class="col-md-7">
+		<div class="alert alert-warning" role="alert">
+			<strong>Heads up!</strong>
+			Use the simulator for more fiability
+		</div>
+		<iframe style="margin:0 auto;display:block;" id="iframepreview" width="320px" height="480px" src="{{url_base}}/keosu/export/simulator/www/index.html#/Page/{{ page.id }}"></iframe>
 	</div>
 </div>
-
-
 {% endblock %}

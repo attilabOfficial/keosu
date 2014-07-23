@@ -4,6 +4,7 @@ namespace Keosu\Gadget\MenuGadgetBundle\EventListener;
 
 use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
+use keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,6 +14,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class GadgetListener implements EventSubscriberInterface
 {
+
+	const GADGET_NAME = 'keosu-menu';
+
 	private $container;
 
 	public function __construct($container)
@@ -26,11 +30,12 @@ class GadgetListener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			KeosuEvents::GADGET_CONF_BUILD.'keosu-menu' => 'onGadgetConfBuild',
+			KeosuEvents::GADGET_CONF_FORM_BUILD.GadgetListener::GADGET_NAME => 'onGadgetConfFormBuild',
+			KeosuEvents::GADGET_CONF_SAV.GadgetListener::GADGET_NAME        => 'onGadgetConfSav',
 	);
 	}
 
-	public function onGadgetConfBuild(GadgetFormBuilderEvent $event)
+	public function onGadgetConfFormBuild(GadgetFormBuilderEvent $event)
 	{
 
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
@@ -57,6 +62,26 @@ class GadgetListener implements EventSubscriberInterface
 						)
 				));
 				
+	}
+	
+	public function onGadgetConfSav(GadgetSaveConfigEvent $event)
+	{
+		$conf = array();
+		$conf['pages'] = array();
+		$em = $this->container->get('doctrine')->getManager();
+
+		$gadget = $event->getGadget();
+		$listPageId = $gadget->getConfig()['page'];
+		$tmp = array();
+		// add icon to page id
+		foreach($listPageId as $pageId) {
+			$page = $em->getRepository('KeosuCoreBundle:Page')->find($pageId);
+			$tmp['id'] = $pageId;
+			$tmp['icon'] = $page->getIcon();
+			$conf['pages'][] = $tmp;
+		}
+		
+		$gadget->setConfig($conf);
 	}
 }
 

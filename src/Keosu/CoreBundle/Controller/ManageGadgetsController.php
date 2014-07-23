@@ -18,7 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Controller;
 
+use Keosu\CoreBundle\KeosuEvents;
+
 use Keosu\CoreBundle\Entity\Gadget;
+
+use Keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 
 use Keosu\CoreBundle\Form\ConfigType;
 
@@ -154,9 +158,16 @@ class ManageGadgetsController extends Controller {
 			if ($form->isValid()) {
 
 				// TODO event
+				$event = new GadgetSaveConfigEvent($form,$request,$gadget);
+				$dispatcher->dispatch(KeosuEvents::GADGET_CONF_SAV.$gadget->getName(),$event);
+				
+				if($event->getResponse() !== null) {
+					return $event->getResponse();
+				}
 
 				$em->persist($gadget);
 				$em->flush();
+
 				//TODO
 				//$this->container->get('keosu_core.exporter')->exportApp();
 

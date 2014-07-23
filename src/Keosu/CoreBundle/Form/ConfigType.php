@@ -45,7 +45,7 @@ class ConfigType extends AbstractType {
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 
 		$event = new GadgetFormBuilderEvent($builder,$this->request,$this->gadget);
-		$this->dispatcher->dispatch(KeosuEvents::GADGET_CONF_BUILD.$this->gadget->getName(),$event);
+		$this->dispatcher->dispatch(KeosuEvents::GADGET_CONF_FORM_BUILD.$this->gadget->getName(),$event);
 
 	}
 

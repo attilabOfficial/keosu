@@ -7,7 +7,6 @@ use Keosu\CoreBundle\Entity\Gadget;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class GadgetFormBuilderEvent extends Event
 {

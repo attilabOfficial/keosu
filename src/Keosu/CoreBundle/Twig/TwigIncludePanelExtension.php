@@ -3,7 +3,6 @@
 namespace Keosu\CoreBundle\Twig;
 
 use Keosu\CoreBundle\KeosuEvents;
-use Keosu\CoreBundle\Entity\Gadget;
 use Keosu\CoreBundle\Event\GadgetPanelEvent;
 
 /**
@@ -25,7 +24,7 @@ class TwigIncludePanelExtension extends \Twig_Extension {
 		);
 	}
 	
-	public function includePanel($zoneHtmlId,$pageId,Gadget $gadget,$gadgetList)
+	public function includePanel($zoneHtmlId,$pageId,$gadget,$gadgetList)
 	{
 		if($gadget !== null) {
 			$dispatcher = $this->container->get('event_dispatcher');

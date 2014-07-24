@@ -66,9 +66,7 @@ class PageStudioController extends Controller {
 			}
 
 			$zoneModel = array();
-			if ($gadget != null) {
-				$zoneModel['gadget'] = $gadget;
-			}
+			$zoneModel['gadget'] = $gadget;
 			$zoneModel['zoneId'] = $zone;
 			$zoneModelList[] = $zoneModel;
 		}

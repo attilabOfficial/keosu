@@ -132,7 +132,7 @@ class ManagePagesController extends Controller {
 		
 		foreach ($gadgets as $gadget) {
 			$event = new GadgetPageActionEvent($page,$gadget);
-			$dispatcher->dispatch(KeosuEvents::GADGET_PAGE_DELETE.$gadget->getName(),$event);
+			$dispatcher->dispatch(KeosuEvents::GADGET_PAGE_EDIT.$gadget->getName(),$event);
 			if($event->getResponse() !== null)
 				return $event->getResponse();
 		}

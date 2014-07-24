@@ -2,7 +2,9 @@
 
 namespace Keosu\CoreBundle\Twig;
 
+use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Entity\Gadget;
+use Keosu\CoreBundle\Event\GadgetPanelEvent;
 
 /**
  * This class allow to personalise the list of action available in the simulator
@@ -23,11 +25,19 @@ class TwigIncludePanelExtension extends \Twig_Extension {
 		);
 	}
 	
-	public function includePanel($zoneId,$pageId,Gadget $gadget,$gadgetList)
+	public function includePanel($zoneHtmlId,$pageId,Gadget $gadget,$gadgetList)
 	{
-		// TODO event
+		if($gadget !== null) {
+			$dispatcher = $this->container->get('event_dispatcher');
+			$event = new GadgetPanelEvent($zoneHtmlId,$pageId,$gadget,$gadgetList);
+			$dispatcher->dispatch(KeosuEvents::GADGET_PANEL.$gadget->getName(),$event);
+		
+			if($event->getHtml() !== null)
+				return $event->getHtml();
+		}
+
 		return $this->container->get('templating')->render('KeosuCoreBundle:Page:zonePanel.html.twig', array(
-			'zoneId'     => $zoneId,
+			'zoneId'     => $zoneHtmlId,
 			'pageId'     => $pageId,
 			'gadget'     => $gadget,
 			'gadgetList' => $gadgetList

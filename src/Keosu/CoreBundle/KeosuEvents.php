@@ -72,4 +72,12 @@ final class KeosuEvents
 	 * The event listener method receives a Keosu\CoreBundle\Event\FormEvent instance
 	 */
 	const GADGET_CONF_VIEW = 'keosu.gadget.conf.view.';
+
+	/**
+	 * The GADGET_PANEL[Name of the gadget] event occurs when the panel for the gadget is rendered in page simulator
+	 *
+	 * This event allows to modify the panel of the gadget
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPanelEvent instance
+	 */
+	const GADGET_PANEL = 'keosu.gadget.panel.';
 }

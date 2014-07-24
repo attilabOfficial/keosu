@@ -19,7 +19,7 @@
 //Main function
 
 app.controller('article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
-
+	console.log(usSpinnerService);
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
 	/////////////////////////

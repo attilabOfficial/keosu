@@ -1,10 +1,91 @@
+
+<style>
+	#networkStatus {
+	  position: fixed;
+	  top: 0;
+	  z-index: 100;
+	  -webkit-transition: all 0.4s 0.4s;
+	  -moz-transition: all 0.4s 0.4s;
+	  transition: all 0.4s 0.4s; }
+	  #networkStatus ul {
+	    list-style: none;
+	    height: 100%;
+	    padding: 0;
+	    margin: 0;
+	    overflow: hidden; }
+	    #networkStatus ul > li {
+	      display: table;
+	      text-align: center;
+	      float: left;
+	      -webkit-transition: all 0.4s;
+	      -moz-transition: all 0.4s;
+	      transition: all 0.4s; }
+	      #networkStatus ul > li:nth-child(2) {
+	        background-color: #19a6d4;
+	        -webkit-transition-delay: 0.1s;
+	        -moz-transition-delay: 0.1s;
+	        transition-delay: 0.1s; }
+	      nav ul > li > a {
+			width: 100%;
+	        color: white;
+	        text-transform: uppercase;
+	        display: table-cell;
+	        vertical-align: middle;
+	        font-size: 16px;
+	        letter-spacing: 0.05em;
+	        -webkit-transition: all 0.2s linear;
+	        -moz-transition: all 0.2s linear;
+	        transition: all 0.2s linear; }
+	        #networkStatus ul > li > a:hover {
+	          color: white;
+	          background-color: rgba(0, 0, 0, 0.2); }
+	  #networkStatus.top {
+	    left: 0;
+	    top: -200px;
+	    width: 100%;
+	    height: 200px; }
+	    #networkStatus.top ul {
+	      width: 100%; }
+	      #networkStatus.top ul > li {
+	        width: 100%;
+	        height: 100%;
+	        -webkit-transform: translate(0, -100%);
+	        -moz-transform: translate(0, -100%);
+	        -ms-transform: translate(0, -100%);
+	        -o-transform: translate(0, -100%);
+	        transform: translate(0, -100%); }
+	
+	
+	#networkStatus.open {
+	  -webkit-transition-delay: 0;
+	  -moz-transition-delay: 0;
+	  transition-delay: 0; }
+	  #networkStatus.open ul > li {
+	    -webkit-transform: translate(0, 0);
+	    -moz-transform: translate(0, 0);
+	    -ms-transform: translate(0, 0);
+	    -o-transform: translate(0, 0);
+	    transform: translate(0, 0); }
+	  #networkStatus.open.top {
+	    top: 0; }
+
+</style>
+
+<div id="networkStatus" class="top">
+   <ul>
+     <li>
+       <a id="info" href="#">Offline</a>
+     </li>
+   </ul>
+ </div>
+ 
 <nav class="navbar navbar-default navbar-fixed-top classic-navbar"
 	role="banner">
 	<a href="index.html">
 		<h2 class="title">{{appName}}</h2>
 	</a> <span
 		us-spinner="{lines: 17, length: 0, width: 2, radius: 10, corners: 1, rotate: 0, direction: 1, color: '#FFFFFF', speed: 1, trail: 60, shadow: false, hwaccel: false, className: 'spinner', zIndex: 1030}"
-		spinner-key="spinner" class="navbar navbar-default navbar-fixed-top"
+		spinner-key="spinner" spinner-start-active="true" class="navbar navbar-default navbar-fixed-top"
 		style="position: fixed; top: 50%; width: 0px; left: 50%;"></span>
 </nav>
 

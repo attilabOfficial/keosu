@@ -28,12 +28,6 @@ use Keosu\CoreBundle\Util\ExporterUtil;
 use Keosu\CoreBundle\Util\StringUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Delegate\ExporterDelegate;
-use Keosu\CoreBundle\Model\ZoneModel;
-use Keosu\CoreBundle\Entity\Page;
-
-use Symfony\Component\DomCrawler\Crawler;
-
 class Exporter {
 
 	private $doctrine;
@@ -54,9 +48,8 @@ class Exporter {
 		
 		
 		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appId);
-		$isIndexPageImported = false;
 
-		$clean=$this->cleanDir();
+		$this->cleanDir();
 
 		//Export theme
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);

@@ -19,7 +19,7 @@
 
 
 //Main function
-app.controller('last_article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {	
+app.controller('last_article_gadgetController', function ($scope, $http, $sce, $q, usSpinnerService, localStorageService) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -36,12 +36,13 @@ app.controller('last_article_gadgetController', function ($scope, $http, $sce, u
 		$scope.parts(false, true, $scope);
 	};
 	$scope.init = function (host, param, page, gadget, zone){
-	
 		$scope.param = {
 			'host'   : host+param,
 			'page'   : page,
 			'gadget' : gadget,
-			'zone'   : zone
+			'zone'   : zone,
+            'cacheExpiration':20000,//TODO put this in gadget config
+            'offset':(0)
 		};
 	
 	
@@ -51,30 +52,32 @@ app.controller('last_article_gadgetController', function ($scope, $http, $sce, u
 				page:0
 		};
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		$http.get(host + param + 'service/gadget/lastarticle/' + gadget + '/' + offset + '/' + 'json').success( function (data) {
-			usSpinnerService.stop('spinner');
-			$tmp = [];
-			for (i = 0; i < data.data.length; i++) {
-				$tmp[i] = data.data[i];
-				$tmp[i].content = $sce.trustAsHtml(decodedContent(data.data[i].content));
-				$tmp[i].title = decodedContent(data.data[i].title);
-			}
-			nb = 0;
-			pages = new Array();
-			for (i = 0; i < $tmp.length; i++) {
-				tmpPage = [];
-				for (j = 0; j < data.articleperpage; j++) {
-					if (!$tmp[i])
-						break;
-					tmpPage[j] = $tmp[i];
-					i++;
-				}
-				i--;
-				pages[nb] = tmpPage;
-				nb++;
-			}
-			$scope.pages = pages;
-		});
+        data = $scope.getFromCache(gadget,
+                $scope.param.host + 'service/gadget/lastarticle/' + $scope.param.gadget + '/' + $scope.param.offset + '/' + 'json')
+                 .success(function(data){
+                        $tmp = [];
+                        for (i = 0; i < data.data.length; i++) {
+                            $tmp[i] = data.data[i];
+                            $tmp[i].content = $sce.trustAsHtml(decodedContent(data.data[i].content));
+                            $tmp[i].title = decodedContent(data.data[i].title);
+                        }
+                        nb = 0;
+                        pages = new Array();
+                        for (i = 0; i < $tmp.length; i++) {
+                            tmpPage = [];
+                            for (j = 0; j < data.articleperpage; j++) {
+                                if (!$tmp[i])
+                                    break;
+                                tmpPage[j] = $tmp[i];
+                                i++;
+                            }
+                            i--;
+                            pages[nb] = tmpPage;
+                            nb++;
+                        }
+                        $scope.pages = pages;
+                        usSpinnerService.stop('spinner');
+                });
 	};
 	
 	/////////////////////////

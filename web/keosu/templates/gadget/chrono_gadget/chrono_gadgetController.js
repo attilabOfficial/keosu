@@ -18,23 +18,26 @@
 
 //Main function
 
-app.controller('chrono_gadgetController', function ($scope, chronoService) {
+app.controller('chrono_gadgetController', function ($scope, usSpinnerService, chronoService) {
 	$scope.isStart = "";
 	$scope.isStop = "";
+    usSpinnerService.stop('spinner');
 	initTimer($scope);
 	chronoService.addTimer('myTimer', { interval: 500 });
 	$scope.start = function() {
 		$scope.isStart = "disabled";
 		$scope.isStop = "";
 		$scope.time = Date.now();
+		$('#networkStatus').addClass('open');
 		chronoService.start();
 	};
 	$scope.stop = function() {
 		$scope.isStop = "disabled";
 		$scope.isStart = "";
 		$scope.time = Date.now();
+	    $('#networkStatus').removeClass('open');
 		chronoService.stop();
-	};
+	};	
 });
 
 function initTimer($scope) {

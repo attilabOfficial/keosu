@@ -1,79 +1,92 @@
 /**
- * angular-spinner version 0.4.0
+ * angular-spinner version 0.5.0
  * License: MIT.
  * Copyright (C) 2013, 2014, Uri Shaked and contributors.
  */
 
-(function(window, angular, undefined) {
-	'use strict';
+(function (root) {
+    'use strict';
 
-	angular.module('angularSpinner', [])
+    function factory(angular, Spinner) {
 
-	.factory('usSpinnerService', ['$rootScope', function ($rootScope) {
-		var config = {};
+        angular
+            .module('angularSpinner', [])
 
-		config.spin = function (key) {
-			$rootScope.$broadcast('us-spinner:spin', key);
-		};
+            .factory('usSpinnerService', ['$rootScope', function ($rootScope) {
+                var config = {};
 
-		config.stop = function (key) {
-			$rootScope.$broadcast('us-spinner:stop', key);
-		};
+                config.spin = function (key) {
+                    $rootScope.$broadcast('us-spinner:spin', key);
+                };
 
-		return config;
-	}])
+                config.stop = function (key) {
+                    $rootScope.$broadcast('us-spinner:stop', key);
+                };
 
-	.directive('usSpinner', ['$window', function ($window) {
-		return {
-			scope: true,
-			link: function (scope, element, attr) {
-				scope.spinner = null;
+                return config;
+            }])
 
-				scope.key = angular.isDefined(attr.spinnerKey) ? attr.spinnerKey : false;
+            .directive('usSpinner', ['$window', function ($window) {
+                return {
+                    scope: true,
+                    link: function (scope, element, attr) {
+                        var SpinnerConstructor = Spinner || $window.Spinner;
 
-				scope.startActive = angular.isDefined(attr.spinnerStartActive) ?
-						attr.spinnerStartActive : scope.key ?
-								false: true;
+                        scope.spinner = null;
 
-				scope.spin = function () {
-					if (scope.spinner == null) {
-                        scope.spinner = new $window.Spinner(attr.usSpinner);
-					}
-                    scope.spinner.spin(element[0]);
-				};
+                        scope.key = angular.isDefined(attr.spinnerKey) ? attr.spinnerKey : false;
 
-				scope.stop = function () {
-					if (scope.spinner) {
-						scope.spinner.stop();
-					}
-				};
+                        scope.startActive = angular.isDefined(attr.spinnerStartActive) ?
+                            attr.spinnerStartActive : scope.key ?
+                            false : true;
 
-				scope.$watch(attr.usSpinner, function (options) {
-					scope.stop();
-					scope.spinner = new $window.Spinner(options);
-					if (!scope.key || scope.startActive) {
-						scope.spinner.spin(element[0]);
-					}
-				}, true);
+                        scope.spin = function () {
+                            if (scope.spinner) {
+                                scope.spinner.spin(element[0]);
+                            }
+                        };
 
-				scope.$on('us-spinner:spin', function (event, key) {
-					if(key === scope.key){
-						scope.spin();
-					}
-				});
+                        scope.stop = function () {
+                            scope.startActive=false;
+                            if (scope.spinner) {
+                                scope.spinner.stop();
+                            }
+                        };
 
-				scope.$on('us-spinner:stop', function (event, key) {
-					if(key === scope.key){
-						scope.stop();
-					}
-				});
+                        scope.$watch(attr.usSpinner, function (options) {
+                            scope.spinner = new SpinnerConstructor(options);
+                            if (!scope.key || scope.startActive) {
+                                scope.stop();
+                                scope.spinner.spin(element[0]);
+                            }
+                        }, true);
 
-				scope.$on('$destroy', function () {
-					scope.stop();
-					scope.spinner = null;
-				});
-			}
-		};
-	}]);
+                        scope.$on('us-spinner:spin', function (event, key) {
+                            if (key === scope.key) {
+                                scope.spin();
+                            }
+                        });
 
-})(window, window.angular);
+                        scope.$on('us-spinner:stop', function (event, key) {
+                            if (key === scope.key) {
+                                scope.stop();
+                            }
+                        });
+
+                        scope.$on('$destroy', function () {
+                            scope.stop();
+                            scope.spinner = null;
+                        });
+                    }
+                };
+            }]);
+    }
+
+    if (typeof define === 'function' && define.amd) {
+        /* AMD module */
+        define(['angular', 'spin'], factory);
+    } else {
+        /* Browser global */
+        factory(root.angular);
+    }
+}(window));

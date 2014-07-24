@@ -174,7 +174,6 @@
      */
     spin: function(target) {
       this.stop()
-
       var self = this
         , o = self.opts
         , el = self.el = css(createEl(0, {className: o.className}), {position: o.position, width: 0, zIndex: o.zIndex})

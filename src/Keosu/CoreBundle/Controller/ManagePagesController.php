@@ -18,7 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Controller;
 
+use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Entity\Page;
+use Keosu\CoreBundle\Event\GadgetPageActionEvent;
 use Keosu\CoreBundle\Util\TemplateUtil;
 use Keosu\CoreBundle\Util\ThemeUtil;
 
@@ -88,21 +90,21 @@ class ManagePagesController extends Controller {
 	 * Delete a page
 	 */
 	public function deleteAction($id) {
+		$dispatcher = $this->get('event_dispatcher');
 		$em = $this->get('doctrine')->getManager();
+		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
 		$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($id);
 
-
-		// TODO event
-
-		//First delete manually all its gadget
 		foreach ($gadgets as $gadget) {
-			// TODO event
+			$event = new GadgetPageActionEvent($page,$gadget);
+			$dispatcher->dispatch(KeosuEvents::GADGET_PAGE_DELETE.$gadget->getName(),$event);
+			if($event->getResponse() !== null)
+				return $event->getResponse();
 		}
 
 		foreach($gadgets as $gadget)
 			$em->remove($gadget);
 
-		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
 		$em->remove($page);
 		$em->flush();
 
@@ -123,10 +125,17 @@ class ManagePagesController extends Controller {
 	 * Edit an existing page
 	 */
 	public function editAction($id) {
+		$dispatcher = $this->get('event_dispatcher');
 		$em = $this->get('doctrine')->getManager();
 		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
+		$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($id);
 		
-		// TODO event
+		foreach ($gadgets as $gadget) {
+			$event = new GadgetPageActionEvent($page,$gadget);
+			$dispatcher->dispatch(KeosuEvents::GADGET_PAGE_DELETE.$gadget->getName(),$event);
+			if($event->getResponse() !== null)
+				return $event->getResponse();
+		}
 		
 		return $this->editPage($page);
 

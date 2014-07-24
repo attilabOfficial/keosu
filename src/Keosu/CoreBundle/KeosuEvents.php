@@ -80,4 +80,46 @@ final class KeosuEvents
 	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPanelEvent instance
 	 */
 	const GADGET_PANEL = 'keosu.gadget.panel.';
+	
+	/**
+	 * The GADGET_PAGE_PANEL[Name of the gadget] event occurs when the panel for the page is rendered in page list
+	 *
+	 * TODO BUGGY
+	 *
+	 * This event allows to modify the panel of the page where the gadget is included
+	 * The event listener method receives a Keosu\CoreBundle\Event\PagePanelEvent instance
+	 */
+	const GADGET_PAGE_PANEL = 'keosu.gadget.page.panel.';
+
+	/**
+	 * The GADGET_PAGE_EDIT[Name of the gadget] event occurs when the page is about to be edited
+	 *
+	 * This event allows to modify the edit action of a page with a specific gadget
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPanelEvent instance
+	 */
+	const GADGET_PAGE_EDIT = 'keosu.gadget.page.edit.';
+
+	/**
+	 * The GADGET_PAGE_DELETE[Name of the gadget] event occurs when the page is about to be deleted
+	 *
+	 * This event allows to modify the delete action of a page with a specific gadget
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPanelEvent instance
+	 */
+	const GADGET_PAGE_DELETE = 'keosu.gadget.page.delete.';
+
+	/**
+	 * The GADGET_GLOBAL_CONFIG_BUILD_FORM[Name of the gadget] event occurs when the form of the app is about to be builded
+	 *
+	 * This event allows to add specific config in global config
+	 * The event listener method receives a Keosu\CoreBundle\Event\PagePanelEvent instance
+	 */
+	const GADGET_GLOBAL_CONFIG_BUILD_FORM = 'keosu.gadget.global.config.build.form.';
+
+	/**
+	 * The GADGET_PAGE_PANEL[Name of the gadget] event occurs when the panel when the config for app is about to be saved
+	 *
+	 * This event allows to add custom information for the gadget in global param
+	 * The event listener method receives a Keosu\CoreBundle\Event\PagePanelEvent instance
+	 */
+	const GADGET_GLOBAL_CONFIG_SAV_FORM = 'keosu.gadget.global.config.sav.form.';
 }

@@ -3,6 +3,7 @@
 namespace Keosu\CoreBundle\Twig;
 
 use Keosu\CoreBundle\KeosuEvents;
+use Keosu\CoreBundle\Event\GadgetPagePanelEvent;
 use Keosu\CoreBundle\Event\GadgetPanelEvent;
 
 /**
@@ -48,6 +49,20 @@ class TwigIncludePanelExtension extends \Twig_Extension {
 
 	public function includePanelPage($pageId)
 	{
+		$em = $this->container->get('doctrine')->getManager();
+
+		$page = $em->getRepository('KeosuCoreBundle:Page')->find($pageId);
+		$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($pageId);
+	
+		foreach ($gadgets as $gadget) {
+			$dispatcher = $this->container->get('event_dispatcher');
+			$event = new GadgetPagePanelEvent($page,$gadget);
+			$dispatcher->dispatch(KeosuEvents::GADGET_PAGE_PANEL.$gadget->getName(),$event);
+
+			if($event->getHtml() !== null)
+				return $event->getHtml();
+		}
+
 		return $this->container->get('templating')->render('KeosuCoreBundle:Page:pagePanel.html.twig', array(
 			'pageId'     => $pageId
 		));;

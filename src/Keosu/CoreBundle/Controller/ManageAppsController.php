@@ -198,7 +198,7 @@ class ManageAppsController extends Controller {
 						);
 			}
 		}
-		return $this->render('KeosuCoreBundle:App:edit.html.twig.old',array(
+		return $this->render('KeosuCoreBundle:App:edit.html.twig',array(
 							'form' => $form->createView(),
 							'firstApp'=>$isFirstApp,
 							'themeDir'=>ThemeUtil::getThemeDir()

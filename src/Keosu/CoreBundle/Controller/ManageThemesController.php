@@ -107,7 +107,7 @@ class ManageThemesController extends Controller {
 			if ($form->isValid ()) {
 				// Storing pag
 				if (($error = $theme->upload()) !== null)
-					return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig.old', array (
+					return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig', array (
 							'form' => $form->createView (),
 							'theme' => $theme,
 							'error' => $error
@@ -132,7 +132,7 @@ class ManageThemesController extends Controller {
 
 			}
 		}
-		return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig.old', array (
+		return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig', array (
 				'form' => $form->createView (),
 				'theme' => $theme,
 				'error' => $error

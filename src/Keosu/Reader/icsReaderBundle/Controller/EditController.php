@@ -63,7 +63,7 @@ class EditController extends Controller {
 			}
 		}
 		return $this
-				->render('KeosuReadericsReaderBundle:Edit:edit.html.twig.old',
+				->render('KeosuReadericsReaderBundle:Edit:edit.html.twig',
 						array('form' => $form->createView()));
 
 	}

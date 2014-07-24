@@ -190,7 +190,7 @@ class ManagePagesController extends Controller {
 		}
 		
 		return $this
-				->render('KeosuCoreBundle:Page:edit.html.twig.old',
+				->render('KeosuCoreBundle:Page:edit.html.twig',
 						array('form' => $form->createView(),
 							'theme'=>$theme->getTheme(),
 							'templateDir'=>TemplateUtil::getPageTemplateWebPath()

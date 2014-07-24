@@ -83,7 +83,6 @@
 </style>
 <div class="panel">
 	<div class="row">
-		
 		<div class="col-md-12">
 			{% if firstApp %}
 			<div class="alert alert-success">
@@ -96,23 +95,30 @@
 				{{ form_start(form) }}
 					{{ form_errors(form) }}
 
-					{{ form_row(form.name) }}
-					{{ form_row(form.packageName) }}
-					{{ form_row(form.description) }}
-					{{ form_row(form.author) }}
-					{{ form_row(form.website) }}
-					{{ form_row(form.email) }}
+					<fieldset>
+						<legend>Main Params</legend>
+						{{ form_row(form.name) }}
+						{{ form_row(form.packageName) }}
+						{{ form_row(form.description) }}
+						{{ form_row(form.author) }}
+						{{ form_row(form.website) }}
+						{{ form_row(form.email) }}
 
-					<div class="imgtheme">
-						{{ form_row(form.theme) }}
-					</div>
-
-					{{ form_row(form.debugMode) }}
-					<div class="row">
-						<div class="col-lg-9 col-lg-push-3">
-							<span class="help-block">This param allow to debug your app with <a href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
+						<div class="imgtheme">
+							{{ form_row(form.theme) }}
 						</div>
-					</div>
+					</fieldset>
+
+					<fieldset>
+						<legend>For developers</legend>
+
+						{{ form_row(form.debugMode) }}
+						<div class="row">
+							<div class="col-lg-9 col-lg-push-3">
+								<span class="help-block">This param allow to debug your app with <a href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
+							</div>
+						</div>
+					</fieldset>
 
 					<!-- TODO -->
 					<div class="row">
@@ -120,10 +126,11 @@
 							<span class="help-block">The three facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>.</span>
 						</div>
 					</div>
-					
 
-					
-					{% include 'KeosuCoreBundle:App:editConfigParameters.html.twig' %}
+					<fieldset>
+						<legend>Preference list</legend>
+						{% include 'KeosuCoreBundle:App:editConfigParameters.html.twig' %}
+					</fieldset>
 				{{ form_end(form) }}
 			</div>
 		</div>

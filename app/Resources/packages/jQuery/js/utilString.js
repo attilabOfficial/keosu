@@ -2,7 +2,7 @@
  * Decode json content
  */
 function decodedContent(content){
-	content = $('<div/>').html(content).html();
-	content = content.replace(/[/\\*]/g, "");
-	return content;
+	var ret = document.createElement('div');
+	ret.innerHTML = content.replace(/[/\\*]/g, "");
+	return ret;
 }

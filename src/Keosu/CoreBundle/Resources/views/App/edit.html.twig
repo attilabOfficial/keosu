@@ -96,121 +96,35 @@
 				{{ form_start(form) }}
 					{{ form_errors(form) }}
 
-					<div class="col-lg-3 configurelabel">
-						Name
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="Name of your application"></span>
-						</a>
-					</div>
 					{{ form_row(form.name) }}
-					<br class="clear"/>
-					
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
-						Package Name
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign"></span>
-						</a>
-					</div>
 					{{ form_row(form.packageName) }}
-					<br class="clear"/>
-					
-					<div class="col-lg-3 configurelabel">
-						Description
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
-					</div>
 					{{ form_row(form.description) }}
-					<br class="clear"/><br class="clear"/>
-					
-					<div class="col-lg-3 configurelabel">
-						Author (optional)
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
-					</div>
 					{{ form_row(form.author) }}
-					<br class="clear"/>
-					
-					<div class="col-lg-3 configurelabel">
-						Website (optional)
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
-					</div>
 					{{ form_row(form.website) }}
-					<br class="clear"/>
-					
-					<div class="col-lg-3 configurelabel">
-						Email (optional)
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
-					</div>
 					{{ form_row(form.email) }}
-					<br class="clear"/>
 
-					<div class="col-lg-3 configurelabel">
-						Private app (optional)
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="if the checkbox is checked only logged user can access to this app and a special authentication page is created."></span>
-						</a>
-					</div>
-					{{ form_row(form.privateApp) }}
-					<br class="clear"/>
-					
-					<div class="col-lg-3 configurelabel">
-						Theme
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
-					</div>
 					<div class="imgtheme">
 						{{ form_row(form.theme) }}
 					</div>
-					<br class="clear"/><br class="clear"/>
-					
-					<div class="col-lg-3 configurelabel">
-						Facebook app id (optional)
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
-					</div>
-					{{ form_row(form.facebookAppId) }}
-					<br class="clear"/>
-					
-					<div class="col-lg-3 configurelabel">
-						Facebook app name(optional)
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
-					</div>
-					{{ form_row(form.facebookAppName) }}
-					<br class="clear"/>
-					
-					<div class="col-lg-3 configurelabel" title="This is my tooltip">
-						Facebook app secret (optional)
-						<a title="">
-							<span class="glyphicon glyphicon-info-sign" title="This is my tooltip"></span>
-						</a>
-					</div>
-					{{ form_row(form.facebookAppSecret) }}
-					<div class="col-lg-9">
-						<span class="help-block">The three facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>.</span>
-					</div>
-					<br class="clear"/>
 
-					<div class="col-lg-3 configurelabel">
-						Debug mode (optional)
-					</div>
 					{{ form_row(form.debugMode) }}
-					<div class="col-lg-9">
-						<span class="help-block">This param allow to debug your app with <a href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
+					<div class="row">
+						<div class="col-lg-9 col-lg-push-3">
+							<span class="help-block">This param allow to debug your app with <a href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
+						</div>
 					</div>
-					<br class="clear"/>
+
+					<!-- TODO -->
+					<div class="row">
+						<div class="col-lg-9 col-lg-push-3">
+							<span class="help-block">The three facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>.</span>
+						</div>
+					</div>
+					
+
 					
 					{% include 'KeosuCoreBundle:App:editConfigParameters.html.twig' %}
-					
+				{{ form_end(form) }}
 			</div>
 		</div>
 	</div>

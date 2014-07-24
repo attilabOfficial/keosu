@@ -26,17 +26,16 @@ class AppServiceController extends Controller {
 	 * REST service returning the list of all pages
 	 */
 	public function listAction($format) {
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
+		$appid = $this->get('keosu_core.curapp')->getCurApp();
+		$em = $this->get('doctrine')->getManager();
 		if($appid==0 || $appid==null){
 			return null;
 		}
-		$curAppName = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:App')->find($appid)->getName();
-		$contents = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:App')->findAll();
-		return $this
-				->render(
-						'KeosuCoreBundle:App/Service:list.' . $format
-								. '.twig', array('contents' => $contents, 'curapp'=>$curAppName));
+		$curAppName = $em->getRepository('KeosuCoreBundle:App')->find($appid)->getName();
+		$contents = $em->getRepository('KeosuCoreBundle:App')->findAll();
+		return $this->render('KeosuCoreBundle:App/Service:list.'.$format.'.twig', array(
+								'contents' => $contents,
+								'curapp'   => $curAppName
+		));
 	}
 }

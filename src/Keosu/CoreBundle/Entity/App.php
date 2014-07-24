@@ -32,21 +32,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class App
 {
-	
-	/**
-	 * Set default data for the form.
-	 */
-	public function __construct(){
-		$this->packageName = 'com.keosu.demo';
-		$this->description = 'Keosu demo';
-		$this->author = 'keosu team';
-		$this->website = 'http://keosu.com';
-		$this->email = 'vleborgne@keosu.com';
-		$this->theme = array_keys(ThemeUtil::getThemeList())[0];
-		$this->configParam = new ConfigParameters();
-	}
-	
-	
+
+    /**
+     * Set default data for the form.
+     */
+    public function __construct(){
+        $this->packageName = 'com.keosu.demo';
+        $this->description = 'Keosu demo';
+        $this->author = 'keosu team';
+        $this->website = 'http://keosu.com';
+        $this->email = 'vleborgne@keosu.com';
+        $this->theme = array_keys(ThemeUtil::getThemeList())[0];
+        $this->configParam = new ConfigParameters();
+    }
+
     /**
      * @var integer
      *
@@ -69,14 +68,7 @@ class App
      * @ORM\Column(name="theme", type="string", length=255)
      */
     private $theme;
-    
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="privateApp", type="boolean")
-     */
-    private $privateApp;
-    
+
     /**
      * @var string
      *
@@ -113,34 +105,12 @@ class App
     private $email;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="facebookAppId", type="string", length=1024, nullable=true)
-     */
-    private $facebookAppId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="facebookAppName", type="string", length=1024, nullable=true)
-     */
-    private $facebookAppName;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="facebookAppSecret", type="string", length=1024, nullable=true)
-     */
-    private $facebookAppSecret;
-    
-    /**
      * @var boolean
      *
      * @ORM\Column(name="debugMode", type="boolean")
      */
-    private $debugMode;   
+    private $debugMode;
 
-    
     /**
      * @var ConfigParameters
      * 
@@ -191,7 +161,7 @@ class App
     public function setTheme($theme)
     {
         $this->theme = $theme;
-    
+
         return $this;
     }
 
@@ -204,34 +174,7 @@ class App
     {
         return $this->theme;
     }
-    
-    /**
-     * Set privateApp
-     *
-     * @param boolean $privateApp
-     * @return App
-     */
-    public function setPrivateApp($privateApp)
-    {
-        $this->privateApp = $privateApp;
-    
-        return $this;
-    }
 
-    /**
-     * Get privateApp
-     *
-     * @return boolean
-     */
-    public function getPrivateApp()
-    {
-        return $this->privateApp;
-    }
-    
-    public function isPrivate() {
-        return $this->privateApp;
-    }
-    
     /**
      * Set packageName
      *
@@ -241,7 +184,7 @@ class App
     public function setPackageName($packageName)
     {
         $this->packageName = $packageName;
-    
+
         return $this;
     }
 
@@ -348,75 +291,6 @@ class App
     }
 
     /**
-     * Set facebookAppId
-     *
-     * @param string $facebookAppId
-     * @return App
-     */
-    public function setFacebookAppId($facebookAppId)
-    {
-        $this->facebookAppId = $facebookAppId;
-    
-        return $this;
-    }
-
-    /**
-     * Get facebookAppId
-     *
-     * @return string 
-     */
-    public function getFacebookAppId()
-    {
-        return $this->facebookAppId;
-    }
-
-    /**
-     * Set facebookAppName
-     *
-     * @param string $facebookAppName
-     * @return App
-     */
-    public function setFacebookAppName($facebookAppName)
-    {
-        $this->facebookAppName = $facebookAppName;
-    
-        return $this;
-    }
-
-    /**
-     * Get facebookAppName
-     *
-     * @return string 
-     */
-    public function getFacebookAppName()
-    {
-        return $this->facebookAppName;
-    }
-    
-    /**
-     * Set facebookAppSecret
-     *
-     * @param string $facebookAppSecret
-     * @return App
-     */
-    public function setFacebookAppSecret($facebookAppSecret)
-    {
-        $this->facebookAppSecret = $facebookAppSecret;
-    
-        return $this;
-    }
-
-    /**
-     * Get facebookAppSecret
-     *
-     * @return string 
-     */
-    public function getFacebookAppSecret()
-    {
-        return $this->facebookAppSecret;
-    }
-    
-    /**
      * Set debugMode
      *
      * @param boolean $debugMode
@@ -438,17 +312,16 @@ class App
     {
         return $this->debugMode;
     }
-	
+
     /**
      * Get configParam
      *
      * @return ConfigParam
      */
     public function getConfigParam(){
-    	return $this->configParam;
+        return $this->configParam;
     }
-    
-    
+
     /**
      * Set configParam
      *
@@ -456,55 +329,7 @@ class App
      * @return App
      */
     public function setConfigParam(ConfigParameters $configParam){
-    	$this->configParam = $configParam;
-    	return this;
+        $this->configParam = $configParam;
+        return this;
     }
-    
-	
-	/**
-	 * Set path
-	 *
-	 * @param string $path
-	 * @return ArticleAttachment
-	 */
-	public function setPath($path) {
-		$this->path = $path;
-	
-		return $this;
-	}
-	
-	/**
-	 * Get path
-	 *
-	 * @return string
-	 */
-	public function getPath() {
-		return $this->path;
-	}
-	
-	public function getAbsolutePath() {
-		return null === $this->path ? null
-		: $this->getUploadRootDir() . '/' . $this->path;
-	}
-	
-	public function getWebPath() {
-		return null === $this->path ? null
-		: '/' . $this->getUploadDir() . '/' . $this->path;
-	}
-	
-	public function getUploadRootDir() {
-		// the absolute directory path where uploaded
-		// documents should be saved
-		return __DIR__ .'/../../../../web/' . $this->getUploadDir();
-	}
-	
-	protected function getUploadDir() {
-		// get rid of the __DIR__ so it doesn't screw up
-		// when displaying uploaded doc/image in the view.
-		return 'uploads/splashscreen';
-	}
-	
-	
-	
-	
 }

@@ -18,12 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\Gadget\AuthenticationGadgetBundle\Controller;
 
-use Keosu\CoreBundle\Util\TemplateUtil;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-
-use Symfony\Component\HttpFoundation\Request;
 
 
 class ResetController extends Controller {

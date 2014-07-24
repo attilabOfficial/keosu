@@ -21,10 +21,6 @@ namespace Keosu\Gadget\AuthenticationGadgetBundle\Controller;
 use Keosu\CoreBundle\Controller\iGadgetController;
 use Keosu\CoreBundle\Controller\GadgetEditController;
 use Keosu\CoreBundle\Util\TemplateUtil;
-use Keosu\CoreBundle\Entity\Gadget;
-
-use Keosu\Gadget\ArticleGadgetBundle\ArticleGadget;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Specific gadget controller 

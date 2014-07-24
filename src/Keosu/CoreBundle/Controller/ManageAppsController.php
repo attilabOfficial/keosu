@@ -30,7 +30,6 @@ use Keosu\Gadget\AuthenticationGadgetBundle\AuthenticationGadget;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
 use Keosu\CoreBundle\Form\ConfigParametersType;
-use Keosu\CoreBundle\Entity\ConfigParameters;
 use Keosu\CoreBundle\Form\SplashscreensType;
 use Keosu\CoreBundle\Form\IconsType;
 use Keosu\CoreBundle\Util\FilesUtil;
@@ -211,7 +210,6 @@ class ManageAppsController extends Controller {
 	 */
 	// TODO remove default value
 	private function buildAppForm($formBuilder) {
-		$themesKeys = array_keys(ThemeUtil::getThemeList());
 		$formBuilder->add('name', 'text',array(
 							'label' => false
 				))

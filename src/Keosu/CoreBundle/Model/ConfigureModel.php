@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Model;
 
 class ConfigureModel {
-	private $databaseType;
 	private $databaseHost;
 	private $databaseName;
 	private $databasePort;

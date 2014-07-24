@@ -20,8 +20,6 @@ namespace Keosu\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * ConfigParameters
  *
@@ -495,18 +493,6 @@ class ConfigParameters
 	 */
 	public function getAutoHideSplashScreen(){
 		return $this->auto_hide_splash_screen;
-	}
-	
-	/**
-	 * Set disable_cursor
-	 *
-	 * @param boolean $disable_cursor
-	 * @return App
-	 */
-	public function setDisableCursor($disable_cursor){
-		$this->disable_cursor = $autdisable_cursor;
-	
-		return $this;
 	}
 	
 	/**

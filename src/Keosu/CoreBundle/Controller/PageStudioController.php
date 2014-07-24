@@ -18,15 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Controller;
 
-use Keosu\CoreBundle\Util\ThemeUtil;
-
 use Keosu\CoreBundle\Model\ZoneModel;
 
 use Keosu\CoreBundle\KeosuExtension;
 
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Entity\Page;
 use Symfony\Component\DomCrawler\Crawler;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

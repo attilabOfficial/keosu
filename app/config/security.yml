@@ -21,7 +21,7 @@ security:
     in_memory:
       memory:
         users: 
-          admin: { password: lagoutte, roles: 'ROLE_SUPER_ADMIN' }
+          admin: { password: "%admin_password%", roles: 'ROLE_SUPER_ADMIN' }
    
   firewalls:
     dev:

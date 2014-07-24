@@ -19,8 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Controller;
 use Keosu\CoreBundle\Util\ExporterUtil;
 
-use Keosu\CoreBundle\Util\ZipUtil;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**

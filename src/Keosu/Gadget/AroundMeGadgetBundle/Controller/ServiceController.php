@@ -18,8 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\Gadget\AroundMeGadgetBundle\Controller;
 
-use Keosu\CoreBundle\Util\TemplateUtil;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ServiceController extends Controller {
@@ -27,8 +25,6 @@ class ServiceController extends Controller {
 	public function viewListAction($gadgetId, $format, $offset, $limit, $lat, $lng) {
 		$gadget = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
-		$gadgetConfig = $gadget->getConfig();
-		
 		$queryString= 'SELECT DISTINCT a.id,';
 		$queryString=$queryString.'( 6355 * acos(cos(radians(' . $lat . '))' .
 				'* cos( radians( a.lat ) )' .

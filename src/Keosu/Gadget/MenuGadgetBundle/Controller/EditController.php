@@ -26,12 +26,6 @@ use Keosu\Gadget\MenuGadgetBundle\Form\MenuPageType;
 
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Entity\Gadget;
-
-use Keosu\Gadget\LinkGadgetBundle\LinkGadget;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 /**
  * Specific gadget controller
  * extends Keosu\CoreBundle\Controller\GadgetEditController
@@ -52,7 +46,7 @@ class EditController extends GadgetEditController  implements iGadgetController 
 	}
 	
 	//Specific form for the gadget
-	public function buildGadgetForm($formBuilder, $gadgetName) {	
+	public function buildGadgetForm($formBuilder, $gadgetName) {
 		$appid = $this->container->get('keosu_core.curapp')
 			->getCurApp($this->get('doctrine')->getManager(),
 				$this->get("session"));

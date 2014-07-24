@@ -64,22 +64,20 @@ class ManageReadersController extends Controller {
 	 * Delete a reader
 	 */
 	public function deleteAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Reader');
+        $em = $this->get('doctrine')->getManager();
+	    $repo = $em->getRepository('KeosuCoreBundle:Reader');
 
 		$reader = $repo->find($id);
 		
-		$repoarticle = $this->get('doctrine')->getManager()
-			->getRepository($reader->getLinkedEntity());
-		$linkedArticles=$repoarticle->findByReader($reader->getId());
-		$em = $this->get('doctrine')->getManager();
+		$repoArticle = $em->getRepository($reader->getLinkedEntity());
+		$linkedArticles=$repoArticle->findByReader($reader->getId());
+
 		foreach ($linkedArticles as $article){
 			$article->setReader(null);
 			$em->persist($article);
-			$em->flush();
 		}
-		$this->get('doctrine')->getManager()->remove($reader);
-		$this->get('doctrine')->getManager()->flush();
+        $em->remove($reader);
+        $em->flush();
 		return $this
 				->redirect($this->generateUrl('keosu_ReaderManager_manage'));
 	}

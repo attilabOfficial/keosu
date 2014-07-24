@@ -20,11 +20,8 @@ namespace Keosu\Gadget\PicturesGalleryGadgetBundle\Controller;
 
 use Keosu\CoreBundle\Controller\iGadgetController;
 use Keosu\CoreBundle\Controller\GadgetEditController;
-use Keosu\Gadget\PicturesGalleryGadgetBundle\PicturesGalleryGadget;
 use Keosu\CoreBundle\Util\TemplateUtil;
-use Keosu\CoreBundle\Entity\Gadget;
-use Keosu\Gadget\PictureGadgetBundle\PictureGadget;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 
 /**
  * Specific gadget controller

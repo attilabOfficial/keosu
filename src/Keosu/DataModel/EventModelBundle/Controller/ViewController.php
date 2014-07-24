@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
 namespace Keosu\DataModel\EventModelBundle\Controller;
-use Keosu\DataModel\EventModelBundle\Entity\Event;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

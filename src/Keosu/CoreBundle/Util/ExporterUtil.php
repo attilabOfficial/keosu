@@ -18,14 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Util;
 
-use Keosu\CoreBundle\Util\StringUtil;
-
-use Keosu\CoreBundle\Model\ZoneModel;
-
-use Keosu\CoreBundle\Util\TemplateUtil;
-
-use Keosu\CoreBundle\Entity\Page;
-use Symfony\Component\DomCrawler\Crawler;
 
 class ExporterUtil {
 	public static function getExportPath() {

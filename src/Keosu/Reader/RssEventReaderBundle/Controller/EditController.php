@@ -20,8 +20,6 @@ namespace Keosu\Reader\RssEventReaderBundle\Controller;
 
 use Keosu\Reader\RssEventReaderBundle\RssEventReader;
 
-use Keosu\CoreBundle\Form\ReaderType;
-
 use Keosu\CoreBundle\Entity\Reader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

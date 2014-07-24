@@ -21,9 +21,6 @@ use Keosu\CoreBundle\GadgetParent;
 
 use Keosu\CoreBundle\iGadget;
 
-use Keosu\CoreBundle\Entity\Reader;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 class MyAccountGadget extends GadgetParent implements iGadget {
 
 	//TODO
@@ -46,7 +43,6 @@ class MyAccountGadget extends GadgetParent implements iGadget {
 		$instance = new self();
 		parent::constructParentFromGadget($gadget,$instance);
 		//Specific conf for this gadget
-		$gadgetConfig = $gadget->getConfig();
 		// TODO $instance->articleId = $gadgetConfig['article-id'];
 		return $instance;
 	}

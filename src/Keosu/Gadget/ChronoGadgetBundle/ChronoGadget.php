@@ -20,8 +20,6 @@ namespace Keosu\Gadget\ChronoGadgetBundle;
 use Keosu\CoreBundle\iGadget;
 use Keosu\CoreBundle\GadgetParent;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 class ChronoGadget extends GadgetParent implements iGadget {
 	/**
 	 * Gadget Name

@@ -79,7 +79,57 @@ app.controller('last_article_gadgetController', function ($scope, $http, $sce, $
                         usSpinnerService.stop('spinner');
                 });
 	};
-	
+
+    //TODO put this function in an angular module
+    // Add page nbr in cachekey if we need to
+    $scope.getFromCache = function(cachekey, url){
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+
+        lastUpdate = localStorageService.get('lastup'+cachekey);
+        now = new Date().getTime();
+        if(lastUpdate==null){
+            lastUpdate=0;
+            now=0;
+        }
+        dif = now - lastUpdate;
+        currentCache = localStorageService.get(cachekey);
+        if((currentCache && (dif < $scope.param.cacheExpiration && dif != 0))
+            /*|| TODO Add user not connected to the net*/ ){
+                deferred.resolve(currentCache);
+                //return ;
+        }else{
+            $http.get(url)
+                .success( function (data) {
+                    localStorageService.set(cachekey,data);
+                    localStorageService.set('lastup'+cachekey,now);
+                    deferred.resolve(data);
+                })
+                .error(function(data){
+                    if(currentCache !=null){
+                        deferred.resolve(currentCache);
+                    }else{
+                        deferred.reject('error');
+                        //TODO Return an error
+                    }
+                }
+            );
+
+        }
+        promise.success = function(fn) {
+            promise.then(fn);
+            return promise;
+        }
+
+        promise.error = function(fn) {
+            promise.then(null, fn);
+            return promise;
+        }
+
+        return promise;
+
+    }
+
 	/////////////////////////
 	// Comment part
 	/////////////////////////

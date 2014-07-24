@@ -23,10 +23,6 @@ use Keosu\CoreBundle\Controller\GadgetEditController;
 
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Entity\Gadget;
-
-use Keosu\DataModel\MapModelBundle\Entity;
-
 /**
  * Specific gadget controller
  * extends Keosu\CoreBundle\Controller\GadgetEditController

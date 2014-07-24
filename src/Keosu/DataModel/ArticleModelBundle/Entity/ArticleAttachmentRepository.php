@@ -28,18 +28,4 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleAttachmentRepository extends EntityRepository {
 
-	public function getAttachmentByReader($idext, $readerId) {
-		$attachment = $this->_em
-				->createQuery(
-						'SELECT a FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment a WHERE a.idext='
-								. $idext . 'AND a.reader=' . $readerId)
-				->getResult();
-		if (count($attachment) > 1) {
-			//TODO ERROR DUPLICATE ARTICLE
-		} else if (count($attachment) == 0) {
-			return null;
-		} else {
-			return $attachment[0];
-		}
-	}
 }

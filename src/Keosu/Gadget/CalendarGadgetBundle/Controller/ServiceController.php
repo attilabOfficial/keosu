@@ -19,8 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Keosu\Gadget\CalendarGadgetBundle\Controller;
 
-use Keosu\CoreBundle\Util\TemplateUtil;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ServiceController extends Controller {
@@ -42,8 +40,7 @@ class ServiceController extends Controller {
 		$eventsList = $query->execute();
 
 		$queryCount = $em->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\EventModelBundle\Entity\Event p");
-		$count = $queryCount->getSingleScalarResult();
-	
+
 		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewlist.'. $format . '.twig',array(
 									'events'        => $eventsList,
 									'eventsperpage' => $eventsperpage
@@ -68,9 +65,6 @@ class ServiceController extends Controller {
 		$query = $qb->getQuery();
 		$eventsList = $query->execute();
 
-		$queryCount = $em->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\EventModelBundle\Entity\Event p");
-		$count = $queryCount->getSingleScalarResult();
-	
 		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewtable.'. $format . '.twig',array(
 									'events' => $eventsList
 				));

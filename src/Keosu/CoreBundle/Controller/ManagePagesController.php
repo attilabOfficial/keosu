@@ -120,7 +120,7 @@ class ManagePagesController extends Controller {
 		$page->setAppId($appId);
 		return $this->editPage($page);
 	}
-	
+
 	/**
 	 * Edit an existing page
 	 */
@@ -138,10 +138,8 @@ class ManagePagesController extends Controller {
 		}
 		
 		return $this->editPage($page);
-
 	}
 
-	
 	/**
 	 * Shared function to edit/add a page
 	 */
@@ -201,7 +199,7 @@ class ManagePagesController extends Controller {
 						'expanded'=>true
 				));
 	}
-	
+
 	/**
 	 * Check if there is a "isMain" page in the app
 	 */
@@ -213,8 +211,6 @@ class ManagePagesController extends Controller {
 		return $this->render('KeosuCoreBundle:Page:check.html.twig',array(
 														'nbrIsMain' => $nbrIsMain
 							));
-	
 	}
-	
 
 }

@@ -1,0 +1,7 @@
+{% block pageEditAction %}
+<a href="{{ path('keosu_core_views_page_manage_edit',{'id':pageId}) }}"><i class="glyphicon glyphicon-edit"></i></a>
+{% endblock pageEditAction %}
+{% block pageDeleteAction %}
+<a href="{{ path('keosu_core_views_page_manage_delete',{'id':pageId}) }}"><i class="glyphicon glyphicon-remove"></i></a>
+{% endblock pageDeleteAction %}
+{% block pageExtentionAction %}{% endblock pageExtentionAction %}

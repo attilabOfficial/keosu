@@ -1,25 +1,23 @@
-	{# 	
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+{# 	
+Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
 {% extends 'KeosuCoreBundle:MainViews:page.html.twig' %}
 
-{% block title %}
-	Manage page
-{% endblock %}
+{% block title %}Manage pages{% endblock %}
 
 {% block content %}
 
@@ -40,29 +38,21 @@
 					</tr>
 				</thead>
 				<tbody>
-				{% for content in contents %}
+				{% for page in pages %}
 					<tr>
 						<td>
-							{% if content.isMain %}
+							{% if page.isMain %}
 								<span class="glyphicon glyphicon-hand-right"></span>
 							{% endif %}
 						</td>
-						<td>{{ content.name }}</td>
-						<td>{{ content.templateId }}</td>
-						{% if content.id in cannotEdit %}
-						<td colspan="2">
-						</td>
-						{% else %}
+						<td>{{ page.name }}</td>
+						<td>{{ page.templateId }}</td>
 						<td>
-							<a href="{{ path('keosu_core_views_page_manage_edit',{'id':content.id}) }}"><i class="glyphicon glyphicon-edit"></i></a>
+							{{ includePanelPage(page.id) }}
 						</td>
-						<td>
-							<a href="{{ path('keosu_core_views_page_manage_delete',{'id':content.id}) }}"><i class="glyphicon glyphicon-remove"></i></a>
-						</td>
-						{% endif %}
 					</tr>
 				{% else %}
-					<p>No content</p>
+					<p>No pages</p>
 				{% endfor %}
 				</tbody>
 				<tfoot>
@@ -70,7 +60,7 @@
 						<th>is index</th>
 						<th>page name</th>
 						<th>page template</th>
-						<th colspan="2"></th>
+						<th></th>
 					</tr>
 				</tfoot>
 			</table>

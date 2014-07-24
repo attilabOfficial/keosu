@@ -83,7 +83,7 @@ class ManageGadgetsController extends Controller {
 							);
 	}
 	/**
-	 * Ading a new Gadget in a zone
+	 * Add a new Gadget in a zone
 	 * @param $pageId where we want to add the gadget
 	 * @param $zoneName where we want to add the gadget
 	 * @param $gadgetName name of the gadget
@@ -122,7 +122,8 @@ class ManageGadgetsController extends Controller {
 
 	/**
 	 * Edit an existing gadget
-	 * Same process as Add
+	 * @param $pageId id of the page
+	 * @param $zoneName name of the zone
 	 */
 	public function editAction($pageId, $zoneName) {
 	

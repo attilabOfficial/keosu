@@ -18,13 +18,16 @@ class TwigIncludePanelExtension extends \Twig_Extension {
 
 	public function getFunctions() {
 		return array(
-			new \Twig_SimpleFunction('includePanel',array($this,'includePanel'), array(
+			new \Twig_SimpleFunction('includePanelGadget',array($this,'includePanelGadget'), array(
 					'is_safe' => array('html')
 			)),
+			new \Twig_SimpleFunction('includePanelPage', array($this,'includePanelPage'), array(
+					'is_safe' => array('html')
+			))
 		);
 	}
 	
-	public function includePanel($zoneHtmlId,$pageId,$gadget,$gadgetList)
+	public function includePanelGadget($zoneHtmlId,$pageId,$gadget,$gadgetList)
 	{
 		if($gadget !== null) {
 			$dispatcher = $this->container->get('event_dispatcher');
@@ -40,6 +43,13 @@ class TwigIncludePanelExtension extends \Twig_Extension {
 			'pageId'     => $pageId,
 			'gadget'     => $gadget,
 			'gadgetList' => $gadgetList
+		));;
+	}
+
+	public function includePanelPage($pageId)
+	{
+		return $this->container->get('templating')->render('KeosuCoreBundle:Page:pagePanel.html.twig', array(
+			'pageId'     => $pageId
 		));;
 	}
 

@@ -18,15 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Controller;
 
-use Keosu\CoreBundle\Util\ThemeUtil;
-
-use Keosu\CoreBundle\Util\TemplateUtil;
-
 use Keosu\CoreBundle\Entity\Page;
+use Keosu\CoreBundle\Util\TemplateUtil;
+use Keosu\CoreBundle\Util\ThemeUtil;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ManagePagesController extends Controller {
+
 	//List of available icons
 	//Can be extend using http://getbootstrap.com/components/#glyphicons
 	public $iconList = array(
@@ -76,54 +75,38 @@ class ManagePagesController extends Controller {
 	 * We can set the theme in this controller and add/edit/delete new pages
 	 */
 	public function viewAction() {
-		/**
-		 * List of pages for an app we display them in a array after
-		 */
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-		$contents = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
-		
-		// Private app case
-		$cannotEdit = array();
-		foreach($contents as $content) {
-			if($content->getName() == TemplateUtil::getAuthenticationPageName()
-				&& $content->getTemplateid() == TemplateUtil::getAuthenticationTemplateId()) {
-				$cannotEdit[] = $content->getId();
-			}
-		}
 
-		return $this
-				->render('KeosuCoreBundle:Page:manage.html.twig',
-						array('contents'    => $contents,
-							  'cannotEdit'  => $cannotEdit,));
+		$appid = $this->get('keosu_core.curapp')->getCurApp();
+		$em = $this->get('doctrine')->getManager();
+		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
+
+		return $this->render('KeosuCoreBundle:Page:manage.html.twig',
+						array('pages' => $pages));
 	}
 	
 	/**
 	 * Delete a page
 	 */
 	public function deleteAction($id) {
-		$gadgetRepo = $this->get('doctrine')->getManager()
-			->getRepository('KeosuCoreBundle:Gadget');
-		$gadgets = $gadgetRepo->findByPage($id);
+		$em = $this->get('doctrine')->getManager();
+		$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($id);
+
+
+		// TODO event
+
 		//First delete manually all its gadget
 		foreach ($gadgets as $gadget) {
-			$this->get('doctrine')->getManager()->remove($gadget);
+			// TODO event
 		}
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page');
-		//Delete the page
-		$page = $repo->find($id);
-		
-		if($page->getname() == TemplateUtil::getAuthenticationPageName()
-			&& $page->gettemplateid() == TemplateUtil::getAuthenticationTemplateId()) {
-			// the user can't delete this page because it's a private app
-		} else {
-			$this->get('doctrine')->getManager()->remove($page);
-			$this->get('doctrine')->getManager()->flush();
-		}
-		return $this->redirect(
-						$this->generateUrl('keosu_core_views_page_manage')
-					);
+
+		foreach($gadgets as $gadget)
+			$em->remove($gadget);
+
+		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
+		$em->remove($page);
+		$em->flush();
+
+		return $this->redirect($this->generateUrl('keosu_core_views_page_manage'));
 	}
 
 	/**
@@ -131,10 +114,8 @@ class ManagePagesController extends Controller {
 	 */
 	public function addAction() {
 		$page = new Page();
-		
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-		$page->setAppId($appid);
-		//Form and store action are shared with editAction
+		$appId = $this->get('keosu_core.curapp')->getCurApp();
+		$page->setAppId($appId);
 		return $this->editPage($page);
 	}
 	
@@ -142,14 +123,11 @@ class ManagePagesController extends Controller {
 	 * Edit an existing page
 	 */
 	public function editAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page');
-		$page = $repo->find($id);
-		if($page->getname() == TemplateUtil::getAuthenticationPageName() && $page->gettemplateid() == TemplateUtil::getAuthenticationTemplateId()) {
-			// the user can't edit this page because it's a private app
-			return $this->redirect($this->generateUrl('keosu_core_views_page_manage'));
-		}
-		//Form and store action are shared with editAction
+		$em = $this->get('doctrine')->getManager();
+		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
+		
+		// TODO event
+		
 		return $this->editPage($page);
 
 	}
@@ -159,41 +137,36 @@ class ManagePagesController extends Controller {
 	 * Shared function to edit/add a page
 	 */
 	private function editPage($page) {
-		//Curent theme
-		//Curent app id
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
+		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
+		$em = $this->get('doctrine')->getManager();
+		$request = $this->get('request');
+
 		//Get Curent theme
-		$repo = $this->get('doctrine')->getManager()
-			->getRepository('KeosuCoreBundle:App');
-		$theme = $repo->find($appid);
+		$theme = $em->getRepository('KeosuCoreBundle:App')->find($appId);
 		//page edit form
-		$formBuilder = $this
-				->createFormBuilder($page,
-						array('label' => 'Page edit'));
+		$formBuilder = $this->createFormBuilder($page,array(
+									'label' => 'Page edit'
+					));
 		$this->buildPageForm($formBuilder);
 		$form = $formBuilder->getForm();
-		$request = $this->get('request');
+		
 		//If we are in POST method, form is submit
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
 				//Storing page
-				$em = $this->get('doctrine')->getManager();
 				$em->persist($page);
 				$em->flush();
 				//Export app to see new page in simulator
-				$this->container->get('keosu_core.exporter')->exportApp();
-				return $this
-						->redirect(
-								$this
-										->generateUrl(
-												'keosu_core_views_page_manage'));
+				// TODO
+				//$this->get('keosu_core.exporter')->exportApp();
+				return $this->redirect(
+								$this->generateUrl('keosu_core_views_page_manage'));
 			}
 		}
 		
-		return $this
-				->render('KeosuCoreBundle:Page:edit.html.twig',
-						array('form' => $form->createView(),
+		return $this->render('KeosuCoreBundle:Page:edit.html.twig',array(
+							'form' => $form->createView(),
 							'theme'=>$theme->getTheme(),
 							'templateDir'=>TemplateUtil::getPageTemplateWebPath()
 						));
@@ -203,27 +176,34 @@ class ManagePagesController extends Controller {
 	 * Edit page form
 	 */
 	private function buildPageForm($formBuilder) {
-		$formBuilder->add('name', 'text')
-				->add('icon', 'choice',
-						array('choices' => $this->iconList, 'required' => true,'expanded'=>true))
-				->add('isMain', 'checkbox', array('required' => false)) //Main is index page
-				->add('templateId', 'choice',
-						array('choices' => TemplateUtil::getTemplateList(),
-								'required'  => true, 
-								'expanded'=>true));
+		$formBuilder
+				->add('name', 'text')
+				->add('icon', 'choice',array(
+						'choices' => $this->iconList,
+						'required' => true,
+						'expanded'=>true
+				))
+				->add('isMain', 'checkbox', array(
+						'required' => false
+				))
+				->add('templateId', 'choice', array(
+						'choices' => TemplateUtil::getTemplateList(),
+						'required'  => true, 
+						'expanded'=>true
+				));
 	}
 	
 	/**
 	 * Check if there is a "isMain" page in the app
 	 */
 	public function checkIsMainAction() {
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
+		$appid = $this->get('keosu_core.curapp')->getCurApp();
+		$em = $this->get('doctrine')->getManager();
 		//Count number of isMain
-		$nbrIsMain = $this->get('doctrine')->getManager()->getRepository('KeosuCoreBundle:Page')
-											->countIsMainByAppId($appid);
-		return $this
-			->render('KeosuCoreBundle:Page:check.html.twig',
-				array('nbrIsMain' => $nbrIsMain));
+		$nbrIsMain = $em->getRepository('KeosuCoreBundle:Page')->countIsMainByAppId($appid);
+		return $this->render('KeosuCoreBundle:Page:check.html.twig',array(
+														'nbrIsMain' => $nbrIsMain
+							));
 	
 	}
 	

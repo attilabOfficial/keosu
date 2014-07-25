@@ -6,6 +6,8 @@ use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Event\GadgetPagePanelEvent;
 use Keosu\CoreBundle\Event\GadgetPanelEvent;
 
+use Symfony\Component\Form\FormView;
+
 /**
  * This class allow to personalise the list of action available in the simulator
  */
@@ -55,7 +57,7 @@ class TwigIncludePanelExtension extends \Twig_Extension {
 			'pageId'     => $pageId,
 			'gadget'     => $gadget,
 			'gadgetList' => $gadgetList
-		));;
+		));
 	}
 
 	/**
@@ -81,7 +83,7 @@ class TwigIncludePanelExtension extends \Twig_Extension {
 
 		return $this->container->get('templating')->render('KeosuCoreBundle:Page:pagePanel.html.twig', array(
 			'pageId'     => $pageId
-		));;
+		));
 	}
 
 	/**
@@ -91,8 +93,13 @@ class TwigIncludePanelExtension extends \Twig_Extension {
 	 * @param $helpMessage help message
 	 * @return html
 	 */
-	public function includePanelAppConfig($nameOfPackage,$typeOfPackage,$helpMessage) {
-		return "coucou";
+	public function includePanelAppConfig($nameOfPackage,$typeOfPackage,$helpMessage,FormView $form) {
+		return $this->container->get('templating')->render('KeosuCoreBundle:App:configPanel.html.twig', array(
+			'packageName'        => $nameOfPackage,
+			'packageHelpMessage' => $helpMessage,
+			'packageType'        => $typeOfPackage,
+			'form'               => $form
+		));
 	}
 
 

@@ -13,6 +13,7 @@ class GadgetPagePanelEvent extends Event
 	private $page;
 	private $gadget;
 	private $response;
+	private $html;
 
 	public function __construct(Page $page,Gadget $gadget)
 	{

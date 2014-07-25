@@ -85,31 +85,6 @@ class ManagePagesController extends Controller {
 		return $this->render('KeosuCoreBundle:Page:manage.html.twig',
 						array('pages' => $pages));
 	}
-	
-	/**
-	 * Delete a page
-	 */
-	public function deleteAction($id) {
-		$dispatcher = $this->get('event_dispatcher');
-		$em = $this->get('doctrine')->getManager();
-		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
-		$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($id);
-
-		foreach ($gadgets as $gadget) {
-			$event = new GadgetPageActionEvent($page,$gadget);
-			$dispatcher->dispatch(KeosuEvents::GADGET_PAGE_DELETE.$gadget->getName(),$event);
-			if($event->getResponse() !== null)
-				return $event->getResponse();
-		}
-
-		foreach($gadgets as $gadget)
-			$em->remove($gadget);
-
-		$em->remove($page);
-		$em->flush();
-
-		return $this->redirect($this->generateUrl('keosu_core_views_page_manage'));
-	}
 
 	/**
 	 * Add a new page
@@ -138,6 +113,31 @@ class ManagePagesController extends Controller {
 		}
 		
 		return $this->editPage($page);
+	}
+
+	/**
+	 * Delete a page
+	 */
+	public function deleteAction($id) {
+		$dispatcher = $this->get('event_dispatcher');
+		$em = $this->get('doctrine')->getManager();
+		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
+		$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($id);
+
+		foreach ($gadgets as $gadget) {
+			$event = new GadgetPageActionEvent($page,$gadget);
+			$dispatcher->dispatch(KeosuEvents::GADGET_PAGE_DELETE.$gadget->getName(),$event);
+			if($event->getResponse() !== null)
+				return $event->getResponse();
+		}
+
+		foreach($gadgets as $gadget)
+			$em->remove($gadget);
+
+		$em->remove($page);
+		$em->flush();
+
+		return $this->redirect($this->generateUrl('keosu_core_views_page_manage'));
 	}
 
 	/**

@@ -121,16 +121,18 @@
 					</fieldset>
 
 					<!-- TODO -->
-					<div class="row">
-						<div class="col-lg-9 col-lg-push-3">
-							<span class="help-block">The three facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>.</span>
-						</div>
-					</div>
 
-					<fieldset>
-						<legend>Preference list</legend>
-						{% include 'KeosuCoreBundle:App:editConfigParameters.html.twig' %}
-					</fieldset>
+					{% for p in packageToConfigure %}
+						{{ includePanelAppConfig(p.name,p.type,null,attribute(form.configPackages,p.name) ) }}
+					{% endfor %}
+
+<!-- The three facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>. -->
+
+					<br class="clear"/><br class="clear"/>
+					<input type="submit" class="btn btn-success" />&nbsp;
+					<a class="confirmModal" href="javascript:history.go(-1);" >
+						<button type="button" class="btn btn-danger">Cancel</button>
+					</a>
 				{{ form_end(form) }}
 			</div>
 		</div>

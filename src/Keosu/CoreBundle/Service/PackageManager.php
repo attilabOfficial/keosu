@@ -127,7 +127,7 @@ class PackageManager {
 			foreach($templates as $t) {
 				if($t == "." or $t == "..")
 					continue;
-				if($t != $this::DEFAULT_TEMPLATE_GADGET_NAME and StringUtil::endsWith($t,".html") and array_search($t.".png",$templates) === false)
+				if($t != $this::DEFAULT_TEMPLATE_GADGET_NAME && StringUtil::endsWith($t,".html") && array_search($t.".png",$templates) === false)
 					throw new \LogicException("Missing previsualisation for template ".$t." to your gadget ".$packageName." located at ".$packageLocation);
 			}
 		}
@@ -135,16 +135,30 @@ class PackageManager {
 	
 	/**
 	 * Return the config of a package
-	 * @param $packageLocation location of the package
+	 * @param $packageNameOrLocation name or location of the package
 	 * @return config of the package in an array.
 	 */
-	private function getConfigPackage($packageLocation) {
+	public function getConfigPackage($packageNameOrLocation) {
 		// TODO lock php execution
 		// TODO test json
 
+		// not a path
+		if(!strstr($packageNameOrLocation,DIRECTORY_SEPARATOR)) {
+			$em = $this->doctrine->getManager();
+			$package = $em->getRepository('KeosuCoreBundle:Package')->findOneByName($packageNameOrLocation);
+			if($package !== null)
+				$packageLocation = $package->getPath();
+			else
+				throw new \LogicException("package.json not found for package ".$packageNameOrLocation);
+		}
+
 		// check package.json existance
-		if(!is_file($packageLocation."/package.json"))
-			throw new \LogicException("package.json not found for ".$packageLocation);
+		if(strstr($packageNameOrLocation,DIRECTORY_SEPARATOR)) {
+			if(!is_file($packageNameOrLocation."/package.json"))
+				throw new \LogicException("package.json not found for ".$packageNameOrLocation);
+			else
+				$packageLocation = $packageNameOrLocation;
+		}
 		
 		return \json_decode(\file_get_contents($packageLocation."/package.json"),true);
 	}

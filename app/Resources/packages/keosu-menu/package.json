@@ -1,19 +1,22 @@
 {
-   "name" : "keosu-menu",
-   "description" : "Create a menu gadget",
-   "version" : "0.1",
-   "type" : "gadget",
-   "param" : [
-      { "pages" : [{
+    "name" : "keosu-menu",
+    "description" : "Create a menu gadget",
+    "version" : "0.1",
+    "type" : "gadget",
+    "param" : [
+        { "pages" : [{
                     "id"   : "integer",
                     "icon" : "text"
-                 }]
-      }
-   ],
-   "require" : {
-      "angularJS" : ">=1.2"
-   },
-   "configCordova" : {},
-   "libJs" : [],
-   "appParam" : []
+                    }]
+        }
+    ],
+    "require" : {
+    "angularJS" : ">=1.2"
+    },
+    "configCordova" : {},
+    "libJs" : [],
+    "appParam" : [
+        {"name" : "test" , "type" : "text"},
+        {"name" : "test2", "type" : "checkbox"}
+    ]
 }

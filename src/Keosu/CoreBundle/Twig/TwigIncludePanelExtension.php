@@ -93,7 +93,8 @@ class TwigIncludePanelExtension extends \Twig_Extension {
 	 * @param $helpMessage help message
 	 * @return html
 	 */
-	public function includePanelAppConfig($nameOfPackage,$typeOfPackage,$helpMessage,FormView $form) {
+	public function includePanelAppConfig($nameOfPackage,$typeOfPackage,$helpMessage,FormView $form)
+	{
 		return $this->container->get('templating')->render('KeosuCoreBundle:App:configPanel.html.twig', array(
 			'packageName'        => $nameOfPackage,
 			'packageHelpMessage' => $helpMessage,
@@ -103,7 +104,8 @@ class TwigIncludePanelExtension extends \Twig_Extension {
 	}
 
 
-	public function getName() {
+	public function getName()
+	{
 		return 'twig_include_panel_extension';
 	}
 

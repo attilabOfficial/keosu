@@ -19,24 +19,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Controller;
 
 use Keosu\CoreBundle\Entity\App;
+use Keosu\CoreBundle\Entity\ConfigParameters;
+
+use Keosu\CoreBundle\Form\ConfigPackageType;
+use Keosu\CoreBundle\Form\ConfigParametersType;
 
 use Keosu\CoreBundle\Util\ThemeUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\Gadget\AuthenticationGadgetBundle\AuthenticationGadget;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
-use Keosu\CoreBundle\Form\ConfigParametersType;
-use Keosu\CoreBundle\Entity\ConfigParameters;
+
 
 class ManageAppsController extends Controller {
 
 	public function viewAction() {
 		$em = $this->get('doctrine')->getManager();
 		$apps = $em->getRepository('KeosuCoreBundle:App')->findAll();
-		return $this->render('KeosuCoreBundle:App:manage.html.twig',
-						array('apps' => $apps));
+		return $this->render('KeosuCoreBundle:App:manage.html.twig',array(
+						'apps' => $apps
+		));
 	}
 
 	public function addAction() {
@@ -56,6 +58,7 @@ class ManageAppsController extends Controller {
 	private function editApp(App $app) {
 		$em = $this->get('doctrine')->getManager();
 		$request = $this->get('request');
+		$packageManager = $this->get('keosu_core.packagemanager');
 
 		$apps = $em->getRepository('KeosuCoreBundle:App')->findAll();
 		//Find existing app to know if it's the first one
@@ -93,10 +96,21 @@ class ManageAppsController extends Controller {
 						);
 			}
 		}
+
+		// find package witch need to be configured
+		$listPackage = $packageManager->getPackageList();
+		$packageToConfigure = array();
+		foreach($listPackage as $p) {
+			$config = $packageManager->getConfigPackage($p);
+			if(count($config['appParam']))
+				$packageToConfigure[] = $config;
+		}
+
 		return $this->render('KeosuCoreBundle:App:edit.html.twig',array(
-							'form' => $form->createView(),
-							'firstApp'=>$isFirstApp,
-							'themeDir'=>ThemeUtil::getThemeDir()
+							'form'               => $form->createView(),
+							'firstApp'           => $isFirstApp,
+							'themeDir'           => ThemeUtil::getThemeDir(),
+							'packageToConfigure' => $packageToConfigure
 						));
 	}
 
@@ -105,27 +119,26 @@ class ManageAppsController extends Controller {
 	 */
 	private function buildAppForm($formBuilder) {
 		$themesKeys = array_keys(ThemeUtil::getThemeList());
-		$formBuilder
-				->add('name', 'text')
-				->add('packageName','text')
-				->add('description','textarea')
-				->add('author','text',array(
-						'required' => false,
-				))
-				->add('website','url',array(
-						'required' => false,
-				))
-				->add('email','email',array(
-						'required' => false,
-				))
-				->add('debugMode','checkbox', array(
-						'required' => false,
-				))
-				->add('theme', 'choice', array(
-						'choices'  => ThemeUtil::getThemeList(),
-						'required' => true,
-						'expanded' => true))
-				->add('configParam', new ConfigParametersType());
+		$formBuilder->add('name', 'text')
+					->add('packageName','text')
+					->add('description','textarea')
+					->add('author','text',array(
+							'required' => false
+					))
+					->add('website','url',array(
+							'required' => false
+					))
+					->add('email','email',array(
+							'required' => false
+					))
+					->add('debugMode','checkbox', array(
+							'required' => false
+					))
+					->add('theme', 'choice', array(
+							'choices'  => ThemeUtil::getThemeList(),
+							'expanded' => true))
+					->add('configPackages',new ConfigPackageType($this->container,$this->get('request')))
+					->add('configParam', new ConfigParametersType());
 	}
 
 }

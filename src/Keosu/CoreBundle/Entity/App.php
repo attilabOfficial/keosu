@@ -112,6 +112,13 @@ class App
     private $debugMode;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="configPackages", type="array",nullable=true)
+     */
+    private $configPackages;
+
+    /**
      * @var ConfigParameters
      * 
      * @ORM\OneToOne(targetEntity="Keosu\CoreBundle\Entity\ConfigParameters", cascade={"persist"})
@@ -311,6 +318,29 @@ class App
     public function getDebugMode()
     {
         return $this->debugMode;
+    }
+
+    /**
+     * Set configPackages
+     *
+     * @param array $configPackages
+     * @return App
+     */
+    public function setConfigPackages($configPackages)
+    {
+        $this->configPackages = $configPackages;
+    
+        return $this;
+    }
+
+    /**
+     * Get configPackages
+     *
+     * @return array
+     */
+    public function getConfigPackages()
+    {
+        return $this->configPackages;
     }
 
     /**

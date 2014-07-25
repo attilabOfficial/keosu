@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * This class allow to personalise the config of a gadget
  */
-class ConfigType extends AbstractType {
+class ConfigGadgetType extends AbstractType {
 
 	private $dispatcher;
 
@@ -53,6 +53,6 @@ class ConfigType extends AbstractType {
 	}
 
 	public function getName() {
-		return 'Keosu_CoreBundle_configtype';
+		return 'Keosu_CoreBundle_configgadgettype';
 	}
 }

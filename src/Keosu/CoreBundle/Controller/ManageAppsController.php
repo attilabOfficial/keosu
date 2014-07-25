@@ -23,6 +23,7 @@ use Keosu\CoreBundle\Entity\ConfigParameters;
 
 use Keosu\CoreBundle\Form\ConfigPackageType;
 use Keosu\CoreBundle\Form\ConfigParametersType;
+use Keosu\CoreBundle\Form\PreferenceType;
 
 use Keosu\CoreBundle\Util\ThemeUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
@@ -136,9 +137,19 @@ class ManageAppsController extends Controller {
 					))
 					->add('theme', 'choice', array(
 							'choices'  => ThemeUtil::getThemeList(),
-							'expanded' => true))
+							'expanded' => true
+					))
 					->add('configPackages',new ConfigPackageType($this->container,$this->get('request')))
-					->add('configParam', new ConfigParametersType());
+					->add('preferences', 'collection',array(
+						'type'         => new PreferenceType(),
+						'required'     => false,
+						'label'        => "Edit preference",
+						'allow_add'    => true,
+						'allow_delete' => true,
+						'by_reference' => true,
+						'options'      => array(
+							'label'   => false,
+						)));
 	}
 
 }

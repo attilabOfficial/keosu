@@ -126,7 +126,11 @@
 						{{ includePanelAppConfig(p.name,p.type,null,attribute(form.configPackages,p.name) ) }}
 					{% endfor %}
 
-<!-- The three facebook field are only required if you plan to use facebook on your application. You can get the two required information <a href="https://developers.facebook.com/?ref=pf">here</a>. -->
+					<fieldset>
+						<legend>Preferences</legend>
+						{{ form_row(form.preferences) }}
+					</fieldset>
+
 
 					<br class="clear"/><br class="clear"/>
 					<input type="submit" class="btn btn-success" />&nbsp;

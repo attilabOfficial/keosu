@@ -43,7 +43,30 @@ class App
         $this->website = 'http://keosu.com';
         $this->email = 'vleborgne@keosu.com';
         $this->theme = array_keys(ThemeUtil::getThemeList())[0];
-        $this->configParam = new ConfigParameters();
+        $this->preferences = array(
+                // If you do not want any permissions to be added to your app, add the
+                // following tag to your config.xml; you will still have the INTERNET
+                // permission on your app, which PhoneGap requires.
+                array("key"=>"permissions"                ,"value"=> "none"),
+                array("key"=>"phonegap-version"           ,"value"=> "3.1.0" ), // all: current version of PhoneGap
+                array("key"=>"orientation"                ,"value"=> "default" ), // all: default means both landscape and portrait are enabled
+                array("key"=>"target-device"              ,"value"=> "universal" ), // all: possible values handset, tablet, or universal
+                array("key"=>"Fullscreen"                 ,"value"=> "true" ), // all: hides the status bar at the top of the screen
+                array("key"=>"webviewbounce"              ,"value"=> "true" ), // ios: control whether the screen 'bounces' when scrolled beyond the top
+                array("key"=>"prerendered-icon"           ,"value"=> "true" ), // ios: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen
+                array("key"=>"stay-in-webview"            ,"value"=> "false" ), // ios: external links should open in the default browser, 'true' would use the webview the app lives in
+                array("key"=>"ios-statusbarstyle"         ,"value"=> "black-opaque"), // ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar
+                array("key"=>"detect-data-types"          ,"value"=> "true" ), // ios: controls whether data types (such as phone no. and dates) are automatically turned into links by the system
+                array("key"=>"exit-on-suspend"            ,"value"=> "true" ), // ios: if set to true, app will terminate when home button is pressed
+                array("key"=>"Show-splash-screen-spinner" ,"value"=> "true" ), // ios: if set to false, the spinner won't appear on the splash screen during app loading
+                array("key"=>"auto-hide-splash-screen"    ,"value"=> "false" ), // ios: if set to false, the splash screen must be hidden using a JavaScript API
+                array("key"=>"disable-cursor"             ,"value"=> "false" ), // blackberry: prevents a mouse-icon/cursor from being displayed on the app
+                array("key"=>"android-minSdkVersion"      ,"value"=> "7" ), // android: MIN SDK version supported on the target device. MAX version is blank by default.
+                array("key"=>"android-installLocation"    ,"value"=> "auto" ), // android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard.
+                array("key"=>"DisallowOverscroll"         ,"value"=> "true" ),
+                array("key"=>"splash-screen-duration"     ,"value"=> "10000"),
+                array("key"=>"disallowOverscroll"         ,"value"=> "true" )
+        );
     }
 
     /**
@@ -119,11 +142,11 @@ class App
     private $configPackages;
 
     /**
-     * @var ConfigParameters
-     * 
-     * @ORM\OneToOne(targetEntity="Keosu\CoreBundle\Entity\ConfigParameters", cascade={"persist"})
+     * @var array
+     *
+     * @ORM\Column(name="preferences", type="array",nullable=true)
      */
-    private $configParam;
+    private $preferences;
     
     
     /**
@@ -344,22 +367,22 @@ class App
     }
 
     /**
-     * Get configParam
+     * Get preferences
      *
-     * @return ConfigParam
+     * @return array
      */
-    public function getConfigParam(){
-        return $this->configParam;
+    public function getPreferences(){
+        return $this->preferences;
     }
 
     /**
-     * Set configParam
+     * Set preferences
      *
-     * @param ConfigParam $configParam
+     * @param array $preferences
      * @return App
      */
-    public function setConfigParam(ConfigParameters $configParam){
-        $this->configParam = $configParam;
+    public function setPreferences($preferences) {
+        $this->preferences = $preferences;
         return this;
     }
 }

@@ -1,4 +1,4 @@
-var app = angular.module('keosuApp', ['angular-chrono', 'angularSpinner', 'ngSanitize', 'ngTouch', 'ngRoute','angular-inview','LocalStorageModule']);
+var app = angular.module('keosuApp', ['angular-chrono', 'angularSpinner', 'ngSanitize', 'ngTouch', 'ngRoute','angular-inview','LocalStorageModule','CacheManagerModule']);
 
 app.controller('main_Controller', function($http, $scope) {
 		$http.get('data/appName.json').success( function (data) {
@@ -7,8 +7,7 @@ app.controller('main_Controller', function($http, $scope) {
 });
 
 //Offline Mode
-
-document.addEventListener("offline",
+	document.addEventListener("offline",
         function(){
             alert("Perte du r&eacute;seau. La page sera recharg&eacute;e; d&eacute;s que possible");
 		    document.addEventListener("online",
@@ -16,9 +15,8 @@ document.addEventListener("offline",
 					alert("Reconnection !");
 					document.removeEventListener("online",function(){},false);
 					location.reload();
-		            //window.location="index.html";
-		    }, false);
 		}, false);
+	}, false);
 
 
 

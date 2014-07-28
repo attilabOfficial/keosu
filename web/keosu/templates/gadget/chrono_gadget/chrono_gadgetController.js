@@ -28,14 +28,12 @@ app.controller('chrono_gadgetController', function ($scope, usSpinnerService, ch
 		$scope.isStart = "disabled";
 		$scope.isStop = "";
 		$scope.time = Date.now();
-		$('#networkStatus').addClass('open');
 		chronoService.start();
 	};
 	$scope.stop = function() {
 		$scope.isStop = "disabled";
 		$scope.isStart = "";
 		$scope.time = Date.now();
-	    $('#networkStatus').removeClass('open');
 		chronoService.stop();
 	};	
 });

@@ -20,7 +20,7 @@
  */
 
 //Main function
-app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
+app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -101,7 +101,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 		var date_ms = 0; var title = ""; var location = ""; var notes = ""; var startDate; var endDate;
 		// First, it is necessary to load the file with the events informations
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		$http.get($scope.host + $scope.param + 'service/gadget/calendar/view/' + page_id + '/json', {timeout: 10000}).success(function (data){
+		data = cacheManagerService.get($scope.param.gadget, $scope.param.host + 'service/gadget/calendar/view/' + page_id + '/json', {timeout: 10000}).success(function (data){
 				// If the file has been loaded, we execute the following code
 				usSpinnerService.stop('spinner');
 				// The data is stored in variables which can be readed from the html (with $scope)
@@ -115,7 +115,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				$scope.anEvent.description = decodedContent(data[0].description);
 				$scope.anEvent.description = $sce.trustAsHtml($scope.anEvent.description);
 				// Here, we use the data for the phone's calendar
-				notes = $scope.strip(description_html);
+				notes = $scope.strip($scope.anEvent.description);
 				date_ms = data[0].date_ms;
 				startDate = new Date(parseInt(date_ms));
 				endDate = new Date();
@@ -276,15 +276,18 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	
 	// When the page is loaded, this function is called
 	$scope.init = function (host, param, page, gadget, zone){ 
-		// At the beginning, we display the calendar
-		$scope.parts(true, false, $scope);
+		$scope.param = {
+				'host'   : host+param,
+				'page'   : page,
+				'gadget' : gadget,
+				'zone'   : zone,
+				'offset':(0)
+			}
 		
-		// We store the parameters information, we need it the functions
-		$scope.host = host;
-		$scope.param = param;
+		// At the beginning, we display the calendar
+		$scope.parts(true, false, $scope);	
 		
 		// The first page to display is number 0
-		var offset = (0);
 		$scope.activePage = {
 				page:0
 		};
@@ -293,48 +296,49 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 		var test_init = document.getElementById('init_calendar');
 		if (test_init!=null){
 			// This is the table calendar, send the information
-			init_calendar( host + param + 'service/gadget/calendar/1/json');
+			init_calendar( $scope.param.host+ 'service/gadget/calendar/1/json');
 		} else {
 			// This is the list calendar, load the file with the events informations
-			$http.get(host + param + 'service/gadget/calendar/' + gadget + '/' + offset + '/' + 'json', {timeout: 10000}).success( function (data) {
-				// The file has been loaded successfully, we initialize the event list
-				$tmp = [];	
-				// While there are datas to use
-				for (i = 0; i < data.data.length; i++) {
-					// The data is stored
-					$tmp[i]=data.data[i];
-					decodedContent = data.data[i].name;
-					decodedContent = $('<div/>').html(decodedContent).text();
-					decodedContent = decodedContent.replace(/[/\\*]/g, "");
-					$tmp[i].name = decodedContent;
-					decodedContent = data.data[i].date;
-					decodedContent = $('<div/>').html(decodedContent).text();
-					decodedContent = decodedContent.replace(/[/\\*]/g, "");
-					$tmp[i].date = decodedContent;
-				}
-
-				nb = 0;
-				pages = new Array();
-				// Display the good informations
-				for (i = 0; i < $tmp.length; i++) {
-					tmpPage = [];
-					for (j = 0; j < data.eventsperpage; j++) {
-					
-						if (!$tmp[i])
-							break;
-						tmpPage[j] = $tmp[i];
-						i++;
+			data = cacheManagerService.get($scope.param.gadget, $scope.param.host+ 'service/gadget/calendar/' + $scope.param.gadget + '/' + $scope.param.offset + '/' + 'json', {timeout: 10000})
+				.success( function (data) {
+					// The file has been loaded successfully, we initialize the event list
+					$tmp = [];	
+					// While there are datas to use
+					for (i = 0; i < data.data.length; i++) {
+						// The data is stored
+						$tmp[i]=data.data[i];
+						decodedContent = data.data[i].name;
+						decodedContent = $('<div/>').html(decodedContent).text();
+						decodedContent = decodedContent.replace(/[/\\*]/g, "");
+						$tmp[i].name = decodedContent;
+						decodedContent = data.data[i].date;
+						decodedContent = $('<div/>').html(decodedContent).text();
+						decodedContent = decodedContent.replace(/[/\\*]/g, "");
+						$tmp[i].date = decodedContent;
 					}
-					i--;
-					pages[nb] = tmpPage;
-					nb++;
-				}
-				$scope.pages = pages;
-			}).error(function (response, data, status, header) {
-				// The file could not have been loaded
-				usSpinnerService.stop('spinner');
-				alert('Failed to load file...');
-			});
+	
+					nb = 0;
+					pages = new Array();
+					// Display the good informations
+					for (i = 0; i < $tmp.length; i++) {
+						tmpPage = [];
+						for (j = 0; j < data.eventsperpage; j++) {
+						
+							if (!$tmp[i])
+								break;
+							tmpPage[j] = $tmp[i];
+							i++;
+						}
+						i--;
+						pages[nb] = tmpPage;
+						nb++;
+					}
+					$scope.pages = pages;
+				}).error(function (response, data, status, header) {
+					// The file could not have been loaded
+					usSpinnerService.stop('spinner');
+					alert('Failed to load file...');
+				});
 		}
 		
 		usSpinnerService.stop('spinner');
@@ -344,7 +348,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	// Comment part
 	/////////////////////////
 	$scope.commentListAction = function() {
-		$http.get($scope.host + $scope.param +'service/gadget/comment/'+$scope.anEvent.dataModelObjectName+'/'+$scope.anEvent.id).success(function(data){
+		$http.get($scope.param.host +'service/gadget/comment/'+$scope.anEvent.dataModelObjectName+'/'+$scope.anEvent.id).success(function(data){
 			$scope.comments = data.comments;
 			$scope.connect = data.connect;
 		});
@@ -353,7 +357,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 	$scope.commentAddAction = function() {
 		var data = "message="+$scope.messageComment;
 		$scope.messageComment = "";
-		$http.post($scope.host + $scope.param +'service/gadget/comment/'+$scope.anEvent.dataModelObjectName+'/'+$scope.anEvent.id,data).success(function(data){
+		$http.post($scope.param.host +'service/gadget/comment/'+$scope.anEvent.dataModelObjectName+'/'+$scope.anEvent.id,data).success(function(data){
 			$scope.comments = data.comments;
 			$scope.connect = data.connect;
 		});

@@ -18,8 +18,7 @@
 
 //Main function
 
-app.controller('article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
-	console.log(usSpinnerService);
+app.controller('article_gadgetController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
 	/////////////////////////
@@ -41,24 +40,26 @@ app.controller('article_gadgetController', function ($scope, $http, $sce, usSpin
 	/////////////////////////
 	$scope.articleInit = function() {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		$http.get($scope.param.host+ 'service/gadget/article/' + $scope.param.gadget + '/json').success(function(data) {
-			usSpinnerService.stop('spinner');
-			$scope.article = data[0];
-			$scope.article.content = decodedContent(data[0].content);
-			$scope.article.title = decodedContent(data[0].title);
-			$scope.article.content = $sce.trustAsHtml($scope.article.content);
-			$scope.commentListAction();
-		});
+		data = cacheManagerService.get($scope.param.gadget, $scope.param.host+ 'service/gadget/article/' + $scope.param.gadget + '/json')
+			.success(function(data) {
+				usSpinnerService.stop('spinner');
+				$scope.article = data[0];
+				$scope.article.content = decodedContent(data[0].content);
+				$scope.article.title = decodedContent(data[0].title);
+				$scope.article.content = $sce.trustAsHtml($scope.article.content);
+				$scope.commentListAction();
+			});
 	};
 	
 	/////////////////////////
 	// Comment part
 	/////////////////////////
 	$scope.commentListAction = function() {
-		$http.get($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id).success(function(data){
-			$scope.comments = data.comments;
-			$scope.connect = data.connect;
-		});
+		$http.get($scope.param.host+'service/gadget/comment/'+$scope.article.dataModelObjectName+'/'+$scope.article.id)
+			.success(function(data){
+				$scope.comments = data.comments;
+				$scope.connect = data.connect;
+			});
 	};
 	
 	$scope.commentAddAction = function() {

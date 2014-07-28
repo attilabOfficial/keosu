@@ -18,7 +18,7 @@
 
 //Main function
 
-app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
+app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {
 
 	////////////////////////////
 	// init part
@@ -39,21 +39,22 @@ app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerS
 	$scope.showMapAction = function () {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 
-		$http.get($scope.param.host+'service/gadget/mapgadget/'+$scope.param.gadget+ '/json').success( function (data) {
-					usSpinnerService.stop('spinner');
-					$scope.map = data[0];
-					var map = $scope.initialize();
-					$scope.title = $('<div/>').html(data[0].name).text();
-					$scope.content = $sce.trustAsHtml(decodedContent(data[0].description));
-					map.setZoom(8);
-					google.maps.event.trigger($("#map_canvas")[0], 'resize');
-					var latitudeAndLongitude = new google.maps.LatLng(data[0].lat,data[0].lng);
-					map.setCenter(latitudeAndLongitude);
-					markerOne = new google.maps.Marker({
-						position: latitudeAndLongitude,
-						map: map
+		data = cacheManagerService.get($scope.param.gadget, $scope.param.host+'service/gadget/mapgadget/'+$scope.param.gadget+ '/json')
+			.success( function (data) {
+						usSpinnerService.stop('spinner');
+						$scope.map = data[0];
+						var map = $scope.initialize();
+						$scope.title = $('<div/>').html(data[0].name).text();
+						$scope.content = $sce.trustAsHtml(decodedContent(data[0].description));
+						map.setZoom(8);
+						google.maps.event.trigger($("#map_canvas")[0], 'resize');
+						var latitudeAndLongitude = new google.maps.LatLng(data[0].lat,data[0].lng);
+						map.setCenter(latitudeAndLongitude);
+						markerOne = new google.maps.Marker({
+							position: latitudeAndLongitude,
+							map: map
+						});
 					});
-				});
 	};
 	
 	$scope.initialize = function() {

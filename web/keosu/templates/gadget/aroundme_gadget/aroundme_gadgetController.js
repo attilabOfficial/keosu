@@ -17,7 +17,7 @@
  ************************************************************************/
 
 //Main controller
-app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
+app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {
 	//Functions
 	$scope.parts=function(isList, isMap, $scope) {
 		$scope.isList = isList;
@@ -37,8 +37,8 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
 	}
 	$scope.open = function (page) {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		$http.get($scope.host + $scope.param + 'service/gadget/aroundme/view/'
-				+ page.id + '/json').success(function (data){
+		data = cacheManagerService.get($scope.param.gadget, $scope.param.host + 'service/gadget/aroundme/view/'+ page.id + '/json')
+				.success(function (data){
 					usSpinnerService.stop('spinner');
 					$scope.myMap = data[0];
 					$scope.myMap.description = $sce.trustAsHtml(decodedContent(data[0].description));
@@ -64,15 +64,20 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
 	};
 	
 	$scope.init = function (host, param, page, gadget, zone) {
+			$scope.param = {
+				'host'   : host+param,
+				'page'   : page,
+				'gadget' : gadget,
+				'zone'   : zone,
+			};
 			$scope.parts(true, false, $scope);
 			usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-			$scope.host = host;
-			$scope.param = param;
 	
 			var onGpsSuccess = function(position) {
-				$http.get(host +param + 'service/gadget/aroundme/' + gadget +'/'
+				data = cacheManagerService.get($scope.param.gadget, $scope.param.host + 'service/gadget/aroundme/' + gadget +'/'
 						+ position.coords.latitude + '/'
-						+ position.coords.longitude + '/0/' + '10' + '/json').success(function (data) {
+						+ position.coords.longitude + '/0/' + '10' + '/json')
+						.success(function (data) {
 							usSpinnerService.stop('spinner');
 							$tmp = [];		
 							for (i = 0; i < data.data.length; i++) {

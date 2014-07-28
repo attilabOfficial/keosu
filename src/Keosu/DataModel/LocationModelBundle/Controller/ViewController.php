@@ -16,23 +16,24 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-namespace Keosu\CoreBundle\Controller;
+
+namespace Keosu\DataModel\LocationModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class PageServiceController extends Controller {
-
-	/**
-	 * REST service returning the list of all pages
-	 */
-	public function listAction($format) {
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-		
-		$contents = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
+/**
+ * Controller to view edit pois page
+ * @author vleborgne
+ *
+ */
+class ViewController extends Controller {
+	public function viewAction() {
+		$repo = $this->get('doctrine')->getManager()
+				->getRepository(
+						'KeosuDataModelLocationModelBundle:Location');
+		$pois = $repo->findAll();
 		return $this
-				->render(
-						'KeosuCoreBundle:Page/Service:list.' . $format
-								. '.twig', array('contents' => $contents));
+				->render('KeosuDataModelLocationModelBundle:View:view.html.twig',
+						array('pois' => $pois));
 	}
 }

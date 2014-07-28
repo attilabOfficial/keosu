@@ -32,7 +32,7 @@ class ServiceController extends Controller {
 		$gadgetConfig = $gadget->getConfig();
 		$poi = $this->get('doctrine')->getManager()
 				->getRepository(
-						'KeosuDataModelMapModelBundle:PointOfInterest')
+						'KeosuDataModelLocationModelBundle:Location')
 				->find($gadgetConfig["poi-id"]);
 		return $this
 				->render(

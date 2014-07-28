@@ -28,7 +28,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class PageStudioController extends Controller {
+class PageStudioController extends Controller implements MenuProviderController{
 
 	/**
 	 * Display a page in studio and allow to add/edit gadget

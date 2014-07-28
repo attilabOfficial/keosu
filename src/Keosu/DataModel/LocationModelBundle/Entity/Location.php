@@ -17,19 +17,19 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
-namespace Keosu\DataModel\MapModelBundle\Entity;
+namespace Keosu\DataModel\LocationModelBundle\Entity;
 
 use Keosu\CoreBundle\Entity\Model\DataModel;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Keosu\DataModel\MapModelBundle\Entity\PointOfInterest
+ * Keosu\DataModel\LocationModelBundle\Entity\Location
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Keosu\DataModel\MapModelBundle\Entity\PointOfInterestRepository")
+ * @ORM\Entity(repositoryClass="Keosu\DataModel\LocationModelBundle\Entity\LocationRepository")
  */
-class PointOfInterest extends DataModel{
+class Location extends DataModel{
 	/**
 	 * @var string
 	 *
@@ -67,7 +67,7 @@ class PointOfInterest extends DataModel{
 	 * Set name
 	 *
 	 * @param string $name
-	 * @return PointOfInterest
+	 * @return Location
 	 */
 	public function setName($name) {
 		$this->name = $name;
@@ -88,7 +88,7 @@ class PointOfInterest extends DataModel{
 	 * Set description
 	 *
 	 * @param string $description
-	 * @return PointOfInterest
+	 * @return Location
 	 */
 	public function setDescription($description) {
 		$this->description = $description;
@@ -109,7 +109,7 @@ class PointOfInterest extends DataModel{
 	 * Set lat
 	 *
 	 * @param float $lat
-	 * @return PointOfInterest
+	 * @return Location
 	 */
 	public function setLat($lat) {
 		$this->lat = $lat;
@@ -130,7 +130,7 @@ class PointOfInterest extends DataModel{
 	 * Set lng
 	 *
 	 * @param float $lng
-	 * @return PointOfInterest
+	 * @return Location
 	 */
 	public function setLng($lng) {
 		$this->lng = $lng;

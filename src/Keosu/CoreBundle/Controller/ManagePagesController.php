@@ -24,7 +24,7 @@ use Keosu\CoreBundle\Entity\Page;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ManagePagesController extends Controller {
+class ManagePagesController extends Controller implements MenuProviderController{
 	//List of available icons
 	//Can be extend using http://getbootstrap.com/components/#glyphicons
 	public $iconList = array(
@@ -119,6 +119,7 @@ class ManagePagesController extends Controller {
 			$this->get('doctrine')->getManager()->remove($page);
 			$this->get('doctrine')->getManager()->flush();
 		}
+		$this->get("session")->set('pages', null);
 		return $this->redirect(
 						$this->generateUrl('keosu_core_views_page_manage')
 					);
@@ -181,6 +182,7 @@ class ManagePagesController extends Controller {
 				$em->flush();
 				//Export app to see new page in simulator
 				$this->container->get('keosu_core.exporter')->exportApp();
+				$this->get("session")->set('pages', null);
 				return $this
 						->redirect(
 								$this

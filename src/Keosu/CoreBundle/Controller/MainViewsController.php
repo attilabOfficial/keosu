@@ -27,7 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @author vleborgne
  *
  */
-class MainViewsController extends Controller{
+class MainViewsController extends Controller implements MenuProviderController{
 	
 	/**
 	 * Display the Configuration page

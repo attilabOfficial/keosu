@@ -32,7 +32,7 @@ class ServiceController extends Controller {
 				'- radians(' . $lng . ') )' .
 				'+ sin( radians(' . $lat . ') )' .
 				'* sin( radians( a.lat ) ) ) ) as distance';
-		$queryString=$queryString.' FROM Keosu\DataModel\MapModelBundle\Entity\PointOfInterest a';
+		$queryString=$queryString.' FROM Keosu\DataModel\LocationModelBundle\Entity\Location a';
 		$queryString=$queryString.' ORDER BY distance';
 		
 		$query=$this->get('doctrine')->getManager()->createQuery($queryString);
@@ -46,7 +46,7 @@ class ServiceController extends Controller {
 		foreach($poisORM as $poiORM)
 		{
 			$repo = $this->get('doctrine')->getManager()
-				->getRepository('KeosuDataModelMapModelBundle:PointOfInterest');
+				->getRepository('KeosuDataModelLocationModelBundle:Location');
 			$poi = $repo->find($poiORM['id']);
 			$poi->setDistance($poiORM['distance']);
 			$pois[]=$poi;
@@ -61,7 +61,7 @@ class ServiceController extends Controller {
 	
 	public function viewOneAction($poiid,$format){
 		$repo = $this->get('doctrine')->getManager()
-			->getRepository('KeosuDataModelMapModelBundle:PointOfInterest');
+			->getRepository('KeosuDataModelLocationModelBundle:Location');
 		$poi = $repo->find($poiid);
 		return $this
 			->render(

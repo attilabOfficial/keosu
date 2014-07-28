@@ -13,3 +13,7 @@ services:
         class: Keosu\CoreBundle\Form\Extension\ImageTypeExtension
         tags:
             - { name: form.type_extension, alias: file }
+    keosu_core.menuprovider.action_listener:
+        class: Keosu\CoreBundle\EventListener\MenuProviderListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }

@@ -42,7 +42,7 @@ class KeosuExtension {
 	
 	public static $dataModelList = array(
 			'article'  => 'KeosuDataModelArticleModelBundle:ArticleBody',
-			'location' => 'KeosuDataModelMapModelBundle:PointOfInterest',
+			'location' => 'KeosuDataModelLocationModelBundle:Location',
 			'picture'  => 'KeosuDataModelPictureModelBundle:Picture',
 			'event'    => 'KeosuDataModelEventModelBundle:Event',
 	);

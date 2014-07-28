@@ -21,7 +21,7 @@ namespace Keosu\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Keosu\CoreBundle\KeosuExtension;
 
-class ManageReadersController extends Controller {
+class ManageReadersController extends Controller implements MenuProviderController{
 
 	/**
 	 * Create a form to choose the type of reader we want to add

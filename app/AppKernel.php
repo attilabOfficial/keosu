@@ -27,7 +27,7 @@ class AppKernel extends Kernel
             new Keosu\Gadget\LastArticleGadgetBundle\KeosuGadgetLastArticleGadgetBundle(),
             new Keosu\UserBundle\KeosuUserBundle(),
             new Keosu\Gadget\ChronoGadgetBundle\KeosuGadgetChronoGadgetBundle(),
-            new Keosu\DataModel\MapModelBundle\KeosuDataModelMapModelBundle(),
+            new Keosu\DataModel\LocationModelBundle\KeosuDataModelLocationModelBundle(),
            	new Keosu\Gadget\MapGadgetBundle\KeosuGadgetMapGadgetBundle(),
             new Keosu\Gadget\MenuGadgetBundle\KeosuGadgetMenuGadgetBundle(),
         	new Keosu\Reader\RssReaderBundle\KeosuReaderRssReaderBundle(),

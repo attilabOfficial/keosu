@@ -31,7 +31,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @author vleborgne
  *
  */
-class GadgetEditController extends Controller {
+class GadgetEditController extends Controller implements MenuProviderController{
 	/**
 	 * Clean a zone and delete all the gadgets inside
 	 * @param  $page where we want to delete the gadget

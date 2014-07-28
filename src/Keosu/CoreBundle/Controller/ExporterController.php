@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ExporterController extends Controller {
+class ExporterController extends Controller implements MenuProviderController {
 
 	/***
 	 * Call export service (Keosu\CoreBundle\Service Exporter )

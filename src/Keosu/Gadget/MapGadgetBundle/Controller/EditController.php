@@ -39,7 +39,7 @@ class EditController extends GadgetEditController implements iGadgetController {
 	public function buildGadgetForm($formBuilder, $gadgetName) {
 		$pois = $this->get('doctrine')->getManager()
 				->getRepository(
-						'KeosuDataModelMapModelBundle:PointOfInterest')
+						'KeosuDataModelLocationModelBundle:Location')
 				->findAll();
 		$poiList = Array();
 		foreach ($pois as $poi) {

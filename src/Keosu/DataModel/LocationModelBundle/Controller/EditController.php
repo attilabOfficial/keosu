@@ -17,8 +17,8 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
-namespace Keosu\DataModel\MapModelBundle\Controller;
-use Keosu\DataModel\MapModelBundle\Entity\PointOfInterest;
+namespace Keosu\DataModel\LocationModelBundle\Controller;
+use Keosu\DataModel\LocationModelBundle\Entity\Location;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -33,8 +33,8 @@ class EditController extends Controller {
 	 * add map object action
 	 */
 	public function addAction() {
-		$poi = new PointOfInterest();
-		return $this->editPointOfInterest($poi);
+		$poi = new Location();
+		return $this->editLocation($poi);
 	}
 
 	/**
@@ -42,15 +42,15 @@ class EditController extends Controller {
 	 */
 	public function editAction($id) {
 		$em = $this->getDoctrine()->getManager();
-		$poi = $em->getRepository('KeosuDataModelMapModelBundle:PointOfInterest')->find($id);
-		return $this->editPointOfInterest($poi);
+		$poi = $em->getRepository('KeosuDataModelLocationModelBundle:Location')->find($id);
+		return $this->editLocation($poi);
 	}
 	/**
 	 * delete map object action
 	 */
 	public function deleteAction($id) {
 		$em = $this->getDoctrine()->getManager();
-		$poi = $em->getRepository('KeosuDataModelMapModelBundle:PointOfInterest')->find($id);
+		$poi = $em->getRepository('KeosuDataModelLocationModelBundle:Location')->find($id);
 
 		if ($poi->getReader() === null) {
 			$em->remove($poi);
@@ -63,8 +63,8 @@ class EditController extends Controller {
 	 * Common function to edit/add a poi
 	 * Manage form and store object in database
 	 */
-	private function editPointOfInterest($poi) {
-		$form = $this->getPointOfInterestForm($poi);
+	private function editLocation($poi) {
+		$form = $this->getLocationForm($poi);
 
 		$request = $this->get('request');
 
@@ -81,7 +81,7 @@ class EditController extends Controller {
 			}
 		}
 		return $this
-				->render('KeosuDataModelMapModelBundle:Edit:edit.html.twig',
+				->render('KeosuDataModelLocationModelBundle:Edit:edit.html.twig',
 						array('form' => $form->createView(),
 								'poiid' => $poi->getId()));
 	}
@@ -89,7 +89,7 @@ class EditController extends Controller {
 	/**
 	 * Build POI specific form
 	 */
-	private function getPointOfInterestForm($poi) {
+	private function getLocationForm($poi) {
 		return $this->createFormBuilder($poi)
 				->add('name', 'text')
 				->add('description', 'text')

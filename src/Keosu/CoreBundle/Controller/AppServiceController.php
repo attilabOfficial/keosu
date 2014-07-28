@@ -27,13 +27,11 @@ class AppServiceController extends Controller {
 	 */
 	public function listAction($format) {
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-		if($appid==0 || $appid==null){
-			return null;
-		}
 		$curAppName = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:App')->find($appid)->getName();
 		$contents = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:App')->findAll();
+		//If appid is null the template will be blank
 		return $this
 				->render(
 						'KeosuCoreBundle:App/Service:list.' . $format

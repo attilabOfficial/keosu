@@ -70,7 +70,7 @@ doctrine:
                 connection: default
                 mappings:
                     KeosuDataModelArticleModelBundle: ~
-                    KeosuDataModelMapModelBundle: ~
+                    KeosuDataModelLocationModelBundle: ~
                     KeosuDataModelPictureModelBundle: ~
                     KeosuDataModelEventModelBundle: ~
                     KeosuGadgetCommentGadgetBundle: ~

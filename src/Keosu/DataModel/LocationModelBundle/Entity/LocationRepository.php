@@ -16,24 +16,13 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-
-namespace Keosu\DataModel\MapModelBundle\Controller;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+namespace Keosu\DataModel\LocationModelBundle\Entity;
+use Doctrine\ORM\EntityRepository;
 
 /**
- * Controller to view edit pois page
- * @author vleborgne
+ * LocationRepository
  *
  */
-class ViewController extends Controller {
-	public function viewAction() {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelMapModelBundle:PointOfInterest');
-		$pois = $repo->findAll();
-		return $this
-				->render('KeosuDataModelMapModelBundle:View:view.html.twig',
-						array('pois' => $pois));
-	}
+class LocationRepository extends EntityRepository {
+
 }

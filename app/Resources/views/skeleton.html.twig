@@ -36,13 +36,16 @@
 									<br/>
 
 									<div class="dropdown" id="applist">
-										<script type="text/javascript" charset="utf-8">
-												$(document).ready(function() {
-													$.get('{{path('keosu_core_app_service_list',{'format':'html'}) }}', function(data) {
-														$('#applist').html(data);
-													});
-												} );
-										</script>
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+											<span class="glyphicon glyphicon-eye-open"></span>
+											<b>Current app is : </b>{{ app.session.get('curapp_name') }} <b class="caret"></b></a>
+										<ul class="dropdown-menu">
+											{% for app in app.session.get('applist') %}
+												<li role="presentation">
+													<a href="{{ path('keosu_changeapp',{'appid':app.id}) }}">{{ app.name }}</a>
+												</li>
+											{% endfor %}
+										</ul>
 									</div>
 									<div class="separator">&nbsp;</div>
 									{% block contentmenu %}

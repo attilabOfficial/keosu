@@ -35,7 +35,7 @@ use Keosu\CoreBundle\Form\IconsType;
 use Keosu\CoreBundle\Util\FilesUtil;
 use Keosu\CoreBundle\Util\ExporterUtil;
 
-class ManageAppsController extends Controller {
+class ManageAppsController extends Controller implements MenuProviderController{
 
 	/**
 	 * "Manage apps" page
@@ -83,6 +83,7 @@ class ManageAppsController extends Controller {
 			//Copy older splashscreens and icons in a temp repertory
 			FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir($app->getId()), ExporterUtil::getSplashsIconesDir("tmp"));
 		}
+
 		
 		//Form and store action are shared with editAction
 		return $this->editApp($app);
@@ -94,10 +95,6 @@ class ManageAppsController extends Controller {
 	 * Shared function to edit/add an app
 	 */
 	private function editApp($app) {
-		
-		
-		
-		
 		//Find existing app to know if it's the first one
 		$apps = $this->get('doctrine')->getManager()
 			->getRepository('KeosuCoreBundle:App')->findAll();
@@ -182,8 +179,12 @@ class ManageAppsController extends Controller {
 				}
 				$em->flush();
 
+				//Clean session
 				$session = $this->get("session");
 				$session->set("appid",$app->getId());
+				$session->set('curapp_name', null);
+				$session->set('applist', null);
+				$session->set('pages', null);
 				
 
 				//Copy splashscreens and icons

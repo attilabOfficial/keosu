@@ -1,6 +1,6 @@
 <?php
 /************************************************************************
- Keosu is an open source CMS for mobile app
+Keosu is an open source CMS for mobile app
 Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
 This program is free software: you can redistribute it and/or modify
@@ -15,24 +15,9 @@ GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-************************************************************************/
+ ************************************************************************/
 namespace Keosu\CoreBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-class PageServiceController extends Controller {
-
-	/**
-	 * REST service returning the list of all pages
-	 */
-	public function listAction($format) {
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-		
-		$contents = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
-		return $this
-				->render(
-						'KeosuCoreBundle:Page/Service:list.' . $format
-								. '.twig', array('contents' => $contents));
-	}
+interface MenuProviderController
+{
 }

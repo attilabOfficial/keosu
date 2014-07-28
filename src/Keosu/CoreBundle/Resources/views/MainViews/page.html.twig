@@ -26,7 +26,17 @@
 				&nbsp;Pages
 		</a>
 	</div>
- 	{% include "KeosuCoreBundle:Page:view.html.twig"%} 
+	<a class="sidebarlink" href="{{ path('keosu_core_views_page_manage') }}">
+		Manage Pages
+	</a>
+
+	<div id="pagelist-result">
+		{% for content in app.session.get('pages') %}
+			<div>
+				<a class="sidebarlink" href="{{ path('keosu_core_views_page',{'id':content.id}) }}">Edit {{ content.name }}</a>
+			</div>
+		{% endfor %}
+	</div>
 	<div>&nbsp;</div>
 {% endblock %}
 

@@ -28,6 +28,8 @@ class ChangeAppController extends Controller {
 	public function changeAppAction($appid) {
 		$session = $this->get("session");
 		$session->set("appid",$appid);
+		$session->set('curapp_name', null);
+		$session->set('pages', null);
 		$this->container->get('keosu_core.exporter')->exportApp();
 		return $this->redirect($this->get('request')->headers->get('referer'));
 	}

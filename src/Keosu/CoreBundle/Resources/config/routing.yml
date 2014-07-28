@@ -82,22 +82,10 @@ keosu_core_theme_manage_add:
 keosu_core_theme_manage_edit:
     pattern:  /theme/manage/edit/{id}
     defaults: { _controller: KeosuCoreBundle:ManageThemes:edit }
-    
-keosu_core_views_content_service_list:
-    pattern:  /service/views/content/list/{format}
-    defaults: { _controller: KeosuCoreBundle:DataModelService:list }
-    
-keosu_core_views_page_service_list:
-    pattern:  /service/views/page/list/{format}
-    defaults: { _controller: KeosuCoreBundle:PageService:list }
  
 keosu_gadget_delete:
     pattern:  /views/page/gadget/delete/{page}/{zone}
     defaults: { _controller: KeosuCoreBundle:GadgetEdit:delete }
-
-keosu_core_app_service_list:
-    pattern:  /service/app/list/{format}
-    defaults: { _controller: KeosuCoreBundle:AppService:list }
     
 keosu_ReaderManager_manage:
     pattern:  /content/reader/manage

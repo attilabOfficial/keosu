@@ -23,7 +23,7 @@ use Keosu\CoreBundle\Entity\Theme;
 use Keosu\CoreBundle\Util\ThemeUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ManageThemesController extends Controller {
+class ManageThemesController extends Controller implements MenuProviderController{
 	/**
 	 * "Manage Themes" page
 	 * We can set add/delete new themes

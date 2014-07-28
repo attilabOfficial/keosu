@@ -32,14 +32,12 @@
 		</a>
 	</div>
 	<div id="contentlist-result">
+		{% for content in app.session.get('datamodel') %}
+			<div>
+				<a class="sidebarlink" href="{{ path('keosu_'~content~'_viewlist') }}">Manage {{content}}</a>
+			</div>
+		{% endfor %}
 	</div>
-	<script type="text/javascript" charset="utf-8">
-	$(document).ready(function() {
-		$.get('{{path('keosu_core_views_content_service_list',{'format':'html'}) }}', function(data) {
-			$('#contentlist-result').html(data);
-		});
-	} );
-	</script>
 	<div>&nbsp;</div>
 {% endblock %}
 

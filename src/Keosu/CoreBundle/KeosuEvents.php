@@ -108,6 +108,15 @@ final class KeosuEvents
 	const GADGET_PAGE_DELETE = 'keosu.gadget.page.delete.';
 
 	/**
+	 * The GADGET_EXPORT[Name of the gadget] event occurs when the package is about to be exported
+	 *
+	 * This event allows to modify the default action when a package is about to be exported
+	 * The event listener method receives a Keosu\CoreBundle\Event\ExportPackageEvent instance
+	 */
+	const PACKAGE_EXPORT = 'keosu.package.export.';
+
+	/**
+	TODO
 	 * The GADGET_GLOBAL_CONFIG_BUILD_FORM[Name of the gadget] event occurs when the form of the app is about to be builded
 	 *
 	 * This event allows to add specific config in global config
@@ -118,6 +127,7 @@ final class KeosuEvents
 	/**
 	 * The GADGET_PAGE_PANEL[Name of the gadget] event occurs when the panel when the config for app is about to be saved
 	 *
+	TODO
 	 * This event allows to add custom information for the gadget in global param
 	 * The event listener method receives a Keosu\CoreBundle\Event\PagePanelEvent instance
 	 */

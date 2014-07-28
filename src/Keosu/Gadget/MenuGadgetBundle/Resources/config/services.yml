@@ -1,6 +1,11 @@
 services:
-    keosu_gadget.menu:
+    keosu_gadget.menu.gadget:
         class: Keosu\Gadget\MenuGadgetBundle\EventListener\GadgetListener
+        arguments: [@service_container]
+        tags:
+            - { name: kernel.event_subscriber }
+    keosu_gadget.menu.export:
+        class: Keosu\Gadget\MenuGadgetBundle\EventListener\ExportListener
         arguments: [@service_container]
         tags:
             - { name: kernel.event_subscriber }

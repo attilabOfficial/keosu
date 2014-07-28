@@ -17,6 +17,8 @@
     "libJs" : [],
     "appParam" : [
         {"name" : "test" , "type" : "text"},
-        {"name" : "test2", "type" : "checkbox"}
+        {"name" : "test2", "type" : "checkbox", "options" : {
+                "required" : 0
+        }}
     ]
 }

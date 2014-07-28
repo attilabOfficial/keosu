@@ -45,7 +45,10 @@ class ConfigPackageValueType extends AbstractType {
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 
 		foreach($this->config as $c)
-			$builder->add($c['name'],$c['type']);
+			if(isset($c['options']))
+				$builder->add($c['name'],$c['type'],$c['options']);
+			else
+				$builder->add($c['name'],$c['type']);
 	}
 
 	public function getName() {

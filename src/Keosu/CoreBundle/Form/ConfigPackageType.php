@@ -45,9 +45,9 @@ class ConfigPackageType extends AbstractType {
 		$packages = $packageManager->getPackageList();
 		
 		foreach($packages as $p) {
-			$config = $packageManager->getConfigPackage($p);
+			$config = $packageManager->getConfigPackage($p->getPath());
 			if(count($config['appParam']))
-				$builder->add($p,new ConfigPackageValueType($this->container,$this->request,$config['appParam']),array(
+				$builder->add($p->getName(),new ConfigPackageValueType($this->container,$this->request,$config['appParam']),array(
 								'label' => false,
 						));
 		}

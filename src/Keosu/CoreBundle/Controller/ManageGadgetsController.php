@@ -81,13 +81,16 @@ class ManageGadgetsController extends Controller {
 			$zoneModelList[] = $zoneModel;
 		}
 
-		$gadgetList = $this->get('keosu_core.package_manager')->getPackageList(PackageManager::TYPE_PACKAGE_GADGET);
+		$gadgetList = array();
+		$packageList = $this->get('keosu_core.package_manager')->getPackageList(PackageManager::TYPE_PACKAGE_GADGET);
+		foreach($packageList as $p)
+			$gadgetList[] = $p->getName();
 
-		return $this->render('KeosuCoreBundle:Page:studio.html.twig',
-						array('page'         => $page,
-							  'zones'        => $zoneModelList,
-							  'templatehtml' => $templateHtml,
-							  'gadgets'      => $gadgetList));
+		return $this->render('KeosuCoreBundle:Page:studio.html.twig', array(
+								'page'         => $page,
+								'zones'        => $zoneModelList,
+								'templatehtml' => $templateHtml,
+								'gadgets'      => $gadgetList));
 	}
 
 	/**

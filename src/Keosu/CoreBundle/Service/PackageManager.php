@@ -48,7 +48,7 @@ class PackageManager {
 	/**
 	 * Return the list of package for the $type requested
 	 * @param $type (optionnal) TYPE_PACKAGE_GADGET or TYPE_PACKAGE_LIB or TYPE_PACKAGE_PLUGIN
-	 * @return array
+	 * @return array of Package
 	 */
 	public function getPackageList($type = null) {
 	
@@ -57,8 +57,6 @@ class PackageManager {
 				and $type != $this::TYPE_PACKAGE_LIB
 					and $type != $this::TYPE_PACKAGE_PLUGIN)
 			throw new \LogicException("Wrong parameter for getList");
-
-		$this->checkAllPackages();
 		
 		$em = $this->doctrine->getManager();
 		$listPackage = array();
@@ -66,12 +64,8 @@ class PackageManager {
 			$listPackage = $em->getRepository("KeosuCoreBundle:Package")->findAll();
 		else
 			$listPackage = $em->getRepository("KeosuCoreBundle:Package")->findByType($type);
-		
-		$ret = array();
-		foreach($listPackage as $p)
-			$ret[] = $p->getName();
 
-		return $ret;
+		return $listPackage;
 	}
 	
 	/**

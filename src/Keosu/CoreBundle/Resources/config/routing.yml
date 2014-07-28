@@ -56,10 +56,6 @@ keosu_core_views_page_manage_delete:
     pattern:  /views/page/manage/delete/{id}
     defaults: { _controller: KeosuCoreBundle:ManagePages:delete }
     
-keosu_core_views_page:
-    pattern:  /views/page/{id}
-    defaults: { _controller: KeosuCoreBundle:PageStudio:view }
-    
 keosu_core_app_manage:
     pattern:  /app/manage
     defaults: { _controller: KeosuCoreBundle:ManageApps:view }
@@ -91,6 +87,10 @@ keosu_core_views_content_service_list:
 keosu_core_views_page_service_list:
     pattern:  /service/views/page/list/{format}
     defaults: { _controller: KeosuCoreBundle:PageService:list }
+
+keosu_core_views_page:
+    pattern:  /views/page/{id}
+    defaults: { _controller: KeosuCoreBundle:ManageGadgets:view }
 
 # CRUD gadget
 keosu_gadget_add:

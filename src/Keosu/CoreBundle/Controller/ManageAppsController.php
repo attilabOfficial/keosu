@@ -102,7 +102,7 @@ class ManageAppsController extends Controller {
 		$listPackage = $packageManager->getPackageList();
 		$packageToConfigure = array();
 		foreach($listPackage as $p) {
-			$config = $packageManager->getConfigPackage($p);
+			$config = $packageManager->getConfigPackage($p->getPath());
 			if(count($config['appParam']))
 				$packageToConfigure[] = $config;
 		}

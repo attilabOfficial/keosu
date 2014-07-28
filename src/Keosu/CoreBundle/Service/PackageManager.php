@@ -50,8 +50,8 @@ class PackageManager {
 	 * @param $type (optionnal) TYPE_PACKAGE_GADGET or TYPE_PACKAGE_LIB or TYPE_PACKAGE_PLUGIN
 	 * @return array of Package
 	 */
-	public function getPackageList($type = null) {
-	
+	public function getPackageList($type = null)
+	{
 		if($type != null
 			and $type != $this::TYPE_PACKAGE_GADGET
 				and $type != $this::TYPE_PACKAGE_LIB
@@ -69,10 +69,27 @@ class PackageManager {
 	}
 	
 	/**
+	 * Allow to retrieve package information form a package name
+	 * @param string $name name of the package
+	 * @return package
+	 */
+	public function findPackage($name)
+	{
+		// TODO use cache istead of bdd ?
+		$em = $this->doctrine->getManager();
+		$package = $em->getRepository("KeosuCoreBundle:Package")->findOneByName($name);
+		if($package === null)
+			throw new \LogicException("The package ".$name." cannot be found");
+
+		return $package;
+	}
+	
+	/**
 	 * Check all packages throw logicException if it's not the case
 	 * @return void
 	 */
-	public function checkAllPackages() {
+	public function checkAllPackages()
+	{
 		// TODO check link to bdd
 		$dir = scandir($this::ROOT_DIR_PACKAGE);
 		foreach($dir as $folder) {
@@ -88,8 +105,8 @@ class PackageManager {
 	 * @param $packageLocation path to the package
 	 * @return boolean
 	 */
-	public function checkPackage($packageLocation) {
-
+	public function checkPackage($packageLocation)
+	{
 		$config = $this->getConfigPackage($packageLocation);
 		
 		$requiredKeys = array("name","description","version","type");
@@ -132,7 +149,8 @@ class PackageManager {
 	 * @param $packageNameOrLocation name or location of the package
 	 * @return config of the package in an array.
 	 */
-	public function getConfigPackage($packageNameOrLocation) {
+	public function getConfigPackage($packageNameOrLocation)
+	{
 		// TODO lock php execution
 		// TODO test json
 
@@ -162,8 +180,8 @@ class PackageManager {
 	 * @param $packageName name of the package
 	 * @return string
 	 */
-	private function getPath($packageName) {
-	
+	private function getPath($packageName)
+	{
 		// TODO change to bdd
 		$dir = scandir($this::ROOT_DIR_PACKAGE);
 		foreach($dir as $folder) {
@@ -184,7 +202,8 @@ class PackageManager {
 	 * @param $pathTopackage path where to find the package
 	 * @return void
 	 */
-	public function install($pathToPackage) {
+	public function install($pathToPackage)
+	{
 		// TODO make all step to install a package
 		// TODO manage update
 		// TODO manage version
@@ -207,19 +226,21 @@ class PackageManager {
 		$package->setPath($pathToPackage); // TODO mv + name generation
 		$package->setVersion($config["version"]);
 		$package->setType($config["type"]);
-		
-		// install template
-		if($package->getType() === $this::TYPE_PACKAGE_GADGET) {
-			$templates = $this->getListTemplateForGadget($gadgetName);
-			foreach($templates as $t) {
-				copy($pathToPackage."/templates/".$t.".png",$this::ROOT_DIR_TEMPLATE.$t.".png");
-				// unlink($pathToPackage."/templates/".$t.".png"); TODO in final version
-			}
-		}
-
 
 		$em->persist($package);
 		$em->flush();
+		
+		// install template
+		if($package->getType() === $this::TYPE_PACKAGE_GADGET) {
+			$templates = $this->getListTemplateForGadget($package->getName());
+			foreach($templates as $t) {
+				if($t !== $this::DEFAULT_TEMPLATE_GADGET_NAME) {
+					copy($pathToPackage."/templates/".$t.".png",$this::ROOT_DIR_TEMPLATE.$package->getName().'/'.$t.'.png');
+					// unlink($pathToPackage."/templates/".$t.".png"); TODO in final version
+				}
+			}
+		}
+
 	}
 	
 	/**
@@ -227,8 +248,8 @@ class PackageManager {
 	 * @param $gadgetName name of the gadget
 	 * @return array with list of html template
 	 */
-	public function getListTemplateForGadget($gadgetName) {
-	
+	public function getListTemplateForGadget($gadgetName)
+	{
 		$pathToGadget = $this->getPath($gadgetName);
 		
 		// test good gadget type
@@ -257,7 +278,8 @@ class PackageManager {
 	 * @param name of the gadget
 	 * @return boolean true if the gadget exist
 	 */
-	public function isGadgetExist($gadgetName) {
+	public function isGadgetExist($gadgetName)
+	{
 		$em = $this->doctrine->getManager();
 		
 		$gadget = $em->getRepository("KeosuCoreBundle:Package")->findOneBy(array(

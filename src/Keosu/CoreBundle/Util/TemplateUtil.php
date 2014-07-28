@@ -90,14 +90,10 @@ class TemplateUtil {
 	}
 	
 	public static function getPageTemplateAbsolutePath() {
-		return TemplateUtil::getAbsolutePath() . '/page-template/';
+		return TemplateUtil::getAbsolutePath() . '/page/';
 	}
 	public static function getPageTemplateWebPath() {
-		return TemplateUtil::getWebPath() . '/page-template/';
-	}
-
-	public static function getGadgetAbsolutePath() {
-		return TemplateUtil::getAbsolutePath() . '/gadget/';
+		return TemplateUtil::getWebPath() . '/page/';
 	}
 
 	public static function getWebPath() {

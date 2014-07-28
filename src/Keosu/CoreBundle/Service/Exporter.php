@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses,.
 ************************************************************************/
 namespace Keosu\CoreBundle\Service;
 
+use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\KeosuExtension;
-use Keosu\CoreBundle\GadgetParent;
 
 use Keosu\CoreBundle\Util\ZipUtil;
 use Keosu\CoreBundle\Util\ThemeUtil;
@@ -28,9 +28,12 @@ use Keosu\CoreBundle\Util\ExporterUtil;
 use Keosu\CoreBundle\Util\StringUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Delegate\ExporterDelegate;
-use Keosu\CoreBundle\Model\ZoneModel;
 use Keosu\CoreBundle\Entity\Page;
+use Keosu\CoreBundle\Entity\Package;
+
+use Keosu\CoreBundle\Event\ExportPackageEvent;
+
+use Keosu\CoreBundle\Model\ZoneModel;
 
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -40,9 +43,12 @@ class Exporter {
 
 	private $container;
 
+	private $packageManager;
+
 	public function __construct($doctrine,$container) {
 		$this->doctrine = $doctrine;
 		$this->container = $container;
+		$this->packageManager = $this->container->get('keosu_core.packagemanager');
 	}
 
 	public function exportApp() {
@@ -53,11 +59,10 @@ class Exporter {
 
 		$em = $this->doctrine->getManager();
 		$baseurl = $this->container->getParameter('url_base');
-		$param = $this->container->getParameter('url_param');
-		
+
 		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appId);
 
-		$clean=$this->cleanDir();
+		$clean = $this->cleanDir();
 
 		//Export theme
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
@@ -73,7 +78,7 @@ class Exporter {
 		
 		//Copy all web/templates/export/js dir to web/export/www/js
 		FilesUtil::copyFolder(TemplateUtil::getAbsolutePath() . '/main-header/js',
-				ExporterUtil::getAbsolutePath() . '/simulator/www/js');
+			ExporterUtil::getAbsolutePath() . '/simulator/www/js');
 		
 		//cordova_plugins.json
 		copy(TemplateUtil::getAbsolutePath() . '/main-header/cordova_plugins.js',
@@ -85,14 +90,41 @@ class Exporter {
 		
 		//Copy all theme/header/js dir to web/export/www/js
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/header/js',
-		ExporterUtil::getAbsolutePath() . '/simulator/www/js');
+			ExporterUtil::getAbsolutePath() . '/simulator/www/js');
 
 		// list of imported gadgets
-		$importedGadget = array();
-		// list of permissions requiered for the application
-		$permissions = array();
-		$jsToImport = array();
+		$importedPackages = array();
+		$jsInit = $jsCore = $jsEnd = '';
+		
+		// load index.html (main template)
+		$indexHtml = new \DOMDocument();
+		@$indexHtml->loadHtmlFile(ExporterUtil::getAbsolutePath() . '/simulator/www/index.html');
+		
+		///////////////////////////////////////////////////
+		// Generate config.xml
+		//////////////////////////////////////////////////
+		$configXml = new \DOMDocument('1.0','UTF-8');
+		$configXml->formatOutput = true;//TODO remove after debug
+		$widget = $configXml->createElement('widget');
+		$widget->setAttribute('xmlns','http://www.w3.org/ns/widgets');
+		$widget->setAttribute('xmlns:gap','http://phonegap.com/ns/1.0');
+		$widget->setAttribute('id',$app->getPackageName());
+		$widget->setAttribute('version','1.0');
+
+		$configXml->appendChild($widget);
+
+		$widget->appendChild($configXml->createElement('name',$app->getName()));
+		$widget->appendChild($configXml->createElement('description',$app->getDescription()));
+		$author = $configXml->createElement('author',$app->getAuthor());
+		$author->setAttribute('href',$app->getWebsite());
+		$author->setAttribute('email',$app->getEmail());
+		$widget->appendChild($author);
+		
 		$mainPage = null;
+		
+		$paramGadget = array();
+		$paramGadget['host'] = $this->container->getParameter('url_base').$this->container->getParameter('url_param');
+
 		
 		////////////////////////////////////////
 		// Generate view for each page
@@ -106,158 +138,103 @@ class Exporter {
 				$mainPage = $page->getId();
 			}
 
-			//All page content will be put in $document
 			$document = new \DOMDocument();
-
-			//For all zones in page template
-			$classname = "zone";//Find all the zone div in page template
-			//Disallow errors to allow HTML5 parsing
 			@$document->loadHtmlFile(TemplateUtil::getPageTemplateAbsolutePath().$page->getTemplateId());
 
 			$finder = new \DOMXPath($document);
+			$classname = "zone";//Find all the zone div in page template
 			$zones = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
 
-			$gadgetRepo = $em->getRepository('KeosuCoreBundle:Gadget');
 			foreach ($zones as $zone) {
 				$zoneId = $zone->getAttribute('id');
 				//Look if there is a shared gadget in this zone
-				$gadget = $gadgetRepo->findSharedByZoneAndApp($zoneId,$appId);
+				$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findSharedByZoneAndApp($zoneId,$appId);
 				//If there is no share gadget we try to find the specific one
 				if($gadget == null){
 					//Find the gadget associated with page and zone
-					$gadget = $gadgetRepo->findOneBy(array('zone' => $zoneId, 'page' => $page->getId()));
+					$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->findOneBy(array('zone' => $zoneId, 'page' => $page->getId()));
 				}
 
 				if ($gadget != null) {
-					//Add gadget html template
-					$gadgetTemplateHtml = file_get_contents(
-							TemplateUtil::getGadgetAbsolutePath() . '/'
-									. $gadget->getGadgetName() . '/'
-									. $gadget->getGadgetTemplate());
+
+					// import if it's needed
+					if(array_search($gadget->getName(),$importedPackages) === false) {
+						try {
+							$this->importPackage($gadget->getName(),$indexHtml,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages);
+						} catch(\Exception $e) {
+							throw new \LogicException('Unable to import '.$gadget->getName().' because '.$e->getMessage());
+						}
+					}
+
+					$package = $this->packageManager->findPackage($gadget->getName());
+					//Copy in HTML
+					$gadgetTemplateHtml = file_get_contents($package->getPath().'/templates/'.$gadget->getTemplate());
 					$gadgetTemplateHtml = utf8_encode($gadgetTemplateHtml);
 					$zone->nodeValue = $gadgetTemplateHtml;
 					//Add the angularJS directive to zone
-					$zone->setAttribute("ng-controller", $gadget->getGadgetName()."Controller");
-					$zone->setAttribute("ng-init","init('".$baseurl."','".$param."','".$page->getFileName()."','".$gadget->getId() ."','".$zoneId."')");
+					// import param
+					$zone->setAttribute('ng-controller', $gadget->getName().'Controller');
+					$paramGadget['gadgetId'] = $gadget->getId();
+					$paramGadget['pageId'] = $page->getId();
+					$paramGadget['packageParam'] = $gadget->getConfig();
+					
+					// globalParam
+					$paramGadget['appParam'] = array();
+					if(isset($app->getConfigPackages()[$package->getName()]))
+						$paramGadget['appParam'] = $app->getConfigPackages()[$package->getName()];
+					$zone->setAttribute('ng-init','init('.json_encode($paramGadget).')');
 					//Saving node
 					$zone->ownerDocument->saveXML($zone);
-
-					// permission part
-					$class = KeosuExtension::$gadgetList[$gadget->getGadgetName()];
-					$instance = new $class();
-					$instance = $instance->constructFromGadget($gadget);
-					$permissions = array_merge($permissions,$instance->getRequieredPermissions());
-					
-					//JS file to import
-					$jsToImport=array_merge($jsToImport,$instance->getExtraJsToImport());
-					
-					// import folder part
-					$importedGadget[] = $gadget->getGadgetName();
 				}
 			}
 
-			$bodyEl = $document->getElementsByTagName("body")->item(0);
+			$bodyEl = $document->getElementsByTagName('body')->item(0);
 			$html = $this->DomInnerHTML($bodyEl);
 			$html = StringUtil::decodeString($html);
-			$this->writeFile($html, $page->getFileName(),"/simulator/www/");
+			$this->writeFile($html, $page->getFileName(),'/simulator/www/');
 		}
-		
-		$importedGadget = array_unique($importedGadget);
-		$permissions = array_unique($permissions);
-		$jsToImport = array_unique($jsToImport);
 
 		///////////////////////////////////////////////////
 		// Generate main view index.html
 		///////////////////////////////////////////////////
 
-		// load index.html (main template)
-		$document = new \DOMDocument();
-		@$document->loadHtmlFile(ExporterUtil::getAbsolutePath() . '/simulator/www/index.html');
+
 
 		// import theme in index.html
 		$tmpthemeHeader = new \DOMDocument();
 		@$tmpthemeHeader->loadHtmlFile(ThemeUtil::getAbsolutePath() .$app->getTheme().'/header/header.html');
 		
-		$children = $tmpthemeHeader->getElementsByTagName("head")->item(0)->childNodes;
+		$children = $tmpthemeHeader->getElementsByTagName('head')->item(0)->childNodes;
 		foreach($children as $child) {
-			$document->getElementsByTagName("head")->item(0)->appendChild($document->importNode($child));
-		}
-		
-		// facebook api js part
-		if( array_search(GadgetParent::PERMISSION_FACEBOOK_API,$permissions) !== false 
-					&& $app->getFacebookAppId() != null && $app->getFacebookAppName() && $app->getFacebookAppSecret() != null) {
-			$script = $document->createElement("script");
-			$script->setAttribute("src","js/cdv-plugin-fb-connect.js");
-			$document->getElementsByTagName("head")->item(0)->appendChild($script);
-			
-			$script = $document->createElement("script");
-			$script->setAttribute("src","js/facebook-js-sdk.js");
-			$document->getElementsByTagName("head")->item(0)->appendChild($script);
-			
-			copy(TemplateUtil::getAbsolutePath() . '/main-header/plugins/facebook/cdv-plugin-fb-connect.js',
-			ExporterUtil::getAbsolutePath() . '/simulator/www/js/cdv-plugin-fb-connect.js');
-			
-			copy(TemplateUtil::getAbsolutePath() . '/main-header/plugins/facebook/facebook-js-sdk.js',
-			ExporterUtil::getAbsolutePath() . '/simulator/www/js/facebook-js-sdk.js');
+			$indexHtml->getElementsByTagName('head')->item(0)->appendChild($indexHtml->importNode($child));
 		}
 
-		//Adding the script TAG in document head
-		//This is used to import custom JS file for gadgets
-		foreach ($jsToImport as $jsURl){
-			$script = $document->createElement("script");
-			$script->setAttribute("src",$jsURl);
-			$document->getElementsByTagName("head")->item(0)->appendChild($script);
-		}
 		// import weinre if the app is in debug mode
 		// @see https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html
 		if($app->getDebugMode() == true) {
-			$script = $document->createElement("script");
-			$script->setAttribute("src",\substr($baseurl,0,\strlen($baseurl)-10).":8080/target/target-script-min.js#anonymous");
-			$document->getElementsByTagName("head")->item(0)->appendChild($script);
+			$script = $indexHtml->createElement('script');
+			$script->setAttribute('src',\substr($baseurl,0,\strlen($baseurl)-10).':8080/target/target-script-min.js#anonymous');
+			$indexHtml->getElementsByTagName('head')->item(0)->appendChild($script);
 		}
 
 		// this should always be at the end
-		$script = $document->createElement("script");
-		$script->setAttribute("src","js/app.js");
-		$document->getElementsByTagName("head")->item(0)->appendChild($script);
+		$script = $indexHtml->createElement('script');
+		$script->setAttribute('src','js/app.js');
+		$indexHtml->getElementsByTagName('head')->item(0)->appendChild($script);
 
 
-		$this->writeFile(StringUtil::decodeString($document->saveHTML()),'index.html','/simulator/www/');
+		$this->writeFile(StringUtil::decodeString($indexHtml->saveHTML()),'index.html','/simulator/www/');
 
 		////////////////////////////////////////////////////
 		// import all gadget requiered controller
 		////////////////////////////////////////////////////
-		$appJs = \file_get_contents(ExporterUtil::getAbsolutePath() . '/simulator/www/js/app.js');
-		$appJs .= '
-app.config(function($routeProvider,$locationProvider){
-	$routeProvider.when("/Page/:pageName",{
-		templateUrl: function(params) {
-			return params.pageName+".html";
-		}
-	})
-	.otherwise({redirectTo:"/Page/'.$mainPage.'"});
-});';
-
-		if( array_search(GadgetParent::PERMISSION_FACEBOOK_API,$permissions) !== false 
-					&& $app->getFacebookAppId() != null && $app->getFacebookAppName() && $app->getFacebookAppSecret() != null) {
-			$appJs .= "
-document.addEventListener('deviceready', function() {
-	FB.init({
-		appId: '".$app->getFacebookAppId()."',
-		nativeInterface: CDV.FB,
-		useCachedDialogs: false
-	});
-});";
-		}
-
-		foreach($importedGadget as $ig) {
-			$appJs .= "\n".\file_get_contents(TemplateUtil::getGadgetAbsolutePath().$ig .'/'.$ig.'Controller.js');
-		}
+		$appJs = $jsInit.$jsCore.$jsEnd;
 		$this->writeFile($appJs,'app.js','/simulator/www/js/');
 		
 		////////////////////////////////////////////////////
 		// import folder if they exist
 		////////////////////////////////////////////////////
+		/* TODO
 		foreach($importedGadget as $gadget) {
 		
 			$path = TemplateUtil::getAbsolutePath().DIRECTORY_SEPARATOR.'gadget'.DIRECTORY_SEPARATOR.$gadget;
@@ -268,102 +245,23 @@ document.addEventListener('deviceready', function() {
 						ExporterUtil::getAbsolutePath() . DIRECTORY_SEPARATOR .'simulator'. DIRECTORY_SEPARATOR .'www'. DIRECTORY_SEPARATOR .$dir);
 				}
 			}
-		}
-
-		///////////////////////////////////////////////////
-		// Generate config.xml
-		//////////////////////////////////////////////////
-		$configXml = new \DOMDocument("1.0","UTF-8");
-		$configXml->formatOutput = true;//TODO remove after debug
-		$widget = $configXml->createElement('widget');
-		$widget->setAttribute("xmlns","http://www.w3.org/ns/widgets");
-		$widget->setAttribute("xmlns:gap","http://phonegap.com/ns/1.0");
-		$widget->setAttribute("id",$app->getPackageName());
-		$widget->setAttribute("version","1.0");
-
-		$configXml->appendChild($widget);
-
-		$widget->appendChild($configXml->createElement("name",$app->getName()));
-		$widget->appendChild($configXml->createElement("description",$app->getDescription()));
-		$author = $configXml->createElement("author",$app->getAuthor());
-		$author->setAttribute("href",$app->getWebsite());
-		$author->setAttribute("email",$app->getEmail());
-		$widget->appendChild($author);
+		}*/
 
 		//Enable individual API permissions here.
 		//The "device" permission is required for the 'deviceready' event.
-		$device = $configXml->createElement("feature");
-		$device->setAttribute("name","http://api.phonegap.com/1.0/device");
+		$device = $configXml->createElement('feature');
+		$device->setAttribute('name','http://api.phonegap.com/1.0/device');
 		$widget->appendChild($device);
-		
-		if( array_search(GadgetParent::PERMISSION_GOOGLE_MAP_API,$permissions) !== false) {
-			$feature = $configXml->createElement("feature");
-			$feature->setAttribute("name","http://api.phonegap.com/1.0/geolocation");
-			$widget->appendChild($feature);
-		}
-		
-		$preferences = array(
-			// If you do not want any permissions to be added to your app, add the
-			// following tag to your config.xml; you will still have the INTERNET
-			// permission on your app, which PhoneGap requires.
-			"permissions"                => $app->getConfigParam()->getPermissions(),
-			"phonegap-version"           => $app->getConfigParam()->getPhonegapVersion() , // all: current version of PhoneGap 
-			"orientation"                => $app->getConfigParam()->getOrientation() , // all: default means both landscape and portrait are enabled 
-			"target-device"              => $app->getConfigParam()->getTargetDevice() , // all: possible values handset, tablet, or universal 
-			"Fullscreen"                 => ExporterUtil::boolToString($app->getConfigParam()->getFullscreen()) , // all: hides the status bar at the top of the screen 
-			"webviewbounce"              => ExporterUtil::boolToString($app->getConfigParam()->getWebviewbounce()) , // ios: control whether the screen 'bounces' when scrolled beyond the top 
-			"prerendered-icon"           => ExporterUtil::boolToString($app->getConfigParam()->getPrerenderedIcon()) , // ios: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen 
-			"stay-in-webview"            => ExporterUtil::boolToString($app->getConfigParam()->getStayInWebview()) , // ios: external links should open in the default browser, 'true' would use the webview the app lives in 
-			"ios-statusbarstyle"         => $app->getConfigParam()->getIosStatusbarstyle() , // ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar 
-			"detect-data-types"          => ExporterUtil::boolToString($app->getConfigParam()->getDetectDataTypes()) , // ios: controls whether data types (such as phone no. and dates) are automatically turned into links by the system 
-			"exit-on-suspend"            => ExporterUtil::boolToString($app->getConfigParam()->getExitOnSuspend()) , // ios: if set to true, app will terminate when home button is pressed 
-			"Show-splash-screen-spinner" => ExporterUtil::boolToString($app->getConfigParam()->getShowSplashScreenSpinner()) , // ios: if set to false, the spinner won't appear on the splash screen during app loading 
-			"auto-hide-splash-screen"    => ExporterUtil::boolToString($app->getConfigParam()->getAutoHideSplashScreen()) , // ios: if set to false, the splash screen must be hidden using a JavaScript API 
-			"disable-cursor"             => ExporterUtil::boolToString($app->getConfigParam()->getDisableCursor()) , // blackberry: prevents a mouse-icon/cursor from being displayed on the app 
-			"android-minSdkVersion"      => $app->getConfigParam()->getAndroidMinSdkVersion() , // android: MIN SDK version supported on the target device. MAX version is blank by default. 
-			"android-installLocation"    => $app->getConfigParam()->getAndroidInstallLocation() , // android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. 
-			"DisallowOverscroll"         => ExporterUtil::boolToString($app->getConfigParam()->getDisallowOverscroll()) ,
-			"splash-screen-duration"     => $app->getConfigParam()->getSplashScreenDuration(),
-		);
-		
-		foreach($preferences as $k => $v) {
-			$preference = $configXml->createElement("preference");
-			$preference->setAttribute($k,$v);
+
+		// Render preferences
+		$preferences = $app->getPreferences();
+		foreach($preferences as $p) {
+			$preference = $configXml->createElement('preference');
+			$preference->setAttribute($p['key'],$p['value']);
 			$widget->appendChild($preference);
 		}
-		
 
-		if( array_search(GadgetParent::PERMISSION_NATIVE_CALENDAR,$permissions) !== false) {
-			$plugin = $configXml->createElement("gap:plugin");
-			$plugin->setAttribute("name","nl.x-services.plugins.calendar");
-			$plugin->setAttribute("version","4.2.2");
-			$widget->appendChild($plugin);
-		}
-		
-		if( array_search(GadgetParent::PERMISSION_NATIVE_SOCIAL_SHARING,$permissions) !== false) {
-			$plugin = $configXml->createElement("gap:plugin");
-			$plugin->setAttribute("name","nl.x-services.plugins.socialsharing");
-			$plugin->setAttribute("version","4.0.8");
-			$widget->appendChild($plugin);
-		}
-		
-		if( array_search(GadgetParent::PERMISSION_FACEBOOK_API,$permissions) !== false 
-			&& $app->getFacebookAppId() != null && $app->getFacebookAppName() && $app->getFacebookAppSecret() != null) {
-			$plugin = $configXml->createElement("gap:plugin");
-			$plugin->setAttribute("name","com.phonegap.plugins.facebookconnect");
-			$plugin->setAttribute("version","0.4.0");
-				$param = $configXml->createElement("param");
-				$param->setAttribute("name","APP_ID");
-				$param->setAttribute("value",$app->getFacebookAppId());
-				$plugin->appendChild($param);
-				
-				$param = $configXml->createElement("param");
-				$param->setAttribute("name","APP_NAME");
-				$param->setAttribute("value",$app->getFacebookAppName());
-				$plugin->appendChild($param);
-			$widget->appendChild($plugin);
-			
-		}
+
 		// Define app icon for each platform.
 		$icons = array(
 			array( "src"=>"icon.png"),
@@ -409,7 +307,7 @@ document.addEventListener('deviceready', function() {
 		);
 		
 		foreach($splashScreen as $asplash) {
-			$splash = $configXml->createElement("gap:splash");
+			$splash = $configXml->createElement('gap:splash');
 			foreach($asplash as $k=>$v)
 				$splash->setAttribute($k,$v);
 			$widget->appendChild($splash);
@@ -423,10 +321,10 @@ document.addEventListener('deviceready', function() {
 		// <access origin="http://phonegap.com" subdomains="true"), - same as above, but including subdomains, such as http://build.phonegap.com/
 		// <access origin="http://phonegap.com" browserOnly="true"), - only allows http://phonegap.com to be opened by the child browser.
 		$access = array(
-			array("origin"=>"*")
+			array('origin' => '*')
 		);
 		foreach($access as $a) {
-			$accesses = $configXml->createElement("access");
+			$accesses = $configXml->createElement('access');
 			foreach($a as $k => $v)
 				$accesses->setAttribute($k,$v);
 			$widget->appendChild($accesses);
@@ -474,24 +372,10 @@ document.addEventListener('deviceready', function() {
 		ZipUtil::ZipFolder(ExporterUtil::getAbsolutePath().'/phonegapbuild/www',
 			ExporterUtil::getAbsolutePath().'/phonegapbuild/export.zip');
 
-		// Remove cache for simulator
-		$document = new \DOMDocument();
-		@$document->loadHtmlFile(ExporterUtil::getAbsolutePath() . '/simulator/www/index.html');
-
-		$meta = $document->createElement("meta");
-		$meta->setAttribute("http-equiv","Pragma");
-		$meta->setAttribute("content","no-cache");
-		$document->getElementsByTagName("head")->item(0)->appendChild($meta);
-		
-		$meta = $document->createElement("meta");
-		$meta->setAttribute("http-equiv","Expires");
-		$meta->setAttribute("content","-1");
-		$document->getElementsByTagName("head")->item(0)->appendChild($meta);
-		
-		$this->writeFile(StringUtil::decodeString($document->saveHTML()),'index.html','/simulator/www/');
 	}
 
-	private function cleanDir() {
+	private function cleanDir()
+	{
 		//Clean existing export dir
 		FilesUtil::deleteDir(ExporterUtil::getAbsolutePath() .'/simulator/www');
 		FilesUtil::deleteDir(ExporterUtil::getAbsolutePath() .'/ios/www');
@@ -511,7 +395,8 @@ document.addEventListener('deviceready', function() {
 	}
 
 	//write a file
-	private function writeFile($html, $fileName, $path) {
+	private function writeFile($html, $fileName, $path)
+	{
 		//Writting the html content in file
 		$destiPath = ExporterUtil::getAbsolutePath() . $path;
 	
@@ -539,5 +424,73 @@ document.addEventListener('deviceready', function() {
 
 		return $innerHTML; 
 	}
+
+	/**
+	 * @param string $packageName name of the package to import
+	 * @param DOMDocument $indexDocument index.html file
+	 * @param DOMDocument $configXml config.xml document
+	 * @param string $jsInit js init part
+	 * @param string $jsCore main part of the js
+	 * @param string $jsEnd end part of the js
+	 * @param array $importedPackages list of imported gadget
+	 */
+	private function importPackage($packageName,&$indexDocument,&$configXml,&$jsInit,&$jsCore,&$jsEnd,&$importedPackages)
+	{
+		$package = $this->packageManager->findPackage($packageName);
+		$importedPackages[] = $package->getName();
+		$config = $this->packageManager->getConfigPackage($package->getPath());
+		
+		// check dependency
+		if(isset($config['require'])) {
+			$require = $config['require'];
+			if(count($require)) {
+				foreach($require as $r) {
+					if(array_search($r['name'],$importedPackages) === false) {
+						$this->importPackage($r['name'],$indexDocument,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages);
+					}
+				}
+			}
+		}
+
+		// config Xml TODO
+		
+		// javascript lib
+		if(isset($config['libJs'])) {
+			$libJs = $config['libJs'];
+			if(count($libJs)) {
+				foreach($libJs as $l) {
+					copy($package->getPath().DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.$l,
+						ExporterUtil::getAbsolutePath() .DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.$l);
+					$script = $indexDocument->createElement('script');
+					$script->setAttribute('src','js/'.$l);
+					$indexDocument->getElementsByTagName('head')->item(0)->appendChild($script);
+					
+				}
+			}
+		}
+		
+		// javascript script
+		if(is_file($package->getPath().DIRECTORY_SEPARATOR.'init.js'))
+			$jsInit .= file_get_contents($package->getPath().DIRECTORY_SEPARATOR.'init.js');
+		if(is_file($package->getPath().DIRECTORY_SEPARATOR.'core.js'))
+			$jsCore .= file_get_contents($package->getPath().DIRECTORY_SEPARATOR.'core.js');
+		if(is_file($package->getPath().DIRECTORY_SEPARATOR.'end.js'))
+			$jsEnd .= file_get_contents($package->getPath().DIRECTORY_SEPARATOR.'end.js');
+			
+		// event to add new feature
+		$dispatcher = $this->container->get('event_dispatcher');
+		$event = new ExportPackageEvent($indexDocument,$configXml);
+		$dispatcher->dispatch(KeosuEvents::PACKAGE_EXPORT.$package->getName(),$event);
+		
+		if($event->getJsInit() !== null)
+			$jsInit.= $event->getJsInit();
+		
+		if($event->getJsCore() !== null)
+			$jsCore.= $event->getJsCore();
+		
+		if($event->getJsEnd() !== null)
+			$jsEnd.= $event->getJsEnd();
+	}
+
 }
 ?>

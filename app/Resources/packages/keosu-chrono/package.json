@@ -5,8 +5,7 @@
    "type" : "gadget",
    "param" : [],
    "require" : [
-      {"name":"angularJS"},
-      {"name":"JQuery"}
+      { "name" : "angularJS" , "version" : ">=1.2" }
    ],
    "configCordova" : {},
    "libJs" : [],

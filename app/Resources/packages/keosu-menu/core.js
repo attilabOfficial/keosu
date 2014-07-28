@@ -15,10 +15,9 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
-app.controller('menu_gadgetController', function ($scope, $http,$location) {
+app.controller('keosu-menuController', function ($scope, $http,$location) {
 	$scope.init = function (params) {
-		$scope.page = params.page;
-		$scope.page = params.gadgetParam;
+		$scope.pages = params.packageParam.pages;
 	};
 	
 	// @see https://stackoverflow.com/questions/12592472/how-to-highlight-a-current-menu-item-in-angularjs

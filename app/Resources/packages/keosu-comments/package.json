@@ -5,13 +5,13 @@
    "type" : "plugin",
    "param" : [
       {"objectId" : "integer"},
-      {"dataModelObjectName": "string"},
+      {"dataModelObjectName" : "string"},
       {"enableComments" : "boolean"},
       {"templateName" : "string"}
    ],
-   "require" : {
-      "angularJS" : ">=1.2"
-   },
+   "require" : [
+      {"name" : "angularJs" , "version" : ">=1.2"}
+   ],
    "configCordova" : {},
    "libJs" : [],
    "appParam" : []

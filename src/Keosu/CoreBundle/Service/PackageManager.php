@@ -44,7 +44,7 @@ class PackageManager {
 		$this->doctrine = $doctrine;
 		$this->container = $container;
 	}
-	
+
 	/**
 	 * Return the list of package for the $type requested
 	 * @param $type (optionnal) TYPE_PACKAGE_GADGET or TYPE_PACKAGE_LIB or TYPE_PACKAGE_PLUGIN
@@ -67,7 +67,7 @@ class PackageManager {
 
 		return $listPackage;
 	}
-	
+
 	/**
 	 * Allow to retrieve package information form a package name
 	 * @param string $name name of the package
@@ -83,7 +83,7 @@ class PackageManager {
 
 		return $package;
 	}
-	
+
 	/**
 	 * Check all packages throw logicException if it's not the case
 	 * @return void
@@ -99,7 +99,7 @@ class PackageManager {
 			$this->checkPackage($this::ROOT_DIR_PACKAGE.$folder);
 		}
 	}
-	
+
 	/**
 	 * Check a package integrity
 	 * @param $packageLocation path to the package
@@ -143,7 +143,7 @@ class PackageManager {
 			}
 		}
 	}
-	
+
 	/**
 	 * Return the config of a package
 	 * @param $packageNameOrLocation name or location of the package
@@ -174,7 +174,7 @@ class PackageManager {
 		
 		return \json_decode(\file_get_contents($packageLocation."/package.json"),true);
 	}
-	
+
 	/**
 	 * Return the path of the package
 	 * @param $packageName name of the package
@@ -194,9 +194,9 @@ class PackageManager {
 				return $this::ROOT_DIR_PACKAGE."/".$folder;
 
 		}
-		throw new \LogicException("Package not found");
+		throw new \LogicException("Package ".$packageName." not found");
 	}
-	
+
 	/**
 	 * install a new package
 	 * @param $pathTopackage path where to find the package
@@ -273,7 +273,7 @@ class PackageManager {
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * @param name of the gadget
 	 * @return boolean true if the gadget exist

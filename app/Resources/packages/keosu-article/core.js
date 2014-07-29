@@ -17,7 +17,7 @@
  ************************************************************************/
 //Main function
 
-app.controller('article_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
+app.controller('keosu-articleController', function ($scope, $http, $sce, usSpinnerService) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -35,7 +35,7 @@ app.controller('article_gadgetController', function ($scope, $http, $sce, usSpin
 	/////////////////////////
 	$scope.articleInit = function() {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		$http.get($scope.param.host+ 'service/gadget/article/' + $scope.param.gadget + '/json').success(function(data) {
+		$http.get($scope.param.host+ 'service/gadget/article/' + $scope.param.gadgetId + '/json').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.article = data[0];
 			$scope.article.content = decodedContent(data[0].content);

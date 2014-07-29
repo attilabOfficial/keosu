@@ -30,15 +30,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ServiceController extends Controller {
 
 	public function viewOneAction($gadgetId, $format) {
-		$gadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+		$em = $this->get('doctrine')->getManager();
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
-		$article = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelArticleModelBundle:ArticleBody')
-				->find($gadgetConfig["article-id"]);
-		return $this
-				->render(
+		$article = $em->getRepository('KeosuDataModelArticleModelBundle:ArticleBody')->find($gadgetConfig["article-id"]);
+		return $this->render(
 						'KeosuGadgetArticleGadgetBundle:Service:viewone.'
 								. $format . '.twig',
 						array('article' => $article));

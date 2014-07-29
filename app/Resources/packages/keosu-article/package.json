@@ -6,10 +6,10 @@
    "param" : [
       {"articleId" : "integer"}
    ],
-   "require" : {
-      "angularJS" : ">=1.2",
-      "jQuery"    : ">=2"
-   },
+   "require" : [
+      { "name" : "angularJs" , "version" : ">=1.2" },
+      { "name" : "jQuery"    , "version" : ">=2"   }
+   ],
    "configCordova" : {},
    "libJs" : [],
    "appParam" : []

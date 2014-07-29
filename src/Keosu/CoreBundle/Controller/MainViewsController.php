@@ -62,7 +62,7 @@ class MainViewsController extends Controller{
 			return $this->redirect(
 					$this->generateUrl('keosu_core_app_manage_add'));
 		}
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
+		$appid = $this->get('keosu_core.curapp')->getCurApp();
 		$pages = $this->get('doctrine')->getManager()
 			->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
 		return $this->render('KeosuCoreBundle:MainViews:page.html.twig', array('pages' => $pages));

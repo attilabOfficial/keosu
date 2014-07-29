@@ -192,9 +192,8 @@ class ManageGadgetsController extends Controller {
 			$em->remove($gadget);
 			$em->flush();
 		}
-
 		//Export app
-		// TODO $this->get('keosu_core.exporter')->exportApp();
+		$this->get('keosu_core.exporter')->exportApp();
 
 		//Redirect to the last page
 		return $this->redirect(
@@ -240,8 +239,7 @@ class ManageGadgetsController extends Controller {
 				$em->persist($gadget);
 				$em->flush();
 
-				//TODO
-				//$this->get('keosu_core.exporter')->exportApp();
+				$this->get('keosu_core.exporter')->exportApp();
 
 				return $this->redirect($this->generateUrl('keosu_core_views_page',array(
 													'id' => $gadget->getPage()->getId()

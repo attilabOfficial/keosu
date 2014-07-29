@@ -174,6 +174,8 @@ class Exporter {
 					//Add the angularJS directive to zone
 					// import param
 					$zone->setAttribute('ng-controller', $gadget->getName().'Controller');
+					
+					// set param for gadgets
 					$paramGadget['gadgetId'] = $gadget->getId();
 					$paramGadget['pageId'] = $page->getId();
 					$paramGadget['packageParam'] = $gadget->getConfig();
@@ -197,8 +199,6 @@ class Exporter {
 		///////////////////////////////////////////////////
 		// Generate main view index.html
 		///////////////////////////////////////////////////
-
-
 
 		// import theme in index.html
 		$tmpthemeHeader = new \DOMDocument();
@@ -344,7 +344,6 @@ class Exporter {
 			ExporterUtil::getAbsolutePath().'/ios/www/cordova.js');
 		
 		//For Android
-		
 		FilesUtil::copyFolder(ExporterUtil::getAbsolutePath().'/simulator/www',
 			ExporterUtil::getAbsolutePath().'/android/www');
 		

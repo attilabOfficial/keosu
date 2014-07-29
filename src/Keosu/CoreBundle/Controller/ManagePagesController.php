@@ -165,8 +165,7 @@ class ManagePagesController extends Controller {
 				$em->persist($page);
 				$em->flush();
 				//Export app to see new page in simulator
-				// TODO
-				//$this->get('keosu_core.exporter')->exportApp();
+				$this->get('keosu_core.exporter')->exportApp();
 				return $this->redirect(
 								$this->generateUrl('keosu_core_views_page_manage'));
 			}

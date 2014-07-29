@@ -89,8 +89,7 @@ class ManageAppsController extends Controller {
 				$session = $this->get("session");
 				$session->set("appid",$app->getId());
 				// export the app
-				// TODO
-				//$this->container->get('keosu_core.exporter')->exportApp();
+				$this->container->get('keosu_core.exporter')->exportApp();
 
 				return $this->redirect(
 							$this->generateUrl('keosu_core_app_manage')

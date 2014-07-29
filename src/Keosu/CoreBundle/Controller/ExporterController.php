@@ -24,10 +24,9 @@ class ExporterController extends Controller {
 	/***
 	 * Call export service (Keosu\CoreBundle\Service Exporter )
 	 */
-	public function exportAction() {
-
+	public function exportAction()
+	{
 		$this->container->get('keosu_core.exporter')->exportApp();
-		
 		return $this->redirect($this->generateUrl('keosu_core_publish'));
 	}
 

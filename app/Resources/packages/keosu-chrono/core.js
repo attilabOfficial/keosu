@@ -18,10 +18,15 @@
 
 //Main function
 
-app.controller('chrono_gadgetController', function ($scope, chronoService) {
+app.controller('keosu-chronoController', function ($scope, chronoService) {
+
+	// Initialization
 	$scope.isStart = "";
 	$scope.isStop = "";
-	initTimer($scope);
+	$scope.init = function (params){
+		$scope.initTimer();
+	};
+
 	chronoService.addTimer('myTimer', { interval: 500 });
 	$scope.start = function() {
 		$scope.isStart = "disabled";
@@ -29,16 +34,17 @@ app.controller('chrono_gadgetController', function ($scope, chronoService) {
 		$scope.time = Date.now();
 		chronoService.start();
 	};
+
 	$scope.stop = function() {
 		$scope.isStop = "disabled";
 		$scope.isStart = "";
 		$scope.time = Date.now();
 		chronoService.stop();
 	};
-});
 
-function initTimer($scope) {
-	$scope.hours = '00';
-	$scope.minutes = '00';
-	$scope.seconds = '00';
-}
+	$scope.initTimer = function() {
+		$scope.hours = '00';
+		$scope.minutes = '00';
+		$scope.seconds = '00';
+	}
+});

@@ -76,10 +76,6 @@ class Exporter {
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/res',
 			ExporterUtil::getAbsolutePath() . '/simulator/www/res');
 		
-		//Copy all web/templates/export/js dir to web/export/www/js
-		FilesUtil::copyFolder(TemplateUtil::getAbsolutePath() . '/main-header/js',
-			ExporterUtil::getAbsolutePath() . '/simulator/www/js');
-		
 		//cordova_plugins.json
 		copy(TemplateUtil::getAbsolutePath() . '/main-header/cordova_plugins.js',
 			ExporterUtil::getAbsolutePath() . '/simulator/www/cordova_plugins.js');

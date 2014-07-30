@@ -4,32 +4,10 @@
     "version" : "0.1",
     "type" : "gadget",
     "param" : [
-        { "pages" : [{
-                    "id"   : "integer",
-                    "icon" : "text"
-                    }]
-        }
+        {"name" : "pages" , "type" : "collection"}
     ],
     "require" : [
         { "name" : "angularJs" , "version" : ">=1.2" },
         { "name" : "jQuery", "version" : ">=2"}
-    ],
-    "configCordova" : [
-        { "gap:plugin" : [
-            { "@attributes" : {"name" : "com.phonegap.plugins.facebookconnect" , "version":"0.4.0"} },
-            { "@text" : "This is my text" },
-            { "param" : [ 
-                {"@attributes" : {"name" : "test","value":"@@test2@@"} }
-            ]},
-            { "param" : [
-                {"@attributes" : {"name" : "test2","value":"@@test@@"}}
-            ]}
-    ]}],
-    "libJs" : [],
-    "appParam" : [
-        {"name" : "test" , "type" : "text"},
-        {"name" : "test2", "type" : "checkbox", "options" : {
-                "required" : 0
-        }}
     ]
 }

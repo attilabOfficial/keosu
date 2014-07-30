@@ -153,16 +153,6 @@ class Exporter {
 
 				if ($gadget != null) {
 
-					// set param for gadgets
-					$paramGadget['gadgetId'] = $gadget->getId();
-					$paramGadget['pageId'] = $page->getId();
-					$paramGadget['packageParam'] = $gadget->getConfig();
-					
-					// globalParam
-					$paramGadget['appParam'] = array();
-					if(isset($app->getConfigPackages()[$gadget->getName()]))
-						$paramGadget['appParam'] = $app->getConfigPackages()[$gadget->getName()];
-
 					// import if it's needed
 					if(array_search($gadget->getName(),$importedPackages) === false) {
 						try {
@@ -173,6 +163,23 @@ class Exporter {
 					}
 
 					$package = $this->packageManager->findPackage($gadget->getName());
+					$packageConfig = $this->packageManager->getConfigPackage($package->getPath());
+					
+					// set param for gadgets
+					$paramGadget['gadgetId'] = $gadget->getId();
+					$paramGadget['pageId'] = $page->getId();
+					$paramGadget['packageParam'] = $this->secureParameters($gadget->getConfig(),$packageConfig);
+					
+					// globalParam
+					$paramGadget['appParam'] = array();
+					if(isset($app->getConfigPackages()[$gadget->getName()]))
+						$paramGadget['appParam'] = $this->secureParameters(
+															$app->getConfigPackages()[$gadget->getName()],
+															$packageConfig
+													);
+					
+					
+					
 					//Copy in HTML
 					$gadgetTemplateHtml = file_get_contents($package->getPath().'/templates/'.$gadget->getTemplate());
 					$gadgetTemplateHtml = utf8_encode($gadgetTemplateHtml);
@@ -503,17 +510,17 @@ class Exporter {
 	{
 		foreach($node as $tag) {
 			$tagName = array_keys($tag)[0];
-			if($tagName === "@attributes") {
+			if($tagName === '@attributes') {
 				foreach($tag[$tagName] as $key => $value) {
 					// auto fill if the param is of type @@key@@
 					$keyToFind = substr($value,2,-2);
-					if(substr($value,-2) === "@@" && substr($value,0,2) == "@@" && isset($configAppForPackage[$keyToFind])) {
+					if(substr($value,-2) === '@@' && substr($value,0,2) == '@@' && isset($configAppForPackage[$keyToFind])) {
 						$currentNode->setAttribute($key,$this->phpToXmlSpecialValue($configAppForPackage[$keyToFind]));
 					} else {
 						$currentNode->setAttribute($key,$value);
 					}
 				}
-			} elseif($tagName === "@text") {
+			} elseif($tagName === '@text') {
 				$text = $configXml->createTextNode($tag[$tagName]);
 				$currentNode->appendChild($text);
 			} else {
@@ -533,9 +540,39 @@ class Exporter {
 	{
 		$ret = $value;
 		if($value === false)
-			$ret = "false";
+			$ret = 'false';
 		if($value === true)
-			$ret = "true";
+			$ret = 'true';
+		return $ret;
+	}
+	
+	/**
+	 * This fonction remove the parameter that are only in the backoffice
+	 * @param array $config config to secure
+	 * @param array $configPackage config of the package
+	 * @return array
+	 */
+	private function secureParameters($config,$configPackage) {
+		$ret = array();
+		$backOfficeOnly = array();
+		if(isset($configPackage['param'])) {
+			foreach($configPackage['param'] as $p) {
+				if(isset($p['backOfficeOnly']))
+					$backOfficeOnly[] = $p['name'];
+			}
+		}
+
+		if(isset($configPackage['appParam'])) {
+			foreach($configPackage['appParam'] as $p) {
+				if(isset($p['backOfficeOnly']))
+					$backOfficeOnly[] = $p['name'];
+			}
+		}
+
+		foreach($config as $k => $c) {
+			if(\array_search($k,$backOfficeOnly) === false)
+				$ret[$k]=$c;
+		}
 		return $ret;
 	}
 }

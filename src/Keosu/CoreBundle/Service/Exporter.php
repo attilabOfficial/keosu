@@ -513,6 +513,9 @@ class Exporter {
 						$currentNode->setAttribute($key,$value);
 					}
 				}
+			} elseif($tagName === "@text") {
+				$text = $configXml->createTextNode($tag[$tagName]);
+				$currentNode->appendChild($text);
 			} else {
 				$element = $configXml->createElement($tagName);
 				$this->convertToXml($tag[$tagName],$configXml,$element,$configAppForPackage);

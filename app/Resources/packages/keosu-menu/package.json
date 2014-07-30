@@ -17,8 +17,13 @@
     "configCordova" : [
         { "gap:plugin" : [
             { "@attributes" : {"name" : "com.phonegap.plugins.facebookconnect" , "version":"0.4.0"} },
-            { "param" : [ {"@attributes" : {"name" : "test","value":"@@test2@@"} } ] },
-            { "param" : [ {"@attributes" : {"name" : "test2","value":"@@test1@@"}}]}
+            { "@text" : "This is my text" },
+            { "param" : [ 
+                {"@attributes" : {"name" : "test","value":"@@test2@@"} }
+            ]},
+            { "param" : [
+                {"@attributes" : {"name" : "test2","value":"@@test@@"}}
+            ]}
     ]}],
     "libJs" : [],
     "appParam" : [

@@ -343,7 +343,12 @@ document.addEventListener('deviceready', function() {
 			$widget->appendChild($preference);
 		}
 		
-
+		//Add Network information plugin
+		$plugin = $configXml->createElement("gap:plugin");
+		$plugin->setAttribute("name","org.apache.cordova.network-information");
+		$plugin->setAttribute("version","0.2.7");
+		$widget->appendChild($plugin);
+		
 		if( array_search(GadgetParent::PERMISSION_NATIVE_CALENDAR,$permissions) !== false) {
 			$plugin = $configXml->createElement("gap:plugin");
 			$plugin->setAttribute("name","nl.x-services.plugins.calendar");

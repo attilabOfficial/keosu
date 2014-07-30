@@ -153,10 +153,20 @@ class Exporter {
 
 				if ($gadget != null) {
 
+					// set param for gadgets
+					$paramGadget['gadgetId'] = $gadget->getId();
+					$paramGadget['pageId'] = $page->getId();
+					$paramGadget['packageParam'] = $gadget->getConfig();
+					
+					// globalParam
+					$paramGadget['appParam'] = array();
+					if(isset($app->getConfigPackages()[$gadget->getName()]))
+						$paramGadget['appParam'] = $app->getConfigPackages()[$gadget->getName()];
+
 					// import if it's needed
 					if(array_search($gadget->getName(),$importedPackages) === false) {
 						try {
-							$this->importPackage($gadget->getName(),$indexHtml,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages);
+							$this->importPackage($gadget->getName(),$indexHtml,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app);
 						} catch(\Exception $e) {
 							throw new \LogicException('Unable to import '.$gadget->getName().' because '.$e->getMessage());
 						}
@@ -170,16 +180,6 @@ class Exporter {
 					//Add the angularJS directive to zone
 					// import param
 					$zone->setAttribute('ng-controller', $gadget->getName().'Controller');
-					
-					// set param for gadgets
-					$paramGadget['gadgetId'] = $gadget->getId();
-					$paramGadget['pageId'] = $page->getId();
-					$paramGadget['packageParam'] = $gadget->getConfig();
-					
-					// globalParam
-					$paramGadget['appParam'] = array();
-					if(isset($app->getConfigPackages()[$package->getName()]))
-						$paramGadget['appParam'] = $app->getConfigPackages()[$package->getName()];
 					$zone->setAttribute('ng-init','init('.json_encode($paramGadget).')');
 					//Saving node
 					$zone->ownerDocument->saveXML($zone);
@@ -428,8 +428,9 @@ class Exporter {
 	 * @param string $jsCore main part of the js
 	 * @param string $jsEnd end part of the js
 	 * @param array $importedPackages list of imported gadget
+	 * @param App $app app to export
 	 */
-	private function importPackage($packageName,&$indexDocument,&$configXml,&$jsInit,&$jsCore,&$jsEnd,&$importedPackages)
+	private function importPackage($packageName,&$indexDocument,&$configXml,&$jsInit,&$jsCore,&$jsEnd,&$importedPackages,&$app)
 	{
 		$package = $this->packageManager->findPackage($packageName);
 		$importedPackages[] = $package->getName();
@@ -441,14 +442,25 @@ class Exporter {
 			if(count($require)) {
 				foreach($require as $r) {
 					if(array_search($r['name'],$importedPackages) === false) {
-						$this->importPackage($r['name'],$indexDocument,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages);
+						$this->importPackage($r['name'],$indexDocument,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app);
 					}
 				}
 			}
 		}
-
-		// config Xml TODO
 		
+		// getApp config for gadget
+		$appConfig = array();
+		if(isset($app->getConfigPackages()[$package->getName()]))
+			$appConfig = $app->getConfigPackages()[$package->getName()];
+
+		// config Xml
+		if(isset($config['configCordova'])) {
+			$configCordova = $config['configCordova'];
+			if(count($configCordova)) {
+				$this->convertToXml($configCordova,$configXml,$configXml->getElementsByTagName('widget')->item(0),$appConfig);
+			}
+		}
+
 		// javascript lib
 		if(isset($config['libJs'])) {
 			$libJs = $config['libJs'];
@@ -487,5 +499,41 @@ class Exporter {
 			$jsEnd.= $event->getJsEnd();
 	}
 
+	private function convertToXml($node,\DOMDocument &$configXml,&$currentNode,$configAppForPackage)
+	{
+		foreach($node as $tag) {
+			$tagName = array_keys($tag)[0];
+			if($tagName === "@attributes") {
+				foreach($tag[$tagName] as $key => $value) {
+					// auto fill if the param is of type @@key@@
+					$keyToFind = substr($value,2,-2);
+					if(substr($value,-2) === "@@" && substr($value,0,2) == "@@" && isset($configAppForPackage[$keyToFind])) {
+						$currentNode->setAttribute($key,$this->phpToXmlSpecialValue($configAppForPackage[$keyToFind]));
+					} else {
+						$currentNode->setAttribute($key,$value);
+					}
+				}
+			} else {
+				$element = $configXml->createElement($tagName);
+				$this->convertToXml($tag[$tagName],$configXml,$element,$configAppForPackage);
+				$currentNode->appendChild($element);
+			}
+		}
+	}
+	
+	/**
+	 * This function allow to convert php value to xml
+	 * @param $value value to convert in xml
+	 * @return string
+	 */
+	private function phpToXmlSpecialValue($value)
+	{
+		$ret = $value;
+		if($value === false)
+			$ret = "false";
+		if($value === true)
+			$ret = "true";
+		return $ret;
+	}
 }
 ?>

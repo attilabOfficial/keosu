@@ -9,7 +9,7 @@ use Keosu\CoreBundle\Event\GadgetPanelEvent;
 use Symfony\Component\Form\FormView;
 
 /**
- * This class allow to personalise the list of action available in the simulator
+ * This class allow to personalise differents screen in the app
  */
 class TwigIncludePanelExtension extends \Twig_Extension {
 

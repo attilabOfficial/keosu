@@ -4,16 +4,13 @@
     var angularCacheManager = angular.module('CacheManagerModule', ['ngRoute', 'LocalStorageModule']);
     
     angularCacheManager.provider('cacheManagerService', function() {
-    	
-    	this.cacheExpiration=20000;
-    	
-    	
+
+    	this.cacheExpiration=100000;
+  	
     	this.$get = ['$http','$q','localStorageService', function($http,$q,localStorageService) {
     	    
     		var cacheExpiration = this.cacheExpiration; //TODO put this in gadget config
-    		
     	    var getFromCache = function(cachekey, url){
-    		
 	    		var deferred = $q.defer();
 	            var promise = deferred.promise;
 	
@@ -26,7 +23,7 @@
 	            var dif = now - lastUpdate;
 	            var currentCache = localStorageService.get(cachekey);
 	            if((currentCache && (dif < cacheExpiration && dif != 0))
-	                /*|| TODO Add user not connected to the net*/ ){
+	                /*|| navigator.connection.type=="NONE" */ ){
 	                    deferred.resolve(currentCache);
 	                    //return ;
 	            }else{
@@ -51,6 +48,50 @@
 	                promise.then(fn);
 	                return promise;
 	            }
+	            promise.error = function(fn) {
+	                promise.then(null, fn);
+	                return promise;
+	            }
+	            return promise;
+    		};
+
+    		var getLocationFromCache = function(cachekey){				
+    			var onGpsSuccess = function(position){
+    				localStorageService.set(cachekey,position);
+    				localStorageService.set('lastup'+cachekey,now);
+    				deferred.resolve(position);
+    			};
+
+    			var onGpsError = function(){
+    				if(currentCache !=null){
+                        deferred.resolve(currentCache);
+                    }else{
+                    	alert('Impossible de vous localiser.');
+                        deferred.reject('error');
+                    }
+    			};
+		
+    			var cacheExpiration = this.cacheExpiration; 			
+    			var deferred = $q.defer();
+	            var promise = deferred.promise;
+	            var lastUpdate = localStorageService.get('lastup'+cachekey);
+	            var now = new Date().getTime();
+	            if(lastUpdate==null){
+	                lastUpdate=0;
+	                now=0;
+	            }
+	            var dif = now - lastUpdate;
+	            var currentCache = localStorageService.get(cachekey);
+	            if((currentCache && (dif < cacheExpiration && dif != 0))
+	                /*|| navigator.connection.type=="NONE"*/ ){
+	                    deferred.resolve(currentCache);
+	            }else{
+	            	navigator.geolocation.getCurrentPosition(onGpsSuccess, onGpsError);	
+	            }
+	            promise.success = function(fn) {
+	                promise.then(fn);
+	                return promise;
+	            }
 	
 	            promise.error = function(fn) {
 	                promise.then(null, fn);
@@ -59,9 +100,11 @@
 	
 	            return promise;
     		};
-    	    
+    		
+    		
     	    return{
-    	    	get: getFromCache
+    	    	get: getFromCache,
+    	    	getLocation : getLocationFromCache
     	    };
 		}];
     });

@@ -63,9 +63,8 @@ class App
                 array("key"=>"disable-cursor"             ,"value"=> "false" ), // blackberry: prevents a mouse-icon/cursor from being displayed on the app
                 array("key"=>"android-minSdkVersion"      ,"value"=> "7" ), // android: MIN SDK version supported on the target device. MAX version is blank by default.
                 array("key"=>"android-installLocation"    ,"value"=> "auto" ), // android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard.
-                array("key"=>"DisallowOverscroll"         ,"value"=> "true" ),
-                array("key"=>"splash-screen-duration"     ,"value"=> "10000"),
-                array("key"=>"disallowOverscroll"         ,"value"=> "true" )
+                array("key"=>"disallowOverscroll"         ,"value"=> "true" ),
+                array("key"=>"splash-screen-duration"     ,"value"=> "10000")
         );
     }
 

@@ -1,0 +1,15 @@
+{
+    "name" : "keosu-picture-gallery",
+    "description" : "Create a menu gadget",
+    "version" : "0.1",
+    "type" : "gadget",
+    "param" : [
+        {"name" : "picturesPerPage" , "type" : "choice" , "options" : {
+            "required" : 1,
+            "choices" : {"3":"3","5":"5","10":"10","20":"20","50":"50","100":"100"}
+        }}
+    ],
+    "require" : [
+        { "name" : "angularJs" , "version" : ">=1.2" }
+    ]
+}

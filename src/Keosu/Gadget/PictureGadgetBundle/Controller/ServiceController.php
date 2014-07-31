@@ -36,7 +36,7 @@ class ServiceController extends Controller {
 		$picture = $this->get('doctrine')->getManager()
 				->getRepository(
 						'KeosuDataModelPictureModelBundle:Picture')
-				->find($gadgetConfig["picture-id"]);
+				->find($gadgetConfig["pictureId"]);
 		return $this
 				->render(
 						'KeosuGadgetPictureGadgetBundle:Service:viewone.'

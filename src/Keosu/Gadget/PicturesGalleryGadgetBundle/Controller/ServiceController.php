@@ -30,12 +30,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ServiceController extends Controller {
 
 	public function viewListAction($gadgetId, $format, $offset) {
-		$gadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+		$em = $this->get('doctrine')->getManager();
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
-		$picturesperpage=$gadgetConfig['pictures-per-page'];
+		$picturesperpage = $gadgetConfig['picturesPerPage'];
 
-		$qb = $this->get('doctrine')->getManager()->createQueryBuilder();
+		$qb = $em->createQueryBuilder();
 		$qb->add('select', 'p')
 				->add('from',
 						'Keosu\DataModel\PictureModelBundle\Entity\Picture p')
@@ -46,8 +46,7 @@ class ServiceController extends Controller {
 		$query = $qb->getQuery();
 		$picturesList = $query->execute();
 
-		
-		$queryCount = $this->get('doctrine')->getManager()->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\PictureModelBundle\Entity\Picture p");
+		$queryCount = $em->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\PictureModelBundle\Entity\Picture p");
 		$count = $queryCount->getSingleScalarResult();
 	
 		return $this

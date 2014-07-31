@@ -1,4 +1,4 @@
-app.controller('authentication_gadgetController',function ($scope, $http, usSpinnerService,$location) {
+app.controller('keosu-authenticationController',function ($scope, $http, usSpinnerService,$location) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -29,19 +29,12 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 	//////////////////////////////////////
 	// Init part
 	//////////////////////////////////////
-	$scope.init = function(host, param, page, gadget, zone){
+	$scope.init = function(params){
 
 		if($scope.param == null)
-			$http.get(host+param + 'service/gadget/authentication/' + gadget + '/json/init').success(function(data) {
-				$scope.param = {
-					'host'               : host+param,
-					'page'               : page,
-					'gadget'             : gadget,
-					'zone'               : zone,
-					'pageToGoAfterLogin' : data.pageToGoAfterLogin,
-					'facebookConnect'    : data.facebookConnect
-				}
-
+			$http.get(params.host+'service/gadget/authentication/'+params.gadgetId+'/json/init').success(function(data) {
+				$scope.param = params;
+/*
 				// Facebook login part
 				if($scope.param.facebookConnect) {
 				
@@ -86,7 +79,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 						})
 					});
 				}
-
+*/
 				$scope.loginInit();
 			});
 		else
@@ -102,11 +95,11 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		
 		$scope.loginError = message;
 		$scope.loginSuccess = success;
-		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/loginInit').success(function(data) {
+		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadgetId + '/json/loginInit').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.token = data.csrf_token;
 			if(data.allReadyLogged) {
-				$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
+				$location.path('/Page/'+$scope.param.gadgetParam.pageToGoAfterLogin);
 			} else {
 				$scope.routing('login');
 			}
@@ -123,14 +116,11 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		$http.post($scope.param.host + 'login_check',data).success(function(data) {
 			usSpinnerService.stop('spinner');
 			if(data.success) {
-				$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
+				$location.path('/Page/'+$scope.param.gadgetParam.pageToGoAfterLogin);
 			} else {
 				$scope.loginInit(data.message);
 			}
 		});
-	}
-	$scope.loginFacebookAction = function() {
-		FB.login(null, {scope: 'email'});
 	}
 	
 	///////////////////////////////
@@ -140,7 +130,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		usSpinnerService.spin('spinner');
 		$scope.routing('register');
 		$scope.registerError = message;
-		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/register').success(function(data) {
+		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadgetId + '/json/register').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.token = data.csrf_token;
 		});
@@ -171,7 +161,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		} else {
 			usSpinnerService.spin('spinner');
 			var data = 'csrf_token='+$scope.token+'&password='+$scope.password+'&email='+$scope.email;
-			$http.post($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadget + '/json/register',data).success(function(data) {
+			$http.post($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadgetId + '/json/register',data).success(function(data) {
 				usSpinnerService.stop('spinner');
 				if(data.success) {
 					$scope.loginInit(null,"Registration completed you can now log in");
@@ -199,7 +189,7 @@ app.controller('authentication_gadgetController',function ($scope, $http, usSpin
 		} else {
 			usSpinnerService.spin('spinner');
 			var data = 'username='+$scope.username;
-			$http.post($scope.param.host + 'service/gadget/authentification/' + $scope.param.gadget + '/json/forgotPassword',data).success(function(data) {
+			$http.post($scope.param.host + 'service/gadget/authentification/' + $scope.param.gadgetId + '/json/forgotPassword',data).success(function(data) {
 				usSpinnerService.stop('spinner');
 				if(data.success) {
 					$scope.loginInit(null,"Please check your email account to recover to password");

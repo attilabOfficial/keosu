@@ -1,0 +1,12 @@
+{
+   "name" : "keosu-authentication",
+   "description" : "This allow to register and login a user",
+   "version" : "0.1",
+   "type" : "gadget",
+   "param" : [
+      { "name" : "pageToGoAfterLogin", "type" : "number"}
+   ],
+   "require" : [
+      { "name" : "angularJs" , "version" : ">=1.2" }
+   ]
+}

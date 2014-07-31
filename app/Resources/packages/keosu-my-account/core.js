@@ -1,4 +1,4 @@
-app.controller('my_account_gadgetController',function ($scope, $http, usSpinnerService) {
+app.controller('keosu-my-accountController',function ($scope, $http, usSpinnerService) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -24,13 +24,8 @@ app.controller('my_account_gadgetController',function ($scope, $http, usSpinnerS
 	/**************
 	 * Init part
 	 **************/
-	$scope.init = function(host, param, page, gadget, zone){
-		$scope.param = {
-			'host' :   host+param,
-			'page' :   page,
-			'gadget' : gadget,
-			'zone' :   zone
-		}
+	$scope.init = function(params){
+		$scope.param = params;
 		$scope.showAccountInit();
 	}
 	
@@ -60,7 +55,7 @@ app.controller('my_account_gadgetController',function ($scope, $http, usSpinnerS
 	 **************/
 	$scope.logoutAction = function () {
 	
-		$http.get($scope.param.host + 'service/gadget/authentication/'+$scope.param.gadget+'/logout').success(function(data) {
+		$http.get($scope.param.host + 'service/gadget/authentication/'+$scope.param.gadgetId+'/logout').success(function(data) {
 			$scope.logged = false;
 			if(data.appPrivate) {
 				window.location.replace("index.html");

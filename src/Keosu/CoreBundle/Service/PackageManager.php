@@ -122,14 +122,8 @@ class PackageManager {
 	 */
 	public function checkAllPackages()
 	{
-		// TODO check link to bdd
-		$dir = scandir($this::ROOT_DIR_PACKAGE);
-		foreach($dir as $folder) {
-			if($folder === '.' or $folder === '..')
-				continue;
-			
-			$this->checkPackage($this::ROOT_DIR_PACKAGE.$folder);
-		}
+		foreach($this->cachePackage as $package)
+			$this->checkPackage($package->getPath());
 	}
 
 	/**
@@ -232,7 +226,7 @@ class PackageManager {
 	 * install a new package
 	 * @param $pathTopackage path where to find the package
 	 * @return void
-	 */
+	 *
 	public function install($pathToPackage)
 	{
 		// TODO make all step to install a package
@@ -271,9 +265,8 @@ class PackageManager {
 				}
 			}
 		}
+	}*/
 
-	}
-	
 	/**
 	 * This work for gadget only
 	 * @param $gadgetName name of the gadget
@@ -311,12 +304,11 @@ class PackageManager {
 	 */
 	public function isGadgetExist($gadgetName)
 	{
-		$em = $this->doctrine->getManager();
-		
-		$gadget = $em->getRepository('KeosuCoreBundle:Package')->findOneBy(array(
-											'name' => $gadgetName,
-											'type' => $this::TYPE_PACKAGE_GADGET,
-							));
+		$gadget = null;
+		foreach($this->cachePackage as $p) {
+			if($p->getName() === $gadgetName && $p->getType() === $this::TYPE_PACKAGE_GADGET)
+				$gadget = $p;
+		}
 		return $gadget !== null;
 	}
 }

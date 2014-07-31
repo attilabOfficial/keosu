@@ -9,7 +9,7 @@ services:
         arguments: [@doctrine,@service_container]
     keosu_core.package_manager:
         class: %keosu_core.packagemanager.class%
-        arguments: [@doctrine,@service_container]
+        arguments: [@service_container]
     keosu_core.curapp:
         class: %keosu_core.curapp.class%
         arguments: [@doctrine,@session]

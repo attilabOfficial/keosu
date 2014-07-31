@@ -1,64 +1,36 @@
 <?php
 
-namespace Keosu\CoreBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
+namespace Keosu\CoreBundle\Model;
 
 /**
  * Package
- *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="Keosu\CoreBundle\Entity\PackageRepository")
  */
 class Package
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="path", type="string", length=255)
-     */
     private $path;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
     private $name;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="version", type="string", length=255)
-     */
     private $version;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
-     */
     private $type;
 
-
     /**
-     * Get id
-     *
-     * @return integer 
+     * Contructor of package
+     * @param string $name name of the package
+     * @param string $type type of the package
+     * @param string $version version of the package
+     * @param string $path path of the package
      */
-    public function getId()
+    public function __construct($name,$type,$version,$path)
     {
-        return $this->id;
+        $this->name = $name;
+        $this->type = $type;
+        $this->version = $version;
+        $this->path = $path;
     }
+
 
     /**
      * Set path

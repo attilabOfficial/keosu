@@ -102,7 +102,7 @@ class ManageAppsController extends Controller {
 		$packageToConfigure = array();
 		foreach($listPackage as $p) {
 			$config = $packageManager->getConfigPackage($p->getPath());
-			if(count($config['appParam']))
+			if(isset($config['appParam']) && count($config['appParam']))
 				$packageToConfigure[] = $config;
 		}
 
@@ -138,7 +138,9 @@ class ManageAppsController extends Controller {
 							'choices'  => ThemeUtil::getThemeList(),
 							'expanded' => true
 					))
-					->add('configPackages',new ConfigPackageType($this->container,$this->get('request')))
+					->add('configPackages',new ConfigPackageType($this->container,$this->get('request')),array(
+							'label' => false,
+					))
 					->add('preferences', 'collection',array(
 						'type'         => new PreferenceType(),
 						'required'     => false,

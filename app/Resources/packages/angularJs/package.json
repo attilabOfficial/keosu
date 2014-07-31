@@ -15,7 +15,8 @@
       "angular-sanitize.min.js",
       "angular-spinner.js",
       "angular-touch.js",
-      "spin.js"
+      "spin.js",
+      "utilString.js"
    ],
    "appParam" : []
 }

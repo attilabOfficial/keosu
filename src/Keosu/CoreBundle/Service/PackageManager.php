@@ -46,7 +46,7 @@ class PackageManager {
 	public function __construct($container)
 	{
 		$this->container = $container;
-		$this->generateListOfPackage();
+		$this->generateListOfPackage(true);
 	}
 
 	/**

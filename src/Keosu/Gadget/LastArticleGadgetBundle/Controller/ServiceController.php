@@ -33,7 +33,7 @@ class ServiceController extends Controller {
 		$gadget = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
-		$articlesperpage=$gadgetConfig['articles-per-page'];
+		$articlesperpage=$gadgetConfig['articlesPerPage'];
 
 		$queryCount = $this->get('doctrine')->getManager()->createQuery('SELECT COUNT(u.id) FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody u');
 		$count = $queryCount->getSingleScalarResult();
@@ -53,8 +53,7 @@ class ServiceController extends Controller {
 			->setBody(
 					TemplateUtil::formatTemplateString($article->getBody()));
 		}
-		
-		//$article->setBody(TemplateUtil::formatTemplateString($article->getBody()));
+
 		return $this
 				->render(
 						'KeosuGadgetLastArticleGadgetBundle:Service:viewlist.'

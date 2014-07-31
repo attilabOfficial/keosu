@@ -1,0 +1,15 @@
+{
+   "name" : "keosu-last-article",
+   "description" : "Display a list of articles in your app",
+   "version" : "0.1",
+   "type" : "gadget",
+   "param" : [
+      {"name": "articlesPerPage", "type" : "choice","options": {
+         "choices" : {"3":"3","5":"5","10":"10","50":50,"100":"100"},
+         "required" : 1
+      }}
+   ],
+   "require" : [
+      { "name" : "angularJs" , "version" : ">=1.2" }
+   ]
+}

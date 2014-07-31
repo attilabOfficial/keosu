@@ -473,10 +473,14 @@ class Exporter {
 			$libJs = $config['libJs'];
 			if(count($libJs)) {
 				foreach($libJs as $l) {
-					copy($package->getPath().DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.$l,
-						ExporterUtil::getAbsolutePath() .DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.$l);
 					$script = $indexDocument->createElement('script');
-					$script->setAttribute('src','js/'.$l);
+					if(substr($l,0,8) === 'https://' || substr($l,0,7) === 'http://') {
+						$script->setAttribute('src',$l);
+					} else {
+						copy($package->getPath().DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.$l,
+							ExporterUtil::getAbsolutePath() .DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.$l);
+						$script->setAttribute('src','js/'.$l);
+					}
 					$indexDocument->getElementsByTagName('head')->item(0)->appendChild($script);
 					
 				}

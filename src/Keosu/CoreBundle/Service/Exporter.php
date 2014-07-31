@@ -225,13 +225,13 @@ class Exporter {
 		$script->setAttribute('src','js/app.js');
 		$indexHtml->getElementsByTagName('head')->item(0)->appendChild($script);
 
-
 		$this->writeFile(StringUtil::decodeString($indexHtml->saveHTML()),'index.html','/simulator/www/');
 
 		////////////////////////////////////////////////////
 		// import all gadget requiered controller
 		////////////////////////////////////////////////////
-		$appJs = $jsInit.$jsCore.$jsEnd;
+		$appJs = 'var importedPackages = '.\json_encode($importedPackages).";\n";
+		$appJs .= $jsInit.$jsCore.$jsEnd;
 		$this->writeFile($appJs,'app.js','/simulator/www/js/');
 		
 		////////////////////////////////////////////////////

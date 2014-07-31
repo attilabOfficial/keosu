@@ -213,7 +213,7 @@ class ManageGadgetsController extends Controller {
 
 		$formBuilder = $this->createFormBuilder($gadget);
 
-		$configType = new ConfigGadgetType($dispatcher,$request,$gadget);
+		$configType = new ConfigGadgetType($dispatcher,$request,$this->container->get('keosu_core.packagemanager'),$gadget);
 		$formBuilder->add('template', 'choice',array(
 							'choices'  => $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName()),
 							'required' => true,

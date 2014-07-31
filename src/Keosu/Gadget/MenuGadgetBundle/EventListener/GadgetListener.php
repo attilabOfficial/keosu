@@ -36,7 +36,7 @@ class GadgetListener implements EventSubscriberInterface
 
 	public function onGadgetConfFormBuild(GadgetFormBuilderEvent $event)
 	{
-
+		$event->setOverrideForm(true);
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 
 		$em = $this->container->get('doctrine')->getManager();

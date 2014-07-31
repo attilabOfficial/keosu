@@ -22,6 +22,7 @@ namespace Keosu\CoreBundle\Form;
 use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Entity\Gadget;
 use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
+use Keosu\CoreBundle\Service\PackageManager;
 
 use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\Form\AbstractType;
@@ -39,20 +40,40 @@ class ConfigGadgetType extends AbstractType {
 
 	private $gadget;
 
-	public function __construct(ContainerAwareEventDispatcher $dispatcher,Request $request,Gadget $gadget) {
+	private $packageManager;
+
+	public function __construct(ContainerAwareEventDispatcher $dispatcher,Request $request,PackageManager $packageManager,Gadget $gadget)
+	{
 		$this->dispatcher = $dispatcher;
 		$this->request = $request;
+		$this->packageManager = $packageManager;
 		$this->gadget = $gadget;
 	}
 
-	public function buildForm(FormBuilderInterface $builder, array $options) {
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
 
 		$event = new GadgetFormBuilderEvent($builder,$this->request,$this->gadget);
 		$this->dispatcher->dispatch(KeosuEvents::GADGET_CONF_FORM_BUILD.$this->gadget->getName(),$event);
-
+		if(!$event->isOverrideForm()) {
+			$config = $this->packageManager->getConfigPackage($this->gadget->getName());
+			if(isset($config['param'])) {
+				$params = $config['param'];
+				foreach($params as $p) {
+					if($builder->has($p['name']))
+						throw new \LogicException('The property '.$p['name'].' allready exist maybe you forget to enable overrideForm ?');
+				
+					if(isset($p['options']))
+						$builder->add($p['name'],$p['type'],$p['options']);
+					else
+						$builder->add($p['name'],$p['type']);
+				}
+			}
+		}
 	}
 
-	public function getName() {
+	public function getName()
+	{
 		return 'Keosu_CoreBundle_configgadgettype';
 	}
 }

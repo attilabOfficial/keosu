@@ -13,12 +13,14 @@ class GadgetFormBuilderEvent extends Event
 	private $formBuilder;
 	private $request;
 	private $gadget;
+	private $overrideForm;
 
 	public function __construct(FormBuilder $formBuilder, Request $request,Gadget $gadget)
 	{
 		$this->formBuilder = $formBuilder;
 		$this->request = $request;
 		$this->gadget = $gadget;
+		$this->overrideForm = false;
 	}
 
 	/**
@@ -43,5 +45,21 @@ class GadgetFormBuilderEvent extends Event
 	public function getGadget()
 	{
 		return $this->gadget;
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function isOverrideForm()
+	{
+		return $this->overrideForm;
+	}
+	
+	/**
+	 * set true if you don't want the form to be automatiquely generated
+	 */
+	public function setOverrideForm($value)
+	{
+		$this->overrideForm = !!$value;
 	}
 }

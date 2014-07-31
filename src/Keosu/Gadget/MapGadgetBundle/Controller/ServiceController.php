@@ -30,13 +30,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ServiceController extends Controller {
 
 	public function viewOneAction($gadgetId, $format) {
-		$gadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+		$em = $this->get('doctrine')->getManager();
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
-		$poi = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelMapModelBundle:PointOfInterest')
-				->find($gadgetConfig["poi-id"]);
+		$poi = $em->getRepository('KeosuDataModelMapModelBundle:PointOfInterest')
+				->find($gadgetConfig["poiId"]);
 		return $this
 				->render(
 						'KeosuGadgetMapGadgetBundle:Service:viewone.'

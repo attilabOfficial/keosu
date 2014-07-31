@@ -17,7 +17,7 @@
  ************************************************************************/
 
 //Main controller
-app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
+app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpinnerService) {
 	//Functions
 	$scope.parts=function(isList, isMap, $scope) {
 		$scope.isList = isList;
@@ -37,7 +37,7 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
 	}
 	$scope.open = function (page) {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		$http.get($scope.host + $scope.param + 'service/gadget/aroundme/view/'
+		$http.get($scope.param.host + 'service/gadget/aroundme/view/'
 				+ page.id + '/json').success(function (data){
 					usSpinnerService.stop('spinner');
 					$scope.myMap = data[0];
@@ -63,14 +63,13 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
 		$scope.parts(true, false, $scope);
 	};
 	
-	$scope.init = function (host, param, page, gadget, zone) {
+	$scope.init = function (params) {
 			$scope.parts(true, false, $scope);
 			usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-			$scope.host = host;
-			$scope.param = param;
+			$scope.param = params;
 	
 			var onGpsSuccess = function(position) {
-				$http.get(host +param + 'service/gadget/aroundme/' + gadget +'/'
+				$http.get($scope.param.host + 'service/gadget/aroundme/' + $scope.param.gadgetId +'/'
 						+ position.coords.latitude + '/'
 						+ position.coords.longitude + '/0/' + '10' + '/json').success(function (data) {
 							usSpinnerService.stop('spinner');

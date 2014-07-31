@@ -1,0 +1,36 @@
+<div ng-show="isList">
+	<div class="panel list">
+		<div class="panel-body list-content" ng-repeat="page in pages">
+			<div class="media" ng-click="open(page)">
+				<div href="#" class="row list-elements">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<div class="list-elem-left">
+							<a href="#"><h6>{{ page.title }}</h6></a>
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<div class="media-body pull-right list-elem-right">
+							<p>{{ page.distance }} km</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+		</div>
+	</div>
+</div>
+<div ng-show="isMap">
+	<a href="#" ng-click="close()"><i
+		class="fui-cross basic-icon-cross"></i></a>
+	<h4 class="title">{{ myMap.nom }}</h4>
+	<hr>
+	<div class="gadget-content">
+		<div class="row-fluid">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div ng-bind-html="myMap.description"></div>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div id="map_canvas"></div>
+</div>

@@ -18,18 +18,13 @@
 
 //Main function
 
-app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerService) {
+app.controller('keosu-mapController', function ($scope, $http, $sce, usSpinnerService) {
 
 	////////////////////////////
 	// init part
 	////////////////////////////
-	$scope.init = function (host, param, page, gadget, zone){
-		$scope.param = {
-			'host'   : host+param,
-			'page'   : page,
-			'gadget' : gadget,
-			'zone'   : zone,
-		};
+	$scope.init = function (params){
+		$scope.param = params;
 		$scope.showMapAction();
 	};
 	
@@ -39,7 +34,7 @@ app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerS
 	$scope.showMapAction = function () {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 
-		$http.get($scope.param.host+'service/gadget/mapgadget/'+$scope.param.gadget+ '/json').success( function (data) {
+		$http.get($scope.param.host+'service/gadget/mapgadget/'+$scope.param.gadgetId+ '/json').success( function (data) {
 					usSpinnerService.stop('spinner');
 					$scope.map = data[0];
 					var map = $scope.initialize();
@@ -65,24 +60,5 @@ app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerS
 		var map = new google.maps.Map(document.getElementById("map_canvas"),
 				mapOptions);
 		return map;
-	};
-	
-	////////////////////////////////
-	// Comment part
-	////////////////////////////////
-	$scope.commentListAction = function() {
-		$http.get($scope.param.host+'service/gadget/comment/'+$scope.map.dataModelObjectName+'/'+$scope.map.id).success(function(data){
-			$scope.comments = data.comments;
-			$scope.connect = data.connect;
-		});
-	};
-	
-	$scope.commentAddAction = function() {
-		var data = "message="+$scope.messageComment;
-		$scope.messageComment = "";
-		$http.post($scope.param.host+'service/gadget/comment/'+$scope.map.dataModelObjectName+'/'+$scope.map.id,data).success(function(data){
-			$scope.comments = data.comments;
-			$scope.connect = data.connect;
-		});
 	};
 });

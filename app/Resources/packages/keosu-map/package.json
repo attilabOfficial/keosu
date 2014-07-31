@@ -1,0 +1,13 @@
+{
+    "name" : "keosu-map",
+    "description" : "display a map",
+    "version" : "0.1",
+    "type" : "gadget",
+    "param" : [
+        { "name" : "poiId", "type":"number"}
+    ],
+    "require" : [
+        { "name" : "angularJs" , "version" : ">=1.2" },
+        { "name" : "jQuery", "version" : ">=2"}
+    ]
+}

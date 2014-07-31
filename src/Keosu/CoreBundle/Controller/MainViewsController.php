@@ -17,9 +17,8 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Controller;
-use Keosu\CoreBundle\Util\ExporterUtil;
 
-use Keosu\CoreBundle\Util\ZipUtil;
+use Keosu\CoreBundle\Service\Exporter;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -77,7 +76,7 @@ class MainViewsController extends Controller{
 	   				$this->generateUrl('keosu_core_app_manage_add'));
 	   	}
 		//URL to dowload zip file
-		$url = ExporterUtil::getWebPath() . 'export.zip';
+		$url = Exporter::EXPORT_WEB_PATH.'export.zip';
 		return $this
 				->render('KeosuCoreBundle:MainViews:publish.html.twig',
 						array('downloadurl' => $url));

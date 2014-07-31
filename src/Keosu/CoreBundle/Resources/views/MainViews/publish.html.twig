@@ -37,7 +37,7 @@
 			<p>
 				Export App before download the last version
 			</p>
-			<a href="{{ path('keosu_core_exporter_export') }}"><button id="spinner-load" type="button" class="btn btn-default">Export</button></a>
+			<a href="{{ path('keosu_core_exporter_export') }}"><button type="button" class="btn btn-default">Export</button></a>
 		</div>
 	</div>
 	
@@ -47,7 +47,7 @@
 			<p>
 				You can use the zip file directly in phonegap build plateform.
 			</p>
-			<a href="{{url_base}}/keosu/export/phonegapbuild/export.zip"<button type="button" class="btn btn-default">Download</button></a>
+			<a href="{{url_base}}/keosu/export/phonegapbuild/export.zip"><button type="button" class="btn btn-default">Download</button></a>
 		</div>
 	</div>
 	<div class="col-md-3">
@@ -69,6 +69,5 @@
 			<a href="{{url_base}}/keosu/export/android/export.zip"><button type="button" class="btn btn-default">Download</button></a>
 		</div>
 	</div>
-	<center><img id="spinner-loading" src="{{url_base}}/img/loading.gif" alt="Loading"/></center>
 	
 {% endblock %}

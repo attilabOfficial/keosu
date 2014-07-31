@@ -17,7 +17,7 @@ security:
       chain:
         providers: [in_memory, fos_userbundle]
     fos_userbundle:
-       id: fos_user.user_provider.username
+       id: fos_user.user_provider.username_email
     in_memory:
       memory:
         users: 

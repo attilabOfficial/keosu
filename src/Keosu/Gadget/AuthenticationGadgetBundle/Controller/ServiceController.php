@@ -170,12 +170,13 @@ class ServiceController extends Controller {
 					
 						$user->setPlainPassword($request->request->get('password'));
 						$user->setEmail($request->request->get('email'));
+						$user->setUsername($request->request->get('username'));
 						$user->setAccountType('keosu');
 						try {
 							$userManager->updateUser($user);
 							$success = true;
 						} catch(\Exception $e) {
-							$message = "Your email is allready used";
+							$message = "Your email or your username is allready used";
 						}
 					} else {
 						$message = "Invalid email";

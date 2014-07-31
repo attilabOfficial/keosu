@@ -160,7 +160,7 @@ app.controller('keosu-authenticationController',function ($scope, $http, usSpinn
 			window.scrollTo(0, 0);
 		} else {
 			usSpinnerService.spin('spinner');
-			var data = 'csrf_token='+$scope.token+'&password='+$scope.password+'&email='+$scope.email;
+			var data = 'username='+$scope.username+'&csrf_token='+$scope.token+'&password='+$scope.password+'&email='+$scope.email;
 			$http.post($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadgetId + '/json/register',data).success(function(data) {
 				usSpinnerService.stop('spinner');
 				if(data.success) {

@@ -36,6 +36,10 @@
 		<div ng-show="registerError" class="alert alert-danger">{{ registerError }}</div>
 		<form role="form" ng-submit="registerAction()">
 			<div class="form-group">
+				<label for="inputUsernameRegister">Login</label>
+				<input type="text" class="form-control" id="inputUsernameRegister" placeholder="Enter your login" ng-model="username">
+			</div>
+			<div class="form-group">
 				<label for="inputMailRegister">Email</label>
 				<input type="mail" class="form-control" id="inputMailRegister" placeholder="Enter your email" ng-model="email">
 			</div>

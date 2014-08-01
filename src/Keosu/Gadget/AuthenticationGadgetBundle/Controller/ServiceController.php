@@ -31,6 +31,7 @@ use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphUser;
 use Facebook\RequestException;
+use Facebook\FacebookRequestException;
 
 class ServiceController extends Controller {
 

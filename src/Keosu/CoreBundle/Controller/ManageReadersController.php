@@ -26,16 +26,17 @@ class ManageReadersController extends Controller {
 	/**
 	 * Create a form to choose the type of reader we want to add
 	 */
-	public function addAction() {
+	public function addAction()
+	{
 		//Reader list
-		$contents = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Reader')->findAll();
+		$em = $this->get('doctrine')->getManager();
+		$readers = $em->getRepository('KeosuCoreBundle:Reader')->findAll();
 
 		$formBuilder = $this->createFormBuilder();
-		$formBuilder
-				->add('readertype', 'choice',
-						array('choices' => KeosuExtension::$readerList,
-								'required' => true,));
+		$formBuilder->add('readertype', 'choice', array(
+								'choices' => KeosuExtension::$readerList,
+								'required' => true,
+						));
 		$form = $formBuilder->getForm();
 		$request = $this->get('request');
 		//If we are in POST method, form is submit
@@ -63,25 +64,20 @@ class ManageReadersController extends Controller {
 	/**
 	 * Delete a reader
 	 */
-	public function deleteAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Reader');
-
-		$reader = $repo->find($id);
-		
-		$repoarticle = $this->get('doctrine')->getManager()
-			->getRepository($reader->getLinkedEntity());
-		$linkedArticles=$repoarticle->findByReader($reader->getId());
+	public function deleteAction($id)
+	{
 		$em = $this->get('doctrine')->getManager();
+
+		$reader = $em->getRepository('KeosuCoreBundle:Reader')->find($id);
+
+		$linkedArticles = $em->getRepository($reader->getLinkedEntity())->findByReader($reader->getId());
 		foreach ($linkedArticles as $article){
 			$article->setReader(null);
 			$em->persist($article);
-			$em->flush();
 		}
-		$this->get('doctrine')->getManager()->remove($reader);
-		$this->get('doctrine')->getManager()->flush();
-		return $this
-				->redirect($this->generateUrl('keosu_ReaderManager_manage'));
+		$em->remove($reader);
+		$em->flush();
+		return $this->redirect($this->generateUrl('keosu_ReaderManager_manage'));
 	}
 
 }

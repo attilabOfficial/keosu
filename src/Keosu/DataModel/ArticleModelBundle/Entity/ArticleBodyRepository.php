@@ -28,19 +28,4 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleBodyRepository extends EntityRepository {
 
-	public function getArticleByReader($idext, $readerId) {
-
-		$article = $this->_em
-				->createQuery(
-						'SELECT a FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a WHERE a.idext='
-								. $idext . ' AND a.reader=' . $readerId)
-				->getResult();
-		if (count($article) > 1) {
-			//TODO ERROR DUPLICATE ARTICLE
-		} else if (count($article) == 0) {
-			return null;
-		} else {
-			return $article[0];
-		}
-	}
 }

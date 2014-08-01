@@ -31,12 +31,16 @@ class PageRepository extends EntityRepository {
 	 * Find all shared gadget in a zone for an app
 	 */
 	public function countIsMainByAppId($appid ) {
-		$pages = $this->_em
-			->createQuery(
-				'SELECT a FROM Keosu\CoreBundle\Entity\Page a
-					WHERE a.appId='.$appid.' and a.isMain=1')->getResult();	
-		
-		return count($pages);
+		$qb = $this->_em->createQueryBuilder();
+		$qb->select('count(a.id)');
+		$qb->from('Keosu\CoreBundle\Entity\Page', 'a');
+		$qb->where('a.isMain=1');
+		$qb->andWhere('a.appId=?1');
+		$qb->setParameter(1, $appid);
+		$query = $qb->getQuery();
+		$nbr=$query->getSingleScalarResult();
+		return $nbr;
 	
 	}
 }
+

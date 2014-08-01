@@ -64,7 +64,7 @@ class PackageManager {
 		if(!$session->has('cachePackage') || $forceReload) {
 			$dir = scandir($this::getRootDirPackage());
 			foreach($dir as $folder) {
-				if($folder === '.' or $folder === '..')
+				if($folder === '.' || $folder === '..')
 					continue;
 			
 				$this->checkPackage($this::getRootDirPackage().$folder);
@@ -85,9 +85,9 @@ class PackageManager {
 	public function getPackageList($type = null)
 	{
 		if($type != null
-			and $type != $this::TYPE_PACKAGE_GADGET
-				and $type != $this::TYPE_PACKAGE_LIB
-					and $type != $this::TYPE_PACKAGE_PLUGIN)
+			&& $type != $this::TYPE_PACKAGE_GADGET
+				&& $type != $this::TYPE_PACKAGE_LIB
+					&& $type != $this::TYPE_PACKAGE_PLUGIN)
 			throw new \LogicException('Wrong parameter for getList');
 
 		$listPackage = array();
@@ -152,8 +152,8 @@ class PackageManager {
 		
 		// check type allowed
 		if($config['type'] != $this::TYPE_PACKAGE_LIB 
-			and $config['type'] != $this::TYPE_PACKAGE_GADGET
-				and $config['type'] != $this::TYPE_PACKAGE_PLUGIN)
+			&& $config['type'] != $this::TYPE_PACKAGE_GADGET
+				&& $config['type'] != $this::TYPE_PACKAGE_PLUGIN)
 			throw new \LogicException('The type of your package can only be gadget, plugin or lib
 										for your package '.$packageName.' located at '.$packageLocation);
 										
@@ -167,7 +167,7 @@ class PackageManager {
 			
 			$templates = scandir($packageLocation.'/templates');
 			foreach($templates as $t) {
-				if($t == '.' or $t == '..')
+				if($t == '.' || $t == '..')
 					continue;
 				if($t != $this::DEFAULT_TEMPLATE_GADGET_NAME && StringUtil::endsWith($t,'.html') && array_search($t.'.png',$templates) === false)
 					throw new \LogicException('Missing previsualisation for template '.$t.' to your gadget '.$packageName.' located at '.$packageLocation);
@@ -215,7 +215,7 @@ class PackageManager {
 		// TODO change to bdd
 		$dir = scandir($this::getRootDirPackage());
 		foreach($dir as $folder) {
-			if($folder === '.' or $folder === '..')
+			if($folder === '.' || $folder === '..')
 				continue;
 
 			$config = \json_decode(\file_get_contents($this::getRootDirPackage().$folder.'/package.json'),true);
@@ -294,7 +294,7 @@ class PackageManager {
 			mkdir($templatesGadgetFolder);
 
 		foreach($templates as $t) {
-			if($t == '.' or $t == '..')
+			if($t == '.' || $t == '..')
 				continue;
 			if(StringUtil::endsWith($t,'.html')) {
 				$ret[$t] = $t;

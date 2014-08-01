@@ -48,19 +48,19 @@ class ManageAppsController extends Controller {
 	public function addAction() {
 		$app = new App();
 		//Copy default splashscreens and icons in a temp repertory
-		FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir("keosu"), ExporterUtil::getSplashsIconesDir("tmp"));
+		FilesUtil::copyFolder(ExporterUtil::getImageDir('keosu'), ExporterUtil::getImageDir('tmp'));
 		return $this->editApp($app);
 	}
 
 	public function editAction($id) {
 		$em = $this->get('doctrine')->getManager();
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($id);
-		if(!is_dir(Exporter::EXPORT_SPLASHICON_DIR.$app->getId().'/')) {
+		if(!is_dir(Exporter::getImageDir($app->getId()))) {
 			//Copy default splashscreens and icons in a temp repertory
-			FilesUtil::copyFolder(Exporter::EXPORT_SPLASHICON_DIR.'keosu/', Exporter::EXPORT_SPLASHICON_DIR.'tmp/');
+			FilesUtil::copyFolder(Exporter::getImageDir('keosu'), Exporter::getImageDir('tmp'));
 		} else {
 			//Copy older splashscreens and icons in a temp repertory
-			FilesUtil::copyFolder(Exporter::EXPORT_SPLASHICON_DIR.$app->getId().'/', Exporter::EXPORT_SPLASHICON_DIR.'tmp/');
+			FilesUtil::copyFolder(Exporter::getImageDir($app->getId()), Exporter::getImageDir('tmp'));
 		}
 		return $this->editApp($app);
 	}
@@ -102,7 +102,7 @@ class ManageAppsController extends Controller {
 				$session->set("appid",$app->getId());
 
 				//Copy splashscreens and icons
-				FilesUtil::copyFolder(Exporter::EXPORT_SPLASHICON_DIR.'tmp/', Exporter::EXPORT_SPLASHICON_DIR.$app->getId().'/');
+				FilesUtil::copyFolder(Exporter::getImageDir('tmp'), Exporter::getImageDir($app->getId()));
 
 				// export the app
 				$this->container->get('keosu_core.exporter')->exportApp();

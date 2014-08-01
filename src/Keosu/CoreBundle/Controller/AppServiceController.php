@@ -28,11 +28,9 @@ class AppServiceController extends Controller {
 	public function listAction($format) {
 		$appid = $this->get('keosu_core.curapp')->getCurApp();
 		$em = $this->get('doctrine')->getManager();
-		if($appid==0 || $appid==null){
-			return null;
-		}
 		$curAppName = $em->getRepository('KeosuCoreBundle:App')->find($appid)->getName();
 		$contents = $em->getRepository('KeosuCoreBundle:App')->findAll();
+		//If appid is null the template will be blank
 		return $this->render('KeosuCoreBundle:App/Service:list.'.$format.'.twig', array(
 								'contents' => $contents,
 								'curapp'   => $curAppName

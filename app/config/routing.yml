@@ -63,7 +63,7 @@ keosu_article:
     prefix:   /
     
 keosu_poi:
-    resource: "@KeosuDataModelMapModelBundle/Resources/config/routing.yml"
+    resource: "@KeosuDataModelLocationModelBundle/Resources/config/routing.yml"
     prefix:   /
     
 keosu_event:

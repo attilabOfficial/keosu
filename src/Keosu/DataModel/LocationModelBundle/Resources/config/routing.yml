@@ -1,0 +1,15 @@
+keosu_location_viewlist:
+    pattern:  /content/poi/
+    defaults: { _controller: KeosuDataModelLocationModelBundle:View:view }
+    
+keosu_poi_delete:
+    pattern:  /content/poi/delete/{id}
+    defaults: { _controller: KeosuDataModelLocationModelBundle:Edit:delete }
+    
+keosu_poi_edit:
+    pattern:  /content/poi/edit/{id}
+    defaults: { _controller: KeosuDataModelLocationModelBundle:Edit:edit }
+    
+keosu_poi_add:
+    pattern:  /content/poi/add
+    defaults: { _controller: KeosuDataModelLocationModelBundle:Edit:add }

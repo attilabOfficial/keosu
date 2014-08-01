@@ -17,8 +17,8 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
-namespace Keosu\DataModel\MapModelBundle\Controller;
-use Keosu\DataModel\MapModelBundle\Entity\PointOfInterest;
+namespace Keosu\DataModel\LocationModelBundle\Controller;
+use Keosu\DataModel\LocationModelBundle\Entity\PointOfInterest;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -29,12 +29,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class ViewController extends Controller {
 	public function viewAction() {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelMapModelBundle:PointOfInterest');
-		$pois = $repo->findAll();
+		$em = $this->get('doctrine')->getManager();
+		$location = $em->getRepository('KeosuDataModelLocationModelBundle:Location')->findAll();
 		return $this
-				->render('KeosuDataModelMapModelBundle:View:view.html.twig',
-						array('pois' => $pois));
+				->render('KeosuDataModelLocationModelBundle:View:view.html.twig',
+						array('pois' => $location));
 	}
 }

@@ -135,7 +135,6 @@ class ManageAppsController extends Controller {
 	 * Edit App form
 	 */
 	private function buildAppForm($formBuilder) {
-		$themesKeys = array_keys(ThemeUtil::getThemeList());
 		$formBuilder->add('name', 'text')
 					->add('packageName','text')
 					->add('description','textarea')

@@ -43,10 +43,7 @@ class SyncController extends Controller {
 		 * Init Keosu (local) connection and managers
 		 */
 		$Keosu_manager = $this->get('doctrine')->getManager();
-		$Keosu_repository_article = $Keosu_manager
-				->getRepository(
-						'KeosuDataModelArticleModelBundle:ArticleBody');
-		
+
 		/**
 		 * Get the curent reader to initialize  connection
 		 */
@@ -109,8 +106,7 @@ class SyncController extends Controller {
 		}
 		if($entry->getElementsByTagName("dc:creator")->item(0)!=null)
 			$author=$entry->getElementsByTagName("dc:creator")->item(0)->nodeValue;
-		
-		print("hello2");
+
 		//Store in database
 		$this->storeArticle($title, $body, $date, $idext, $img, $author,
 			$reader);
@@ -119,7 +115,6 @@ class SyncController extends Controller {
 	
 	private function storeArticle($title, $body, $date, $idext, $img, $author,
 			$reader) {
-		print("hello");
 		//Test if article already exist
 		$article = $this->get('doctrine')->getManager()
 			->getRepository(
@@ -146,8 +141,7 @@ class SyncController extends Controller {
 			$attachment = new ArticleAttachment();
 			$filePath=$this->downloadFile($img,$attachment->getUploadRootDir());
 			$baseName=basename($img);
-			$file=new UploadedFile($filePath,$baseName);
-			$attachment->setName($baseName);		
+			$attachment->setName($baseName);
 			$attachment->setPath($baseName);
 			$article->addAttachment($attachment);
 		}
@@ -164,3 +158,4 @@ class SyncController extends Controller {
 	}
 
 }
+

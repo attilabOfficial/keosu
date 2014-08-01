@@ -27,7 +27,6 @@ class ServiceController extends Controller {
 	public function viewListAction($gadgetId, $format, $offset, $limit, $lat, $lng) {
 		$gadget = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
-		$gadgetConfig = $gadget->getConfig();
 		
 		$queryString= 'SELECT DISTINCT a.id,';
 		$queryString=$queryString.'( 6355 * acos(cos(radians(' . $lat . '))' .

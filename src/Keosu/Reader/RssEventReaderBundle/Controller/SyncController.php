@@ -40,10 +40,7 @@ class SyncController extends Controller {
 		 * Init Keosu (local) connection and managers
 		 */
 		$Keosu_manager = $this->get('doctrine')->getManager();
-		$Keosu_repository_article = $Keosu_manager
-				->getRepository(
-						'KeosuDataModelEventModelBundle:Event');
-		
+
 		/**
 		 * Get the curent reader to initialize  connection
 		 */
@@ -151,27 +148,5 @@ class SyncController extends Controller {
 	
 	}
 
-	private function downloadFile($url, $path) {
-
-		$newfname = $path + "/temp";
-		$file = fopen($url, "rb");
-		if ($file) {
-			$newf = fopen($newfname, "wb");
-
-			if ($newf)
-				while (!feof($file)) {
-					fwrite($newf, fread($file, 1024 * 8), 1024 * 8);
-				}
-		}
-
-		if ($file) {
-			fclose($file);
-		}
-
-		if ($newf) {
-			fclose($newf);
-		}
-		return $file;
-	}
-
 }
+

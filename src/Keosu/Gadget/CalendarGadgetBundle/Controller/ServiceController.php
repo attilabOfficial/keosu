@@ -30,7 +30,7 @@ class ServiceController extends Controller {
 	
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
-		$eventsperpage=$gadgetConfig['events-per-page'];
+		$eventsperpage = $gadgetConfig['events-per-page'];
 
 		$qb = $em->createQueryBuilder();
 		$qb->add('select', 'p')
@@ -41,9 +41,6 @@ class ServiceController extends Controller {
 		$query = $qb->getQuery();
 		$eventsList = $query->execute();
 
-		$queryCount = $em->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\EventModelBundle\Entity\Event p");
-		$count = $queryCount->getSingleScalarResult();
-	
 		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewlist.'. $format . '.twig',array(
 									'events'        => $eventsList,
 									'eventsperpage' => $eventsperpage
@@ -67,9 +64,6 @@ class ServiceController extends Controller {
 				->add('orderBy', 'p.date DESC');
 		$query = $qb->getQuery();
 		$eventsList = $query->execute();
-
-		$queryCount = $em->createQuery("SELECT COUNT(p.id) FROM Keosu\DataModel\EventModelBundle\Entity\Event p");
-		$count = $queryCount->getSingleScalarResult();
 	
 		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewtable.'. $format . '.twig',array(
 									'events' => $eventsList

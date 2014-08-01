@@ -63,8 +63,7 @@ class ServiceController extends Controller {
 		if($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
 		
 			$ret['connect'] = true;
-			
-			$oldpass = $request->request->get('oldPassword');
+
 			$newpass = $request->request->get('newPassword');
 
 			if(strlen($newpass) > 5) {

@@ -22,7 +22,6 @@ use Keosu\DataModel\EventModelBundle\Entity\Event;
 use Keosu\Reader\icsReaderBundle\icsReader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Synchronise a ics feed with Event data model
@@ -34,30 +33,13 @@ class SyncController extends Controller {
 	 * Synchronise ics remote contents with articles
 	 * @param $id of the curent reader
 	 */
-	private function dist($lat,$lng){
-		$current_lat = 48.117266;
-		$current_lng = -1.6777926;
-		return ($lat-$current_lat)*($lat-$current_lat)+($lng-$current_lng)*($lng-$current_lng);
-	}
-	
-	private function cmpByDist($a,$b){
-		if ( $this->dist($a['geometry']['location']['lat'],$a['geometry']['location']['lng'])
-		== $this->dist($b['geometry']['location']['lat'],$b['geometry']['location']['lng']) ) {
-			return 0;
-		}
-		return ($this->dist($a['geometry']['location']['lat'],$a['geometry']['location']['lng'])
-				< $this->dist($b['geometry']['location']['lat'],$b['geometry']['location']['lng'])) ? -1 : 1;
-	}
 	
 	public function syncAction($id) {
 		/**
 		 * Init Keosu (local) connection and managers
 		 */
 		$Keosu_manager = $this->get('doctrine')->getManager();
-		$Keosu_repository_article = $Keosu_manager
-				->getRepository(
-						'KeosuDataModelEventModelBundle:Event');
-		
+
 		$reader = $Keosu_manager->getRepository('KeosuCoreBundle:Reader')
 		->find($id);
 		//Convert it to a RssReader
@@ -165,28 +147,5 @@ class SyncController extends Controller {
 	
 	
 	}
-
-	private function downloadFile($url, $path) {
-
-		$newfname = $path + "/temp";
-		$file = fopen($url, "rb");
-		if ($file) {
-			$newf = fopen($newfname, "wb");
-
-			if ($newf)
-				while (!feof($file)) {
-					fwrite($newf, fread($file, 1024 * 8), 1024 * 8);
-				}
-		}
-
-		if ($file) {
-			fclose($file);
-		}
-
-		if ($newf) {
-			fclose($newf);
-		}
-		return $file;
-	}
-
 }
+

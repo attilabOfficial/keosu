@@ -27,8 +27,6 @@ use Keosu\CoreBundle\Model\Splashscreens;
 
 use Keosu\CoreBundle\Util\ThemeUtil;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * App
  *

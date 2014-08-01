@@ -4,5 +4,7 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
+    admin_password:    lagoutte
+
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt

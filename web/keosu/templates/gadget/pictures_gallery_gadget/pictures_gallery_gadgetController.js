@@ -62,7 +62,7 @@ app.controller('pictures_gallery_gadgetController', function ($scope, $http, usS
 		};
 		$scope.imgClass = [];
 		usSpinnerService.spin('spinner');
-		data = cacheManagerService.get(gadget, $scope.param.host + 'service/gadget/picturesgallery/'+ $scope.param.gadget + '/' + $scope.param.offset + '/' + 'json')
+		cacheManagerService.get($scope.param.host + 'service/gadget/picturesgallery/'+ $scope.param.gadget + '/' + $scope.param.offset + '/' + 'json')
 				.success(function (data) {
 					usSpinnerService.stop('spinner');
 					$tmp = [];

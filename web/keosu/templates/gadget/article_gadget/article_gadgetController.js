@@ -40,7 +40,7 @@ app.controller('article_gadgetController', function ($scope, $http, $sce, usSpin
 	/////////////////////////
 	$scope.articleInit = function() {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		data = cacheManagerService.get($scope.param.gadget, $scope.param.host+ 'service/gadget/article/' + $scope.param.gadget + '/json')
+		cacheManagerService.get($scope.param.host+ 'service/gadget/article/' + $scope.param.gadget + '/json')
 			.success(function(data) {
 				usSpinnerService.stop('spinner');
 				$scope.article = data[0];

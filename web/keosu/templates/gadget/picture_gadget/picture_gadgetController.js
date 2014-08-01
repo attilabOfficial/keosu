@@ -35,7 +35,7 @@ app.controller('picture_gadgetController', function ($scope, $http, usSpinnerSer
 
 	$scope.showPictureAction = function() {
 		usSpinnerService.spin('spinner');
-		data = cacheManagerService.get($scope.param.gadget, $scope.param.host+'service/gadget/picture/'+$scope.param.gadget+'/json')
+		cacheManagerService.get($scope.param.host+'service/gadget/picture/'+$scope.param.gadget+'/json')
 			.success( function (data) {
 					usSpinnerService.stop('spinner');
 					$scope.picture = data[0];

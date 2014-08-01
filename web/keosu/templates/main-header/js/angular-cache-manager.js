@@ -10,8 +10,15 @@
     	this.$get = ['$http','$q','localStorageService', function($http,$q,localStorageService) {
     	    
     		var cacheExpiration = this.cacheExpiration; //TODO put this in gadget config
-    	    var getFromCache = function(cachekey, url){
-	    		var deferred = $q.defer();
+    	    
+    		var getFromCache = function(url){
+    	    	var tmp=url.split("/");
+    	    	var cachekey="";
+    	    	for(var c in tmp){
+    	    		cachekey=cachekey+"_"+tmp[c];
+    	    	}
+
+    	    	var deferred = $q.defer();
 	            var promise = deferred.promise;
 	
 	            var lastUpdate = localStorageService.get('lastup'+cachekey);
@@ -27,6 +34,7 @@
 	                    deferred.resolve(currentCache);
 	                    //return ;
 	            }else{
+	            	console.log(url);
 	                $http.get(url)
 	                    .success( function (data) {
 	                        localStorageService.set(cachekey,data);

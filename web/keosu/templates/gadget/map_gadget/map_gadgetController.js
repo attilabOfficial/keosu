@@ -39,7 +39,7 @@ app.controller('map_gadgetController', function ($scope, $http, $sce, usSpinnerS
 	$scope.showMapAction = function () {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 
-		data = cacheManagerService.get($scope.param.gadget, $scope.param.host+'service/gadget/mapgadget/'+$scope.param.gadget+ '/json')
+		cacheManagerService.get($scope.param.host+'service/gadget/mapgadget/'+$scope.param.gadget+ '/json')
 			.success( function (data) {
 						usSpinnerService.stop('spinner');
 						$scope.map = data[0];

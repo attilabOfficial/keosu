@@ -37,7 +37,7 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
 	}
 	$scope.open = function (page) {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		data = cacheManagerService.get($scope.param.gadget+'.'+page.id, $scope.param.host + 'service/gadget/aroundme/view/'+ page.id + '/json')
+		cacheManagerService.get($scope.param.host + 'service/gadget/aroundme/view/'+ page.id + '/json')
 				.success(function (data){
 					usSpinnerService.stop('spinner');
 					$scope.myMap = data[0];
@@ -73,7 +73,7 @@ app.controller('aroundme_gadgetController', function ($scope, $http, $sce, usSpi
 			$scope.parts(true, false, $scope);
 			usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 			var onGpsSuccess = function(position) {
-				data = cacheManagerService.get($scope.param.gadget, $scope.param.host + 'service/gadget/aroundme/' + gadget +'/'
+				cacheManagerService.get($scope.param.host + 'service/gadget/aroundme/' + gadget +'/'
 						+ position.coords.latitude + '/'
 						+ position.coords.longitude + '/0/' + '10' + '/json')
 					.success(function (data) {

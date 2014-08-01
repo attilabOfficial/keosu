@@ -19,7 +19,7 @@
 
 
 //Main function
-app.controller('last_article_gadgetController', function ($scope, $http, $sce, $q, usSpinnerService, cacheManagerService) {
+app.controller('last_article_gadgetController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -35,13 +35,13 @@ app.controller('last_article_gadgetController', function ($scope, $http, $sce, $
 		$scope.commentListAction();
 		$scope.parts(false, true, $scope);
 	};
-	$scope.init = function (host, param, page, gadget, zone){
+	$scope.init = function (host, param, page, gadget, zone, cacheExpiration){
 		$scope.param = {
 			'host'   : host+param,
 			'page'   : page,
 			'gadget' : gadget,
 			'zone'   : zone,
-            'cacheExpiration':20000,//TODO put this in gadget config
+            'cacheExpiration':cacheExpiration,//TODO put this in gadget config
             'offset':(0)
 		};
 	
@@ -52,8 +52,7 @@ app.controller('last_article_gadgetController', function ($scope, $http, $sce, $
 				page:0
 		};
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-        data = cacheManagerService.get(gadget,
-                $scope.param.host + 'service/gadget/lastarticle/' + $scope.param.gadget + '/' + $scope.param.offset + '/' + 'json')
+        cacheManagerService.get($scope.param.host + 'service/gadget/lastarticle/' + $scope.param.gadget + '/' + $scope.param.offset + '/' + 'json')
                  .success(function(data){
                         $tmp = [];
                         for (i = 0; i < data.data.length; i++) {

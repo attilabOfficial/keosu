@@ -101,7 +101,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 		var date_ms = 0; var title = ""; var location = ""; var notes = ""; var startDate; var endDate;
 		// First, it is necessary to load the file with the events informations
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		data = cacheManagerService.get($scope.param.gadget, $scope.param.host + 'service/gadget/calendar/view/' + page_id + '/json', {timeout: 10000}).success(function (data){
+		cacheManagerService.get($scope.param.host + 'service/gadget/calendar/view/' + page_id + '/json', {timeout: 10000}).success(function (data){
 				// If the file has been loaded, we execute the following code
 				usSpinnerService.stop('spinner');
 				// The data is stored in variables which can be readed from the html (with $scope)
@@ -299,7 +299,7 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 			init_calendar( $scope.param.host+ 'service/gadget/calendar/1/json');
 		} else {
 			// This is the list calendar, load the file with the events informations
-			data = cacheManagerService.get($scope.param.gadget, $scope.param.host+ 'service/gadget/calendar/' + $scope.param.gadget + '/' + $scope.param.offset + '/' + 'json', {timeout: 10000})
+			cacheManagerService.get($scope.param.host+ 'service/gadget/calendar/' + $scope.param.gadget + '/' + $scope.param.offset + '/' + 'json', {timeout: 10000})
 				.success( function (data) {
 					// The file has been loaded successfully, we initialize the event list
 					$tmp = [];	

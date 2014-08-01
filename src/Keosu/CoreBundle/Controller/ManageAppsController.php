@@ -22,7 +22,6 @@ use Keosu\CoreBundle\Entity\App;
 use Keosu\CoreBundle\Entity\ConfigParameters;
 
 use Keosu\CoreBundle\Form\ConfigPackageType;
-use Keosu\CoreBundle\Form\ConfigParametersType;
 use Keosu\CoreBundle\Form\IconsType;
 use Keosu\CoreBundle\Form\PreferenceType;
 use Keosu\CoreBundle\Form\SplashscreensType;
@@ -103,7 +102,7 @@ class ManageAppsController extends Controller {
 				$session->set("appid",$app->getId());
 
 				//Copy splashscreens and icons
-				FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir("tmp"), ExporterUtil::getSplashsIconesDir($app->getId()));
+				FilesUtil::copyFolder(Exporter::EXPORT_SPLASHICON_DIR.'tmp/', Exporter::EXPORT_SPLASHICON_DIR.$app->getId().'/');
 
 				// export the app
 				$this->container->get('keosu_core.exporter')->exportApp();

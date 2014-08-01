@@ -88,7 +88,7 @@ class IconsType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Keosu\CoreBundle\Entity\Icons'
+            'data_class' => 'Keosu\CoreBundle\Model\Icons'
         ));
     }
 

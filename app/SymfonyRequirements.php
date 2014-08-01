@@ -705,4 +705,3 @@ class SymfonyRequirements extends RequirementCollection
         }
     }
 }
-

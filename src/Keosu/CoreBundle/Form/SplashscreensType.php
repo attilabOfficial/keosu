@@ -94,7 +94,7 @@ class SplashscreensType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Keosu\CoreBundle\Entity\Splashscreens'
+            'data_class' => 'Keosu\CoreBundle\Model\Splashscreens'
         ));
     }
 

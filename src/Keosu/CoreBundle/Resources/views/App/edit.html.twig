@@ -20,7 +20,7 @@
 {% block title %}Edit App{% endblock %}
 
 {% block body %}
-<script type="text/javascript">
+<script>
 	$(document).ready(function() {
 		$( ".radio" ).each(function( index ) {
 			input = $(this).find('input');
@@ -41,33 +41,50 @@
 			$(this).css("border","red solid 3px");
 		});
 	});
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		
-		function openInput($el){
-			$el.parent().parent().find('input[type="file"]')[ 0 ].click();
-		}
-		 
-		$(document).on("click",'.uploader',function() {
-			 	openInput($(this));
-			    return false;
-		 });
 
-		$(document).on("change",'input[type="file"]',function() {
-			if (this.files &&  this.files[0]) {
-	            var reader = new FileReader();
-	            el= $(this);
-	            reader.onload = function (e) {
-	            	$('#img-preview').attr('src', e.target.result).show();
+	var _URL = window.URL || window.webkitURL;
+	
+	
+	/*
+	*Test the size of an image uploaded
+	*@param input : tag input controler
+	*@param width : width expected
+	*@param height : height expected
+	*@param callback : function who upload the image if it's ok
+	*/
+	function check(input,width,height,callback){
+		var file, img;		
+	    if ((file = input.files[0])) {
+	        img = new Image();	  
+	        img.onload = function () {     
+	            if(this.width!=width || this.height!=height){
+	            	alert("Warning: Width "+ width +" / Height "+ height +" expected");
+	            	callback(0,input);	            	
+	            }else{
+	            	callback(1,input);
 	            }
-	            reader.readAsDataURL(this.files[0]);
+	        };
+	       }
+	    img.src = _URL.createObjectURL(file);
+	}
+	
+	/*
+	*Change the preview with the image uploaded
+	*@param input : tag input controler
+	*@param preview : string who contain the name of the balise "preview".
+	*/
+	function readURL(input,preview) {
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+	
+	        reader.onload = function (e) {
+	            $('#'+preview).attr('src', e.target.result);
 	        }
-		});
-		
-		
-	});
-	</script>
+	
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+</script>
 <style type="text/css">
 .imgtheme .radio {
 	display:inline;
@@ -119,8 +136,20 @@
 							</div>
 						</div>
 					</fieldset>
+					
+					<!-- Trigger Button HTML -->
+					<input type="button" class="btn" data-toggle="collapse" data-target="#icons" value="Icons">
+					<div id="icons" class="collapse">
+						{% include 'KeosuCoreBundle:App:editIcones.html.twig' %}
+					</div>
+					<br class="clear"/><br class="clear"/>
 
-					<!-- TODO -->
+					<!-- Trigger Button HTML -->
+					<input type="button" class="btn" data-toggle="collapse" data-target="#splashscreens" value="Splashscreens">
+					<div id="splashscreens" class="collapse">
+						{% include 'KeosuCoreBundle:App:editSplashscreens.html.twig' %}
+					</div>
+					<br class="clear"/>
 
 					{% for p in packageToConfigure %}
 						{{ includePanelAppConfig(p.name,p.type,null,attribute(form.configPackages,p.name) ) }}

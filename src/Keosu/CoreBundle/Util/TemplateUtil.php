@@ -20,6 +20,9 @@ namespace Keosu\CoreBundle\Util;
 
 class TemplateUtil {
 
+
+// TODO delete this file
+
 	protected static function getTemplateDir() {
 		return "keosu/templates/";
 	}

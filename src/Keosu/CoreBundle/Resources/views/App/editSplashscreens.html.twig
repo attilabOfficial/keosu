@@ -1,0 +1,182 @@
+{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+    
+ 
+					<h4>Splashscreens Android</h4>
+					
+    	    		<div class="col-lg-3 configurelabel">
+						320x436
+					</div>
+					<div id="A320x436">
+						<img id="previewA320x436" src="/keosu/web/keosu/res/tmp/splashscreens/android/splashscreenA320x436.png">
+						{{ form_row(form.splashscreens.splashscreenA320x436) }}
+					</div>	
+					<br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						320x470
+					</div>
+					<div id="A320x470">
+						<img id="previewA320x470" src="/keosu/web/keosu/res/tmp/splashscreens/android/splashscreenA320x470.png">
+				    	{{ form_row(form.splashscreens.splashscreenA320x470) }}
+				    </div>	
+				    <br class="clear"/>
+				    
+					<div class="col-lg-3 configurelabel">
+						640x480
+					</div>
+					<div id="A640x480">
+						<img id="previewA640x480" src="/keosu/web/keosu/res/tmp/splashscreens/android/splashscreenA640x480.png">			    
+				    	{{ form_row(form.splashscreens.splashscreenA640x480) }}
+				    </div>
+				    <br class="clear"/>
+				
+					<div class="col-lg-3 configurelabel">
+						960x720
+					</div>
+					<div id="A960x720">
+						<img id="previewA960x720" src="/keosu/web/keosu/res/tmp/splashscreens/android/splashscreenA960x720.png">			
+				    	{{ form_row(form.splashscreens.splashscreenA960x720) }}
+				    </div>	
+				    <br class="clear"/>
+				    
+				    
+				    
+				    
+				    <h4>Splashscreens IOS</h4>
+				    
+				    <div class="col-lg-3 configurelabel">
+						320x480
+					</div>
+					<div id="I320x480">
+						<img id="previewI320x480" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI320x480.png">			
+				    	{{ form_row(form.splashscreens.splashscreenI320x480) }}
+				    </div>
+				    <br class="clear"/>
+				    
+				    <div class="col-lg-3 configurelabel">
+						640x960
+					</div>
+					<div id="I640x960">
+						<img id="previewI640x960" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI640x960.png">			  
+				    	{{ form_row(form.splashscreens.splashscreenI640x960) }}
+				    </div>	
+				    <br class="clear"/>
+				
+					<div class="col-lg-3 configurelabel">
+						640x1136
+					</div>
+					<div id="I640x1136">
+						<img id="previewI640x1136" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI640x1136.png">			  
+				    	{{ form_row(form.splashscreens.splashscreenI640x1136) }}
+				    </div>	
+				    <br class="clear"/>
+					
+					<div class="col-lg-3 configurelabel">
+						1024x748
+					</div>
+					<div id="I1024x748">
+						<img id="previewI1024x748" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI1024x748.png">			  
+				    	{{ form_row(form.splashscreens.splashscreenI1024x748) }}
+				    </div>
+				    <br class="clear"/>
+				    
+				    <div class="col-lg-3 configurelabel">
+						768x1004
+					</div>
+					<div id="I768x1004">
+						<img id="previewI768x1004" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI768x1004.png">			  
+				    	{{ form_row(form.splashscreens.splashscreenI768x1004) }}
+				    </div>
+				    <br class="clear"/>
+				    
+				    <div class="col-lg-3 configurelabel">
+						2048x1496
+					</div>
+				    <div id="I2048x1496">
+						<img id="previewI2048x1496" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI2048x1496.png">			  
+				    	{{ form_row(form.splashscreens.splashscreenI2048x1496) }}
+				    </div>
+				    <br class="clear"/>
+				    
+				    <div class="col-lg-3 configurelabel">
+						1536x2008
+					</div>
+				    <div id="I1536x2008">
+						<img id="previewI1536x2008" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI1536x2008.png">			  
+				    	{{ form_row(form.splashscreens.splashscreenI1536x2008) }}
+				    <br class="clear"/>
+				    
+				    
+<script type="text/javascript">
+
+	$("#A320x436").on("change",'input[type="file"]',function() {
+		check(this.files,320,436);
+		readURL(this,"previewA320x436");
+	});
+	
+	$("#A320x470").on("change",'input[type="file"]',function() {
+		check(this.files,320,470);
+		readURL(this,"previewA320x470");
+	});
+	
+	$("#A640x480").on("change",'input[type="file"]',function() {
+		check(this.files,640,480);
+		readURL(this,"previewA640x480");
+	});
+	
+	$("#A960x720").on("change",'input[type="file"]',function() {
+		check(this.files,960,720);
+		readURL(this,"previewA960x720");
+	});
+	
+	$("#I320x480").on("change",'input[type="file"]',function() {
+		check(this.files,320,480);
+		readURL(this,"previewI320x480");
+	});
+	
+	$("#I640x960").on("change",'input[type="file"]',function() {
+		check(this.files,640,960);
+		readURL(this,"previewI640x960");
+	});
+	
+	$("#I640x1136").on("change",'input[type="file"]',function() {
+		check(this.files,640,1136);
+		readURL(this,"previewI640x1136");
+	});
+	
+	$("#I1024x748").on("change",'input[type="file"]',function() {
+		check(this.files,1024,748);
+		readURL(this,"previewI1024x748");
+	});
+	
+	$("#I768x1004").on("change",'input[type="file"]',function() {
+		check(this.files,768,1004);
+		readURL(this,"previewI768x1004");
+	});
+	
+	$("#I2048x1496").on("change",'input[type="file"]',function() {
+		check(this.files,2048,1496);
+		readURL(this,"previewI2048x1496");
+	});
+	
+		$("#I1536x2008").on("change",'input[type="file"]',function() {
+		check(this.files,1536,2008);
+		readURL(this,"previewI1536x2008");
+	});
+</script>

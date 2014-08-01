@@ -17,9 +17,14 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Entity\Model;
-use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
+
 use Keosu\CoreBundle\Entity\Model\DataModel;
+use Keosu\CoreBundle\Util\FilesUtil;
+use Keosu\CoreBundle\Util\PathUtil;
+
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass
@@ -67,7 +72,7 @@ abstract class MediaDataModel extends DataModel
 
 	public function getAbsolutePath() {
 		return null === $this->path ? null
-				: $this->getUploadRootDir() . '/' . $this->path;
+				: PathUtil::getRootDir() . '/' . $this->path;;
 	}
 
 	public function getWebPath() {
@@ -78,7 +83,7 @@ abstract class MediaDataModel extends DataModel
 	public function getUploadRootDir() {
 		// the absolute directory path where uploaded
 		// documents should be saved
-		return __DIR__ .'/../../../../../web/' . $this->getUploadDir();
+		return PathUtil::getRootDir() . $this->getUploadDir();
 	}
 
 	protected function getUploadDir() {

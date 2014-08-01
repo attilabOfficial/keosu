@@ -19,9 +19,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Keosu\CoreBundle\Util\ThemeUtil;
+
 use Keosu\CoreBundle\Entity\Model\MediaDataModel;
-use Keosu\CoreBundle\Entity\ConfigParameters;
+
+use Keosu\CoreBundle\Model\Icons;
+use Keosu\CoreBundle\Model\Splashscreens;
+
+use Keosu\CoreBundle\Util\ThemeUtil;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -146,6 +151,10 @@ class App
      * @ORM\Column(name="preferences", type="array",nullable=true)
      */
     private $preferences;
+
+    private $splashscreens;
+
+    private $icons;
     
     
     /**
@@ -383,5 +392,47 @@ class App
     public function setPreferences($preferences) {
         $this->preferences = $preferences;
         return this;
+    }
+
+    /**
+     * Get splashscreens
+     *
+     * @return Splashscreens
+     */
+    public function getSplashscreens(){
+        return $this->splashscreens;
+    }
+
+
+    /**
+     * Set splashscreens
+     *
+     * @param Splashscreens $splashscreens
+     * @return App
+     */
+    public function setSplashscreens(Splashscreens $splashscreens){
+        $this->splashscreens = $splashscreens;
+        return $this;
+    }
+
+    /**
+     * Get icons
+     *
+     * @return Icons
+     */
+    public function getIcons(){
+        return $this->icons;
+    }
+
+
+    /**
+     * Set icons
+     *
+     * @param Icons $icons
+     * @return App
+     */
+    public function setIcons(Icons $icons){
+        $this->icons = $icons;
+        return $this;
     }
 }

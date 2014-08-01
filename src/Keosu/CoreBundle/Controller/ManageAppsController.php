@@ -23,14 +23,17 @@ use Keosu\CoreBundle\Entity\ConfigParameters;
 
 use Keosu\CoreBundle\Form\ConfigPackageType;
 use Keosu\CoreBundle\Form\ConfigParametersType;
+use Keosu\CoreBundle\Form\IconsType;
 use Keosu\CoreBundle\Form\PreferenceType;
+use Keosu\CoreBundle\Form\SplashscreensType;
 
-use Keosu\CoreBundle\Util\ThemeUtil;
+use Keosu\CoreBundle\Util\ExporterUtil;
+use Keosu\CoreBundle\Util\FilesUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
+use Keosu\CoreBundle\Util\ThemeUtil;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
-
 
 class ManageAppsController extends Controller {
 
@@ -44,12 +47,16 @@ class ManageAppsController extends Controller {
 
 	public function addAction() {
 		$app = new App();
+		//Copy default splashscreens and icons in a temp repertory
+		FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir("keosu"), ExporterUtil::getSplashsIconesDir("tmp"));
 		return $this->editApp($app);
 	}
 
 	public function editAction($id) {
 		$em = $this->get('doctrine')->getManager();
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($id);
+		//Copy older splashscreens and icons in a temp repertory
+		FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir($app->getId()), ExporterUtil::getSplashsIconesDir("tmp"));
 		return $this->editApp($app);
 	}
 
@@ -88,6 +95,10 @@ class ManageAppsController extends Controller {
 
 				$session = $this->get("session");
 				$session->set("appid",$app->getId());
+
+				//Copy splashscreens and icons
+				FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir("tmp"), ExporterUtil::getSplashsIconesDir($app->getId()));
+
 				// export the app
 				$this->container->get('keosu_core.exporter')->exportApp();
 
@@ -141,6 +152,8 @@ class ManageAppsController extends Controller {
 					->add('configPackages',new ConfigPackageType($this->container,$this->get('request')),array(
 							'label' => false,
 					))
+					->add('splashscreens', new SplashscreensType())
+					->add('icons', new IconsType())
 					->add('preferences', 'collection',array(
 						'type'         => new PreferenceType(),
 						'required'     => false,

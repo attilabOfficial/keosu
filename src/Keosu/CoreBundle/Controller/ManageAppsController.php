@@ -27,10 +27,11 @@ use Keosu\CoreBundle\Form\IconsType;
 use Keosu\CoreBundle\Form\PreferenceType;
 use Keosu\CoreBundle\Form\SplashscreensType;
 
-use Keosu\CoreBundle\Util\ExporterUtil;
 use Keosu\CoreBundle\Util\FilesUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
 use Keosu\CoreBundle\Util\ThemeUtil;
+
+use Keosu\CoreBundle\Service\Exporter;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
@@ -55,8 +56,13 @@ class ManageAppsController extends Controller {
 	public function editAction($id) {
 		$em = $this->get('doctrine')->getManager();
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($id);
-		//Copy older splashscreens and icons in a temp repertory
-		FilesUtil::copyFolder(ExporterUtil::getSplashsIconesDir($app->getId()), ExporterUtil::getSplashsIconesDir("tmp"));
+		if(!is_dir(Exporter::EXPORT_SPLASHICON_DIR.$app->getId().'/')) {
+			//Copy default splashscreens and icons in a temp repertory
+			FilesUtil::copyFolder(Exporter::EXPORT_SPLASHICON_DIR.'keosu/', Exporter::EXPORT_SPLASHICON_DIR.'tmp/');
+		} else {
+			//Copy older splashscreens and icons in a temp repertory
+			FilesUtil::copyFolder(Exporter::EXPORT_SPLASHICON_DIR.$app->getId().'/', Exporter::EXPORT_SPLASHICON_DIR.'tmp/');
+		}
 		return $this->editApp($app);
 	}
 

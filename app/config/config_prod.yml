@@ -1,5 +1,15 @@
 imports:
     - { resource: config.yml }
+
+#framework:
+#    validation:
+#        cache: apc
+
+#doctrine:
+#    orm:
+#        metadata_cache_driver: apc
+#        result_cache_driver: apc
+#        query_cache_driver: apc
     
 monolog:
     handlers:
@@ -11,7 +21,8 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
-
+        console:
+            type:  console
 
 #swiftmailer:
 #    delivery_address: me@example.com

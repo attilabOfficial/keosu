@@ -17,6 +17,7 @@
 		"symfony/monolog-bundle" : "2.4.*",
 		"sensio/distribution-bundle" : "~3.0",
 		"sensio/framework-extra-bundle" : "~3.0",
+		"sensio/generator-bundle" : "2.3.*",
 		"symfony/css-selector" : "2.3.*",
 		"jms/security-extra-bundle" : "1.5.*",
 		"jms/di-extra-bundle" : "1.4.*",

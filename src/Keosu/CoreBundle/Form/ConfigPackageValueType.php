@@ -30,19 +30,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ConfigPackageValueType extends AbstractType {
 
-	private $container;
 
 	private $request;
 
 	private $config;
 
-	public function __construct($container,Request $request,$config) {
-		$this->container = $container;
+	public function __construct(Request $request,$config) {
 		$this->request = $request;
 		$this->config = $config;
 	}
 
 	public function buildForm(FormBuilderInterface $builder, array $options) {
+	
+		// TODO event
 
 		foreach($this->config as $c)
 			if(isset($c['options']))

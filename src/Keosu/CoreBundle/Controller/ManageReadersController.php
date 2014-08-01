@@ -28,10 +28,6 @@ class ManageReadersController extends Controller {
 	 */
 	public function addAction()
 	{
-		//Reader list
-		$em = $this->get('doctrine')->getManager();
-		$readers = $em->getRepository('KeosuCoreBundle:Reader')->findAll();
-
 		$formBuilder = $this->createFormBuilder();
 		$formBuilder->add('readertype', 'choice', array(
 								'choices' => KeosuExtension::$readerList,
@@ -46,12 +42,8 @@ class ManageReadersController extends Controller {
 				$data = $form->getData();
 				$readerType = $data['readertype'];
 				//We redirect to the choosen Reader Edit action 
-				return $this
-						->redirect(
-							$this
-								->generateUrl(
-									'keosu_ReaderManager_'
-										. $readerType . '_add'));
+				return $this->redirect(
+							$this->generateUrl('keosu_ReaderManager_'. $readerType . '_add'));
 			}
 		}
 

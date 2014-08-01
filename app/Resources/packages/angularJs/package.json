@@ -15,6 +15,7 @@
       "angular-sanitize.min.js",
       "angular-spinner.js",
       "angular-touch.js",
+      "angular-local-storage.js",
       "spin.js",
       "utilString.js",
       "https://maps.googleapis.com/maps/api/js?sensor=false"

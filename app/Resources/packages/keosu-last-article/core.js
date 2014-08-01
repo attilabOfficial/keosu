@@ -19,7 +19,7 @@
 
 
 //Main function
-app.controller('keosu-last-articleController', function ($scope, $http, $sce, usSpinnerService) {	
+app.controller('keosu-last-articleController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {	
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -44,7 +44,7 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 				page:0
 		};
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		$http.get($scope.param.host + 'service/gadget/lastarticle/' + $scope.param.gadgetId + '/' + $scope.param.gadgetParam.articlesPerPage + '/' + 'json').success( function (data) {
+		cacheManagerService.get($scope.param.host+'service/gadget/lastarticle/'+$scope.param.gadgetId+'/'+$scope.param.gadgetParam.articlesPerPage+'/json').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$tmp = [];
 			for (i = 0; i < data.data.length; i++) {

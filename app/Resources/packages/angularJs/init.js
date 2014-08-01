@@ -1,4 +1,4 @@
-var app = angular.module('keosuApp', ['angular-chrono', 'angularSpinner', 'ngSanitize', 'ngTouch', 'ngRoute','angular-inview','LocalStorageModule']);
+var app = angular.module('keosuApp', ['angular-chrono', 'angularSpinner', 'ngSanitize', 'ngTouch', 'ngRoute','angular-inview','LocalStorageModule','CacheManagerModule']);
 
 app.controller('main_Controller', function($http, $scope) {
 		$http.get('data/appName.json').success( function (data) {

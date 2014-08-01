@@ -24,7 +24,6 @@ use Keosu\CoreBundle\Entity\Gadget;
 use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
 use Keosu\CoreBundle\Service\PackageManager;
 
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +41,7 @@ class ConfigGadgetType extends AbstractType {
 
 	private $packageManager;
 
-	public function __construct(ContainerAwareEventDispatcher $dispatcher,Request $request,PackageManager $packageManager,Gadget $gadget)
+	public function __construct($dispatcher,Request $request,PackageManager $packageManager,Gadget $gadget)
 	{
 		$this->dispatcher = $dispatcher;
 		$this->request = $request;
@@ -52,7 +51,6 @@ class ConfigGadgetType extends AbstractType {
 
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-
 		$event = new GadgetFormBuilderEvent($builder,$this->request,$this->gadget);
 		$this->dispatcher->dispatch(KeosuEvents::GADGET_CONF_FORM_BUILD.$this->gadget->getName(),$event);
 		if(!$event->isOverrideForm()) {

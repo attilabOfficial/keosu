@@ -13,11 +13,3 @@ keosu_poi_edit:
 keosu_poi_add:
     pattern:  /content/poi/add
     defaults: { _controller: KeosuDataModelMapModelBundle:Edit:add }
-    
-keosu_poi_service_list:
-    pattern:  /service/content/map/{format}
-    defaults: { _controller: KeosuDataModelMapModelBundle:Service:view }
-    
-keosu_poi_service_view:
-    pattern:  /service/content/poi/{id}/{format}
-    defaults: { _controller: KeosuDataModelMapModelBundle:Service:viewOne }

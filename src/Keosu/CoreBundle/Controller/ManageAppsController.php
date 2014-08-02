@@ -48,7 +48,7 @@ class ManageAppsController extends Controller {
 	public function addAction() {
 		$app = new App();
 		//Copy default splashscreens and icons in a temp repertory
-		FilesUtil::copyFolder(ExporterUtil::getImageDir('keosu'), ExporterUtil::getImageDir('tmp'));
+		FilesUtil::copyFolder(Exporter::getImageDir('keosu'), Exporter::getImageDir('tmp'));
 		return $this->editApp($app);
 	}
 

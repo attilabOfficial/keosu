@@ -18,8 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
 namespace Keosu\DataModel\LocationModelBundle\Controller;
-use Keosu\DataModel\LocationModelBundle\Entity\PointOfInterest;
 
+use Keosu\DataModel\LocationModelBundle\Entity\Location;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**

@@ -44,25 +44,24 @@ class ManageThemesController extends Controller {
 		/**
 		 * List of pages we display them in a array after
 		 */
-		$em = $this->get ( 'doctrine' )->getManager ();
-		$themesData = $em->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
+		$em = $this->get('doctrine')->getManager();
+		$themesData = $em->getRepository ('KeosuCoreBundle:Theme')->findAll();
 		$themes = ThemeUtil::getThemeList ();
 		foreach ( $themes as $theme ) {
-			if ($this->themeExists ( $theme, $themesData, FALSE ) === FALSE) {
+			if ($this->themeExists($theme,$themesData, FALSE ) === FALSE) {
 				$theme_tmp = new Theme ();
 				$theme_tmp->setName ( $theme );
-				$em = $this->get ( 'doctrine' )->getManager ();
-				$em->persist ( $theme_tmp );
-				$em->flush ();
+				$em->persist($theme_tmp);
+				
 			}
 		}
 		foreach ( $themesData as $theme ) {
 			if ($this->themeExists ( $theme, $themes, TRUE ) === FALSE) {
-				$em->remove ( $theme );
-				$em->flush ();
+				$em->remove($theme);
 			}
 		}
-		$themesData = $this->get ( 'doctrine' )->getManager ()->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
+		$em->flush();
+		$themesData = $em->getRepository('KeosuCoreBundle:Theme')->findAll();
 		return $this->render ( 'KeosuCoreBundle:Theme:manage.html.twig', array (
 				'themes' => $themesData,
 				'msg' => null
@@ -74,7 +73,7 @@ class ManageThemesController extends Controller {
 	 */
 	public function addAction() {
 		$theme = new Theme ();
-		$theme->setName ( 'tmp' );
+		$theme->setName ('tmp');
 		// Form and store action are shared with editAction
 		return $this->editTheme ( $theme );
 	}
@@ -95,6 +94,7 @@ class ManageThemesController extends Controller {
 	private function editTheme($theme) {
 		// Find existing app to know if it's the first one
 		$error = null;
+		$em = $this->get('doctrine')->getManager();
 		
 		// page edit form
 		$formBuilder = $this->createFormBuilder ( $theme, array (
@@ -115,19 +115,19 @@ class ManageThemesController extends Controller {
 							'theme' => $theme,
 							'error' => $error
 					) );
-				$themesData = $this->get ( 'doctrine' )->getManager ()->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
+				$themesData = $em->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
 				$themes = ThemeUtil::getThemeList ();
 				foreach ( $themes as $themetmp ) {
 					if ($this->themeExists ( $themetmp, $themesData, FALSE ) === FALSE) {
 						$theme->setName ( $themetmp );
-						$em = $this->get ( 'doctrine' )->getManager ();
 						$session = $this->get ( "session" );
 						$session->set ( "themeid", $theme->getId () );
-						$em->persist ( $theme );
-						$em->flush ();
+						$em->persist ($theme);
+						
 					}
 				}
-				$themesData = $this->get ( 'doctrine' )->getManager ()->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
+				$em->flush();
+				$themesData = $em->getRepository ( 'KeosuCoreBundle:Theme' )->findAll ();
 				return $this->render ( 'KeosuCoreBundle:Theme:manage.html.twig', array (
 						'themes' => $themesData,
 						'msg' => "Your upload succeeded.") );

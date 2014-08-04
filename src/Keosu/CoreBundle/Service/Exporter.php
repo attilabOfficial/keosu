@@ -137,8 +137,7 @@ class Exporter {
 		
 		$paramGadget = array();
 		$paramGadget['host'] = $this->container->getParameter('url_base').$this->container->getParameter('url_param');
-
-		
+	
 		////////////////////////////////////////
 		// Generate view for each page
 		////////////////////////////////////////

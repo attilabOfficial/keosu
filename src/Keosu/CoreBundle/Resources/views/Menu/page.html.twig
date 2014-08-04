@@ -1,0 +1,5 @@
+{% for page in pages %}
+	<div>
+		<a class="sidebarlink" href="{{ path('keosu_core_views_page',{'id':page.id}) }}">Edit {{ page.name }}</a>
+	</div>
+{% endfor %}

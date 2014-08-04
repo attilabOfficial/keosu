@@ -57,36 +57,28 @@ keosu_core_views_page_manage_delete:
     defaults: { _controller: KeosuCoreBundle:ManagePages:delete }
     
 keosu_core_app_manage:
-    pattern:  /app/manage
+    pattern:  /configuration/app/manage
     defaults: { _controller: KeosuCoreBundle:ManageApps:view }
     
 keosu_core_app_manage_add:
-    pattern:  /app/manage/add
+    pattern:  /configuration/app/manage/add
     defaults: { _controller: KeosuCoreBundle:ManageApps:add }
     
 keosu_core_app_manage_edit:
-    pattern:  /app/manage/edit/{id}
+    pattern:  /configuration/app/manage/edit/{id}
     defaults: { _controller: KeosuCoreBundle:ManageApps:edit }
     
 keosu_core_theme_manage:
-    pattern:  /theme/manage
+    pattern:  /configuration/theme/manage
     defaults: { _controller: KeosuCoreBundle:ManageThemes:view }
     
 keosu_core_theme_manage_add:
-    pattern:  /theme/manage/add
+    pattern:  /configuration/theme/manage/add
     defaults: { _controller: KeosuCoreBundle:ManageThemes:add }
     
 keosu_core_theme_manage_edit:
-    pattern:  /theme/manage/edit/{id}
+    pattern:  /configuration/theme/manage/edit/{id}
     defaults: { _controller: KeosuCoreBundle:ManageThemes:edit }
-    
-keosu_core_views_content_service_list:
-    pattern:  /service/views/content/list/{format}
-    defaults: { _controller: KeosuCoreBundle:DataModelService:list }
-    
-keosu_core_views_page_service_list:
-    pattern:  /service/views/page/list/{format}
-    defaults: { _controller: KeosuCoreBundle:PageService:list }
 
 keosu_core_views_page:
     pattern:  /views/page/{id}
@@ -106,11 +98,6 @@ keosu_gadget_delete:
     defaults: { _controller: KeosuCoreBundle:ManageGadgets:delete }
 # /CRUD gadget
 
-
-keosu_core_app_service_list:
-    pattern:  /service/app/list/{format}
-    defaults: { _controller: KeosuCoreBundle:AppService:list }
-    
 keosu_ReaderManager_manage:
     pattern:  /content/reader/manage
     defaults: { _controller: KeosuCoreBundle:ManageReaders:add }
@@ -118,15 +105,16 @@ keosu_ReaderManager_manage:
 keosu_ReaderManager_edit_delete:
     pattern:  /content/reader/manage/delete/{id}
     defaults: { _controller: KeosuCoreBundle:ManageReaders:delete }
-    
+
+
 keosu_ReaderManager_service_list:
     pattern:  /service/content/reader/list/{format}
-    defaults: { _controller: KeosuCoreBundle:ReaderService:view }  
-    
+    defaults: { _controller: KeosuCoreBundle:ReaderService:view }
+
 keosu_core_exporter_export:
     pattern:  /publish/export/
     defaults: { _controller: KeosuCoreBundle:Exporter:export }
     
 keosu_changeapp:
     pattern:  /changeapp/{appid}
-    defaults: { _controller: KeosuCoreBundle:ChangeApp:changeApp }  
+    defaults: { _controller: KeosuCoreBundle:ChangeApp:changeApp }

@@ -17,132 +17,140 @@
     #}
 {% extends '::root.html.twig' %}
 {% block skeleton %}
-  
-	<section id="main-content">
-		
-		<div class="container-fluid">
-			{% block maincontent %}
-			<div class="row">
-				<div class="col-md-3 leftcol">
-					<div class="leftcol">
-						<section id="leftmenu" class="leftcol">
-							<div class="sidebar leftcol">
-	
-							<div class="sidemenu leftcol">	
-								{% block leftmenu %}
-									<center>
-										<div class="logotop">KEOSU</div>
-									</center>
-									<br/>
+<section id="main-content">
+	<div class="container-fluid">
+		{% block maincontent %}
+		<div class="row">
+			<div class="col-md-3 leftcol">
+				<div class="leftcol">
+					<section id="leftmenu" class="leftcol">
+						<div class="sidebar leftcol">
 
-									<div class="dropdown" id="applist">
-										<script type="text/javascript" charset="utf-8">
-												$(document).ready(function() {
-													$.get('{{path('keosu_core_app_service_list',{'format':'html'}) }}', function(data) {
-														$('#applist').html(data);
-													});
-												} );
-										</script>
+						<div class="sidemenu leftcol">	
+							{% block leftmenu %}
+								<div class="logotop" style="text-align:center;">KEOSU</div>
+								<br/>
+
+								<div class="dropdown" id="applist">
+									{{ appListMenu() }}
+								</div>
+								<div class="separator">&nbsp;</div>
+								<!-- content -->
+								<div class="sidebartitle">
+									<a href="{{ path('keosu_core_homepage') }}">
+										<span class="glyphicon glyphicon-book"></span> Content
+									</a>
+								</div>
+								<div>
+									<a class="sidebarlink" href="{{ path('keosu_ReaderManager_manage') }}">
+										Import remote content
+									</a>
+								</div>
+								{{ appListContent() }}
+								
+								<div class="separator">&nbsp;</div>
+								<!-- Page menu -->
+								<div class="sidebartitle">
+									 <a href="{{ path('keosu_core_page') }}">
+											<span class="glyphicon glyphicon-folder-open"></span>
+											&nbsp;Pages
+									</a>
+								</div>
+								<div>
+									<a class="sidebarlink" href="{{ path('keosu_core_views_page_manage') }}">
+										Manage pages
+									</a>
+								</div>
+								{{ appListPage() }}
+								<div class="separator">&nbsp;</div>
+
+								<div class="sidebartitle">
+									<a id="simulator" target="_blank" class="mainnavel" href="http://emulate.phonegap.com?url={{url_base}}/keosu/export/simulator/www/index.html">
+										<span class="glyphicon glyphicon-film"></span> Preview
+									</a>
+								</div>
+
+								<div class="separator">&nbsp;</div>
+
+								<div class="sidebartitle">
+									<a href="{{ path('keosu_core_publish') }}"> 
+										<span class="glyphicon glyphicon-cloud-upload"></span> Publish
+									</a>
+								</div>
+
+								<div class="separator">&nbsp;</div>
+
+								{# active with activesidebartitle #}
+								<div class="sidebartitle menuTitle">
+									<a href="{{ path('keosu_core_configuration') }}"> 
+										<span class="glyphicon glyphicon-cog"></span> Configuration
+									</a>
+								</div>
+								<div class="menuContent">
+									<div>
+										<a class="sidebarlink" href="{{ path('keosu_core_app_manage') }}">Apps</a>
 									</div>
-									<div class="separator">&nbsp;</div>
-									{% block contentmenu %}
-										<div class="sidebartitle">
-										  <a href="{{ path('keosu_core_homepage') }}">
-											<span class="glyphicon glyphicon-book"></span> 
-												Content
-										 </a>
-										</div>
-									{% endblock %}
-									<div class="separator">&nbsp;</div>
-									{% block pagemenu %}
-										<div class="sidebartitle">
-											 <a href="{{ path('keosu_core_page') }}">
-													<span class="glyphicon glyphicon-folder-open"></span>
-													&nbsp;Pages
-											</a>
-										</div>
-									{% endblock %}
-									<div class="separator">&nbsp;</div>
-									{% block previewmenu %}
-										<div class="sidebartitle">
-											<a id="simulator" target="_blank" class="mainnavel" href="http://emulate.phonegap.com?url={{url_base}}/keosu/export/simulator/www/index.html">
-													<span class="glyphicon glyphicon-film"></span> Preview
-											</a>
-										</div>
-									{% endblock %}
-									<div class="separator">&nbsp;</div>
-									{% block publishmenu %}
-										<div class="sidebartitle">
-											<a href="{{ path('keosu_core_publish') }}"> 
-													<span class="glyphicon glyphicon-cloud-upload"></span> Publish
-											</a>
-										</div>
-									{% endblock %}
-									<div class="separator">&nbsp;</div>
-									{% block configurationmenu %}
-										<div class="sidebartitle">
-											<a href="{{ path('keosu_core_configuration') }}"> 
-													<span class="glyphicon glyphicon-cog"></span> 
-													Configuration
-											</a>
-										</div>
-									{% endblock %}
-									<div class="separator">&nbsp;</div>	
-								{% endblock %}
-							</div>
-							</div>
-						</section>
-					</div>
-				</div>
-				<div class="col-md-9">
-					<div class="container">
-					     <div class="row-fluid">
-						      <div class="span6 pull-right logininfo" style="text-align:right">
-						           <span class="glyphicon glyphicon-user"></span>
-										Hello {{ app.user.username }} <a href="{{ path('fos_user_security_logout') }}">
-											(Logout)
-										</a>
-						      </div>
-						  </div>
-				  	</div>
-					<div>
-						<section id="body">{% block body %}{% endblock %}</section>
-					</div>
+									<div>
+										<a class="sidebarlink" href="{{ path('keosu_core_theme_manage') }}">Themes</a>
+									</div>
+								</div>
+								<div class="separator">&nbsp;</div>	
+							{% endblock %}
+						</div>
+						</div>
+					</section>
 				</div>
 			</div>
-			{% endblock %}
+			<div class="col-md-9">
+				<div class="container">
+					<div class="row-fluid">
+							<div class="span6 pull-right logininfo" style="text-align:right">
+								<span class="glyphicon glyphicon-user"></span>
+								Hello {{ app.user.username }}
+								<a href="{{ path('fos_user_security_logout') }}">
+									(Logout)
+								</a>
+							</div>
+					</div>
+				</div>
+				<div>
+					<section id="body">{% block body %}{% endblock %}</section>
+				</div>
+			</div>
 		</div>
-
-	</section>
-	
-	<div id="dialog" title="Confirmation Required">
- 		 Are you sure about this? All your modification will be lost
+		{% endblock %}
 	</div>
-	<script type="text/javascript">
-	 $(document).ready(function() {
-		    $("#dialog").dialog({
-		      autoOpen: false,
-		      modal: true
-		    });
-		  });
 
-		  $(".confirmModal").click(function(e) {
-		    e.preventDefault();
-		    var targetUrl = $(this).attr("href");
+</section>
 
-		    $("#dialog").dialog({
-		      buttons : {
-		        "Confirm" : function() {
-		          window.location.href = targetUrl;
-		        },
-		        "Cancel" : function() {
-		          $(this).dialog("close");
-		        }
-		      }
-		    });
+<div id="dialog" title="Confirmation Required">
+	Are you sure about this? All your modification will be lost
+</div>
+<script>
+$(document).ready(function() {
+	    $("#dialog").dialog({
+	      autoOpen: false,
+	      modal: true
+	    });
+	  });
 
-		    $("#dialog").dialog("open");
-		  });
-	</script>
-	
+	  $(".confirmModal").click(function(e) {
+	    e.preventDefault();
+	    var targetUrl = $(this).attr("href");
+
+	    $("#dialog").dialog({
+	      buttons : {
+	        "Confirm" : function() {
+	          window.location.href = targetUrl;
+	        },
+	        "Cancel" : function() {
+	          $(this).dialog("close");
+	        }
+	      }
+	    });
+
+	    $("#dialog").dialog("open");
+	  });
+</script>
+
 {% endblock %}

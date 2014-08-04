@@ -18,19 +18,6 @@
 
 {% extends 'KeosuCoreBundle::page.html.twig' %}
 
-
-{% block pagemenu %}
-	<div class="activesidebartitle">
-		 <a href="{{ path('keosu_core_page') }}">
-				<span class="glyphicon glyphicon-folder-open"></span>
-				&nbsp;Pages
-		</a>
-	</div>
- 	{% include "KeosuCoreBundle:Page:view.html.twig"%} 
-	<div>&nbsp;</div>
-{% endblock %}
-
-		
 {% block body %}
 	<div id="checklayout">
 		<script type="text/javascript" charset="utf-8">

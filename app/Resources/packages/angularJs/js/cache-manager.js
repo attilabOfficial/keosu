@@ -34,7 +34,6 @@
 					deferred.resolve(currentCache);
 					//return ;
 				}else{
-					console.log(url);
 					$http.get(url)
 					.success( function (data) {
 						localStorageService.set(cachekey,data);
@@ -78,8 +77,6 @@
 						deferred.reject('error');
 					}
 				};
-
-				var cacheExpiration = this.cacheExpiration; 			
 				var deferred = $q.defer();
 				var promise = deferred.promise;
 				var lastUpdate = localStorageService.get('lastup'+cachekey);

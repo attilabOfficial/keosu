@@ -21,7 +21,9 @@ namespace Keosu\CoreBundle\Util;
 class ZipUtil {
 
 	public static function ZipFolder($source, $destination) {
-		unlink($destination);
+		if(is_file($destination))
+			unlink($destination);
+
 		if (!extension_loaded('zip') || !file_exists($source)) {
 			return false;
 		}

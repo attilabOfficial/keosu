@@ -3,11 +3,7 @@
    "description" : "The JQuery librairy and some extensions",
    "version" : "2.1.1",
    "type" : "lib",
-   "param" : [],
-   "require" : {},
-   "configCordova" : {},
    "libJs" : [
       "jquery-2.1.1.min.js"
-   ],
-   "appParam" : []
+   ]
 }

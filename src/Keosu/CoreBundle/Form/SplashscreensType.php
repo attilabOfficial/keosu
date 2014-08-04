@@ -14,7 +14,6 @@ class SplashscreensType extends AbstractType
 		$builder
 		->add('splashscreenA320x436','file',array(
 				'required'	=>false,
-				'image_path' => 'webPath'.'splashscreenA320x436.png',
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'

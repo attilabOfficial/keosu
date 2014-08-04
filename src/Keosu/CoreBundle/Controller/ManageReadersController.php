@@ -28,6 +28,11 @@ class ManageReadersController extends Controller {
 	 */
 	public function addAction()
 	{
+	
+		//Reader list
+		$em = $this->get('doctrine')->getManager();
+		$readers = $em->getRepository('KeosuCoreBundle:Reader')->findAll();
+	
 		$formBuilder = $this->createFormBuilder();
 		$formBuilder->add('readertype', 'choice', array(
 								'choices' => KeosuExtension::$readerList,
@@ -49,7 +54,7 @@ class ManageReadersController extends Controller {
 
 		return $this
 				->render('KeosuCoreBundle:Reader:manage.html.twig',
-						array('contents' => $contents,
+						array('contents' => $readers,
 								'form' => $form->createView()));
 	}
 

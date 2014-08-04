@@ -18,7 +18,7 @@
 
 //Main function
 
-app.controller('keosu-mapController', function ($scope, $http, $sce, usSpinnerService) {
+app.controller('keosu-mapController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {
 
 	////////////////////////////
 	// init part
@@ -34,7 +34,7 @@ app.controller('keosu-mapController', function ($scope, $http, $sce, usSpinnerSe
 	$scope.showMapAction = function () {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 
-		$http.get($scope.param.host+'service/gadget/mapgadget/'+$scope.param.gadgetId+ '/json').success( function (data) {
+		cacheManagerService.get($scope.param.host+'service/gadget/mapgadget/'+$scope.param.gadgetId+ '/json').success( function (data) {
 					usSpinnerService.stop('spinner');
 					$scope.map = data[0];
 					var map = $scope.initialize();

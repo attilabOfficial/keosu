@@ -23,7 +23,7 @@ function parts(isGallery, isPicture, $scope) {
 
 //Main function
 
-app.controller('keosu-picture-galleryController', function ($scope, $http, usSpinnerService) {
+app.controller('keosu-picture-galleryController', function ($scope, $http, usSpinnerService, cacheManagerService) {
 	parts(true, false, $scope);
 	$scope.index = 0;
 	$scope.close = function () {
@@ -54,7 +54,7 @@ app.controller('keosu-picture-galleryController', function ($scope, $http, usSpi
 		};
 		$scope.imgClass = [];
 		usSpinnerService.spin('spinner');
-		$http.get( $scope.param.host + 'service/gadget/picturesgallery/'+$scope.param.gadgetId+'/0/json').success(function (data) {
+		cacheManagerService.get( $scope.param.host + 'service/gadget/picturesgallery/'+$scope.param.gadgetId+'/0/json').success(function (data) {
 					usSpinnerService.stop('spinner');
 					$tmp = [];
 					for (i = 0; i < data.data.length; i++) {

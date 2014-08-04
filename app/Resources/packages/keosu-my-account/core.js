@@ -1,4 +1,4 @@
-app.controller('keosu-my-accountController',function ($scope, $http, usSpinnerService) {
+app.controller('keosu-my-accountController',function ($scope, $http, usSpinnerService, cacheManagerService) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -38,7 +38,7 @@ app.controller('keosu-my-accountController',function ($scope, $http, usSpinnerSe
 		
 		usSpinnerService.spin('spinner');
 		$scope.routing('account');
-		$http.get($scope.param.host + 'service/gadget/myaccount/info').success(function(data) {
+		cacheManagerService.get($scope.param.host + 'service/gadget/myaccount/info').success(function(data) {
 			usSpinnerService.stop('spinner');
 			if(data.connect) {
 				$scope.account = data;

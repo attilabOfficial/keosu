@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
-app.controller('keosu-articleController', function ($scope, $http, $sce, usSpinnerService) {
+app.controller('keosu-articleController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -32,7 +32,7 @@ app.controller('keosu-articleController', function ($scope, $http, $sce, usSpinn
 	/////////////////////////
 	$scope.articleInit = function() {
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		$http.get($scope.param.host+ 'service/gadget/article/' + $scope.param.gadgetId + '/json').success(function(data) {
+		cacheManagerService.get($scope.param.host+ 'service/gadget/article/' + $scope.param.gadgetId + '/json').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.article = data[0];
 		});

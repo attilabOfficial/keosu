@@ -37,7 +37,7 @@
 			<p>
 				Export App before download the last version
 			</p>
-			<a href="{{ path('keosu_core_exporter_export') }}"><button type="button" class="btn btn-default">Export</button></a>
+			<a href="{{ path('keosu_core_exporter_export') }}"><button id="export" type="button" data-loading-text="Loading..." class="btn btn-default">Export</button></a>
 		</div>
 	</div>
 	
@@ -69,5 +69,12 @@
 			<a href="{{url_base}}/keosu/export/android/export.zip"><button type="button" class="btn btn-default">Download</button></a>
 		</div>
 	</div>
-	
+
+<script>				
+	$('#export').click(function () {
+		var btn = $(this);
+		btn.html("Loading...");
+		btn.addClass("btn-primary").removeClass("btn-default");
+	});
+</script>
 {% endblock %}

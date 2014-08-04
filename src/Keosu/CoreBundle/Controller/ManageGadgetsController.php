@@ -121,6 +121,7 @@ class ManageGadgetsController extends Controller {
 			throw new \LogicException("Gadget : ".$gadgetName." Not Found");
 		
 		$gadget->setName($gadgetName);
+		$gadget->setConfig(array());
 		
 		$event = new GadgetActionEvent($pageId,$zoneName,$gadget);
 		$dispatch->dispatch(KeosuEvents::GADGET_ADD.$gadget->getName(),$event);

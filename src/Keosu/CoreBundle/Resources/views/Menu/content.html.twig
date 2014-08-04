@@ -1,0 +1,5 @@
+{% for content in contents %}
+<div>
+	<a class="sidebarlink" href="{{ path('keosu_'~content~'_viewlist') }}">Manage {{content}}</a>
+</div>
+{% endfor %}

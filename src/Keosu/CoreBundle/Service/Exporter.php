@@ -184,6 +184,7 @@ class Exporter {
 					// set param for gadgets
 					$paramGadget['gadgetId'] = $gadget->getId();
 					$paramGadget['pageId'] = $page->getId();
+					$paramGadget['gadgetParam'] = array();
 					$paramGadget['gadgetParam'] = $this->secureParameters($gadget->getConfig(),$packageConfig);
 					
 					// globalParam

@@ -1,0 +1,10 @@
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+<span class="glyphicon glyphicon-eye-open"></span>
+<b>Current app is : </b>{{ curAppName }} <b class="caret"></b></a>
+<ul class="dropdown-menu">
+	{% for app in apps %}
+	<li role="presentation">
+		<a href="{{ path('keosu_changeapp',{'appid':app.id}) }}">{{ app.name }}</a>
+	</li>
+	{% endfor %}
+</ul>

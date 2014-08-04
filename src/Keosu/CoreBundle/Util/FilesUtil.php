@@ -50,7 +50,7 @@ class FilesUtil {
 	public static function copyFolder($source, $dest) {
 	
 		if(!is_dir($dest)) {
-			mkdir($dest);
+			@mkdir($dest);
 		}
 
 		foreach ($iterator = new \RecursiveIteratorIterator(
@@ -58,7 +58,7 @@ class FilesUtil {
 						\RecursiveDirectoryIterator::SKIP_DOTS),
 				\RecursiveIteratorIterator::SELF_FIRST) as $item) {
 			if ($item->isDir()) {
-				mkdir($dest . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+				@mkdir($dest . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
 			} else {
 				copy($item,
 						$dest . DIRECTORY_SEPARATOR

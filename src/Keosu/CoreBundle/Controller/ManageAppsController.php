@@ -110,7 +110,6 @@ class ManageAppsController extends Controller {
 				$session = $this->get("session");
 				$session->set("appid",$app->getId());
 
-				// TODO event
 				$dispatcher = $this->get('event_dispatcher');
 				$event = new PackageSaveAppEvent($form,$request,$app);
 				foreach($listPackage as $p) {

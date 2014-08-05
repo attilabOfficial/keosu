@@ -18,8 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Controller;
 
+use keosu\CoreBundle\KeosuEvents;
+
 use Keosu\CoreBundle\Entity\App;
 use Keosu\CoreBundle\Entity\ConfigParameters;
+
+use Keosu\CoreBundle\Event\PackageSaveAppEvent;
 
 use Keosu\CoreBundle\Form\ConfigPackageType;
 use Keosu\CoreBundle\Form\IconsType;
@@ -77,6 +81,16 @@ class ManageAppsController extends Controller {
 		//Find existing app to know if it's the first one
 		$isFirstApp = ($apps===null);
 
+		// find package witch need to be configured
+		$listPackage = $packageManager->getPackageList();
+		$packageToConfigure = array();
+		foreach($listPackage as $p) {
+			$config = $packageManager->getConfigPackage($p->getPath());
+			if(isset($config['appParam']) && count($config['appParam']))
+				$packageToConfigure[] = $config;
+		}
+
+
 		//page edit form
 		$formBuilder = $this->createFormBuilder($app,array(
 													'label' => 'Edit App'
@@ -89,37 +103,37 @@ class ManageAppsController extends Controller {
 
 			$form->bind($request);
 			if ($form->isValid()) {
-				// TODO event
 
 				$em->persist($app);
 				$em->flush();
 				$em->refresh($app);
-				
-				// TODO event
-				$em->flush();
-
 				$session = $this->get("session");
 				$session->set("appid",$app->getId());
+
+				// TODO event
+				$dispatcher = $this->get('event_dispatcher');
+				$event = new PackageSaveAppEvent($form,$request,$app);
+				foreach($listPackage as $p) {
+					$dispatcher->dispatch(KeosuEvents::PACKAGE_GLOBAL_CONFIG_SAV_FORM.$p->getName(),$event);
+				}
+
+				// Persist event modification
+				$em->persist($app);
+				$em->flush();
 
 				//Copy splashscreens and icons
 				FilesUtil::copyFolder(Exporter::getImageDir('tmp'), Exporter::getImageDir($app->getId()));
 
 				// export the app
 				$this->container->get('keosu_core.exporter')->exportApp();
+				
+				if($event->getResponse() !== null)
+					return $event->getResponse();
 
 				return $this->redirect(
 							$this->generateUrl('keosu_core_app_manage')
 						);
 			}
-		}
-
-		// find package witch need to be configured
-		$listPackage = $packageManager->getPackageList();
-		$packageToConfigure = array();
-		foreach($listPackage as $p) {
-			$config = $packageManager->getConfigPackage($p->getPath());
-			if(isset($config['appParam']) && count($config['appParam']))
-				$packageToConfigure[] = $config;
 		}
 
 		return $this->render('KeosuCoreBundle:App:edit.html.twig',array(

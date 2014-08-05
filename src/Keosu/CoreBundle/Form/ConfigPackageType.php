@@ -43,11 +43,11 @@ class ConfigPackageType extends AbstractType {
 
 		$packageManager = $this->container->get('keosu_core.packagemanager');
 		$packages = $packageManager->getPackageList();
-		
+
 		foreach($packages as $p) {
 			$config = $packageManager->getConfigPackage($p->getPath());
 			if(isset($config['appParam']) && count($config['appParam']))
-				$builder->add($p->getName(),new ConfigPackageValueType($this->request,$config['appParam']),array(
+				$builder->add($p->getName(),new ConfigPackageValueType($this->request,$config['appParam'],$this->container,$p),array(
 								'label' => false,
 						));
 		}

@@ -21,6 +21,8 @@ namespace Keosu\CoreBundle\Form;
 
 use Keosu\CoreBundle\KeosuEvents;
 
+use Keosu\CoreBundle\Event\PackageFormBuilderEvent;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,23 +37,35 @@ class ConfigPackageValueType extends AbstractType {
 
 	private $config;
 
-	public function __construct(Request $request,$config) {
+	private $package;
+
+	private $container;
+
+	public function __construct(Request $request,$config,$container,$package)
+	{
 		$this->request = $request;
 		$this->config = $config;
+		$this->package = $package;
+		$this->container = $container;
 	}
 
-	public function buildForm(FormBuilderInterface $builder, array $options) {
-	
-		// TODO event
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
+		$eventDispather = $this->container->get('event_dispatcher');
+		$event = new PackageFormBuilderEvent($builder,$this->request,$this->package);
+		$eventDispather->dispatch(KeosuEvents::PACKAGE_GLOBAL_CONFIG_BUILD_FORM.$this->package->getName(),$event);
 
-		foreach($this->config as $c)
-			if(isset($c['options']))
-				$builder->add($c['name'],$c['type'],$c['options']);
-			else
-				$builder->add($c['name'],$c['type']);
+		if(!$event->isOverrideForm()) {
+			foreach($this->config as $c)
+				if(isset($c['options']))
+					$builder->add($c['name'],$c['type'],$c['options']);
+				else
+					$builder->add($c['name'],$c['type']);
+		}
 	}
 
-	public function getName() {
+	public function getName()
+	{
 		return 'Keosu_CoreBundle_configpackagevaluetype';
 	}
 }

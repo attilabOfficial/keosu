@@ -28,7 +28,7 @@ class ExportListener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			KeosuEvents::PACKAGE_EXPORT.GadgetListener::GADGET_NAME => 'onGadgetExport',
+			KeosuEvents::PACKAGE_EXPORT.ExportListener::GADGET_NAME => 'onGadgetExport',
 		);
 	}
 

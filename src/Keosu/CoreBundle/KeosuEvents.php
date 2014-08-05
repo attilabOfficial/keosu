@@ -84,8 +84,6 @@ final class KeosuEvents
 	/**
 	 * The GADGET_PAGE_PANEL[Name of the gadget] event occurs when the panel for the page is rendered in page list
 	 *
-	 * TODO BUGGY
-	 *
 	 * This event allows to modify the panel of the page where the gadget is included
 	 * The event listener method receives a Keosu\CoreBundle\Event\PagePanelEvent instance
 	 */
@@ -116,20 +114,18 @@ final class KeosuEvents
 	const PACKAGE_EXPORT = 'keosu.package.export.';
 
 	/**
-	TODO
-	 * The GADGET_GLOBAL_CONFIG_BUILD_FORM[Name of the gadget] event occurs when the form of the app is about to be builded
+	 * The PACKAGE_GLOBAL_CONFIG_BUILD_FORM[Name of the gadget] event occurs when the form of the app is about to be builded
 	 *
 	 * This event allows to add specific config in global config
-	 * The event listener method receives a Keosu\CoreBundle\Event\PagePanelEvent instance
+	 * The event listener method receives a Keosu\CoreBundle\Event\PackageFormBuilderEvent instance
 	 */
-	const GADGET_GLOBAL_CONFIG_BUILD_FORM = 'keosu.gadget.global.config.build.form.';
+	const PACKAGE_GLOBAL_CONFIG_BUILD_FORM = 'keosu.package.global.config.build.form.';
 
 	/**
-	 * The GADGET_PAGE_PANEL[Name of the gadget] event occurs when the panel when the config for app is about to be saved
+	 * The PACKAGE_GLOBAL_CONFIG_SAV_FORM[Name of the gadget] event occurs when the panel when the config for app is about to be saved
 	 *
-	TODO
 	 * This event allows to add custom information for the gadget in global param
-	 * The event listener method receives a Keosu\CoreBundle\Event\PagePanelEvent instance
+	 * The event listener method receives a Keosu\CoreBundle\Event\PackageSaveAppEvent instance
 	 */
-	const GADGET_GLOBAL_CONFIG_SAV_FORM = 'keosu.gadget.global.config.sav.form.';
+	const PACKAGE_GLOBAL_CONFIG_SAV_FORM = 'keosu.package.global.config.sav.form.';
 }

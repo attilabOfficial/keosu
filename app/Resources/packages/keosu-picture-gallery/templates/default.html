@@ -1,4 +1,4 @@
-<div ng-show="isGallery" class="gallery">
+<div ng-show="isGallery" class="gallery animated fadeIn">
 	<li
 		ng-class="{active: activePage.page == $index, 
 inactive: activePage.page != $index}"
@@ -14,19 +14,18 @@ inactive: activePage.page != $index}"
 		</div>
 		<hr>
 		<div class="row-fluid">
-			<a ng-show="pages[$index - 1]" ng-click="activePage.page = $index-1"
-				class="previous" href="#"><button class="btn btn-default btn-page">Previous</button></a>
-			<a ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1"
-				class="next" href="#"><button
-					class="btn btn-default btn-page pull-right">Next</button></a>
+			<button ng-show="pages[$index - 1]" ng-click="activePage.page = $index-1"
+				class="previous btn btn-default btn-page">Previous</button>
+			<button ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1"
+				class="next btn btn-default btn-page pull-right">Next</button>
 		</div>
 	</li>
 </div>
 <div ng-show="isPicture">
 	<div class="full">
-		<div ng-click="close()"><i class="fui-cross basic-icon-cross" style="position:absolute;z-index:2"></i></div>
+		<div ng-click="close()"><i class="fui-cross basic-icon-cross animated zoomIn" style="position:absolute;z-index:2"></i></div>
 		<div>
-		 	<img class="photo-full" src="{{image.path}}" alt="" style="position:absolute;z-index:1"></img>
+		 	<img class="photo-full animated zoomIn" src="{{image.path}}" alt="" style="position:absolute;z-index:1"></img>
 		</div>
 	</div>
 </div>

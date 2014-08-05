@@ -1,4 +1,4 @@
-<div ng-show="isList">
+<div ng-show="isList" class="animated fadeIn">
 	<div class="panel list">
 		<div class="panel-body list-content" ng-repeat="page in pages">
 			<div class="media" ng-click="open(page)">
@@ -19,7 +19,7 @@
 		</div>
 	</div>
 </div>
-<div ng-show="isMap">
+<div ng-show="isMap" class="animated zoomIn">
 	<a href="#" ng-click="close()"><i
 		class="fui-cross basic-icon-cross"></i></a>
 	<h4 class="title">{{ myMap.nom }}</h4>

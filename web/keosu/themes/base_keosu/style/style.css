@@ -351,3 +351,12 @@ img.center, .img-min {
 	background-color: #EA7354;
 	color: #FFFFFF;
 }
+
+/****************************
+	OFFLINE
+****************************/
+.offline{
+	background-color: #19a6d4;
+	text-align: center;
+	color:white;
+}

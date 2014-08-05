@@ -70,8 +70,8 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 	
 			var onGpsSuccess = function(position) {
 				cacheManagerService.get($scope.param.host + 'service/gadget/aroundme/' + $scope.param.gadgetId +'/'
-						+ position.coords.latitude.toFixed(3) + '/'
-						+ position.coords.longitude.toFixed(3) + '/0/' + '10' + '/json').success(function (data) {
+						+ position.coords.latitude + '/'
+						+ position.coords.longitude + '/0/' + '10' + '/json').success(function (data) {
 							usSpinnerService.stop('spinner');
 							$tmp = [];		
 							for (i = 0; i < data.data.length; i++) {
@@ -85,7 +85,7 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 			function onGpsError(error) {
 				alert('Impossible de vous localiser.');
 			}	
-			cacheManagerService.getLocation($scope.param.gadget+'location')
+			cacheManagerService.getLocation($scope.param.host + 'service/gadget/aroundme/'+$scope.param.gadgetId+'/location')
 			.success(function (position) {
 				onGpsSuccess(position);
 			});

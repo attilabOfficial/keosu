@@ -11,7 +11,10 @@
 
 			var cacheExpiration = this.cacheExpiration; //TODO put this in gadget config
 
-			var getFromCache = function(url){
+			var getFromCache = function(url,cacheExp){
+				if(cacheExp){
+					cacheExpiration=cacheExp;
+				}
 				var tmp=url.split("/");
 				var cachekey="";
 				for(var c in tmp){
@@ -30,10 +33,10 @@
 				var dif = now - lastUpdate;
 				var currentCache = localStorageService.get(cachekey);
 				if((currentCache && (dif < cacheExpiration && dif != 0))
-						/*|| navigator.connection.type=="NONE" */ ){
+						/*|| $scope.offline */){
 					deferred.resolve(currentCache);
-					//return ;
 				}else{
+					console.log("GET : "+url);
 					$http.get(url)
 					.success( function (data) {
 						localStorageService.set(cachekey,data);
@@ -62,7 +65,10 @@
 				return promise;
 			};
 
-			var getLocationFromCache = function(cachekey){				
+			var getLocationFromCache = function(cachekey,cacheExp){	
+				if(cacheExp){
+					cacheExpiration=cacheExp;
+				}
 				var onGpsSuccess = function(position){
 					localStorageService.set(cachekey,position);
 					localStorageService.set('lastup'+cachekey,now);
@@ -88,7 +94,7 @@
 				var dif = now - lastUpdate;
 				var currentCache = localStorageService.get(cachekey);
 				if((currentCache && (dif < cacheExpiration && dif != 0))
-						/*|| navigator.connection.type=="NONE"*/ ){
+						/*|| $scope.offline*/ ){
 					deferred.resolve(currentCache);
 				}else{
 					navigator.geolocation.getCurrentPosition(onGpsSuccess, onGpsError);	

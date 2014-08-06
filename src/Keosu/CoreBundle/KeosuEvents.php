@@ -34,6 +34,14 @@ final class KeosuEvents
 	const GADGET_ADD = 'keosu.gadget.add.';
 
 	/**
+	 * The GADGET_ADD_OLD[Name of the gadget] event occurs when a new gadget will be added and the zone allready have a gadget
+	 *
+	 * This event allows to add action when the gadget is about to be replaced
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetActionEvent instance
+	 */
+	const GADGET_ADD_OLD = 'keosu.gadget.add.old.';
+
+	/**
 	 * The GADGET_EDIT[Name of the gadget] event occurs when a gadget is about to be edited
 	 *
 	 * This event allows to add action when the gadget is about to be edited
@@ -85,7 +93,7 @@ final class KeosuEvents
 	 * The GADGET_PAGE_PANEL[Name of the gadget] event occurs when the panel for the page is rendered in page list
 	 *
 	 * This event allows to modify the panel of the page where the gadget is included
-	 * The event listener method receives a Keosu\CoreBundle\Event\PagePanelEvent instance
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPagePanelEvent instance
 	 */
 	const GADGET_PAGE_PANEL = 'keosu.gadget.page.panel.';
 
@@ -93,7 +101,7 @@ final class KeosuEvents
 	 * The GADGET_PAGE_EDIT[Name of the gadget] event occurs when the page is about to be edited
 	 *
 	 * This event allows to modify the edit action of a page with a specific gadget
-	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPanelEvent instance
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPageActionEvent instance
 	 */
 	const GADGET_PAGE_EDIT = 'keosu.gadget.page.edit.';
 
@@ -101,7 +109,7 @@ final class KeosuEvents
 	 * The GADGET_PAGE_DELETE[Name of the gadget] event occurs when the page is about to be deleted
 	 *
 	 * This event allows to modify the delete action of a page with a specific gadget
-	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPanelEvent instance
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPageActionEvent instance
 	 */
 	const GADGET_PAGE_DELETE = 'keosu.gadget.page.delete.';
 

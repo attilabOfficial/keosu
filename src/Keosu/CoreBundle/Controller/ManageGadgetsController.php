@@ -119,10 +119,21 @@ class ManageGadgetsController extends Controller {
 		
 		if(!$this->get('keosu_core.packagemanager')->isGadgetExist($gadgetName))
 			throw new \LogicException("Gadget : ".$gadgetName." Not Found");
-		
-		$gadget->setName($gadgetName);
+			
 		$gadget->setConfig(array());
 		
+		// old gadget
+		if($gadget->getName() !== null) {
+			$event = new GadgetActionEvent($pageId,$zoneName,$gadget);
+			$dispatch->dispatch(KeosuEvents::GADGET_ADD_OLD.$gadget->getName(),$event);
+		
+			if($event->getResponse() !== null)
+				return $event->getResponse();
+		}
+		
+		$gadget->setName($gadgetName);
+		
+		// add a new
 		$event = new GadgetActionEvent($pageId,$zoneName,$gadget);
 		$dispatch->dispatch(KeosuEvents::GADGET_ADD.$gadget->getName(),$event);
 		

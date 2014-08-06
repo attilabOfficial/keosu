@@ -527,7 +527,7 @@ class Exporter {
 			$jsEnd.= $event->getJsEnd();
 	}
 
-	private function convertToXml($node,\DOMDocument &$configXml,&$currentNode,$configAppForPackage)
+	private function convertToXml($node,\DOMDocument $configXml,$currentNode,$configAppForPackage)
 	{
 		foreach($node as $tag) {
 			$tagName = array_keys($tag)[0];

@@ -1,0 +1,3 @@
+keosu_gadget_face_book_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: KeosuGadgetFaceBookBundle:Default:index }

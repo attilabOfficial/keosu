@@ -8,6 +8,7 @@
    "configCordova" : {},
    "libJs" : [
       "angular.min.js",
+      "angular-carousel.js",
       "angular-chrono.js",
       "angular-inview.js",
       "angular-resource.js",

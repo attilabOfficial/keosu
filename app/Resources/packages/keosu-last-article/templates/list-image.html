@@ -5,7 +5,7 @@ inactive: activePage.page != $index}"
 			ng-repeat="page in pages track by $index">
 					<div class="list">
 			<div class="list-content">
-				<div class="media list-elements" ng-repeat="apage in page">
+				<div class="media list-elements animated {{slide}}" ng-repeat="apage in page">
 					<div class="row" ng-click="open(apage)">
 						<div class="col-xs-4 vcenter">
 							<div class="img-min-list">
@@ -28,16 +28,16 @@ inactive: activePage.page != $index}"
 				</div>
 						</div>
 			</div>
-			<a ng-show="pages[$index - 1]" ng-click="activePage.page = $index-1" class="previous">
-				<button class="btn btn-default btn-page">Previous</button>
-			</a>
-			<a ng-show="pages[$index + 1]" ng-click="activePage.page = $index+1" class="next">
-				<button class="btn btn-default btn-page pull-right">Next</button>
-			</a>
+		<div class="animated fadeIn">
+			<button ng-show="pages[$index - 1]" ng-click="previous()"
+				class="previou btn btn-default btn-page">Previous</button>
+			<button ng-show="pages[$index + 1]" ng-click="next()"
+				class="next btn btn-default btn-page pull-right">Next</button>
+		</div>
 		</li>
 
 </div>
-<div ng-show="isArticle">
+<div ng-show="isArticle" class="animated zoomIn">
 	<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a>
 	<div class="row-fluid">
 		<h4 class="title" style="text-align: center">{{ article.title }}</h4>

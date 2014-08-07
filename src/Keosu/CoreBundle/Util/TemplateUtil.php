@@ -20,13 +20,11 @@ namespace Keosu\CoreBundle\Util;
 
 class TemplateUtil {
 
-
 // TODO delete this file
 
 	protected static function getTemplateDir() {
 		return "keosu/templates/";
 	}
-
 
 	protected static function getGadgetTemplateSuffix() {
 		return "gadget-template.html";
@@ -36,6 +34,21 @@ class TemplateUtil {
 		return "template.html";
 	}
 
+	/**
+	 * Scan the $PAGE_TEMPLATE_PATH dir and return the list of file finished by $TEMPLATE_SUFFIX
+	 * @return multitype:unknown
+	 */
+	public static function getTemplateList() {
+		$fileList = scandir(TemplateUtil::getPageTemplateAbsolutePath());
+		$templateList = Array();
+
+		//Filter
+		foreach ($fileList as $file)
+			if (StringUtil::endsWith($file, TemplateUtil::getTemplateSuffix()))
+				$templateList[$file] = $file;
+		return $templateList;
+
+	}
 	/**
 	 * Delete line return
 	 * Escape '
@@ -49,39 +62,7 @@ class TemplateUtil {
 		$templateString = str_replace("'", "\'", $templateString);
 		return $templateString;
 	}
-	/**
-	 * Scan the $PAGE_TEMPLATE_PATH dir and return the list of file finished by $TEMPLATE_SUFFIX
-	 * @return multitype:unknown
-	 */
-	
-	public static function getTemplateList() {
-		$fileList = scandir(TemplateUtil::getPageTemplateAbsolutePath());
-		$templateList = Array();
-	
-		//Filter
-		foreach ($fileList as $file) {
-			if (StringUtil::endsWith($file, TemplateUtil::getTemplateSuffix())) {
-				$templateList[$file] = $file;
-			}
-		}
-		return $templateList;
-	
-	}
 
-	
-	public static function getTemplateGadgetList($gadgetName) {
-		$fileList = scandir(TemplateUtil::getGadgetAbsolutePath() . $gadgetName);
-		$templateList = Array();
-
-		//Filter
-		foreach ($fileList as $file) {
-			if (StringUtil::endsWith($file,
-					TemplateUtil::getGadgetTemplateSuffix())) {
-				$templateList[$file] = $file;
-			}
-		}
-		return $templateList;
-	}
 	public static function getTemplatePath($gadgetName){
 		return TemplateUtil::getWebPath() .'gadget/'. $gadgetName;
 	}
@@ -106,17 +87,6 @@ class TemplateUtil {
 
 	public static function getUploadRootDir() {
 		return __DIR__ . '/../../../../web/';
-	}
-	
-	/**
-	 * For authentication
-	 */
-	public static function getAuthenticationTemplateId() {
-		return 'keosu-authentication-template-special.html';
-	}
-	
-	public static function getAuthenticationPageName() {
-		return 'authenticationPage';
 	}
 
 }

@@ -8,5 +8,10 @@
    ],
    "require" : [
       { "name" : "angularJs" , "version" : ">=1.2" }
+   ],
+   "appParam" : [
+      { "name" : "privateApp", "type" : "checkbox" , "options" : {
+         "required" : 0
+      }}
    ]
 }

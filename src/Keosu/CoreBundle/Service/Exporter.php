@@ -402,10 +402,10 @@ class Exporter {
 		FilesUtil::deleteDir($this::getExportAbsolutePath() .'/phonegapbuild/www');
 		
 		//Creating dir www and js
-		mkdir($this::getExportAbsolutePath() . '/simulator/www/gadget', 0777, true);
+		mkdir($this::getExportAbsolutePath() . '/simulator/www/plugins', 0777, true);
 		mkdir($this::getExportAbsolutePath() . '/simulator/www/theme', 0777, true);
-		mkdir($this::getExportAbsolutePath() . '/simulator/www/js', 0777, true);
 		mkdir($this::getExportAbsolutePath() . '/simulator/www/data', 0777, true);
+		mkdir($this::getExportAbsolutePath() . '/simulator/www/js', 0777, true);
 		mkdir($this::getExportAbsolutePath() . '/simulator/www/res', 0777, true);
 		
 		mkdir($this::getExportAbsolutePath() . '/ios/www', 0777, true);
@@ -459,6 +459,7 @@ class Exporter {
 		$package = $this->packageManager->findPackage($packageName);
 		$importedPackages[] = $package->getName();
 		$config = $this->packageManager->getConfigPackage($package->getPath());
+		$simulatorPath = $this::getExportAbsolutePath() .DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR;
 		
 		// check dependency
 		if(isset($config['require'])) {
@@ -495,7 +496,7 @@ class Exporter {
 						$script->setAttribute('src',$l);
 					} else {
 						copy($package->getPath().DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.$l,
-							$this::getExportAbsolutePath() .DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.$l);
+							$simulatorPath.'js'.DIRECTORY_SEPARATOR.$l);
 						$script->setAttribute('src','js/'.$l);
 					}
 					$indexDocument->getElementsByTagName('head')->item(0)->appendChild($script);
@@ -525,6 +526,13 @@ class Exporter {
 		
 		if($event->getJsEnd() !== null)
 			$jsEnd.= $event->getJsEnd();
+		
+		// export template for plugins
+		if($package->getType() === PackageManager::TYPE_PACKAGE_PLUGIN) {
+			mkdir($simulatorPath.'plugins'.DIRECTORY_SEPARATOR.$package->getName().DIRECTORY_SEPARATOR.'templates', 0777, true);
+			FilesUtil::copyFolder($package->getPath().DIRECTORY_SEPARATOR.'templates',
+				$simulatorPath.'plugins'.DIRECTORY_SEPARATOR.$package->getName().DIRECTORY_SEPARATOR.'templates');
+		}
 	}
 
 	private function convertToXml($node,\DOMDocument $configXml,$currentNode,$configAppForPackage)

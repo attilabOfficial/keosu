@@ -83,9 +83,12 @@ class Exporter {
 
 		//Export theme
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
-		$json = json_encode(array('name' => $app->getName()));
+		$json = json_encode(array(
+							'name' => $app->getName(),
+							'host' => $baseurl.$this->container->getParameter('url_param')
+		));
 		
-		FilesUtil::copyContent($json, $this::getExportAbsolutePath() . '/simulator/www/data/appName.json');
+		FilesUtil::copyContent($json, $this::getExportAbsolutePath() . '/simulator/www/data/globalParam.json');
 		
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/style',
 				$this::getExportAbsolutePath() . '/simulator/www/theme');
@@ -136,7 +139,7 @@ class Exporter {
 		$mainPage = null;
 		
 		$paramGadget = array();
-		$paramGadget['host'] = $this->container->getParameter('url_base').$this->container->getParameter('url_param');
+		$paramGadget['host'] = $baseurl.$this->container->getParameter('url_param');
 	
 		////////////////////////////////////////
 		// Generate view for each page

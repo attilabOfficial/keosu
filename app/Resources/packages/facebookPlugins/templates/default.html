@@ -1,34 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-<div id="fb-root"></div>
-<script>
-	window.fbAsyncInit = function(){
-		FB.init({
-			app_id:714446061962578,
-			xfbml:true,
-			version:'0.3.2'
 
-		});
-	};
 
-	(function(d,s,id){
+<div ng-controller = "authenticationFbConnectCtl">
+		<div id="status" ng-bind="status"></div>
+		<button  type="button" id="login" ng-click="login()">Please login the Facebook</button>
 
-		var js,fjs = d.getElementsByTagName(s)[0];
-		if(d.getElementsByTagName(id))
-		{
-			return;
-		}
-		is= d.createElement(s);
-		js.id =id;
-		js.src = "//connect.facebook.net/en_US/sdk.js";
-		fjs.parentNode.insertBefore(js,fjs);
-	}(document,'script','facebook-jssdk'));
+</div>
 
-</script>
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
 
-</body>
-</html>
+
+<!--BEGIN--LIKE-->
+<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/"></div>
+<!--END--LIKE-->
+<!--BEGIN--SHARE-->
+<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-show-faces="true" data-share="false"></div>
+<!--END--SHARE-->
+

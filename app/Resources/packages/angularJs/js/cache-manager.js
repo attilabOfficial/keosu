@@ -36,7 +36,6 @@
 						/*|| $scope.offline */){
 					deferred.resolve(currentCache);
 				}else{
-					console.log("GET : "+url);
 					$http.get(url)
 					.success( function (data) {
 						localStorageService.set(cachekey,data);

@@ -1,4 +1,4 @@
-<div class="comment row-fluid" ng-show="enableComments == 1" ng-controller="comment_keosuController">
+<div class="comment row-fluid" ng-show="enableComments == 1" ng-init="commentListAction()">
 	<div ng-repeat="comment in comments" class="comment-list">
 		<dl>
 			<dt>{{comment.user}} - {{comment.date}}</dt>

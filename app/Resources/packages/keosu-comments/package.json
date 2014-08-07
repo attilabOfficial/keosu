@@ -11,8 +11,5 @@
    ],
    "require" : [
       {"name" : "angularJs" , "version" : ">=1.2"}
-   ],
-   "configCordova" : [],
-   "libJs" : [],
-   "appParam" : []
+   ]
 }

@@ -6,7 +6,6 @@ use Keosu\CoreBundle\Entity\Gadget;
 use Keosu\CoreBundle\Entity\Page;
 
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpFoundation\Response;
 
 class GadgetPagePanelEvent extends Event
 {

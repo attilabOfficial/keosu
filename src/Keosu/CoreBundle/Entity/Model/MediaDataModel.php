@@ -21,7 +21,6 @@ namespace Keosu\CoreBundle\Entity\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 use Keosu\CoreBundle\Entity\Model\DataModel;
-use Keosu\CoreBundle\Util\FilesUtil;
 use Keosu\CoreBundle\Util\PathUtil;
 
 use Symfony\Component\Validator\Constraints as Assert;

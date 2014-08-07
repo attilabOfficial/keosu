@@ -20,8 +20,6 @@ namespace Keosu\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Keosu\CoreBundle\Entity\Model\MediaDataModel;
-
 use Keosu\CoreBundle\Model\Icons;
 use Keosu\CoreBundle\Model\Splashscreens;
 

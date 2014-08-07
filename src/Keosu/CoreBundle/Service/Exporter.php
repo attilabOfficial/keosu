@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses,.
 namespace Keosu\CoreBundle\Service;
 
 use Keosu\CoreBundle\KeosuEvents;
-use Keosu\CoreBundle\KeosuExtension;
 
 use Keosu\CoreBundle\Util\ZipUtil;
 use Keosu\CoreBundle\Util\ThemeUtil;
@@ -27,14 +26,7 @@ use Keosu\CoreBundle\Util\FilesUtil;
 use Keosu\CoreBundle\Util\StringUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Entity\Page;
-use Keosu\CoreBundle\Entity\Package;
-
 use Keosu\CoreBundle\Event\ExportPackageEvent;
-
-use Keosu\CoreBundle\Model\ZoneModel;
-
-use Symfony\Component\DomCrawler\Crawler;
 
 class Exporter {
 

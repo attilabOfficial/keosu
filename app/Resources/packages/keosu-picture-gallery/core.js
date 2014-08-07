@@ -16,37 +16,60 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/	
 
-function parts(isGallery, isPicture, $scope) {
-	$scope.isGallery = isGallery;
-	$scope.isPicture = isPicture;
-}
+
 
 //Main function
 
 app.controller('keosu-picture-galleryController', function ($scope, $http, usSpinnerService, cacheManagerService) {
-	parts(true, false, $scope);
+	$scope.parts = function (isGallery, isPicture, $scope) {
+		$scope.isGallery = isGallery;
+		$scope.isPicture = isPicture;
+	}
+	$scope.parts(true, false, $scope);
 	$scope.index = 0;
+	$scope.next = function(){
+		if($scope.activePage.page+1 < $scope.pages.length){
+			$scope.slidePage="slideInRight";
+			$scope.activePage.page = $scope.activePage.page+1;
+		}
+	};
+	$scope.previous = function(){
+		if($scope.activePage.page-1 >=0){
+			$scope.slidePage="slideInLeft";
+			$scope.activePage.page = $scope.activePage.page-1;
+		}
+	};
 	$scope.close = function () {
-		parts(true, false, $scope);
+		$scope.slideElement="zoomIn";
+		$scope.activePage.page-1
+		$scope.slide="fadeIn";
+		$scope.parts(true, false, $scope);
 	};
 	$scope.open = function (page, id) {
+		$scope.indexSlide=id-1;
+		$scope.slidePage="fadeIn";
 		$scope.image = page;
 		$scope.index = id - 1;
-		parts(false, true, $scope);
+		$scope.parts(false, true, $scope);
 	};
 	$scope.swipeLeft = function() {
+		$scope.slideElement="slideInRight";
 		if ($scope.index == $scope.imageLength - 1)
 			$scope.index = 0;
 		else
 			$scope.index++;
 	}
 	$scope.swipeRight = function() {
+		$scope.slideElement="slideInLeft";
 		if ($scope.index == 0)
 			$scope.index = $scope.imageLength - 1;
 		else
 			$scope.index--;
 	}
 	$scope.init = function (params) {
+		$scope.indexSlide=0;
+		$scope.slideElement="zoomIn";
+		$scope.slidePage="fadeIn";
 		$scope.param = params;
 		var offset = (0);
 		$scope.activePage = {

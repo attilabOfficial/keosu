@@ -28,16 +28,25 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 		$scope.isArticle = isArticle;
 	}
 	$scope.close = function () {
+		$scope.slide="fadeIn";
 		$scope.parts(true, false, $scope);
+		
 	};
 	$scope.open = function (page) {
 		$scope.article = page;
 		$scope.parts(false, true, $scope);
 	};
+	$scope.next = function(){
+		$scope.slide="slideInRight";
+		$scope.activePage.page = $scope.activePage.page+1;
+	};
+	$scope.previous = function(){
+		$scope.slide="slideInLeft";
+		$scope.activePage.page = $scope.activePage.page-1;
+	};
 	$scope.init = function (params){
+		$scope.slide="fadeIn";
 		$scope.param = params;
-	
-	
 		$scope.parts(true, false, $scope);
 		var offset = (0);
 		$scope.activePage = {

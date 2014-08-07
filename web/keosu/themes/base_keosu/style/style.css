@@ -131,7 +131,7 @@ a {
 .slide-menu >.zone >.menu >.menu-elements >.icons-menu {
 	padding-left: 10px;
 }
-
+/*
 .slide-menu, .slide-img {
 	z-index: 1029;
 	position: fixed;
@@ -141,7 +141,7 @@ a {
     -ms-transition: all 500ms ;
     -o-transition: all 500ms ;
     transition: all 500ms ;	
-}
+}*/
 
 .slide-menu {
 	top: 0px;
@@ -360,3 +360,42 @@ img.center, .img-min {
 	text-align: center;
 	color:white;
 }
+
+
+/****************************
+	TRANSITIONS
+****************************/
+
+/*.zoom{
+	-webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+}
+.zoom.ng-hide{
+	opacity:0;
+}
+*/
+/*
+.ng-enter, .ng-leave{
+	@include transition-duration(1s);
+}
+.ng-enter{
+	@inclide opacity(0);
+}
+.ng-enter.ng-enter-active{
+	@inclide opacity(1);
+}
+.ng-leave-active{
+	@include opacity(0);
+	height:0px;
+}
+*/
+
+
+/*.ng-enter, .ng-leave{
+	-webkit-animation-duration:.5s;
+	-webkit-animation-fill-mode:both;
+}
+.zoom{ -webkit-animation-name: zoomIn;}
+.zoom.ng-hide{ opacity:0;}
+.fade.ng-enter{ -webkit-animation-name: fadeIn;}
+.fade.ng-leave{ -webkit-animation-name: fadeOut;}*/

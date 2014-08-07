@@ -2,9 +2,29 @@
  * Created by lianglijiao on 14-8-5.
  */
 
-<keosufacebook -like      />
+//<keosufacebook-like      />
+//<keosufacebook-share         />
+//<keosufacebook-connect       />
 
-<keosufacebook -share         />
+
+app.controller('authenticationFbConnectCtl', function ($scope) {
 
 
-	<keosufacebook connect       />
+
+
+
+
+
+
+	app.directive('facebookPlugins', function () {
+
+		return {
+			restrict: 'E',
+			templateUrl: 'default.html'
+		};
+
+
+	})
+
+
+})

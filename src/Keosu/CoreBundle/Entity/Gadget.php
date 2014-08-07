@@ -82,6 +82,7 @@ class Gadget {
 	
 	public function __construct() {
 		$this->template = PackageManager::DEFAULT_TEMPLATE_GADGET_NAME;
+		$this->config = array();
 	}
 	
 	

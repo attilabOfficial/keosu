@@ -27,6 +27,7 @@ use Keosu\CoreBundle\Util\TemplateUtil;
  * @ORM\Entity(repositoryClass="Keosu\CoreBundle\Entity\PageRepository")
  */
 class Page {
+
 	/**
 	 * @var integer $id
 	 *

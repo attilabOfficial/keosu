@@ -24,7 +24,6 @@ app.controller('keosu-articleController', function ($scope, $http, $sce, usSpinn
 	/////////////////////////
 	$scope.init = function(params){
 		$scope.param = params;
-		console.log(params);
 		$scope.articleInit();
 	};
 	

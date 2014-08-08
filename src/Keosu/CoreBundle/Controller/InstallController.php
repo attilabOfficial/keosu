@@ -21,8 +21,12 @@ namespace Keosu\CoreBundle\Controller;
 use Keosu\CoreBundle\Util\StringUtil;
 
 use Keosu\CoreBundle\Model\ConfigureModel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Finder\Shell\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 
 class InstallController extends Controller
 {
@@ -30,7 +34,7 @@ class InstallController extends Controller
     /**
      * Check PHP installation
      */
- public function checkAction()
+ 	public function checkAction()
     {
         $phpversion = phpversion();
         $isPhpVersion = version_compare(phpversion(), '5.4.0');
@@ -70,9 +74,9 @@ class InstallController extends Controller
             if ($form->isValid()) {
                 //Registering error handler to catch warning
                 ErrorHandler::register();
-                //Testion database parameters with classical configuration
+                //Testion database parameters with configuration
                 try {
-                    $this->testConnection($configuration);
+                    $this->testAndCreateConnection($configuration);
                 } catch (\Exception $e) {
                     return $this
                         ->render('KeosuCoreBundle:Install:configure.html.twig',
@@ -83,8 +87,8 @@ class InstallController extends Controller
                 $this->exportToYml($configuration);
                 //Updating existing parameters.yml
                 $this->updateParametersYml();
-                //Creating and updating database
-                $this->createAndUpdateDatabase();
+				//Update databaseSchema
+				$this->updateSchema();
                 return $this
                     ->redirect(
                         $this
@@ -102,7 +106,7 @@ class InstallController extends Controller
      */
     public function installdbAction()
     {
-        $this->createAndUpdateDatabase();
+        $this->updateSchema();
         return $this
             ->redirect(
                 $this
@@ -125,7 +129,14 @@ class InstallController extends Controller
         return $form;
     }
 
-    private function testConnection($configuration)
+
+	/*********************************************************
+	 * Database methods
+	 */
+
+	//Test configuration, if configuration is ok we create the database
+	//Else doctrine "classical" exception are sent
+	private function testAndCreateConnection($configuration)
     {
         $connectionFactory = $this->container
             ->get('doctrine.dbal.connection_factory');
@@ -136,9 +147,24 @@ class InstallController extends Controller
                     'password' => $configuration->getDatabasePassword(),
                     'host' => $configuration->getDatabaseHost(),
                     'port' => $configuration->getDatabasePort()));
-        $connection->connect();
+		$connection->getSchemaManager()->createDatabase($configuration->getDatabaseName());
+		$connection->close();
     }
+	//Update schema with console
+	private function updateSchema()
+	{
+		$application = new Application($this->container->get('kernel'));
+		$application->setAutoExit(false);
+		//update Schema
+		$options = array('command' => 'doctrine:schema:update', "--force" => true);
+		$application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
+	}
 
+	/*********************************************************
+	 * Configuration files
+	 */
+
+	//Export configuration object to YML
     private function exportToYml($configuration)
     {
         $content =
@@ -154,6 +180,7 @@ class InstallController extends Controller
         $this->writeFile($content, 'parameters_custom.yml');
     }
 
+	//Update main parameters.yml file
     private function updateParametersYml()
     {
         $content =
@@ -168,6 +195,7 @@ class InstallController extends Controller
         $this->writeFile($content, 'parameters.yml');
     }
 
+	//write a file in config dir
     private function writeFile($content, $fileName)
     {
         $fileName = $this->getAppConfigPath() . $fileName;
@@ -179,19 +207,7 @@ class InstallController extends Controller
         fclose($file);
     }
 
-    private function createAndUpdateDatabase()
-    {
-        $kernel = $this->get('kernel');
-        $application = new \Symfony\Bundle\FrameworkBundle\Console\Application($kernel);
-        $application->setAutoExit(false);
-        //Create database
-        $options = array('command' => 'doctrine:database:create');
-        $application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
-        //Create de Schema
-        $options = array('command' => 'doctrine:schema:update', "--force" => true);
-        $application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
-    }
-
+	//Compute the host of the app
     private function configureUrl($configuration)
     {
         $currentUrl = $this->getRequest()->getUri();

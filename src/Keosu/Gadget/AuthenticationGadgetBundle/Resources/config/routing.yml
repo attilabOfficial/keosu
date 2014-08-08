@@ -18,10 +18,6 @@ keosu_gadget_authentication_service_loginInit:
     pattern:  /service/gadget/authentication/{gadgetId}/{format}/loginInit
     defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:loginInit }
 
-keosu_gadget_authentication_service_loginFacebook:
-    pattern:  /service/gadget/authentication/{gadgetId}/loginFacebook
-    defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:loginFacebook }
-
 keosu_gadget_authentication_service_logout:
     pattern:  /service/gadget/authentication/{gadgetId}/logout
     defaults: { _controller: KeosuGadgetAuthenticationGadgetBundle:Service:logout }

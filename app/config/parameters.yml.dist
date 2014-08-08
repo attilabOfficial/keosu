@@ -1,8 +1,28 @@
 #
 # This file is used for initial configuration
 # DO NOT MODIFY THIS FILE
-# Use parameters_default.yml instead
+# Use parameters.yml instead
 #
-imports:
-    - { resource: parameters_default.yml }
-    - { resource: parameters_temp.yml }
+parameters:
+    mailer_transport:  smtp
+    mailer_host:       localhost
+    mailer_user:       ~
+    mailer_password:   ~
+
+    admin_password:    lagoutte
+
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt
+    
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: ~
+    database_name: symfony
+    database_user: root
+    database_password: ~
+    # Base URL
+    # for exemple
+    # in local installation http://localhost/keosu/web or http://localhost/keosu
+    # in remote installation http://demo.keosu.com
+    url_base: http://localhost/keosu/web
+    url_param: /app_dev.php/

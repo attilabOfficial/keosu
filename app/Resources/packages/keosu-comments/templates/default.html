@@ -1,4 +1,4 @@
-<div class="comment row-fluid animated fadeIn" ng-show="enableComments == 1" ng-init="commentListAction()">
+<div class="clear" ng-show="enableComments == 1" ng-init="init()">
 	<div ng-repeat="comment in comments" class="comment-list">
 		<dl>
 			<dt>{{comment.user}} - {{comment.date}}</dt>

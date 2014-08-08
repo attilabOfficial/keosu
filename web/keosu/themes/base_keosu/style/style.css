@@ -201,7 +201,8 @@ a {
 }
 
 .list-title > .ng-scope > h6, h6.title.ng-binding {
-	white-space: nowrap;
+	height:50px;
+	word-wrap: break-word;
 	overflow: hidden !important;
 	text-overflow: ellipsis !important;
 }

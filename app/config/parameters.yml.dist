@@ -16,10 +16,10 @@ parameters:
     
     database_driver: pdo_mysql
     database_host: 127.0.0.1
-    database_port: 3306
-    database_name: null
-    database_user: null
-    database_password: null
+    database_port: ~
+    database_name: symfony
+    database_user: root
+    database_password: ~
     # Base URL
     # for exemple
     # in local installation http://localhost/keosu/web or http://localhost/keosu

@@ -1,0 +1,36 @@
+<div ng-show="isGallery" class="gallery" ng-swipe-left="next()" ng-swipe-right="previous()">
+	<li
+		ng-class="{active: activePage.page == $index, 
+   inactive: activePage.page != $index}"
+		ng-repeat="page in pages track by $index">
+		<div class="row-fluid">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 gallery">
+				<div ng-repeat="apage in page" class="animated {{slidePage}}">
+					<div class="picture-gallery center">
+						<img src="{{ apage.path }}" alt="" ng-click="open(apage, apage.id)" class="{{ imgClass[apage.id] }}" />
+					</div>
+				</div>
+			</div>
+		</div> <br>
+		<hr>
+		<div class="row-fluid animated fadeIn">
+			<button ng-show="pages[$index - 1]" ng-click="previous()"
+				class="previous btn btn-default btn-page">Previous</button>
+			<button ng-show="pages[$index + 1]" ng-click="next()"
+				class="next btn btn-default btn-page pull-right">Next</button>
+		</div>
+	</li>
+</div>
+
+<div ng-show="isPicture" class="animated fadeIn" ng-click="close()">
+	<i class="fui-cross basic-icon-cross" style="position:absolute;z-index:2"></i>
+	<br />
+</div>
+
+<ul rn-carousel rn-carousel-control rn-carousel-index="indexSlide" ng-show="isPicture" class="animated fadeIn">
+	<li ng-repeat="image in images">
+		<img class="center" src="{{image.path}}" ></img>
+	</li>
+</ul>		
+	
+

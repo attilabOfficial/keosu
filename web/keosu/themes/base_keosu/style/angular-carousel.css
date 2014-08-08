@@ -80,3 +80,36 @@
     right: 0.5em; }
     .rn-carousel-control.rn-carousel-control-next:before {
       content: ">"; }
+
+/* override default controls */
+.rn-carousel-control {
+    font-size:50px !important;
+    color:white;
+    opacity: 1;
+}
+.rn-carousel-control.rn-carousel-control-prev {
+    left: 5px;
+}
+.rn-carousel-control.rn-carousel-control-next {
+    right: 5px;
+}
+
+.thumbs {
+    max-height:65%;
+    max-width:100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+}
+.thumb {
+    display: inline-block;
+    background-size:cover;
+    max-width:100%;
+    margin-left: auto;
+    margin-right: auto;
+    transition: border 0.2s ease-in;
+}
+.is-active {
+    border:1px solid red;
+}

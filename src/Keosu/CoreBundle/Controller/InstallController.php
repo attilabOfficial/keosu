@@ -22,10 +22,8 @@ use Keosu\CoreBundle\Util\StringUtil;
 
 use Keosu\CoreBundle\Model\ConfigureModel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Finder\Shell\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 
 class InstallController extends Controller

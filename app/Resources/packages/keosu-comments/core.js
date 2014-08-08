@@ -3,16 +3,22 @@ app.directive('keosuComments', function(){
 		restrict : 'E',
 		scope : {
 			objectId: '=objectId',
-			patateObjectName: '=patateObjectName',
-			enableComments: '=enableComments',
-			templateName: '=templateName'
+			objectName: '=objectName',
+			enableComments: '=enableComments'
 		},
 		templateUrl : 'plugins/keosu-comments/templates/default.html',
-		controller : function ($scope, $http, usSpinnerService) {
+		controller : ['$scope','$http','usSpinnerService', function ($scope, $http, usSpinnerService) {
+
+			$scope.init = function() {
+				console.log($scope);
+				$http.get('data/globalParam.json').success(function(data){
+					$scope.host = data.host;
+					$scope.commentListAction();
+				});
+			}
 
 			$scope.commentListAction = function() {
-				console.log($scope);
-				$http.get(main.host+'service/gadget/comment/'+$scope.objectName+'/'+$scope.objectId).success(function(data){
+				$http.get($scope.host+'service/gadget/comment/'+$scope.objectName+'/'+$scope.objectId).success(function(data){
 					$scope.comments = data.comments;
 					$scope.connect = data.connect;
 				});
@@ -26,6 +32,6 @@ app.directive('keosuComments', function(){
 					$scope.connect = data.connect;
 				});
 			};
-		}
+		}]
 	};
 });

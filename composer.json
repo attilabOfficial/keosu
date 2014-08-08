@@ -1,6 +1,6 @@
 {
 	"name" : "symfony/framework-standard-edition",
-	"licence" : "AGPL",
+	"license" : "AGPL",
 	"type" : "project",
 	"description" : "The \"Symfony Standard Edition\" distribution",
 	"autoload": {

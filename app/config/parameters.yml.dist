@@ -20,6 +20,7 @@ parameters:
     database_name: symfony
     database_user: root
     database_password: ~
+    database_path: ~
     # Base URL
     # for exemple
     # in local installation http://localhost/keosu/web or http://localhost/keosu

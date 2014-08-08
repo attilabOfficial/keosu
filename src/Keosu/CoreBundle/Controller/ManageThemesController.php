@@ -21,10 +21,8 @@ namespace Keosu\CoreBundle\Controller;
 
 use Keosu\CoreBundle\Entity\Theme;
 use Keosu\CoreBundle\Util\ThemeUtil;
-use Keosu\CoreBundle\Util\TemplateUtil;
-use Keosu\CoreBundle\Entity\Page;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class ManageThemesController extends Controller {
 	/**

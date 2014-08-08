@@ -22,7 +22,6 @@ use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Entity\Page;
 use Keosu\CoreBundle\Event\GadgetPageActionEvent;
 use Keosu\CoreBundle\Util\TemplateUtil;
-use Keosu\CoreBundle\Util\ThemeUtil;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

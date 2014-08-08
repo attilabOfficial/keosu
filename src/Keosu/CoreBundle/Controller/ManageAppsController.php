@@ -21,7 +21,6 @@ namespace Keosu\CoreBundle\Controller;
 use keosu\CoreBundle\KeosuEvents;
 
 use Keosu\CoreBundle\Entity\App;
-use Keosu\CoreBundle\Entity\ConfigParameters;
 
 use Keosu\CoreBundle\Event\PackageSaveAppEvent;
 
@@ -31,13 +30,11 @@ use Keosu\CoreBundle\Form\PreferenceType;
 use Keosu\CoreBundle\Form\SplashscreensType;
 
 use Keosu\CoreBundle\Util\FilesUtil;
-use Keosu\CoreBundle\Util\TemplateUtil;
 use Keosu\CoreBundle\Util\ThemeUtil;
 
 use Keosu\CoreBundle\Service\Exporter;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DomCrawler\Crawler;
 
 class ManageAppsController extends Controller {
 

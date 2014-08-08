@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\Gadget\CommentGadgetBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Keosu\CoreBundle\Entity\Model\DataModel;
+
 /**
  * CommentRepository
  *

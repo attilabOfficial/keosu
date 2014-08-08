@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Listener lock the possibility to delete the 
+ * Listener lock the possibility to delete the gadget
  */
 class GadgetListener implements EventSubscriberInterface
 {
@@ -52,11 +52,15 @@ class GadgetListener implements EventSubscriberInterface
 	
 	public function onGadgetRenderPanel(GadgetPanelEvent $event)
 	{
-		$event->setHtml($this->container->get('templating')->render('KeosuGadgetAuthenticationGadgetBundle:PrivateApp:panelGadget.html.twig', array(
-			'zoneId'     => $event->getZoneHtmlId(),
-			'pageId'     => $event->getPageId(),
-			'gadget'     => $event->getGadget(),
-			'gadgetList' => $event->getGadgetList()
-		)));
+		$em = $this->container->get('doctrine')->getManager();
+		$page = $em->getRepository('KeosuCoreBundle:Page')->find($event->getPageId());
+		if($page->getName() === KeosuGadgetAuthenticationGadgetBundle::AUTHENTICATION_PAGE_NAME
+			&& $page->getTemplateId() == KeosuGadgetAuthenticationGadgetBundle::AUTHENTICATION_TEMPLATE_ID)
+			$event->setHtml($this->container->get('templating')->render('KeosuGadgetAuthenticationGadgetBundle:PrivateApp:panelGadget.html.twig', array(
+				'zoneId'     => $event->getZoneHtmlId(),
+				'pageId'     => $event->getPageId(),
+				'gadget'     => $event->getGadget(),
+				'gadgetList' => $event->getGadgetList()
+			)));
 	}
 }

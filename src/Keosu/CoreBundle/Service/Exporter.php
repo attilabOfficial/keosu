@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses,.
 namespace Keosu\CoreBundle\Service;
 
 use Keosu\CoreBundle\KeosuEvents;
-use Keosu\CoreBundle\KeosuExtension;
 
 use Keosu\CoreBundle\Util\ZipUtil;
 use Keosu\CoreBundle\Util\ThemeUtil;
@@ -27,14 +26,7 @@ use Keosu\CoreBundle\Util\FilesUtil;
 use Keosu\CoreBundle\Util\StringUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
-use Keosu\CoreBundle\Entity\Page;
-use Keosu\CoreBundle\Entity\Package;
-
 use Keosu\CoreBundle\Event\ExportPackageEvent;
-
-use Keosu\CoreBundle\Model\ZoneModel;
-
-use Symfony\Component\DomCrawler\Crawler;
 
 class Exporter {
 
@@ -83,9 +75,12 @@ class Exporter {
 
 		//Export theme
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
-		$json = json_encode(array('name' => $app->getName()));
+		$json = json_encode(array(
+							'name' => $app->getName(),
+							'host' => $baseurl.$this->container->getParameter('url_param')
+		));
 		
-		FilesUtil::copyContent($json, $this::getExportAbsolutePath() . '/simulator/www/data/appName.json');
+		FilesUtil::copyContent($json, $this::getExportAbsolutePath() . '/simulator/www/data/globalParam.json');
 		
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/style',
 				$this::getExportAbsolutePath() . '/simulator/www/theme');
@@ -136,7 +131,7 @@ class Exporter {
 		$mainPage = null;
 		
 		$paramGadget = array();
-		$paramGadget['host'] = $this->container->getParameter('url_base').$this->container->getParameter('url_param');
+		$paramGadget['host'] = $baseurl.$this->container->getParameter('url_param');
 	
 		////////////////////////////////////////
 		// Generate view for each page

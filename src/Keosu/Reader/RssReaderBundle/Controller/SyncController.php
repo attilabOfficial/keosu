@@ -20,7 +20,6 @@ namespace Keosu\Reader\RssReaderBundle\Controller;
 use Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment;
 
 use Keosu\Reader\RssReaderBundle\RssReader;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody;
 

@@ -31,10 +31,8 @@ use Keosu\CoreBundle\Form\ConfigGadgetType;
 use Keosu\CoreBundle\Service\PackageManager;
 
 use Keosu\CoreBundle\Util\TemplateUtil;
-use Keosu\CoreBundle\Util\StringUtil;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**

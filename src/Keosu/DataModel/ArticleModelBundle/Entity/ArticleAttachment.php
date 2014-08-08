@@ -18,9 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
 namespace Keosu\DataModel\ArticleModelBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Keosu\CoreBundle\Entity\Model\MediaDataModel;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment

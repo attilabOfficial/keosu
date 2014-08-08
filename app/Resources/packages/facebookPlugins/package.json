@@ -1,26 +1,26 @@
 {
-"name" : "facebookPlugins",
-"description" : "social plugins packages",
-"version" : "0.3.2",
-"type" : "plugin",
-"param" : [
-{ "name" : "pages", "type" : "collection" }
-],
-"configCordova" : [
-{ "gap:plugin" : [
-{ "@attributes" : {"name" : "com.phonegap.plugins.facebookconnect" , "version":"0.3.2"} },
-
-{ "param" : [
-{ "@attributes" :{"name" : "APP_ID", "value":"@@fbAppId@@"} }
-]},
-{ "param" : [
-{"@attributes" : {"name" : "APP_NAME","value":"@@fbAppName@@"}}
-]}
-]}],
-"libJs" : ["cdv-plugin-fb-connect.js","facebook-js-sdk.js"],
-"appParam" : [
-{"name" : "fbAppId" , "type" : "text" },
-{"name" : "fbAppName" , "type" : "text"}
-
-]
+	"name" : "facebookPlugins",
+	"description" : "social plugins packages",
+	"version" : "0.1",
+	"type" : "plugin",
+	"configCordova" : [
+		{ "gap:plugin" : [
+			{ "@attributes" : {"name" : "com.phonegap.plugins.facebookconnect" , "version":"0.4.0"} },
+			{ "param" : [
+				{ "@attributes" :{"name" : "APP_ID", "value":"@@fbAppId@@"} }
+			]},
+			{ "param" : [
+				{"@attributes" : {"name" : "APP_NAME","value":"@@fbAppName@@"}}
+			]}
+		]}
+	],
+	"libJs" : [
+		"cdv-plugin-fb-connect.js",
+		"facebook-js-sdk.js"
+	],
+	"appParam" : [
+		{"name" : "fbAppId" , "type" : "text" },
+		{"name" : "fbAppName" , "type" : "text"},
+		{"name" : "fbAppSecret", "type" : "text", "backOfficeOnly": 1}
+	]
 }

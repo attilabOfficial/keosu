@@ -15,7 +15,7 @@ use Facebook\FacebookRequestException;
 
 class ServiceController extends Controller
 {
-	public function loginFacebookAction(Request $request) {
+	public function loginFacebookAction($appId,Request $request) {
 
 		$ret = array(
 			'success' => false,
@@ -25,11 +25,12 @@ class ServiceController extends Controller
 		if ($request->request->get('facebook_token') != null && 'POST' === $request->getMethod()) {
 
 			$em = $this->getDoctrine();
-			$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
-			$page = $gadget->getPage();
-			$app = $em->getRepository('KeosuCoreBundle:App')->find($page->getAppId());
+			$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
+			$configPackages = $app->getConfigPackages();
+			$fbAppId = $configPackages[KeosuGadgetFaceBookBundle::PLUGIN_NAME]['fbAppId'];
+			$fbAppSecret = $configPackages[KeosuGadgetFaceBookBundle::PLUGIN_NAME]['fbAppSecret'];
 			
-			FacebookSession::setDefaultApplication($app->getFacebookAppId(),$app->getFacebookAppSecret());
+			FacebookSession::setDefaultApplication($fbAppId,$fbAppSecret);
 			$session = new FacebookSession($request->request->get('facebook_token'));
 			try {
 				$session->validate();

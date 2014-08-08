@@ -1,3 +1,3 @@
 keosu_gadget_facebook_service_loginFacebook:
     pattern:  /service/gadget/facebook/app/{appId}/login
-    defaults: { _controller: KeosuGadgetFacebookGadgetBundle:Service:login }
+    defaults: { _controller: KeosuGadgetFaceBookBundle:Service:login }

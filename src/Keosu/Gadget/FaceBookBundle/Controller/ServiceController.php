@@ -17,11 +17,10 @@ use Facebook\FacebookRequestException;
 
 class ServiceController extends Controller
 {
-	public function loginFacebookAction($appId,Request $request) {
+	public function loginAction($appId,Request $request) {
 
 		$ret = array(
-			'success' => false,
-			'message' => 'unable to login with facebook'
+			'success' => false
 		);
 	
 		if ($request->request->get('facebook_token') != null && 'POST' === $request->getMethod()) {
@@ -47,6 +46,7 @@ class ServiceController extends Controller
 				// the user doesn't have account
 				if($user == null) {
 					$user = $userManager->createUser();
+					$user->setUsername(rand());
 					$user->setEnabled(true);
 					$user->setPlainPassword(\md5($email.\rand()));
 					$user->setEmail($email);
@@ -63,9 +63,13 @@ class ServiceController extends Controller
 				} else {
 					$ret['message'] = "This email is allready used with an other account";
 				}
-				
 			} catch (FacebookRequestException $ex) {
-			} catch (\Exception $ex) {}
+				echo $ex->getMessage();
+			} catch (\Exception $ex) {
+				echo $ex->getMessage();
+			}
+		} else {
+			$ret['message'] = 'unable to login with facebook';
 		}
 
 		$response = new JsonResponse();

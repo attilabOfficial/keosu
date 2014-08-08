@@ -77,7 +77,8 @@ class Exporter {
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
 		$json = json_encode(array(
 							'name' => $app->getName(),
-							'host' => $baseurl.$this->container->getParameter('url_param')
+							'host' => $baseurl.$this->container->getParameter('url_param'),
+							'appId' => $appId
 		));
 		
 		FilesUtil::copyContent($json, $this::getExportAbsolutePath() . '/simulator/www/data/globalParam.json');

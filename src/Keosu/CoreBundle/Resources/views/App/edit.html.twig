@@ -126,40 +126,46 @@
 						</div>
 					</fieldset>
 
-					<fieldset>
-						<legend>For developers</legend>
-
-						{{ form_row(form.debugMode) }}
-						<div class="row">
-							<div class="col-lg-9 col-lg-push-3">
-								<span class="help-block">This param allow to debug your app with <a href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
+					<!-- Trigger Button HTML -->
+					<input type="button" class="btn" data-toggle="collapse" data-target="#advanced" value="For developers...">
+					<div id="advanced" class="collapse">
+						<fieldset>
+							{{ form_row(form.debugMode) }}
+							<div class="row">
+								<div class="col-lg-9 col-lg-push-3">
+									<span class="help-block">This param allow to debug your app with <a href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
+								</div>
 							</div>
+						</fieldset>
+						
+						<!-- Trigger Button HTML -->
+						<input type="button" class="btn" data-toggle="collapse" data-target="#icons" value="Icons...">
+						<div id="icons" class="collapse">
+							{% include 'KeosuCoreBundle:App:editIcones.html.twig' %}
 						</div>
-					</fieldset>
-					
-					<!-- Trigger Button HTML -->
-					<input type="button" class="btn" data-toggle="collapse" data-target="#icons" value="Icons">
-					<div id="icons" class="collapse">
-						{% include 'KeosuCoreBundle:App:editIcones.html.twig' %}
+						<br class="clear"/><br class="clear"/>
+	
+						<!-- Trigger Button HTML -->
+						<input type="button" class="btn" data-toggle="collapse" data-target="#splashscreens" value="Splashscreens...">
+						<div id="splashscreens" class="collapse">
+							{% include 'KeosuCoreBundle:App:editSplashscreens.html.twig' %}
+						</div>
+						<br class="clear"/>
+						
+	
+						{% for p in packageToConfigure %}
+							{{ includePanelAppConfig(p.name,p.type,null,attribute(form.configPackages,p.name) ) }}
+						{% endfor %}
+		
+						<!-- Trigger Button HTML -->
+						<input type="button" class="btn" data-toggle="collapse" data-target="#configXML" value="Preferences...">
+						<div id="configXML" class="collapse">	
+							<fieldset>
+								{{ form_row(form.preferences) }}
+							</fieldset>
+						</div>
+						<br class="clear"/>
 					</div>
-					<br class="clear"/><br class="clear"/>
-
-					<!-- Trigger Button HTML -->
-					<input type="button" class="btn" data-toggle="collapse" data-target="#splashscreens" value="Splashscreens">
-					<div id="splashscreens" class="collapse">
-						{% include 'KeosuCoreBundle:App:editSplashscreens.html.twig' %}
-					</div>
-					<br class="clear"/>
-
-					{% for p in packageToConfigure %}
-						{{ includePanelAppConfig(p.name,p.type,null,attribute(form.configPackages,p.name) ) }}
-					{% endfor %}
-
-					<fieldset>
-						<legend>Preferences</legend>
-						{{ form_row(form.preferences) }}
-					</fieldset>
-
 
 					<br class="clear"/><br class="clear"/>
 					<input type="submit" class="btn btn-success" />&nbsp;

@@ -34,6 +34,7 @@ app.controller('keosu-authenticationController',function ($scope, $http, usSpinn
 		if($scope.param == null)
 			$http.get(params.host+'service/gadget/authentication/'+params.gadgetId+'/json/init').success(function(data) {
 				$scope.param = params;
+
 /*
 				// Facebook login part
 				if($scope.param.facebookConnect) {

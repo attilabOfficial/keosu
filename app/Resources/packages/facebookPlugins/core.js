@@ -14,22 +14,24 @@ app.directive('facebookConnect', function () {
 		templateUrl: 'plugins/facebookPlugins/templates/default.html',
 
 		controller:['$scope','$http', function($scope,$http){
+			$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+
 			$scope.checkLogin = function(){
 				FB.login(null,{scope:"email"});
 			};
 
 			$scope.init=function(){
 
-				if($scope.host==null){
+				if($scope.param==null){
 					$http.get('data/globalParam.json').success(function(data){
-						$scope.host=data.host;
+						$scope.param=data;
 
 						FB.Event.subscribe('auth.login',function(response){
 
 							//window.location.reload();
 							if(response.status =='connect'){
 								var data = 'facebook_Token='+accessToken;
-								$http.post($scope.host + '/service/gadget/facebook/appId/login',data).success(function(data){
+								$http.post($scope.param.host + '/service/gadget/facebook/app/'+$scope.param.appId+'/login',data).success(function(data){
 
 									if(data.success){
 										$location.path('/Page/'+$scope.pageId);

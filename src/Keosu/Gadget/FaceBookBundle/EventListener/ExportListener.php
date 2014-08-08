@@ -38,15 +38,18 @@ class ExportListener implements EventSubscriberInterface
 		$fbAppId = $configPackages[KeosuGadgetFaceBookBundle::PLUGIN_NAME]['fbAppId'];
 
 		$event->addToJsInit('
-FB.init({
-	app_id:'.$fbAppId.',
-	xfbml:true,
-	version:\'0.3.2\'
-});'
-		);
-
-	}
-
+document.addEventListener(\'deviceready\',function(){
+	FB.init({
+		appId:'.$fbAppId.',
+		nativeInterface:CDV.FB,
+		useCacheDialogs:false
+	});
+});');
+		}
 }
+
+
+
+
 
 

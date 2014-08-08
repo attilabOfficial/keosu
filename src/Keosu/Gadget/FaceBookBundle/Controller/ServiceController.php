@@ -2,6 +2,8 @@
 
 namespace Keosu\Gadget\FaceBookBundle\Controller;
 
+use Keosu\Gadget\FaceBookBundle\KeosuGadgetFaceBookBundle;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -1,10 +1,10 @@
 {
-	"name" : "symfony/framework-standard-edition",
-	"license" : "AGPL",
+	"name" : "keosuoffical/keosu",
+	"license" : "AGPL-1.0",
 	"type" : "project",
-	"description" : "The \"Symfony Standard Edition\" distribution",
+	"description" : "Keosu is an open source CMS for mobile app.",
 	"autoload": {
-		"psr-0": { "": "src/", "SymfonyStandard": "app/" }
+		"psr-0": { "": "src/" }
 	},
 	"require" : {
 		"php" : ">=5.4.0",

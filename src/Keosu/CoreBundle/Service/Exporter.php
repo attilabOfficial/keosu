@@ -308,18 +308,18 @@ class Exporter {
 		// Define app splash screen for each platform.
 		$splashScreen = array(
 			// ANDROID
-			array( "src"=>"res/screen/android/splashscreenA320x436.png" ,"gap:platform"=>"android" ,"gap:density"=>"ldpi"),
-			array( "src"=>"res/screen/android/splashscreenA320x470.png" ,"gap:platform"=>"android" ,"gap:density"=>"mdpi"),
-			array( "src"=>"res/screen/android/splashscreenA640x480.png" ,"gap:platform"=>"android" ,"gap:density"=>"hdpi"),
-			array( "src"=>"res/screen/android/splashscreenA960x720.png" ,"gap:platform"=>"android" ,"gap:density"=>"xhdpi"),
+			array( "src"=>"res/splashscreens/android/splashscreenA320x436.png" ,"gap:platform"=>"android" ,"gap:density"=>"ldpi"),
+			array( "src"=>"res/splashscreens/android/splashscreenA320x470.png" ,"gap:platform"=>"android" ,"gap:density"=>"mdpi"),
+			array( "src"=>"res/splashscreens/android/splashscreenA640x480.png" ,"gap:platform"=>"android" ,"gap:density"=>"hdpi"),
+			array( "src"=>"res/splashscreens/android/splashscreenA960x720.png" ,"gap:platform"=>"android" ,"gap:density"=>"xhdpi"),
 			// IOS
-			array( "src"=>"res/screen/ios/splashscreenI320x480.png" ,"gap:platform"=>"ios" ,"width"=>"320" ,"height"=>"480"),
-			array( "src"=>"res/screen/ios/splashscreenI640x960.png" ,"gap:platform"=>"ios" ,"width"=>"640" ,"height"=>"960"),
-			array( "src"=>"res/screen/ios/splashscreenI640x1136.png" ,"gap:platform"=>"ios" ,"width"=>"640" ,"height"=>"1136"),
-			array( "src"=>"res/screen/ios/splashscreenI1024x748.png" ,"gap:platform"=>"ios" ,"width"=>"1024" ,"height"=>"748"),
-			array( "src"=>"res/screen/ios/splashscreenI768x1004.png" ,"gap:platform"=>"ios" ,"width"=>"768" ,"height"=>"1004"),
-			array( "src"=>"res/screen/ios/splashscreenI2048x1496.png" ,"gap:platform"=>"ios" ,"width"=>"2048" ,"height"=>"1496"),
-			array( "src"=>"res/screen/ios/splashscreenI1536x2008.png" ,"gap:platform"=>"ios" ,"width"=>"1536" ,"height"=>"2008"),
+			array( "src"=>"res/splashscreens/ios/splashscreenI320x480.png" ,"gap:platform"=>"ios" ,"width"=>"320" ,"height"=>"480"),
+			array( "src"=>"res/splashscreens/ios/splashscreenI640x960.png" ,"gap:platform"=>"ios" ,"width"=>"640" ,"height"=>"960"),
+			array( "src"=>"res/splashscreens/ios/splashscreenI640x1136.png" ,"gap:platform"=>"ios" ,"width"=>"640" ,"height"=>"1136"),
+			array( "src"=>"res/splashscreens/ios/splashscreenI1024x748.png" ,"gap:platform"=>"ios" ,"width"=>"1024" ,"height"=>"748"),
+			array( "src"=>"res/splashscreens/ios/splashscreenI768x1004.png" ,"gap:platform"=>"ios" ,"width"=>"768" ,"height"=>"1004"),
+			array( "src"=>"res/splashscreens/ios/splashscreenI2048x1496.png" ,"gap:platform"=>"ios" ,"width"=>"2048" ,"height"=>"1496"),
+			array( "src"=>"res/splashscreens/ios/splashscreenI1536x2008.png" ,"gap:platform"=>"ios" ,"width"=>"1536" ,"height"=>"2008"),
 		);
 		
 		foreach($splashScreen as $asplash) {

@@ -55,8 +55,7 @@ abstract class MediaDataModel extends DataModel
 	 * @return ArticleAttachment
 	 */
 	public function setPath($path) {
-		$this->path = $path;
-
+		alert(Math.round(+new Date() / 1000)."_".$path);
 		return $this;
 	}
 
@@ -96,9 +95,10 @@ abstract class MediaDataModel extends DataModel
 	 * @param unknown $file
 	 */
 	public function setFile($file) {
-		$file->move($this->getUploadRootDir(), $file->getClientOriginalName());
+		$time = time();
+		$file->move($this->getUploadRootDir(), $time."_".$file->getClientOriginalName());
 
-		$this->path = $file->getClientOriginalName();
+		$this->path = $time."_".$file->getClientOriginalName();
 
 	}
 	public function getFile() {

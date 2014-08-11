@@ -1,0 +1,38 @@
+<div ng-show="isList">
+		<div class="panel list">
+			<div class="panel-body list-content">
+				<div class="row-fluid list-elements animated {{slide}}" ng-repeat="apage in pages">
+					<div class="media" ng-click="open(apage)">
+						<div class="media-body list-title">
+							<h6 class="title">{{ apage.title }}</h6>
+						</div>
+					</div>
+					<hr>
+				</div>
+			</div>
+		</div>
+		<button ng-show="!isLastPage" ng-click="more()"
+			class="next btn btn-default btn-page pull-right animated fadeIn">More</button>
+
+	</li>
+
+</div>
+<div ng-show="isArticle" class="animated zoomIn">
+	<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a>
+	<div class="row-fluid">
+		<h4 class="title" style="text-align: center">{{ article.title }}</h4>
+	</div>
+	<hr>
+	<div class="gadget-content">
+		<div class="row-fluid">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div ng-bind-html="article.content"></div>
+			</div>
+		</div>
+	</div>
+	<ul class="img-list">
+		<li ng-repeat="img in article.attachments">
+			<img class="center" ng-if="img" src="{{ img.path }}" alt="" />
+		</li>
+	</ul>
+</div>

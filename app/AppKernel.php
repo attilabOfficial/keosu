@@ -43,6 +43,7 @@ class AppKernel extends Kernel
             new Keosu\Gadget\MyAccountGadgetBundle\KeosuGadgetMyAccountGadgetBundle(),
             new Keosu\Gadget\CommentGadgetBundle\KeosuGadgetCommentGadgetBundle(),
             new Keosu\Gadget\FaceBookBundle\KeosuGadgetFaceBookBundle(),
+            new Keosu\Gadget\BaseBundle\KeosuGadgetBaseBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {

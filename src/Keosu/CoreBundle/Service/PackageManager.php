@@ -38,6 +38,7 @@ class PackageManager {
 	const TYPE_PACKAGE_LIB = 'lib';
 	const TYPE_PACKAGE_GADGET = 'gadget';
 	const TYPE_PACKAGE_PLUGIN = 'plugin';
+	const TYPE_PACKAGE_BASE = 'base';
 
 	const DEFAULT_TEMPLATE_GADGET_NAME = 'default.html';
 
@@ -87,7 +88,8 @@ class PackageManager {
 		if($type != null
 			&& $type != $this::TYPE_PACKAGE_GADGET
 				&& $type != $this::TYPE_PACKAGE_LIB
-					&& $type != $this::TYPE_PACKAGE_PLUGIN)
+					&& $type != $this::TYPE_PACKAGE_PLUGIN
+						&& $type != $this::TYPE_PACKAGE_BASE)
 			throw new \LogicException('Wrong parameter for getList');
 
 		$listPackage = array();
@@ -153,8 +155,9 @@ class PackageManager {
 		// check type allowed
 		if($config['type'] != $this::TYPE_PACKAGE_LIB 
 			&& $config['type'] != $this::TYPE_PACKAGE_GADGET
-				&& $config['type'] != $this::TYPE_PACKAGE_PLUGIN)
-			throw new \LogicException('The type of your package can only be gadget, plugin or lib
+				&& $config['type'] != $this::TYPE_PACKAGE_PLUGIN
+					&& $config['type'] != $this::TYPE_PACKAGE_BASE)
+			throw new \LogicException('The type of your package can only be gadget, plugin, lib or base
 										for your package '.$packageName.' located at '.$packageLocation);
 										
 		if(preg_match('/\\s/',$config['name']))

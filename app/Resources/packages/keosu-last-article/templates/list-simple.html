@@ -1,9 +1,7 @@
-<div ng-show="isList">
-	<li ng-class="{active: activePage.page == $index, inactive: activePage.page != $index}"
-		ng-repeat="page in pages track by $index">
+<div ng-show="isList" ng-swipe-left="next()" ng-swipe-right="previous()">
 		<div class="panel list">
 			<div class="panel-body list-content">
-				<div class="row-fluid list-elements animated {{slide}}" ng-repeat="apage in page">
+				<div class="row-fluid list-elements animated {{slide}}" ng-repeat="apage in pages">
 					<div class="media" ng-click="open(apage)">
 						<div class="media-body list-title">
 							<h6 class="title">{{ apage.title }}</h6>
@@ -13,12 +11,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="animated fadeIn">
-			<button ng-show="pages[$index - 1]" ng-click="previous()"
-				class="previou btn btn-default btn-page">Previous</button>
-			<button ng-show="pages[$index + 1]" ng-click="next()"
-				class="next btn btn-default btn-page pull-right">Next</button>
-		</div>
+		<button ng-show="!isFirstPage" ng-click="previous()"
+			class="previou btn btn-default btn-page animated fadeIn">Previous</button>
+		<button ng-show="!isLastPage" ng-click="next()"
+			class="next btn btn-default btn-page pull-right animated fadeIn">Next</button>
+
 	</li>
 
 </div>

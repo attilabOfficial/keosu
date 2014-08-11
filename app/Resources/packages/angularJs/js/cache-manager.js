@@ -8,7 +8,7 @@
 		this.cacheExpiration=100000;
 
 		this.$get = ['$http','$q','localStorageService', function($http,$q,localStorageService) {
-
+			
 			var cacheExpiration = this.cacheExpiration; //TODO put this in gadget config
 
 			var getFromCache = function(url,cacheExp){
@@ -36,6 +36,7 @@
 						/*|| $scope.offline */){
 					deferred.resolve(currentCache);
 				}else{
+					console.log(url);
 					$http.get(url)
 					.success( function (data) {
 						localStorageService.set(cachekey,data);

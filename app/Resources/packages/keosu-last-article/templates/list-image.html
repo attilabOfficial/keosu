@@ -1,42 +1,34 @@
-<div ng-show="isList">
-		<li
-			ng-class="{active: activePage.page == $index, 
-inactive: activePage.page != $index}"
-			ng-repeat="page in pages track by $index">
-					<div class="list">
-			<div class="list-content">
-				<div class="media list-elements animated {{slide}}" ng-repeat="apage in page">
-					<div class="row" ng-click="open(apage)">
-						<div class="col-xs-4 vcenter">
-							<div class="img-min-list">
-								<span ng-if="apage.attachments[0].path"> <img
-									class="img-min" src="{{ apage.attachments[0].path }}" alt="" />
-								</span>
-							</div>
-						</div>
-						<div class="col-xs-7 vcenter">
-							<span class="list-title"> <span
-								ng-if="apage.attachments[0].path">
-									<h6>{{ apage.title }}</h6>
-							</span> <span ng-if="!(apage.attachments[0].path)">
-									<h6 class="title list-title">{{ apage.title }}</h6>
-							</span>
-							</span>
-						</div>
+<div ng-show="isList" class="list"  ng-swipe-left="next()" ng-swipe-right="previous()">
+	<div class="list-content">
+		<div class="media list-elements animated {{slide}}" ng-repeat="apage in pages">
+			<div class="row" ng-click="open(apage)">
+				<div class="col-xs-4 vcenter">
+					<div class="img-min-list">
+						<span ng-if="apage.attachments[0].path"> <img
+							class="img-min-list" src="{{ apage.attachments[0].path }}" alt="" />
+						</span>
 					</div>
-					<hr>
 				</div>
-						</div>
+				<div class="col-xs-7 vcenter">
+					<span class="list-title"> 
+						<span ng-if="apage.attachments[0].path">
+							<h6>{{ apage.title }}</h6>
+						</span> 
+						<span ng-if="!(apage.attachments[0].path)">
+								<h6 class="title list-title">{{ apage.title }}</h6>
+						</span>
+					</span>
+				</div>
 			</div>
-		<div class="animated fadeIn">
-			<button ng-show="pages[$index - 1]" ng-click="previous()"
-				class="previou btn btn-default btn-page">Previous</button>
-			<button ng-show="pages[$index + 1]" ng-click="next()"
-				class="next btn btn-default btn-page pull-right">Next</button>
+			<hr>
 		</div>
-		</li>
-
+	</div>
+	<button ng-show="!isFirstPage" ng-click="previous()"
+		class="previou btn btn-default btn-page animated fadeIn">Previous</button>
+	<button ng-show="!isLastPage" ng-click="next()"
+		class="next btn btn-default btn-page pull-right animated fadeIn">Next</button>
 </div>
+
 <div ng-show="isArticle" class="animated zoomIn">
 	<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a>
 	<div class="row-fluid">

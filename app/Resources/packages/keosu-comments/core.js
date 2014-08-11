@@ -10,7 +10,6 @@ app.directive('keosuComments', function(){
 		controller : ['$scope','$http','usSpinnerService', function ($scope, $http, usSpinnerService) {
 
 			$scope.init = function() {
-				console.log($scope);
 				$http.get('data/globalParam.json').success(function(data){
 					$scope.host = data.host;
 					$scope.commentListAction();

@@ -7,7 +7,7 @@
       { "name" : "article-id", "type" : "number"}
    ],
    "require" : [
-      { "name" : "angularJs" , "version" : ">=1.2" },
-	  { "name":"facebookPlugins","version":">=0.3" }
+      { "name" : "keosu-base" , "version" : ">=0.1" },
+      { "name" : "keosu-comments" , "version":">=0.1" }
    ]
 }

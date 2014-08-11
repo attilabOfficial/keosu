@@ -1,24 +1,19 @@
 <div class="animated fadeIn">
 	<div class="row-fluid">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="media">
-				<div class="pull-left thumbnails-left">
-					<div class="img-min-list">
-						<img class="img-rounded img-min" ng-if="article.attachments" src="{{ article.attachments[0].path }}" alt="" />
-					</div>
-				</div>
-				<div class="medias-body">
-					<h5>{{ article.title }}</h5>
+		<div class="media">
+			<div class="pull-left thumbnails-left">
+				<div class="img-min-list">
+					<img class="img-rounded img-min" ng-if="article.attachments" src="{{ article.attachments[0].path }}" alt="" />
 				</div>
 			</div>
-			<hr>
+			<div class="medias-body">
+				<h5>{{ article.title }}</h5>
+			</div>
 		</div>
+		<hr>
 	</div>
 	<div class="gadget-content">
-		<div class="row-fluid">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<div ng-bind-html="article.content"></div>
-			</div>
-		</div>
+		<div ng-bind-html="article.content"></div>
 	</div>
+	<keosu-comments object-id="article.id" object-name="article.dataModelObjectName" enable-comments="article.enableComments" ></keosu-comments>
 </div>

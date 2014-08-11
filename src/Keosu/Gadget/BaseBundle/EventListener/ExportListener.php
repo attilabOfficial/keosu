@@ -1,9 +1,11 @@
 <?php
 
-namespace Keosu\Gadget\MenuGadgetBundle\EventListener;
+namespace Keosu\Gadget\BaseBundle\EventListener;
 
 use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Event\ExportPackageEvent;
+
+use Keosu\Gadget\BaseBundle\KeosuGadgetBaseBundle;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -12,8 +14,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ExportListener implements EventSubscriberInterface
 {
-
-	const GADGET_NAME = 'keosu-menu';
 
 	private $container;
 
@@ -28,7 +28,7 @@ class ExportListener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			KeosuEvents::PACKAGE_EXPORT.ExportListener::GADGET_NAME => 'onGadgetExport',
+			KeosuEvents::PACKAGE_EXPORT.KeosuGadgetBaseBundle::PACKAGE_NAME => 'onGadgetExport',
 		);
 	}
 

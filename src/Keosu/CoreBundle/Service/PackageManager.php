@@ -59,7 +59,7 @@ class PackageManager {
 		$session = $this->container->get('session');
 		$kernel = $this->container->get('kernel');
 		if($forceReload || !$session->has('cachePackage')) {
-			$dir = scandir($kernel->getRootDir().$this::ROOT_DIR_PACKAGE);
+			$dir = scandir($kernel->getRootDir().$this::ROOT_DIR_PACKAGE);		
 			foreach($dir as $folder) {
 				if($folder === '.' || $folder === '..')
 					continue;
@@ -68,10 +68,12 @@ class PackageManager {
 				$config = $this->getConfigPackage($kernel->getRootDir().$this::ROOT_DIR_PACKAGE.$folder);
 				$this->cachePackage[] = new Package($config['name'],$config['type'],$config['version'],$kernel->getRootDir().$this::ROOT_DIR_PACKAGE.$folder);
 			}
+			
 			$session->set('cachePackage',$this->cachePackage);
 		} else {
 			$this->cachePackage = $session->get('cachePackage');
 		}
+		
 	}
 
 	/**
@@ -185,7 +187,7 @@ class PackageManager {
 		// TODO test json
 
 		// not a path
-		if(!strstr($packageNameOrLocation,DIRECTORY_SEPARATOR)) {
+		if(!strstr($packageNameOrLocation,'/')) {
 			$package = $this->findPackage($packageNameOrLocation);
 			if($package !== null)
 				$packageLocation = $package->getPath();
@@ -194,7 +196,7 @@ class PackageManager {
 		}
 
 		// check package.json existance
-		if(strstr($packageNameOrLocation,DIRECTORY_SEPARATOR)) {
+		if(strstr($packageNameOrLocation,'/')) {
 			if(!is_file($packageNameOrLocation.'/package.json'))
 				throw new \LogicException('package.json not found for '.$packageNameOrLocation);
 			else

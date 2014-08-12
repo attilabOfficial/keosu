@@ -54,18 +54,20 @@ class Exporter {
 
 	private $packageManager;
 
-	public function __construct($doctrine,$container) {
+	public function __construct($doctrine,$container)
+	{
 		$this->doctrine = $doctrine;
 		$this->container = $container;
 		$this->packageManager = $this->container->get('keosu_core.packagemanager');
 	}
 
-	public function exportApp() {
+	public function exportApp()
+	{
 		$this->export($this->container->get('keosu_core.curapp')->getCurApp());
 	}
 	
-	public function export($appId) {
-
+	public function export($appId)
+	{
 		$em = $this->doctrine->getManager();
 		$baseurl = $this->container->getParameter('url_base');
 

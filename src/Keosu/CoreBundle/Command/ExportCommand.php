@@ -1,6 +1,7 @@
 <?php
 namespace Keosu\CoreBundle\Command;
 
+use Keosu\CoreBundle\Entity\App;
 use Keosu\CoreBundle\Service\PackageManager;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -22,47 +23,81 @@ class ExportCommand extends ContainerAwareCommand
 		;
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function execute(InputInterface $input, OutputInterface $stdout)
 	{
-
-		
+		$em = $this->getContainer()->get('doctrine')->getManager();
+		$watch = null;
 		if($input->getOption('watch')) {
+			$watch = true;
+		}
+		$appId = null;
+		if($input->getOption('app')) {
+			$appId = $input->getOption('app');
+		}
 		
-			$key = 0;
+		$stdout->writeln('The <info>keosu:export</info> task export your app');
 		
+		if($appId === null) {
+			$stdout->writeln('List of available apps : ');
+			$apps = $em->getRepository('KeosuCoreBundle:App')->findAll();
+			foreach($apps as $app) {
+				$stdout->writeln('['.$app->getId().'] '.$app->getName());
+			}
+			$appId = $this->getHelper('dialog')->askAndValidate(
+				$stdout,
+				'Which app would you like to export ? (number) : ',
+				function($appId) {
+					if (empty($appId)) {
+						throw new \Exception('AppId can not be empty');
+					}
+						return $appId;
+					}
+				);
+		}
+		
+		if($watch === null) {
+			$stdout->writeln('<info>You can enable auto export with the option --watch</info>');
+		}
+		
+		if($watch) {
+
+			$key = null;
+
 			$kernel = $this->getContainer()->get('kernel');
 			$pathPackage = $kernel->getRootDir().PackageManager::ROOT_DIR_PACKAGE;
-	
-			$finder = new Finder();
-			$sort = function ($a, $b) {
-				return ($b->getMTime() - $a->getMTime());
-			};
-			
-			while(true) {
 
+			while(true) {
 				$newKey = md5(file_get_contents($this->lastModifiedInFolder($pathPackage)));
 				// action if there is a modification in packages
 				if($newKey !== $key) {
 					$key = $newKey;
-					$output->writeln("[export]");
+					$this->exportAction($appId,$stdout);
 				}
-				
 				sleep($input->getOption('period'));
 			}
+		} else {
+			$this->exportAction($appId,$stdout);
 		}
-		
-		
-		//$output->writeln($files[$count-1]->getPathName());
-		
-		$appId = $input->getOption('app');
-
-		$text = 'Hello';
-
-		if ($input->getOption('watch')) {
-			$text = strtoupper($text);
+	}
+	
+	private function exportAction($appId,OutputInterface $stdout)
+	{
+		$em = $this->getContainer()->get('doctrine')->getManager();
+		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
+		if($app === null) {
+			$stdout->writeln('<error>[error]</error> You must provide a valid appId');
+			exit();
 		}
-
-		$output->writeln($text);
+	
+		try {
+			$exporter = $this->getContainer()->get('keosu_core.exporter');
+			$manager = $this->getContainer()->get('keosu_core.packagemanager');
+			$manager->checkAllPackages();
+			$exporter->export($app->getId());
+			$stdout->writeln('<comment>'.date('H:i:s').'</comment> <info>[success]</info> '.$app->getName().' exported');
+		} catch(\Exception $e) {
+			$stdout->writeln('<comment>'.date('H:i:s').'</comment> <error>[error]</error> '.$app->getName().' failed to export because '.$e->getMessage());
+		}
 	}
 
 	/**
@@ -99,7 +134,7 @@ class ExportCommand extends ContainerAwareCommand
 		/* If the $lastModifiedFile isn't set, there were no files
 		we throw an exception */
 		if (empty($lastModifiedFile)) {
-			throw new Exception("No files in the directory");
+			throw new \Exception("No files in the directory");
 		}
 
 		return $lastModifiedFile;

@@ -58,7 +58,7 @@ class PackageManager {
 	{
 		$session = $this->container->get('session');
 		$kernel = $this->container->get('kernel');
-		if(!$session->has('cachePackage') || $forceReload) {
+		if($forceReload || !$session->has('cachePackage')) {
 			$dir = scandir($kernel->getRootDir().$this::ROOT_DIR_PACKAGE);
 			foreach($dir as $folder) {
 				if($folder === '.' || $folder === '..')

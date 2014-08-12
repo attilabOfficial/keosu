@@ -1,14 +1,12 @@
 <?php
 namespace Keosu\CoreBundle\Command;
 
-use Keosu\CoreBundle\Entity\App;
 use Keosu\CoreBundle\Service\PackageManager;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Finder;
 
 class ExportCommand extends ContainerAwareCommand
 {
@@ -85,8 +83,7 @@ class ExportCommand extends ContainerAwareCommand
 		$em = $this->getContainer()->get('doctrine')->getManager();
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
 		if($app === null) {
-			$stdout->writeln('<error>[error]</error> You must provide a valid appId');
-			exit();
+			throw new \Exception('<error>[error]</error> You must provide a valid appId');
 		}
 	
 		try {

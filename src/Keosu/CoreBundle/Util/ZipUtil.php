@@ -68,8 +68,4 @@ class ZipUtil {
 		return $zip->close();
 	}
 
-	public static function ZipAddDir($zip,$dir,$destInZip) {
-		$zip = new \ZipArchive();
-	}
-
 }

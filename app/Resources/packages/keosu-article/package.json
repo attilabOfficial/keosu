@@ -7,7 +7,6 @@
       { "name" : "article-id", "type" : "number"}
    ],
    "require" : [
-      { "name" : "keosu-base" , "version" : ">=0.1" },
-      { "name" : "keosu-comments" , "version":">=0.1" }
+      { "name" : "keosu-base" , "version" : ">=0.1" }
    ]
 }

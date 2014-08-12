@@ -29,7 +29,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class ServiceController extends Controller {
 
-	public function viewListAction($gadgetId, $format, $offset) {
+	public function viewListAction($gadgetId, $page, $format) {
 		$gadget = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
@@ -37,14 +37,14 @@ class ServiceController extends Controller {
 
 		$queryCount = $this->get('doctrine')->getManager()->createQuery('SELECT COUNT(u.id) FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody u');
 		$count = $queryCount->getSingleScalarResult();
-		
+	
 		$qb = $this->get('doctrine')->getManager()->createQueryBuilder();
 		$qb->add('select', 'a')
 				->add('from',
 						'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a')
 				->add('orderBy', 'a.date DESC')
-				->setFirstResult($offset)
-				->setMaxResults($count);
+				->setFirstResult($page*$articlesperpage)
+				->setMaxResults($articlesperpage);
 		
 		$query = $qb->getQuery();
 		$articleList = $query->execute();
@@ -53,12 +53,23 @@ class ServiceController extends Controller {
 			->setBody(
 					TemplateUtil::formatTemplateString($article->getBody()));
 		}
-
+		
+		$isFirst = false;
+		if($page == 0){
+			$isFirst = true;
+		}
+		
+		$isLast = false;
+		if(($page+1)*$articlesperpage >= $count){
+			$isLast = true;
+		}  
+		
+		
 		return $this
 				->render(
 						'KeosuGadgetLastArticleGadgetBundle:Service:viewlist.'
 								. $format . '.twig',
-						array('articles' => $articleList, 'articleperpage' => $articlesperpage));
+						array('articles' => $articleList, 'articleperpage' => $articlesperpage, 'isFirst' => $isFirst, 'isLast' => $isLast));
 	}
 }
 

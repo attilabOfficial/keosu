@@ -26,14 +26,9 @@ class PackageManager {
 
 	// TODO find, add, remove, new
 	// TODO add package theme support
-	
-	public static function getRootDirPackage() {
-		return __DIR__.'/../../../../app/Resources/packages/';
-	}
 
-	public static function getRootDirTemplate() {
-		return __DIR__.'/../../../../web/keosu/templates/gadget/';
-	}
+	const ROOT_DIR_PACKAGE = '/Resources/packages/';
+	const ROOT_DIR_TEMPLATE = '/../web/keosu/templates/gadget/';
 
 	const TYPE_PACKAGE_LIB = 'lib';
 	const TYPE_PACKAGE_GADGET = 'gadget';
@@ -62,20 +57,23 @@ class PackageManager {
 	private function generateListOfPackage($forceReload = false)
 	{
 		$session = $this->container->get('session');
-		if(!$session->has('cachePackage') || $forceReload) {
-			$dir = scandir($this::getRootDirPackage());
+		$kernel = $this->container->get('kernel');
+		if($forceReload || !$session->has('cachePackage')) {
+			$dir = scandir($kernel->getRootDir().$this::ROOT_DIR_PACKAGE);		
 			foreach($dir as $folder) {
 				if($folder === '.' || $folder === '..')
 					continue;
 			
-				$this->checkPackage($this::getRootDirPackage().$folder);
-				$config = $this->getConfigPackage($this::getRootDirPackage().$folder);
-				$this->cachePackage[] = new Package($config['name'],$config['type'],$config['version'],$this::getRootDirPackage().$folder);
+				$this->checkPackage($kernel->getRootDir().$this::ROOT_DIR_PACKAGE.$folder);
+				$config = $this->getConfigPackage($kernel->getRootDir().$this::ROOT_DIR_PACKAGE.$folder);
+				$this->cachePackage[] = new Package($config['name'],$config['type'],$config['version'],$kernel->getRootDir().$this::ROOT_DIR_PACKAGE.$folder);
 			}
+			
 			$session->set('cachePackage',$this->cachePackage);
 		} else {
 			$this->cachePackage = $session->get('cachePackage');
 		}
+		
 	}
 
 	/**
@@ -189,7 +187,7 @@ class PackageManager {
 		// TODO test json
 
 		// not a path
-		if(!strstr($packageNameOrLocation,DIRECTORY_SEPARATOR)) {
+		if(!strstr($packageNameOrLocation,'/')) {
 			$package = $this->findPackage($packageNameOrLocation);
 			if($package !== null)
 				$packageLocation = $package->getPath();
@@ -198,7 +196,7 @@ class PackageManager {
 		}
 
 		// check package.json existance
-		if(strstr($packageNameOrLocation,DIRECTORY_SEPARATOR)) {
+		if(strstr($packageNameOrLocation,'/')) {
 			if(!is_file($packageNameOrLocation.'/package.json'))
 				throw new \LogicException('package.json not found for '.$packageNameOrLocation);
 			else
@@ -215,16 +213,17 @@ class PackageManager {
 	 */
 	private function getPath($packageName)
 	{
-		// TODO change to bdd
-		$dir = scandir($this::getRootDirPackage());
+		// TODO change to cache
+		$kernel = $this->container->get('kernel');
+		$dir = scandir($kernel->getRootDir().$this::ROOT_DIR_PACKAGE);
 		foreach($dir as $folder) {
 			if($folder === '.' || $folder === '..')
 				continue;
 
-			$config = \json_decode(\file_get_contents($this::getRootDirPackage().$folder.'/package.json'),true);
+			$config = \json_decode(\file_get_contents($kernel->getRootDir().$this::ROOT_DIR_PACKAGE.$folder.'/package.json'),true);
 
 			if($packageName === $config['name'])
-				return $this::getRootDirPackage().'/'.$folder;
+				return $kernel->getRootDir().$this::ROOT_DIR_PACKAGE.'/'.$folder;
 
 		}
 		throw new \LogicException('Package '.$packageName.' not found');
@@ -268,7 +267,7 @@ class PackageManager {
 			$templates = $this->getListTemplateForGadget($package->getName());
 			foreach($templates as $t) {
 				if($t !== $this::DEFAULT_TEMPLATE_GADGET_NAME) {
-					copy($pathToPackage.'/templates/'.$t.'.png',$this::getRootDirTemplate().$package->getName().'/'.$t.'.png');
+					copy($pathToPackage.'/templates/'.$t.'.png',$this::ROOT_DIR_TEMPLATE.$package->getName().'/'.$t.'.png');
 					// unlink($pathToPackage.'/templates/'.$t.'.png'); TODO in final version
 				}
 			}
@@ -283,6 +282,7 @@ class PackageManager {
 	public function getListTemplateForGadget($gadgetName)
 	{
 		$pathToGadget = $this->getPath($gadgetName);
+		$kernel = $this->container->get('kernel');
 		
 		// test good gadget type
 		$config = $this->getConfigPackage($pathToGadget);
@@ -292,7 +292,7 @@ class PackageManager {
 		// get list of template
 		$ret = array();
 		$templates = scandir($pathToGadget.'/templates');
-		$templatesGadgetFolder = $this::getRootDirTemplate().'/'.$gadgetName.'/';
+		$templatesGadgetFolder = $kernel->getRootDir().$this::ROOT_DIR_TEMPLATE.'/'.$gadgetName.'/';
 		if(!is_dir($templatesGadgetFolder))
 			mkdir($templatesGadgetFolder);
 

@@ -1,4 +1,4 @@
-<div ng-show="isList" ng-swipe-left="next()" ng-swipe-right="previous()">
+<div ng-show="isList">
 		<div class="panel list">
 			<div class="panel-body list-content">
 				<div class="row-fluid list-elements animated {{slide}}" ng-repeat="apage in pages">
@@ -11,10 +11,8 @@
 				</div>
 			</div>
 		</div>
-		<button ng-show="!isFirstPage" ng-click="previous()"
-			class="previou btn btn-default btn-page animated fadeIn">Previous</button>
-		<button ng-show="!isLastPage" ng-click="next()"
-			class="next btn btn-default btn-page pull-right animated fadeIn">Next</button>
+		<button ng-show="!isLastPage" ng-click="more()"
+			class="next btn btn-default btn-page pull-right animated fadeIn">More</button>
 
 	</li>
 

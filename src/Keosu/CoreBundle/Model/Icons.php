@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Model;
 
+use Symfony\Component\HttpFoundation\File\File;
+
 /**
  * Icons
  */
@@ -66,7 +68,7 @@ class Icons {
      * @param file $iconA36
      * @return Icons
      */
-    public function setIconA36($iconA36)
+    public function setIconA36(File $iconA36)
     {
         $iconA36->move($this->getUploadRootDir("android"), "iconA36.png");
     
@@ -89,7 +91,7 @@ class Icons {
      * @param file $iconA48
      * @return Icons
      */
-    public function setIconA48($iconA48)
+    public function setIconA48(File $iconA48)
     {
         $iconA48->move($this->getUploadRootDir("android"), "iconA48.png");
     
@@ -112,7 +114,7 @@ class Icons {
      * @param file $iconA72
      * @return Icons
      */
-    public function setIconA72($iconA72)
+    public function setIconA72(File $iconA72)
     {
         $iconA72->move($this->getUploadRootDir("android"), "iconA72.png");
     
@@ -135,7 +137,7 @@ class Icons {
      * @param file $iconA96
      * @return Icons
      */
-    public function setIconA96($iconA96)
+    public function setIconA96(File $iconA96)
     {
         $iconA96->move($this->getUploadRootDir("android"), "iconA96.png");
     
@@ -158,7 +160,7 @@ class Icons {
      * @param file $iconI57
      * @return Icons
      */
-    public function setIconI57($iconI57)
+    public function setIconI57(File $iconI57)
     {
         $iconI57->move($this->getUploadRootDir("ios"), "iconI57.png");
     
@@ -181,7 +183,7 @@ class Icons {
      * @param file $iconI72
      * @return Icons
      */
-    public function setIconI72($iconI72)
+    public function setIconI72(File $iconI72)
     {
         $iconI72->move($this->getUploadRootDir("ios"), "iconI72.png");
     
@@ -204,7 +206,7 @@ class Icons {
      * @param file $iconI114
      * @return Icons
      */
-    public function setIconI114($iconI114)
+    public function setIconI114(File $iconI114)
     {
         $iconI114->move($this->getUploadRootDir("ios"), "iconI144.png");
     
@@ -227,7 +229,7 @@ class Icons {
      * @param file $iconI120
      * @return Icons
      */
-    public function setIconI120($iconI120)
+    public function setIconI120(File $iconI120)
     {
         $iconI120->move($this->getUploadRootDir("ios"), "iconI120.png");
     
@@ -250,7 +252,7 @@ class Icons {
      * @param file $iconI152
      * @return Icons
      */
-    public function setIconI152($iconI152)
+    public function setIconI152(File $iconI152)
     {
         $iconI152->move($this->getUploadRootDir("ios"), "iconI152.png");
     
@@ -273,7 +275,7 @@ class Icons {
      * @param file $iconI76
      * @return Icons
      */
-    public function setIconI76($iconI76)
+    public function setIconI76(File $iconI76)
     {
         $iconI76->move($this->getUploadRootDir("ios"), "iconI76.png");
     
@@ -296,7 +298,7 @@ class Icons {
      * @param file $iconI144
      * @return Icons
      */
-    public function setIconI144($iconI144)
+    public function setIconI144(File $iconI144)
     {
         $iconI144->move($this->getUploadRootDir("ios"), "iconI144.png");
     

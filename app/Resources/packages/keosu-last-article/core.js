@@ -23,60 +23,65 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
-	$scope.parts = function (isList, isArticle, $scope) {
+	$scope.parts = function (isList, isArticle) {
 		$scope.isList = isList;
 		$scope.isArticle = isArticle;
 	}
 	$scope.close = function () {
 		$scope.slide="fadeIn";
-		$scope.parts(true, false, $scope);
+		$scope.parts(true, false);
 		
 	};
 	$scope.open = function (page) {
 		$scope.article = page;
-		$scope.parts(false, true, $scope);
+		$scope.parts(false, true);
 	};
 	$scope.next = function(){
+		$scope.isFirstPage = true;
+		$scope.isLastPage = true;
 		$scope.slide="slideInRight";
-		$scope.activePage.page = $scope.activePage.page+1;
+		$scope.activePage++;
+		$scope.getPage($scope.activePage,true);
+		
 	};
 	$scope.previous = function(){
+		$scope.isFirstPage = true;
+		$scope.isLastPage = true;
 		$scope.slide="slideInLeft";
-		$scope.activePage.page = $scope.activePage.page-1;
+		$scope.activePage--;
+		$scope.getPage($scope.activePage,true);
 	};
+	$scope.more = function(){
+		$scope.activePage++;
+		$scope.getPage($scope.activePage,false);
+	}
+	$scope.getPage = function(pageNum,resetPages){
+		if(resetPages){
+			console.log("test ");
+			$scope.pages = [];
+		}
+		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
+		cacheManagerService.get($scope.param.host+'service/gadget/lastarticle/'+$scope.param.gadgetId+'/'+pageNum+'/json').success(function(data) {
+			usSpinnerService.stop('spinner');
+			$scope.isFirstPage = data.isFirst;
+			$scope.isLastPage = data.isLast;
+			start = $scope.pages.length;
+			for (i = 0; i < data.data.length; i++) {
+				$scope.pages[start+i] = data.data[i];
+				$scope.pages[start+i].content = $sce.trustAsHtml(decodedContent(data.data[i].content));
+				$scope.pages[start+i].title = decodedContent(data.data[i].title);
+			}	
+		});
+	}
 	$scope.init = function (params){
 		$scope.slide="fadeIn";
 		$scope.param = params;
-		$scope.parts(true, false, $scope);
-		var offset = (0);
-		$scope.activePage = {
-				page:0
-		};
-		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		cacheManagerService.get($scope.param.host+'service/gadget/lastarticle/'+$scope.param.gadgetId+'/'+$scope.param.gadgetParam.articlesPerPage+'/json').success(function(data) {
-			usSpinnerService.stop('spinner');
-			$tmp = [];
-			for (i = 0; i < data.data.length; i++) {
-				$tmp[i] = data.data[i];
-				$tmp[i].content = $sce.trustAsHtml(decodedContent(data.data[i].content));
-				$tmp[i].title = decodedContent(data.data[i].title);
-			}
-			nb = 0;
-			pages = new Array();
-			for (i = 0; i < $tmp.length; i++) {
-				tmpPage = [];
-				for (j = 0; j < data.articleperpage; j++) {
-					if (!$tmp[i])
-						break;
-					tmpPage[j] = $tmp[i];
-					i++;
-				}
-				i--;
-				pages[nb] = tmpPage;
-				nb++;
-			}
-			$scope.pages = pages;
-		});
+		$scope.pages = new Array();
+		$scope.parts(true, false);
+		$scope.activePage=0;
+		$scope.isFirstPage = true;
+		$scope.isLastPage = true;
+		$scope.getPage($scope.activePage,true);
 	};
 });
 

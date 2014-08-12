@@ -55,7 +55,7 @@ abstract class MediaDataModel extends DataModel
 	 * @return ArticleAttachment
 	 */
 	public function setPath($path) {
-		alert(Math.round(+new Date() / 1000)."_".$path);
+		$this->path=$path;
 		return $this;
 	}
 

@@ -20,13 +20,15 @@ namespace Keosu\CoreBundle\Service;
 
 use Keosu\CoreBundle\KeosuEvents;
 
+use Keosu\CoreBundle\Entity\App;
+
+use Keosu\CoreBundle\Event\ExportPackageEvent;
+
 use Keosu\CoreBundle\Util\ZipUtil;
 use Keosu\CoreBundle\Util\ThemeUtil;
 use Keosu\CoreBundle\Util\FilesUtil;
 use Keosu\CoreBundle\Util\StringUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
-
-use Keosu\CoreBundle\Event\ExportPackageEvent;
 
 class Exporter {
 
@@ -54,18 +56,20 @@ class Exporter {
 
 	private $packageManager;
 
-	public function __construct($doctrine,$container) {
+	public function __construct($doctrine,$container)
+	{
 		$this->doctrine = $doctrine;
 		$this->container = $container;
 		$this->packageManager = $this->container->get('keosu_core.packagemanager');
 	}
 
-	public function exportApp() {
+	public function exportApp()
+	{
 		$this->export($this->container->get('keosu_core.curapp')->getCurApp());
 	}
 	
-	public function export($appId) {
-
+	public function export($appId)
+	{
 		$em = $this->doctrine->getManager();
 		$baseurl = $this->container->getParameter('url_base');
 
@@ -113,7 +117,7 @@ class Exporter {
 		// Generate config.xml
 		//////////////////////////////////////////////////
 		$configXml = new \DOMDocument('1.0','UTF-8');
-		$configXml->formatOutput = true;//TODO remove after debug
+		$configXml->formatOutput = true;
 		$widget = $configXml->createElement('widget');
 		$widget->setAttribute('xmlns','http://www.w3.org/ns/widgets');
 		$widget->setAttribute('xmlns:gap','http://phonegap.com/ns/1.0');
@@ -207,7 +211,7 @@ class Exporter {
 			}
 
 			$bodyEl = $document->getElementsByTagName('body')->item(0);
-			$html = $this->DomInnerHTML($bodyEl);
+			$html = $this->domInnerHtml($bodyEl);
 			$html = StringUtil::decodeString($html);
 			$this->writeFile($html, $page->getFileName(),'/simulator/www/');
 		}
@@ -429,7 +433,7 @@ class Exporter {
 	 * Allow to have innerhtml of a DomNode
 	 * @see https://stackoverflow.com/questions/2087103/innerhtml-in-phps-domdocument
 	 */
-	private function DOMinnerHTML($element) 
+	private function domInnerHtml(\DOMNode $element) 
 	{ 
 		$innerHTML = ""; 
 		$children = $element->childNodes;
@@ -450,7 +454,7 @@ class Exporter {
 	 * @param array $importedPackages list of imported gadget
 	 * @param App $app app to export
 	 */
-	private function importPackage($packageName,&$indexDocument,&$configXml,&$jsInit,&$jsCore,&$jsEnd,&$importedPackages,&$app)
+	private function importPackage($packageName,\DOMDocument &$indexDocument,\DOMDocument &$configXml,&$jsInit,&$jsCore,&$jsEnd,&$importedPackages,App &$app)
 	{
 		$package = $this->packageManager->findPackage($packageName);
 		$importedPackages[] = $package->getName();
@@ -524,14 +528,14 @@ class Exporter {
 			$jsEnd.= $event->getJsEnd();
 		
 		// export template for plugins
-		if($package->getType() === PackageManager::TYPE_PACKAGE_PLUGIN) {
+		if($package->getType() === PackageManager::TYPE_PACKAGE_PLUGIN && is_dir($package->getPath().DIRECTORY_SEPARATOR.'templates')) {
 			mkdir($simulatorPath.'plugins'.DIRECTORY_SEPARATOR.$package->getName().DIRECTORY_SEPARATOR.'templates', 0777, true);
 			FilesUtil::copyFolder($package->getPath().DIRECTORY_SEPARATOR.'templates',
 				$simulatorPath.'plugins'.DIRECTORY_SEPARATOR.$package->getName().DIRECTORY_SEPARATOR.'templates');
 		}
 	}
 
-	private function convertToXml($node,\DOMDocument $configXml,$currentNode,$configAppForPackage)
+	private function convertToXml($node,\DOMDocument $configXml,\DOMNode $currentNode,$configAppForPackage)
 	{
 		foreach($node as $tag) {
 			$tagName = array_keys($tag)[0];

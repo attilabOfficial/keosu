@@ -41,7 +41,7 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 		$scope.isLastPage = true;
 		$scope.slide="slideInRight";
 		$scope.activePage++;
-		$scope.getPage($scope.activePage);
+		$scope.getPage($scope.activePage,true);
 		
 	};
 	$scope.previous = function(){
@@ -49,20 +49,28 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 		$scope.isLastPage = true;
 		$scope.slide="slideInLeft";
 		$scope.activePage--;
-		$scope.getPage($scope.activePage);
+		$scope.getPage($scope.activePage,true);
 	};
-	$scope.getPage = function(pageNum){
-		$scope.pages = [];
+	$scope.more = function(){
+		$scope.activePage++;
+		$scope.getPage($scope.activePage,false);
+	}
+	$scope.getPage = function(pageNum,resetPages){
+		if(resetPages){
+			console.log("test ");
+			$scope.pages = [];
+		}
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		cacheManagerService.get($scope.param.host+'service/gadget/lastarticle/'+$scope.param.gadgetId+'/'+pageNum+'/json').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.isFirstPage = data.isFirst;
 			$scope.isLastPage = data.isLast;
+			start = $scope.pages.length;
 			for (i = 0; i < data.data.length; i++) {
-				$scope.pages[i] = data.data[i];
-				$scope.pages[i].content = $sce.trustAsHtml(decodedContent(data.data[i].content));
-				$scope.pages[i].title = decodedContent(data.data[i].title);
-			}
+				$scope.pages[start+i] = data.data[i];
+				$scope.pages[start+i].content = $sce.trustAsHtml(decodedContent(data.data[i].content));
+				$scope.pages[start+i].title = decodedContent(data.data[i].title);
+			}	
 		});
 	}
 	$scope.init = function (params){
@@ -73,7 +81,7 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 		$scope.activePage=0;
 		$scope.isFirstPage = true;
 		$scope.isLastPage = true;
-		$scope.getPage($scope.activePage);
+		$scope.getPage($scope.activePage,true);
 	};
 });
 

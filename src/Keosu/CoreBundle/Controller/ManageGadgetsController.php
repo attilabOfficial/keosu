@@ -216,7 +216,7 @@ class ManageGadgetsController extends Controller {
 	 * Create the form to edit/add the gadget
 	 */
 	private function formGadget($gadget) {
-
+		
 		$em = $this->get('doctrine')->getManager();
 		$request = $this->get('request');
 		$dispatcher = $this->get('event_dispatcher');
@@ -265,7 +265,8 @@ class ManageGadgetsController extends Controller {
 		
 		return $this->render('KeosuCoreBundle:Page:editGadget.html.twig', array(
 								'form'      => $form->createView(),
-								'gadgetDir' => $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName())
+								'gadgetDir' => TemplateUtil::getTemplateGadgetDir(),
+								'gadgetName' => $gadget->getName()
 							));
 	}
 

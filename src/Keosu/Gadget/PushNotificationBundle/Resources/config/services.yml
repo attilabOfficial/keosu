@@ -1,0 +1,17 @@
+services:
+    keosu.plugin.push.notification.exportlistener:
+        class: Keosu\Gadget\PushNotificationBundle\EventListener\ExportListener
+        arguments: [@service_container]
+        tags:
+            - { name: kernel.event_subscriber }
+    keosu.plugin.push.android.push:
+        public: false
+        class: Keosu\Gadget\PushNotificationBundle\Service\AndroidGCMNotification
+        arguments: [@service_container]
+    keosu.plugin.push.apple.push:
+        public: false
+        class: Keosu\Gadget\PushNotificationBundle\Service\AppleNotification
+        arguments: [@service_container]
+    keosu.plugin.push.notification.service:
+        class: Keosu\Gadget\PushNotificationBundle\Service\PushNotification
+        arguments: [@keosu.plugin.push.android.push,@keosu.plugin.push.apple.push]

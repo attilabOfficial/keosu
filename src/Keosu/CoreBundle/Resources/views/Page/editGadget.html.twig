@@ -25,38 +25,28 @@
 <h1>Edit gadget</h1>
 <br/>
 <div>
-	<script type="text/javascript">
-	/*{#
-	$(document).ready(function() {
-
-		if($( ".radio" ).length==1){
-			$( ".radio" ).each(function( index ) {
-				input = $(this).find('input');
-				input.attr('checked', true);
-				$('.form_gadgetTemplate_form_group').hide();
-			});
-
-		}else{
-			$( ".radio" ).each(function( index ) {
-				input = $(this).find('input');
-				templateName=input.attr('value');
-				img='<img alt="'+templateName+'" src="{{url_base}}/{{ gadgetDir }}/'+templateName+'.png"/>';
-				$( this ).text("");
-				$( this ).append(input);
-				$( this ).append(img);
-			});
-		}
-	});#}*/
-	</script>
-	{% block gadgetform %}
-	<form method="post" {{ form_enctype(form) }}>
-		{{ form_widget(form) }}
-		<br class="clear"/>
-		<br class="clear"/>
-		<br class="clear"/>
-		<input type="submit" class="btn btn-success" />&nbsp;<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-	</form>
-	{% endblock %}
+	{{ form_start(form) }}
+	
+		<div class="imgTemplate">
+			{{ form_row(form.template) }}
+		</div>
+		{{ form_row(form.shared) }}
+		{{ form_row(form.config) }}
+		
+		<br class="clear"/><br class="clear"/>
+		<input type="submit" class="btn btn-success" />&nbsp;
+		<a class="confirmModal" href="javascript:history.go(-1);" >
+			<button type="button" class="btn btn-danger">Cancel</button>
+		</a>
+		
+	{{ form_end(form) }}
 
 </div>
+<script>
+	$(document).ready(function() {	
+		templateButton("{{url_base}}", "{{gadgetDir}}", "{{gadgetName}}");
+	});
+</script>
 {% endblock %}
+
+

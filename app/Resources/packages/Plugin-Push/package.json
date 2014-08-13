@@ -1,0 +1,37 @@
+{
+   "name" : "keosu-push",
+   "description" : "This allow to send push message to your users",
+   "version" : "0.1",
+   "type" : "plugin",
+   "require" : [
+      { "name" : "angularJs" , "version" : ">=0.1" }
+   ],
+   "libJs" : [
+      "PushNotification.js"
+   ],
+   "configCordova": [
+      { "gap:plugin" : [
+         { "@attributes" : {"name" : "com.phonegap.plugins.pushplugin", "version" : "2.1.1"} }
+      ]}
+   ],
+   "appParam" : [
+      { "name" : "enablePush", "type" : "checkbox", "options" : {
+         "required" : 0
+      }},
+      { "name" : "googleGcmApiKey", "type" : "text", "options" : {
+         "required" : 0
+      }},
+      { "name" : "googleUseMultiCurl", "type" : "checkbox", "options" : {
+         "required" : 0
+      }},
+      { "name" : "iosSandbox", "type" : "checkbox", "options" : {
+         "required" : 0
+      }},
+      { "name" : "iosPem" , "type" : "file" , "options" : {
+         "required" : 0
+      }},
+      { "name" : "iosPassPhrase", "type" : "password", "options": {
+         "required" : 0
+      }}
+   ]
+}

@@ -18,62 +18,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle\Model;
 
+use Symfony\Component\HttpFoundation\File\File;
+
 /**
  * Splashscreens
  *
  */
 class Splashscreens{
-	
+
 	// Android
+	private $splashscreenA320x436;
+	private $splashscreenA320x470;
+	private $splashscreenA640x480;
+	private $splashscreenA960x720;
 
-    private $splashscreenA320x436;
 
-    private $splashscreenA320x470;
-    
-    private $splashscreenA640x480;
+	// IOS
+	private $splashscreenI320x480;
+	private $splashscreenI640x960;
+	private $splashscreenI640x1136;
+	private $splashscreenI1024x748;
+	private $splashscreenI768x1004;
+	private $splashscreenI2048x1496;
+	private $splashscreenI1536x2008;
 
-    private $splashscreenA960x720;
-    
-    
-    // IOS
-    
-    private $splashscreenI320x480;
-    
-    private $splashscreenI640x960;
 
-    private $splashscreenI640x1136;
-	
-    private $splashscreenI1024x748;
-    
-    private $splashscreenI768x1004;
-    
-    private $splashscreenI2048x1496;
-    
-    private $splashscreenI1536x2008;
-    
- 
 	public function getAbsolutePath($os) {
 		return $this->getUploadRootDir($os) . '/';
 	}
-	
+
 	public function getWebPath() {
 		return '/' . $this->getUploadDir() . '/';
 	}
-	
+
 	public function getUploadRootDir($os) {
 		// the absolute directory path where uploaded
 		// documents should be saved
 		return __DIR__ .'/../../../../web/' . $this->getUploadDir($os);
 	}
-	
+
 	protected function getUploadDir($os) {
 		// get rid of the __DIR__ so it doesn't screw up
 		// when displaying uploaded doc/image in the view.
 		return 'keosu/res/tmp/splashscreens/'.$os;
 	}
-	
 
-	
 	/**
 	 * Get splashscreensA320x436
 	 *
@@ -84,7 +73,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenA320x436($splashscreen){
+	public function setSplashscreenA320x436(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("android"), "splashscreenA320x436.png");
 	}
 	
@@ -98,7 +87,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenA320x470($splashscreen){
+	public function setSplashscreenA320x470(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("android"), "splashscreenA320x470.png");
 	}
 	
@@ -112,7 +101,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenA640x480($splashscreen){
+	public function setSplashscreenA640x480(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("android"), "splashscreenA640x480.png");
 	}
 	
@@ -126,7 +115,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenA960x720($splashscreen){
+	public function setSplashscreenA960x720(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("android"), "splashscreenA960x720.png");
 	}
 	
@@ -141,7 +130,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenI320x480($splashscreen){
+	public function setSplashscreenI320x480(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI320x480.png");
 	}
 	
@@ -155,7 +144,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenI640x960($splashscreen){
+	public function setSplashscreenI640x960(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI640x960.png");
 	}
 	
@@ -169,7 +158,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenI640x1136($splashscreen){
+	public function setSplashscreenI640x1136(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI640x1136.png");
 	}
 	
@@ -183,7 +172,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenI1024x748($splashscreen){
+	public function setSplashscreenI1024x748(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI1024x748.png");
 	}
 	
@@ -197,7 +186,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenI768x1004($splashscreen){
+	public function setSplashscreenI768x1004(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI768x1004.png");
 	}
 	
@@ -211,7 +200,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenI2048x1496($splashscreen){
+	public function setSplashscreenI2048x1496(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI2048x1496.png");
 	}
 	
@@ -225,7 +214,7 @@ class Splashscreens{
 	}
 	
 	
-	public function setSplashscreenI1536x2008($splashscreen){
+	public function setSplashscreenI1536x2008(File $splashscreen){
 		$splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI1536x2008.png");
 	}
 	

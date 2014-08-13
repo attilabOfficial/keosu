@@ -161,7 +161,7 @@ class ManageAppsController extends Controller {
 					))
 					->add('theme', 'choice', array(
 							'choices'  => ThemeUtil::getThemeList(),
-							'expanded' => true
+							'expanded' => true,
 					))
 					->add('configPackages',new ConfigPackageType($this->container,$this->get('request')),array(
 							'label' => false,

@@ -55,6 +55,10 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 		$scope.activePage++;
 		$scope.getPage($scope.activePage,false);
 	}
+	/*
+	 * @pageNum : page number requested.
+	 * @resetPages : if true, clean the array pages. 
+	 */
 	$scope.getPage = function(pageNum,resetPages){
 		if(resetPages){
 			console.log("test ");

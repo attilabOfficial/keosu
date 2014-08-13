@@ -22,9 +22,14 @@ class TemplateUtil {
 
 // TODO delete this file
 
+	public static function getTemplateGadgetDir(){
+		return TemplateUtil::getTemplateDir()."gadget/";
+	}
+	
 	protected static function getTemplateDir() {
 		return "keosu/templates/";
 	}
+	
 
 	protected static function getGadgetTemplateSuffix() {
 		return "gadget-template.html";

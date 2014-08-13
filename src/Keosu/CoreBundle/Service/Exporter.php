@@ -195,10 +195,7 @@ class Exporter {
 															$packageConfig
 													);
 					
-					
-					
 					//Copy in HTML
-					echo $package->getPath().'/templates/'.$gadget->getTemplate();
 					$gadgetTemplateHtml = file_get_contents($package->getPath().'/templates/'.$gadget->getTemplate());
 					$gadgetTemplateHtml = utf8_encode($gadgetTemplateHtml);
 					$zone->nodeValue = $gadgetTemplateHtml;

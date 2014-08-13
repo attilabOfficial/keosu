@@ -111,7 +111,7 @@ app.directive('facebookConnect', function () {
 	};
 });
 
-
+            // text
 //app.directive('facebookShare',function(){
 //
 //	return{

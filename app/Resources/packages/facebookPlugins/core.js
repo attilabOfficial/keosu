@@ -112,58 +112,58 @@ app.directive('facebookConnect', function () {
 });
 
 
-app.directive('facebookShare',function(){
-
-	return{
-	        restrict:'E',
-			templateUrl: 'plugins/facebookPlugins/templates/default.html',
-
-
-			controller:['$scope','$http',function($scope,$http){
-				$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-
-
-				$scope.shareStatus = function(responde){
-					FB.ui({
-						method:'share',
-						href:'https://developers.facebook.com/docs/'
-					});
-				};
-
-
-				$scope.checkedStatus = function(){
-
-					if ($scope.param == null) {
-						$http.get('data/globalParam.json').success(function (data) {
-							$scope.param = data;
-
-						if($scope.param.facebookConnect){
-							FB.getLoginStatus(function(response){
-								if(response.status == 'connected'){
-
-
-									console.log('share ok');
-
-
-								}else{
-									facebookconnect.checkLogin();
-
-								}
-
-							});
-
-						}else{
-							facebookconnect.checkLogin();
-						}
-						})
-					}
-
-				};
-	}]
-
-};
-
-});
+//app.directive('facebookShare',function(){
+//
+//	return{
+//	        restrict:'E',
+//			templateUrl: 'plugins/facebookPlugins/templates/default.html',
+//
+//
+//			controller:['$scope','$http',function($scope,$http){
+//				$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+//
+//
+//				$scope.shareStatus = function(responde){
+//					FB.ui({
+//						method:'share',
+//						href:'https://developers.facebook.com/docs/'
+//					});
+//				};
+//
+//
+//				$scope.checkedStatus = function(){
+//
+//					if ($scope.param == null) {
+//						$http.get('data/globalParam.json').success(function (data) {
+//							$scope.param = data;
+//
+//						if($scope.param.facebookConnect){
+//							FB.getLoginStatus(function(response){
+//								if(response.status == 'connected'){
+//
+//
+//									console.log('share ok');
+//
+//
+//								}else{
+//									facebookconnect.checkLogin();
+//
+//								}
+//
+//							});
+//
+//						}else{
+//							facebookconnect.checkLogin();
+//						}
+//						})
+//					}
+//
+//				};
+//	}]
+//
+//};
+//
+//});
 
 
 

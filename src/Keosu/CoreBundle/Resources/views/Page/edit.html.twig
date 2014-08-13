@@ -43,21 +43,13 @@
 			$( this ).append(input);
 			$( this ).append(img);
 		});
+		// switch border color
+		$(".imgTemplate img").click(function(){
+			$(".imgTemplate img").css("border","none");
+			$(this).css("border","red solid 3px");
+		});
 	});
 </script>
-<style type="text/css">
-.imgTemplate .radio {
-	height:250px;
-	display:inline;
-
-}
-.imgTemplate .radio input[type="radio"]{
-	float:none;
-	clear:both;
-	margin-left:0px;
-}
-</style>
-
 <div class="panel">
 	<h1>Edit page</h1>
 

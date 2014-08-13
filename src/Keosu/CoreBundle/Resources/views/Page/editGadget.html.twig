@@ -27,7 +27,7 @@
 <div>
 	{{ form_start(form) }}
 	
-		<div class="imgtheme">
+		<div class="imgTemplate">
 			{{ form_row(form.template) }}
 		</div>
 		{{ form_row(form.shared) }}
@@ -55,13 +55,13 @@
 			
 		});
 
-		$(".imgtheme input[checked=checked]").parent(".radio").find("img").css("border","red solid 3px");
+		$(".imgTemplate input[checked=checked]").parent(".radio").find("img").css("border","red solid 3px");
 		
 		// switch border color
-		$(".imgtheme img").click(function(){
+		$(".imgTemplate img").click(function(){
 			template=$(this).attr('template');
 			$("#"+template).addClass('checked','checked');
-			$(".imgtheme img").css("border","none");
+			$(".imgTemplate img").css("border","none");
 			$(this).css("border","red solid 3px");
 		});	
 	});

@@ -44,26 +44,7 @@
 </div>
 <script>
 	$(document).ready(function() {	
-		$( ".radio" ).each(function( index ) {
-			input = $(this).find('input');
-			templateName=input.attr('value');
-			input.attr('id',templateName);
-			img = '<label for="'+templateName+'"><img src="{{url_base}}/{{gadgetDir}}{{gadgetName}}/'+templateName+'.png" template="'+templateName+'"/></label>';
-			$(this).text("");
-			$(this).append(input);
-			$(this).append(img);
-			
-		});
-
-		$(".imgTemplate input[checked=checked]").parent(".radio").find("img").css("border","red solid 3px");
-		
-		// switch border color
-		$(".imgTemplate img").click(function(){
-			template=$(this).attr('template');
-			$("#"+template).addClass('checked','checked');
-			$(".imgTemplate img").css("border","none");
-			$(this).css("border","red solid 3px");
-		});	
+		templateButton("{{url_base}}", "{{gadgetDir}}", "{{gadgetName}}");
 	});
 </script>
 {% endblock %}

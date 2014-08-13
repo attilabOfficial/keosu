@@ -32,22 +32,7 @@
 			$( this ).append(input);
 			$( this ).append(img);
 		});
-		$( ".imgTemplate .radio" ).each(function( index ) {
-			input = $(this).find('input');
-			templateName=input.attr('value');
-			id = templateName;
-			id = id.replace('.','');
-			input.attr('id',id+'Radio');
-			img='<label for="'+id+'Radio"><img alt="'+templateName+'" src="{{url_base}}/{{ templateDir }}/'+templateName+'.png"/></label>';
-			$( this ).text("");
-			$( this ).append(input);
-			$( this ).append(img);
-		});
-		// switch border color
-		$(".imgTemplate img").click(function(){
-			$(".imgTemplate img").css("border","none");
-			$(this).css("border","red solid 3px");
-		});
+		templateButton("{{url_base}}", "{{templateDir}}", "");
 	});
 </script>
 <div class="panel">

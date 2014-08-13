@@ -61,7 +61,6 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 	 */
 	$scope.getPage = function(pageNum,resetPages){
 		if(resetPages){
-			console.log("test ");
 			$scope.pages = [];
 		}
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner

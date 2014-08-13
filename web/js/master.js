@@ -11,7 +11,7 @@ function templateButton(url_base, templateDir, name){
 		input = $(this).find('input');
 		templateName=input.attr('value');
 		input.attr('id',templateName);
-		img = '<label for="'+templateName+'"><img src="'+url_base+'/'+templateDirdir+name+'/'+templateName+'.png" template="'+templateName+'"/></label>';
+		img = '<label for="'+templateName+'"><img src="'+url_base+'/'+templateDir+name+'/'+templateName+'.png" template="'+templateName+'"/></label>';
 		$(this).text("");
 		$(this).append(input);
 		$(this).append(img);

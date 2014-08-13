@@ -20,6 +20,10 @@ namespace Keosu\CoreBundle\Service;
 
 use Keosu\CoreBundle\KeosuEvents;
 
+use Keosu\CoreBundle\Entity\App;
+
+use Keosu\CoreBundle\Event\ExportPackageEvent;
+
 use Keosu\CoreBundle\Util\ZipUtil;
 use Keosu\CoreBundle\Util\ThemeUtil;
 use Keosu\CoreBundle\Util\FilesUtil;
@@ -196,6 +200,7 @@ class Exporter {
 					
 					
 					//Copy in HTML
+					echo $package->getPath().'/templates/'.$gadget->getTemplate();
 					$gadgetTemplateHtml = file_get_contents($package->getPath().'/templates/'.$gadget->getTemplate());
 					$gadgetTemplateHtml = utf8_encode($gadgetTemplateHtml);
 					$zone->nodeValue = $gadgetTemplateHtml;

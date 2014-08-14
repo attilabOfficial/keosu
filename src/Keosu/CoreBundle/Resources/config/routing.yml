@@ -2,19 +2,6 @@ keosu_core_mainhomepage:
     pattern:  /
     defaults: { _controller: KeosuCoreBundle:MainViews:content }
 
-# install part
-keosu_core_install_check:
-    pattern:  /install
-    defaults: { _controller: KeosuCoreBundle:Install:check }
-
-keosu_core_install_configure:
-    pattern:  /install/configure
-    defaults: { _controller: KeosuCoreBundle:Install:configure }
-    
-keosu_core_install_installdb:
-    pattern:  /install/installdb
-    defaults: { _controller: KeosuCoreBundle:Install:installdb }
-
 keosu_core_configuration:
     pattern:  /configuration
     defaults: { _controller: KeosuCoreBundle:MainViews:configuration }

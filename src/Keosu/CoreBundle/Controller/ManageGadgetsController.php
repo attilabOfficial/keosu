@@ -273,9 +273,6 @@ class ManageGadgetsController extends Controller {
 		if($event->getResponse() !== null)
 			return $event->getResponse();
 		
-		
-		print_r(count($this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName())));
-		
 		return $this->render('KeosuCoreBundle:Page:editGadget.html.twig', array(
 								'form'      => $form->createView(),
 								'gadgetDir' => TemplateUtil::getTemplateGadgetDir(),

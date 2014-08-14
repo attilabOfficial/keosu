@@ -120,9 +120,7 @@ class EditController extends Controller {
 	 */
 	private function buildArticleForm($formBuilder) {
 		$formBuilder->add('title', 'text')
-					->add('body', 'textarea', array(
-							'attr' => array('class' => 'tinymce')
-					))
+					->add('body', 'textarea')
 					->add('author', 'text')
 					->add('date', 'date', array(
 							'input'  => 'datetime',

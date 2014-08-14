@@ -4,6 +4,14 @@ services:
         arguments: [@service_container]
         tags:
             - { name: kernel.event_subscriber }
+    keosu.plugin.push.notification.menulistener:
+        class: Keosu\Gadget\PushNotificationBundle\EventListener\MenuListener
+        arguments: [@service_container]
+        tags:
+            - { name: kernel.event_subscriber }
+            
+            
+    # To manage push
     keosu.plugin.push.android.push:
         public: false
         class: Keosu\Gadget\PushNotificationBundle\Service\AndroidGCMNotification

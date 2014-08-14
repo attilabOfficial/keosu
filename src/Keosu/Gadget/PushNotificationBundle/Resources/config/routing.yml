@@ -1,3 +1,3 @@
 keosu_gadget_push_notification_homepage:
-    path:     /view/push/plugin
-    defaults: { _controller: KeosuGadgetPushNotificationBundle:Default:push }
+    path:     /view/push/plugin/sendPushNotification
+    defaults: { _controller: KeosuGadgetPushNotificationBundle:Default:sendPushNotification }

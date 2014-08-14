@@ -42,7 +42,7 @@ class Url
      */
     public function getHref()
     {
-        return $this->Href;
+        return $this->href;
     }
 
     /**

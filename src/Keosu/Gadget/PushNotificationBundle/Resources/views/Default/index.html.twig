@@ -1,1 +1,13 @@
-Hello {{ name }}!
+{% extends 'KeosuCoreBundle:MainViews:configuration.html.twig' %}
+
+{% block body %}
+<div class="panel">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="wellcustom">
+			{{name}}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock body %}

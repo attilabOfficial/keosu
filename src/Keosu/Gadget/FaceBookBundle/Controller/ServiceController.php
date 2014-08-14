@@ -46,7 +46,7 @@ class ServiceController extends Controller
 				// the user doesn't have account
 				if($user == null) {
 					$user = $userManager->createUser();
-					$user->setUsername(rand());
+					$user->setUsername($email);
 					$user->setEnabled(true);
 					$user->setPlainPassword(\md5($email.\rand()));
 					$user->setEmail($email);

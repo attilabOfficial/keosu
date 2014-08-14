@@ -136,4 +136,12 @@ final class KeosuEvents
 	 * The event listener method receives a Keosu\CoreBundle\Event\PackageSaveAppEvent instance
 	 */
 	const PACKAGE_GLOBAL_CONFIG_SAV_FORM = 'keosu.package.global.config.sav.form.';
+
+	/**
+	 * The PACKAGE_GLOBAL_MENU_CONFIG[Name of the gadget] event occurs when the panel when the side menu is about to be rendered
+	 *
+	 * This event allows to add new link in the keosu config side menu
+	 * The event listener method receives a Keosu\CoreBundle\Event\PackageSideMenuEvent instance
+	 */
+	const PACKAGE_GLOBAL_MENU_CONFIG = 'keosu.package.global.menu.config.';
 }

@@ -14,7 +14,7 @@ var appPushNotification = {
 		switch( e.event )
 		{
 			case 'registered':
-			if ( e.regid.length > 0 ) {    
+			if ( e.regid.length > 0 ) {
 				console.log("Regid " + e.regid);
 			}
 			break;

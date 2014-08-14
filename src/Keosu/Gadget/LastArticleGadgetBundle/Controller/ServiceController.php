@@ -79,7 +79,7 @@ class ServiceController extends Controller {
 		}
 		$ret['isFirst'] = $isFirst;
 		$ret['isLast'] = $isLast;
-		return $new JsonResponse($ret);
+		return new JsonResponse($ret);
 	}
 }
 

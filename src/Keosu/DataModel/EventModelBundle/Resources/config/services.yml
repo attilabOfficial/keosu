@@ -1,7 +1,0 @@
-parameters:
-#    keosu_data_model_event_model.example.class: PockeIt\DataModel\EventModelBundle\Example
-
-services:
-#    keosu_data_model_event_model.example:
-#        class: %keosu_data_model_event_model.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

@@ -6,9 +6,6 @@ use RMS\PushNotificationsBundle\Message\AppleMessage;
 use RMS\PushNotificationsBundle\Message\AndroidMessage;
 use RMS\PushNotificationsBundle\Message\MessageInterface;
 
-
-use Keosu\Gadget\PushNotificationBundle\KeosuGadgetPushNotificationBundle;
-
 class PushNotification {
 
 	private $androidNotification;

@@ -21,6 +21,7 @@ namespace Keosu\Gadget\LastArticleGadgetBundle\Controller;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * REST Service controller dedicated to the curent gadget
@@ -54,22 +55,37 @@ class ServiceController extends Controller {
 					TemplateUtil::formatTemplateString($article->getBody()));
 		}
 		
+	 
+		
+		$response = new JsonResponse();
+		$data=array();
+		foreach($articleList as $key=>$article){
+			$data[$key]['id'] = $article->getId();
+			$data[$key]['title'] = $article->getTitle();
+			$data[$key]['content'] = $article->getBody();
+			$data[$key]['dataModelObjectName'] = $article->getDataModelObjectName();
+			$data[$key]['enableComments'] = $article->getEnableComments();
+			
+			$attachments = $article->getAttachments();
+			if (count($attachments) > 0){
+				foreach ($attachments as $k=>$attachment){
+					$data[$key]['attachments'][$k]['path'] =  $this->container->getParameter('url_base') . $attachment->getWebPath();
+				}
+			}
+		}	
+		$ret= array('data'=>$data);
 		$isFirst = false;
 		if($page == 0){
 			$isFirst = true;
 		}
-		
 		$isLast = false;
 		if(($page+1)*$articlesperpage >= $count){
 			$isLast = true;
-		}  
-		
-		
-		return $this
-				->render(
-						'KeosuGadgetLastArticleGadgetBundle:Service:viewlist.'
-								. $format . '.twig',
-						array('articles' => $articleList, 'articleperpage' => $articlesperpage, 'isFirst' => $isFirst, 'isLast' => $isLast));
+		}
+		$ret['isFirst'] = $isFirst;
+		$ret['isLast'] = $isLast;	
+		$response->setData($ret);
+		return $response;
 	}
 }
 

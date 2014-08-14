@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class ServiceController extends Controller
 {
 	public function registerDeviceAction($type,Request $request)
 	{

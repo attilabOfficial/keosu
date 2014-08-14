@@ -23,10 +23,19 @@ Edit article
 {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-{{ tinymce_init() }}
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
+<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
 <script type="text/javascript">
+
+	tinymce.init({
+	    selector: "textarea",
+	    plugins: [
+	        "advlist autolink lists link image charmap print preview anchor",
+	        "searchreplace visualblocks code fullscreen",
+	    ],
+	    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+	});
+	
 	$(document).ready(function() {
 		$('.date').datepicker({ dateFormat: 'dd-mm-y' });
 		
@@ -75,6 +84,7 @@ Edit article
 		});
 		
 	});
+	
 </script>
 <div id="articleform">
 	{{ form_start(form) }}
@@ -108,3 +118,4 @@ Edit article
 	{{ form_end(form) }}
 </div>
 {% endblock %}
+

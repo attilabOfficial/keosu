@@ -33,7 +33,6 @@ class ServiceController extends Controller {
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
 		$article = $em->getRepository('KeosuDataModelArticleModelBundle:ArticleBody')->find($gadgetConfig["article-id"]);
-		$response = new JsonResponse();
 		$ret=array(array(
 				'id' => $article->getId(),
 				'dataModelObjectName' => $article->getDataModelObjectName(),
@@ -47,8 +46,7 @@ class ServiceController extends Controller {
 				$ret[0]['attachments'][$key]['path'] =  $this->container->getParameter('url_base') . $attachment->getWebPath();
 			}
 		}
-		$response->setData($ret);
-		return $response;
+		return new JsonResponse($ret);
 	}
 }
 

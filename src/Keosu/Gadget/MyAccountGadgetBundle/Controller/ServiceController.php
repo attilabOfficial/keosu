@@ -46,9 +46,7 @@ class ServiceController extends Controller {
 			);
 		}
 		
-		$response = new JsonResponse();
-		$response->setData($ret);
-		return $response;
+		return new JsonResponse($ret);
 	}
 	
 	public function passwordAction(Request $request) {
@@ -85,10 +83,7 @@ class ServiceController extends Controller {
 		} else {
 			$ret['message'] = "You must be connected to access to this part of the application";
 		}
-		
-		$response = new JsonResponse();
-		$response->setData($ret);
-		return $response;
+		return  new JsonResponse($ret);
 	}
 }
 

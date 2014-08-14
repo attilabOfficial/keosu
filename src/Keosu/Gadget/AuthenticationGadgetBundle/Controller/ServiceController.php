@@ -31,9 +31,7 @@ class ServiceController extends Controller {
 				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
 
-		$response = new JsonResponse();
-		$response->setData($gadgetConfig);
-		return $response;
+		return new JsonResponse($gadgetConfig);
 	}
 
 	public function loginInitAction($gadgetId,$format) {
@@ -44,13 +42,11 @@ class ServiceController extends Controller {
 		if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
 			$loggedRemembered = true;
 		}
-		
-		$response = new JsonResponse();
-		$response->setData(array(
+
+		return new JsonResponse(array(
 			'csrf_token' => $this->getCsrfToken('authenticate'),
 			'allReadyLogged' => $loggedRemembered
 		));
-		return $response;
 	}
 
 	public function logoutAction($gadgetId) {
@@ -73,9 +69,7 @@ class ServiceController extends Controller {
 			}
 		}
 
-		$response = new JsonResponse();
-		$response->setData($ret);
-		return $response;
+		return new JsonResponse($ret);
 	}
 	
 	
@@ -138,10 +132,7 @@ class ServiceController extends Controller {
 				'csrf_token'=> $this->getCsrfToken($action)
 			);
 		}
-
-		$resp = new JsonResponse();
-		$resp->setData($response);
-		return $resp;
+		return JsonResponse($response);
 	
 	}
 	
@@ -176,10 +167,8 @@ class ServiceController extends Controller {
 				'success' => true
 			);
 		}
-		
-		$resp = new JsonResponse();
-		$resp->setData($response);
-		return $resp;
+
+		return new JsonResponse($response);
 	}
 	
 	private function getCsrfToken($action) {

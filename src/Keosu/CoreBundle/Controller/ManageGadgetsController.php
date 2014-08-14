@@ -224,15 +224,25 @@ class ManageGadgetsController extends Controller {
 		$formBuilder = $this->createFormBuilder($gadget);
 
 		$configType = new ConfigGadgetType($dispatcher,$request,$this->container->get('keosu_core.packagemanager'),$gadget);
-		$formBuilder->add('template', 'choice',array(
-							'choices'  => $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName()),
-							'required' => true,
-							'expanded' => true))
-					->add('shared', 'checkbox', array(
-							'label'    => 'Shared with all pages',
-							'required' => false))
-					->add('config',$configType);
 
+		$listTemplate = $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName());
+		if(count($listTemplate) > 1){
+			$formBuilder->add('template', 'choice',array(
+					'choices'  => $listTemplate,
+					'required' => true,
+					'expanded' => true));
+		}else{
+			$formBuilder->add('template', 'text',array(
+					'label' => false,
+					'data' => 'default.html',
+					'attr'=>array('style'=>'display:none;')));
+		}
+	
+		$formBuilder->add('shared', 'checkbox', array(
+				'label'    => 'Shared with all pages',
+				'required' => false))
+				->add('config',$configType);
+					
 		$form = $formBuilder->getForm();
 
 		if ($request->getMethod() == 'POST') {
@@ -263,10 +273,13 @@ class ManageGadgetsController extends Controller {
 		if($event->getResponse() !== null)
 			return $event->getResponse();
 		
+		
+		print_r(count($this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName())));
+		
 		return $this->render('KeosuCoreBundle:Page:editGadget.html.twig', array(
 								'form'      => $form->createView(),
 								'gadgetDir' => TemplateUtil::getTemplateGadgetDir(),
-								'gadgetName' => $gadget->getName()
+								'gadgetName' => $gadget->getName(),
 							));
 	}
 

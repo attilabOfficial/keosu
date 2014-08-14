@@ -38,7 +38,6 @@ class Devices
 
     /**
      * Get id.
-
      *
      * @return integer
      */
@@ -49,7 +48,6 @@ class Devices
 
     /**
      * Set type.
-
      *
      * @param integer $type
      *
@@ -64,7 +62,6 @@ class Devices
 
     /**
      * Get type.
-
      *
      * @return integer
      */
@@ -75,7 +72,6 @@ class Devices
 
     /**
      * Set token.
-
      *
      * @param string $token
      *
@@ -90,7 +86,6 @@ class Devices
 
     /**
      * Get token.
-
      *
      * @return string
      */

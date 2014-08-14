@@ -1,18 +1,9 @@
-
-<!-- facebook Connect-->
-<div ng-init="init()">
-
-		<button  class="facebook_button" type="button" id="login" ng-click="checkLogin()">Please login the Facebook</button>
-
-</div>
-
 <!-- facebook Share-->
 <div ng-init="checkedStatus()" >
-       <div id="status" ng-bind="status"></div>
-	   <button  class="facebook_button" ng-clicke="checkedStatus()">share via Facebook</button>
+	<div id="status" ng-bind="status"></div>
+	<button  class="facebook_button" ng-clicke="checkedStatus()">share via Facebook</button>
 
 </div>
-
 
 <!--Skipping the share dialogue-->
 
@@ -24,7 +15,7 @@
 		null /* url */,
 		function() {console.log('share ok')}, // success callback
 		function(errormsg){alert(errormsg)})     // error callback" >
-msg via Facebook (with errcallback)
+	msg via Facebook (with errcallback)
 </button>
 
 
@@ -38,11 +29,5 @@ msg via Facebook (with errcallback)
 	'http://www.x-services.nl')">
 	message, subject, image and link
 </button>
-
-
-
-
-
-
 
 

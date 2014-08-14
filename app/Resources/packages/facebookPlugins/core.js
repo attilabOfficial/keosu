@@ -11,7 +11,7 @@ app.directive('facebookConnect', function () {
 			pageId: '=pageId'
 		},
 		restrict: 'E',
-		templateUrl: 'plugins/facebookPlugins/templates/default.html',
+		templateUrl: 'plugins/facebookPlugins/templates/faceBookConnect.html',
 
 		controller: ['$scope', '$http', function ($scope, $http) {
 			$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
@@ -111,12 +111,22 @@ app.directive('facebookConnect', function () {
 	};
 });
 
+app.directive('facebookShare',function(){
+	return{
+		$scope:{
+			pageId:'=pageId'
+		},
 
+	    restrict: 'E',
+	    templateUrl: 'plugins/facebookPlugins/templates/faceBookShare.html'
+	};
+
+});
 //app.directive('facebookShare',function(){
 //
 //	return{
 //	        restrict:'E',
-//			templateUrl: 'plugins/facebookPlugins/templates/default.html',
+//			templateUrl: 'plugins/facebookPlugins/templates/faceBookConnect.html',
 //
 //
 //			controller:['$scope','$http',function($scope,$http){

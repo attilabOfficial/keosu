@@ -1,7 +1,0 @@
-parameters:
-#    keosu_readerics_reader.example.class: Keosu\Reader\icsReaderBundle\Example
-
-services:
-#    keosu_readerics_reader.example:
-#        class: %keosu_readerics_reader.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

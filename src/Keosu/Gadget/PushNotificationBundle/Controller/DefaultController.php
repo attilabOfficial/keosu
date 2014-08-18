@@ -8,13 +8,13 @@ use RMS\PushNotificationsBundle\Message\AndroidMessage;
 use RMS\PushNotificationsBundle\Message\AppleMessage;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-	public function sendPushNotificationAction()
+	public function sendPushNotificationAction(Request $request)
 	{
 		$em = $this->get('doctrine')->getManager();
-		$request = $this->get('request');
 		$error = '';$valid = false;
 
 		$formBuilder = $this->createFormBuilder();
@@ -35,7 +35,7 @@ class DefaultController extends Controller
 					foreach($devices as $device) {
 						if($device->getType() === Devices::TYPE_APPLE) {
 							$appleMessage->setDeviceIdentifier($device->getToken());
-							//$pushService->send($appleMessage);
+							$pushService->send($appleMessage);
 						} else if($device->getType() === Devices::TYPE_ANDROID) {
 							$androidMessage->addGCMIdentifier($device->getToken());
 						}
@@ -48,7 +48,7 @@ class DefaultController extends Controller
 			}
 		}
 		return $this->render('KeosuGadgetPushNotificationBundle:Default:index.html.twig', array(
-									'form' => $form->createView(),
+									'form'  => $form->createView(),
 									'error' => $error,
 									'valid' => $valid
 							));

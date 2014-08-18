@@ -16,11 +16,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-namespace Keosu\Reader\icsReaderBundle\Controller;
-
-use Keosu\Reader\icsReaderBundle\icsReader;
+namespace Keosu\Reader\IcsReaderBundle\Controller;
 
 use Keosu\CoreBundle\Entity\Reader;
+use Keosu\Reader\IcsReaderBundle\IcsReader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -28,7 +27,7 @@ class EditController extends Controller {
 
 	public function addAction() {
 		$commonReader = new Reader();
-		$icsReader = new icsReader();
+		$icsReader = new IcsReader();
 		return $this->editReader($icsReader, $commonReader);
 	}
 

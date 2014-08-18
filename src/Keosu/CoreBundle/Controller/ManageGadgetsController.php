@@ -234,7 +234,7 @@ class ManageGadgetsController extends Controller {
 		}else{
 			$formBuilder->add('template', 'text',array(
 					'label' => false,
-					'data' => 'default.html',
+					'data' => PackageManager::DEFAULT_TEMPLATE_GADGET_NAME,
 					'attr'=>array('style'=>'display:none;')));
 		}
 	

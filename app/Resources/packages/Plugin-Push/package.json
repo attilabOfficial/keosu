@@ -28,7 +28,8 @@
          "required" : 0
       }},
       { "name" : "iosPem" , "type" : "file" , "options" : {
-         "required" : 0
+         "required" : 0,
+         "mapped" : 0
       }},
       { "name" : "iosPassPhrase", "type" : "password", "options": {
          "required" : 0

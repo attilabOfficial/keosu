@@ -120,7 +120,9 @@ class EditController extends Controller {
 	 */
 	private function buildArticleForm($formBuilder) {
 		$formBuilder->add('title', 'text')
-					->add('body', 'textarea')
+					->add('body', 'textarea',array(
+							'required'     => false,
+					))
 					->add('author', 'text')
 					->add('date', 'date', array(
 							'input'  => 'datetime',

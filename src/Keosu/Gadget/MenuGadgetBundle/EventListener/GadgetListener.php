@@ -6,6 +6,8 @@ use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
 use keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 
+use Keosu\Gadget\MenuGadgetBundle\KeosuGadgetMenuGadgetBundle;
+
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -13,8 +15,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class GadgetListener implements EventSubscriberInterface
 {
-
-	const GADGET_NAME = 'keosu-menu';
 
 	private $container;
 
@@ -29,8 +29,8 @@ class GadgetListener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			KeosuEvents::GADGET_CONF_FORM_BUILD.GadgetListener::GADGET_NAME => 'onGadgetConfFormBuild',
-			KeosuEvents::GADGET_CONF_SAV.GadgetListener::GADGET_NAME        => 'onGadgetConfSav',
+			KeosuEvents::GADGET_CONF_FORM_BUILD.KeosuGadgetMenuGadgetBundle::PACKAGE_NAME => 'onGadgetConfFormBuild',
+			KeosuEvents::GADGET_CONF_SAV.KeosuGadgetMenuGadgetBundle::PACKAGE_NAME        => 'onGadgetConfSav',
 		);
 	}
 

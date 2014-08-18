@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Devices
 {
+    const TYPE_APPLE = 1;
+    const TYPE_ANDROID = 2;
+
     /**
      * @var integer
      *

@@ -71,9 +71,6 @@ class ServiceController extends Controller
 		} else {
 			$ret['message'] = 'unable to login with facebook';
 		}
-
-		$response = new JsonResponse();
-		$response->setData($ret);
-		return $response;
+		return new JsonResponse($ret);
 	}
 }

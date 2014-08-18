@@ -47,8 +47,7 @@ class ExportListener implements EventSubscriberInterface
 document.addEventListener("deviceready", function(){
 	var pushNotification = window.plugins.pushNotification;
 	pushNotification.register(appPushNotification.successHandler, appPushNotification.errorHandler,{"senderID":"'.$googleGcmApiKey.'","ecb":"appPushNotification.onNotificationGCM"});
-});
-'          );
+});'         );
 		}
 	}
 }

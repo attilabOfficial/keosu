@@ -18,9 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\Reader\RssEventReaderBundle\Controller;
 
-use Keosu\Reader\RssEventReaderBundle\RssEventReader;
-
 use Keosu\CoreBundle\Entity\Reader;
+use Keosu\Reader\RssEventReaderBundle\RssEventReader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

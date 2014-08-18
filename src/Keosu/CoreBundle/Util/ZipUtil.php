@@ -20,7 +20,7 @@ namespace Keosu\CoreBundle\Util;
 
 class ZipUtil {
 
-	public static function ZipFolder($source, $destination) {
+	public static function zipFolder($source, $destination) {
 		if(is_file($destination))
 			unlink($destination);
 

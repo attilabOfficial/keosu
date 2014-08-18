@@ -13,8 +13,8 @@ class AppleNotification extends \RMS\PushNotificationsBundle\Service\OS\AppleNot
 		$iosSandbox = $app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['iosSandbox'];
 		$iosPassPhrase = $app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['iosPassPhrase'];
 		$iosPem = $app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['iosPem'];
-		//if(!is_file($iosPem)) //TODO
-		//	throw new \LogicException('Can\'t send message because ios pem file isn\'t uploaded');
+		if(!is_file($iosPem))
+			throw new \LogicException('Can\'t send message because ios pem file isn\'t uploaded');
 		parent::__construct($iosSandbox,$iosPem,$iosPassPhrase);
 	}
 

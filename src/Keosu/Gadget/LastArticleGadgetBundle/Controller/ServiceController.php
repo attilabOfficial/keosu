@@ -50,14 +50,9 @@ class ServiceController extends Controller {
 		$query = $qb->getQuery();
 		$articleList = $query->execute();
 		foreach ($articleList as $article){
-			$article
-			->setBody(
-					TemplateUtil::formatTemplateString($article->getBody()));
+			$article->setBody(TemplateUtil::formatTemplateString($article->getBody()));
 		}
-		
-	 
-		
-		$response = new JsonResponse();
+
 		$data=array();
 		foreach($articleList as $key=>$article){
 			$data[$key]['id'] = $article->getId();
@@ -83,9 +78,8 @@ class ServiceController extends Controller {
 			$isLast = true;
 		}
 		$ret['isFirst'] = $isFirst;
-		$ret['isLast'] = $isLast;	
-		$response->setData($ret);
-		return $response;
+		$ret['isLast'] = $isLast;
+		return new JsonResponse($ret);
 	}
 }
 

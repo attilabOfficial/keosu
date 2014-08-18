@@ -1,7 +1,7 @@
 <?php
 /************************************************************************
  Keosu is an open source CMS for mobile app
-Copyright (C) 2014  Vincent Le Borgne, Pockeit
+Copyright (C) 2014  Vincent Le Borgne
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -16,19 +16,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-namespace Keosu\CoreBundle;
-// Declaration de l'interface 'iTemplate'
-interface iReader {
+namespace Keosu\Reader\IcsReaderBundle;
 
-	//Create a reader from a common reader
-	public static function constructfromReader($reader);
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-	//Convert a WP35Readerto a Keosu\ReaderManagerBundle\Entity\Reader
-	public function getAsCommonReader();
-
-	//Common service linked to Reader
-	public function getService();
-
-	public function convertAsExistingCommonReader($commonReader);
-
+class KeosuReaderIcsReaderBundle extends Bundle
+{
 }

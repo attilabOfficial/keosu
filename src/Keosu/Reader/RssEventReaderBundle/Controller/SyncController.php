@@ -34,23 +34,15 @@ class SyncController extends Controller {
 	 * Synchronise RSS remote contents with articles
 	 * @param $id of the curent reader
 	 */
-	public function syncAction($id) {
-
-		/**
-		 * Init Keosu (local) connection and managers
-		 */
-		$Keosu_manager = $this->get('doctrine')->getManager();
-
-		/**
-		 * Get the curent reader to initialize  connection
-		 */
-		$reader = $Keosu_manager->getRepository('KeosuCoreBundle:Reader')
-				->find($id);
+	public function syncAction($id)
+	{
+		$em = $this->get('doctrine')->getManager();
+		$reader = $em->getRepository('KeosuCoreBundle:Reader')->find($id);
 		//Convert it to a RssReader
 		$rssReader = RssEventReader::constructfromReader($reader);
 		
 		//geting the feed as a string
-		$rssurl=$rssReader->feed_url;
+		$rssurl = $rssReader->feed_url;
 		$curl = curl_init($rssurl);
 		curl_setopt($curl, CURLOPT_HTTPHEADER,
 					array('Content-Type: text/xml',
@@ -62,14 +54,9 @@ class SyncController extends Controller {
 		$craw = new Crawler($feedstring);
 		$entries = $craw->filter('item');//Item tag is an entry
 		foreach ($entries as $entry) {
-			$this
-				->parseAndImportEvent($entry, $reader);
+			$this->parseAndImportEvent($entry, $reader);
 		}
-		//return $this
-			//	->render('KeosuCoreBundle:Reader:debug.html.twig'
-				//		);
-		return $this
-				->redirect($this->generateUrl('keosu_event_viewlist'));
+		return $this->redirect($this->generateUrl('keosu_event_viewlist'));
 	}
 	private function parseAndImportEvent($entry, $reader) {
 		//Seting default value to avoid doctrine errors
@@ -112,7 +99,6 @@ class SyncController extends Controller {
 			}
 			$is_Event = true;
 		}
-		
 		//Store in database if it is an event
 		if ($is_Event){
 			$this->storeEvent($name, $desc, $date, $where, $lat, $lng, $reader);
@@ -122,10 +108,8 @@ class SyncController extends Controller {
 	
 	private function storeEvent($name, $desc, $date, $where, $lat, $lng, $reader) {
 		//Test if event already exist (same name)
-		$event = $this->get('doctrine')->getManager()
-		->getRepository(
-				'KeosuDataModelEventModelBundle:Event')
-				->findOneByName($name);
+		$em = $this->get('doctrine')->getManager();
+		$event = $em->getRepository('KeosuDataModelEventModelBundle:Event')->findOneByName($name);
 		//Create a new article if we can't find one in database
 		if ($event == null) {
 			$event = new Event();
@@ -133,18 +117,16 @@ class SyncController extends Controller {
 		} else if($reader->getAllowupdate()==false){
 			return;
 		}
-			
 		$event->setName($name);
 		$event->setDescription($desc);
 		$event->setDate($date);
 		$event->setReader($reader);
 		$event->setLieu($where);
 		$event->setLatitude($lat);
-		$event->setLongitude($lng);	
-		/*TODO Rss attachments*/
+		$event->setLongitude($lng);
 		$event->setDate($date);
-		$this->get('doctrine')->getManager('default')->persist($event);
-		$this->get('doctrine')->getManager('default')->flush();
+		$em->persist($event);
+		$em->flush();
 	
 	}
 

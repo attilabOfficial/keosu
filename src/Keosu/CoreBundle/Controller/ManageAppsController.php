@@ -38,7 +38,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ManageAppsController extends Controller {
 
-	public function viewAction() {
+	public function viewAction()
+	{
 		$em = $this->get('doctrine')->getManager();
 		$apps = $em->getRepository('KeosuCoreBundle:App')->findAll();
 		return $this->render('KeosuCoreBundle:App:manage.html.twig',array(
@@ -46,14 +47,16 @@ class ManageAppsController extends Controller {
 		));
 	}
 
-	public function addAction() {
+	public function addAction()
+	{
 		$app = new App();
 		//Copy default splashscreens and icons in a temp repertory
 		FilesUtil::copyFolder(Exporter::getImageDir('keosu'), Exporter::getImageDir('tmp'));
 		return $this->editApp($app);
 	}
 
-	public function editAction($id) {
+	public function editAction($id)
+	{
 		$em = $this->get('doctrine')->getManager();
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($id);
 		if(!is_dir(Exporter::getImageDir($app->getId()))) {
@@ -69,7 +72,8 @@ class ManageAppsController extends Controller {
 	/**
 	 * Shared function to edit/add an app
 	 */
-	private function editApp(App $app) {
+	private function editApp(App $app)
+	{
 		$em = $this->get('doctrine')->getManager();
 		$request = $this->get('request');
 		$packageManager = $this->get('keosu_core.packagemanager');
@@ -87,11 +91,8 @@ class ManageAppsController extends Controller {
 				$packageToConfigure[] = $config;
 		}
 
-
 		//page edit form
-		$formBuilder = $this->createFormBuilder($app,array(
-													'label' => 'Edit App'
-							));
+		$formBuilder = $this->createFormBuilder($app,array('label' => 'Edit App'));
 		$this->buildAppForm($formBuilder);
 		$form = $formBuilder->getForm();
 		

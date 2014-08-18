@@ -9,8 +9,12 @@ services:
         arguments: [@service_container]
         tags:
             - { name: kernel.event_subscriber }
-            
-            
+    keosu.plugin.push.notification.appconflistener:
+        class: Keosu\Gadget\PushNotificationBundle\EventListener\AppConfListener
+        arguments: [@service_container]
+        tags:
+            - { name: kernel.event_subscriber }
+
     # To manage push
     keosu.plugin.push.android.push:
         public: false

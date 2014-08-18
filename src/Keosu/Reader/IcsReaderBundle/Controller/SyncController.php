@@ -16,10 +16,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-namespace Keosu\Reader\icsReaderBundle\Controller;
-use Keosu\DataModel\EventModelBundle\Entity\Event;
+namespace Keosu\Reader\IcsReaderBundle\Controller;
 
-use Keosu\Reader\icsReaderBundle\icsReader;
+use Keosu\DataModel\EventModelBundle\Entity\Event;
+use Keosu\Reader\IcsReaderBundle\icsReader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -34,14 +34,10 @@ class SyncController extends Controller {
 	 * @param $id of the curent reader
 	 */
 	
-	public function syncAction($id) {
-		/**
-		 * Init Keosu (local) connection and managers
-		 */
-		$Keosu_manager = $this->get('doctrine')->getManager();
-
-		$reader = $Keosu_manager->getRepository('KeosuCoreBundle:Reader')
-		->find($id);
+	public function syncAction($id)
+	{
+		$em = $this->get('doctrine')->getManager();
+		$reader = $em->getRepository('KeosuCoreBundle:Reader')->find($id);
 		//Convert it to a RssReader
 		$icsReader = icsReader::constructfromReader($reader);
 		
@@ -57,46 +53,7 @@ class SyncController extends Controller {
 					$desc = ''; $name = '';
 					set_time_limit(10);
 				}  else if (strstr($buffer, "LOCATION:")!=''){
-					$where = substr($buffer,9);
-					/*$res = json_decode(file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.str_replace(' ','_',$where).'&sensor=false'),true);
-					if ($res['status']=='OVER_QUERY_LIMIT'){
-						$where = $where.' (location can not found)';
-					} else if ($res['results']!=[]){
-						$res=$res['results'];
-						if (sizeof($res)==1){
-							$lat = $res[0]['geometry']['location']['lat'];
-							$lng = $res[0]['geometry']['location']['lng'];
-						} else {
-							$max_links = 0;
-							$final_res = [];
-							foreach($res as $a_result){
-								$links = 0;
-								foreach($a_result['address_components'] as $address_part){
-									if (stristr($name,$address_part['long_name'])!='') $links++;
-									if (stristr($desc,$address_part['long_name'])!='') $links++;
-									if (stristr($name,$address_part['short_name'])!='') $links++;
-									if (stristr($desc,$address_part['short_name'])!='') $links++;
-								}
-								if ($links == $max_links){
-									$final_res[] = $a_result;
-								} else if ($links > $max_links) {
-									$final_res = array($a_result);
-								}
-							}
-							if (sizeof($final_res)>1){
-								usort($res,array($this,'cmpByDist'));
-							}
-							$lat = $res[0]['geometry']['location']['lat'];
-							$lng = $res[0]['geometry']['location']['lng'];
-						}
-					} else {
-						$where = $where.' (location can not be found)';
-					}
-					// It would be the lines to find the location with Google Maps API
-					 * To make it work, we should save the number of events we read, and then, when we
-					 * spent to much time, we would refresh without using the first events
-					*/
-					$where = $where.' (location can not be found)';
+					$where = substr($buffer,9).' (location can not be found)';
 				} else if (strstr($buffer, "DTSTART:")!=''){
 					$dateStr = substr($buffer,8);
 					$year = substr($dateStr,0,4);
@@ -123,10 +80,8 @@ class SyncController extends Controller {
 	
 	private function storeEvent($date,$name,$desc,$where,$lat,$lng,$reader) {
 		//Test if event already exist (same name)
-		$event = $this->get('doctrine')->getManager()
-		->getRepository(
-				'KeosuDataModelEventModelBundle:Event')
-				->findOneByName($name);		
+		$em = $this->get('doctrine')->getManager();
+		$event = $em->getRepository('KeosuDataModelEventModelBundle:Event')->findOneByName($name);
 		//Create a new article if we can't find one in database
 		if ($event == null) {
 			$event = new Event();
@@ -134,7 +89,6 @@ class SyncController extends Controller {
 		} else if($reader->getAllowupdate()==false){
 			return;
 		}
-		
 		$event->setName($name);
 		$event->setDescription($desc);
 		$event->setReader($reader);
@@ -142,10 +96,8 @@ class SyncController extends Controller {
 		$event->setLatitude($lat);
 		$event->setLongitude($lng);	
 		$event->setDate($date);
-		$this->get('doctrine')->getManager('default')->persist($event);
-		$this->get('doctrine')->getManager('default')->flush();
-	
-	
+		$em->persist($event);
+		$em->flush();
 	}
 }
 

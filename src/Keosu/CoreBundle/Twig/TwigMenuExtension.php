@@ -40,10 +40,11 @@ class TwigMenuExtension extends \Twig_Extension {
 		$em = $this->container->get('doctrine')->getManager();
 		$apps = $em->getRepository('KeosuCoreBundle:App')->findAll();
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-		$curAppName = "";
+		$curAppName = '';
 		foreach($apps as $app) {
-			if($app->getId() === $appid)
+			if($app->getId() == $appid) {
 				$curAppName = $app->getName();
+			}
 		}
 		return $this->container->get('templating')->render('KeosuCoreBundle:Menu:app.html.twig', array(
 								'apps'       => $apps,

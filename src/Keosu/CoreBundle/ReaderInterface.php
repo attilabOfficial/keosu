@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\CoreBundle;
 // Declaration de l'interface 'iTemplate'
-interface iReader {
+interface ReaderInterface {
 
 	//Create a reader from a common reader
 	public static function constructfromReader($reader);

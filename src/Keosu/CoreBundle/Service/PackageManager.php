@@ -183,9 +183,6 @@ class PackageManager {
 	 */
 	public function getConfigPackage($packageNameOrLocation)
 	{
-		// TODO lock php execution
-		// TODO test json
-
 		// not a path
 		if(!strstr($packageNameOrLocation,'/')) {
 			$package = $this->findPackage($packageNameOrLocation);
@@ -203,7 +200,26 @@ class PackageManager {
 				$packageLocation = $packageNameOrLocation;
 		}
 		
-		return \json_decode(\file_get_contents($packageLocation.'/package.json'),true);
+		$ret = \json_decode(\file_get_contents($packageLocation.'/package.json'),true);
+
+		if (!function_exists('json_last_error_msg')) {
+			function json_last_error_msg() {
+				static $errors = array(
+					JSON_ERROR_NONE             => null,
+					JSON_ERROR_DEPTH            => 'Maximum stack depth exceeded',
+					JSON_ERROR_STATE_MISMATCH   => 'Underflow or the modes mismatch',
+					JSON_ERROR_CTRL_CHAR        => 'Unexpected control character found',
+					JSON_ERROR_SYNTAX           => 'Syntax error, malformed JSON',
+					JSON_ERROR_UTF8             => 'Malformed UTF-8 characters, possibly incorrectly encoded'
+				);
+				$error = json_last_error();
+				return array_key_exists($error, $errors) ? $errors[$error] : "Unknown error ({$error})";
+			}
+		}
+		if(json_last_error() !== JSON_ERROR_NONE) {
+			throw new \LogicException('Unable to decode your package.json for package : '.$packageNameOrLocation.' because : '.json_last_error_msg());
+		}
+		return $ret;
 	}
 
 	/**
@@ -213,19 +229,10 @@ class PackageManager {
 	 */
 	private function getPath($packageName)
 	{
-		// TODO change to cache
-		$kernel = $this->container->get('kernel');
-		$dir = scandir($kernel->getRootDir().$this::ROOT_DIR_PACKAGE);
-		foreach($dir as $folder) {
-			if($folder === '.' || $folder === '..')
-				continue;
+		foreach($this->cachePackage as $package)
+			if($package->getName() === $packageName)
+				return $package->getPath();
 
-			$config = \json_decode(\file_get_contents($kernel->getRootDir().$this::ROOT_DIR_PACKAGE.$folder.'/package.json'),true);
-
-			if($packageName === $config['name'])
-				return $kernel->getRootDir().$this::ROOT_DIR_PACKAGE.'/'.$folder;
-
-		}
 		throw new \LogicException('Package '.$packageName.' not found');
 	}
 

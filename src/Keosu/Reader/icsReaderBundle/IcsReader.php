@@ -18,11 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\Reader\icsReaderBundle;
 
-use Keosu\CoreBundle\iReader;
+use Keosu\CoreBundle\ReaderInterface;
 use Keosu\CoreBundle\Entity\Reader;
 
 //Custom properties stecific to this reader
-class icsReader implements iReader {
+class IcsReader implements ReaderInterface {
 	public $name;
 	private $service = "icsReader";
 	public $feed_url; //Url of ics feed

@@ -229,19 +229,10 @@ class PackageManager {
 	 */
 	private function getPath($packageName)
 	{
-		// TODO change to cache
-		$kernel = $this->container->get('kernel');
-		$dir = scandir($kernel->getRootDir().$this::ROOT_DIR_PACKAGE);
-		foreach($dir as $folder) {
-			if($folder === '.' || $folder === '..')
-				continue;
+		foreach($this->cachePackage as $package)
+			if($package->getName() === $packageName)
+				return $package->getPath();
 
-			$config = \json_decode(\file_get_contents($kernel->getRootDir().$this::ROOT_DIR_PACKAGE.$folder.'/package.json'),true);
-
-			if($packageName === $config['name'])
-				return $kernel->getRootDir().$this::ROOT_DIR_PACKAGE.'/'.$folder;
-
-		}
 		throw new \LogicException('Package '.$packageName.' not found');
 	}
 

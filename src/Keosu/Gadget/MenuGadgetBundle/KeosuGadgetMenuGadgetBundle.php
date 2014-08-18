@@ -22,4 +22,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class KeosuGadgetMenuGadgetBundle extends Bundle
 {
+	const PACKAGE_NAME = 'keosu-menu';
 }

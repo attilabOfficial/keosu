@@ -29,6 +29,7 @@ class PackageManager {
 
 	const ROOT_DIR_PACKAGE = '/Resources/packages/';
 	const ROOT_DIR_TEMPLATE = '/../web/keosu/templates/gadget/';
+	const ROOT_DIR_APP_DATA = '/Resources/appData/';
 
 	const TYPE_PACKAGE_LIB = 'lib';
 	const TYPE_PACKAGE_GADGET = 'gadget';
@@ -325,6 +326,16 @@ class PackageManager {
 				$gadget = $p;
 		}
 		return $gadget !== null;
+	}
+	
+	/**
+	 * @param $appId the app id
+	 * @return the personnal data folder for an app
+	 */
+	public function getAppDataFolder($appId)
+	{
+		$kernel = $this->container->get('kernel');
+		return $kernel->getRootDir().$this::ROOT_DIR_APP_DATA.$appId.'/';
 	}
 }
 ?>

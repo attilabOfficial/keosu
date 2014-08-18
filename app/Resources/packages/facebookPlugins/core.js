@@ -54,8 +54,8 @@ app.directive('facebookConnect', function () {
 
 						FB.Event.subscribe('auth.login', function (response) {
 							//window.location.reload();
-							if (response.status == 'connected') {
 
+							if (response.status == 'connected') {
 								var data = 'facebook_token=' + response.authResponse.accessToken;
 								$http.post($scope.param.host + 'service/gadget/facebook/app/' + $scope.param.appId + '/login', data).success(function (data) {
 									if (data.success) {
@@ -88,25 +88,25 @@ app.directive('facebookConnect', function () {
 			};
 
 
-			$scope.setFaceBookUserName = function () {
-
-				if (typeof ($scope.username) == "undefined" || $scope.username.length == 0) {
-
-					var data = 'username=' + $scope.username;
-					$http.post($scope.param.host + 'service/gadget/facebook/app/' + $scope.param.appId + '/login', data).success(function (data) {
-
-						if (data.success) {
-							$scope.init();
-						} else {
-
-							alert("please type your username in keosu");
-						}
-
-					})
-
-				}
-
-			}
+//			$scope.setFaceBookUserName = function () {
+//
+//				if (typeof ($scope.username) == "undefined" || $scope.username.length == 0) {
+//
+//					var data = 'username=' + $scope.username;
+//					$http.post($scope.param.host + 'service/gadget/facebook/app/' + $scope.param.appId + '/login', data).success(function (data) {
+//
+//						if (data.success) {
+//							$scope.init();
+//						} else {
+//
+//							alert("please type your username in keosu");
+//						}
+//
+//					})
+//
+//				}
+//
+//			}
 		}]
 	};
 });

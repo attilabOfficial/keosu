@@ -22,7 +22,7 @@ use Keosu\CoreBundle\Entity\Reader;
 use Keosu\CoreBundle\iReader;
 
 //Custom properties stecific to this reader
-class RssReader implements iReader {
+class RssReader implements ReaderInterface {
 	public $name;
 	private $service = "RssReader";
 	public $feed_url; //Url of RSS feed

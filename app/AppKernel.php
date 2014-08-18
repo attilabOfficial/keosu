@@ -27,18 +27,18 @@ class AppKernel extends Kernel
             new Keosu\Gadget\LastArticleGadgetBundle\KeosuGadgetLastArticleGadgetBundle(),
             new Keosu\UserBundle\KeosuUserBundle(),
             new Keosu\DataModel\LocationModelBundle\KeosuDataModelLocationModelBundle(),
-           	new Keosu\Gadget\MapGadgetBundle\KeosuGadgetMapGadgetBundle(),
+            new Keosu\Gadget\MapGadgetBundle\KeosuGadgetMapGadgetBundle(),
             new Keosu\Gadget\MenuGadgetBundle\KeosuGadgetMenuGadgetBundle(),
-        	new Keosu\Reader\RssReaderBundle\KeosuReaderRssReaderBundle(),
-			new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
-        	new Keosu\Gadget\AroundMeGadgetBundle\KeosuGadgetAroundMeGadgetBundle(),
+            new Keosu\Reader\RssReaderBundle\KeosuReaderRssReaderBundle(),
+            new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
+            new Keosu\Gadget\AroundMeGadgetBundle\KeosuGadgetAroundMeGadgetBundle(),
             new Keosu\DataModel\PictureModelBundle\KeosuDataModelPictureModelBundle(),
             new Keosu\Gadget\PictureGadgetBundle\KeosuGadgetPictureGadgetBundle(),
             new Keosu\Gadget\PicturesGalleryGadgetBundle\KeosuGadgetPicturesGalleryGadgetBundle(),
-        	new Keosu\DataModel\EventModelBundle\KeosuDataModelEventModelBundle(),
-        	new Keosu\Reader\icsReaderBundle\KeosuReadericsReaderBundle(),
-        	new Keosu\Reader\RssEventReaderBundle\KeosuReaderRssEventReaderBundle(),
-        	new Keosu\Gadget\CalendarGadgetBundle\KeosuGadgetCalendarGadgetBundle(),
+            new Keosu\DataModel\EventModelBundle\KeosuDataModelEventModelBundle(),
+            new Keosu\Reader\IcsReaderBundle\KeosuReaderIcsReaderBundle(),
+            new Keosu\Reader\RssEventReaderBundle\KeosuReaderRssEventReaderBundle(),
+            new Keosu\Gadget\CalendarGadgetBundle\KeosuGadgetCalendarGadgetBundle(),
             new Keosu\Gadget\AuthenticationGadgetBundle\KeosuGadgetAuthenticationGadgetBundle(),
             new Keosu\Gadget\MyAccountGadgetBundle\KeosuGadgetMyAccountGadgetBundle(),
             new Keosu\Gadget\CommentGadgetBundle\KeosuGadgetCommentGadgetBundle(),
@@ -61,23 +61,4 @@ class AppKernel extends Kernel
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
-    
-    /* for virtual machine *
-    public function getCacheDir()
-    {
-        if (in_array($this->environment, array('dev', 'test'))) {
-            return '/dev/shm/cache/' .  $this->environment;
-        }
-
-        return parent::getCacheDir();
-    }
-
-    public function getLogDir()
-    {
-        if (in_array($this->environment, array('dev', 'test'))) {
-            return '/dev/shm/logs';
-        }
-
-        return parent::getLogDir();
-    }**/
 }

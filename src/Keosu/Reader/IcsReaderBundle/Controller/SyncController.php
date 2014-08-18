@@ -81,7 +81,7 @@ class SyncController extends Controller {
 	private function storeEvent($date,$name,$desc,$where,$lat,$lng,$reader) {
 		//Test if event already exist (same name)
 		$em = $this->get('doctrine')->getManager();
-		$event = ->getRepository('KeosuDataModelEventModelBundle:Event')->findOneByName($name);		
+		$event = $em->getRepository('KeosuDataModelEventModelBundle:Event')->findOneByName($name);
 		//Create a new article if we can't find one in database
 		if ($event == null) {
 			$event = new Event();

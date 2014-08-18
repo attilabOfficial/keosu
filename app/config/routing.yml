@@ -39,7 +39,7 @@ keosu_reader_rss_reader:
     prefix:   /
     
 keosu_readerics_reader:
-    resource: "@KeosuReadericsReaderBundle/Resources/config/routing.yml"
+    resource: "@KeosuReaderIcsReaderBundle/Resources/config/routing.yml"
     prefix:   /
 
 keosu_reader_rss_event_reader:

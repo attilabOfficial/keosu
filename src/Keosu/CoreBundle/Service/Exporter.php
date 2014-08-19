@@ -275,7 +275,8 @@ class Exporter {
 		$preferences = $app->getPreferences();
 		foreach($preferences as $p) {
 			$preference = $configXml->createElement('preference');
-			$preference->setAttribute($p['key'],$p['value']);
+			$preference->setAttribute('name',$p['key']);
+			$preference->setAttribute('value',$p['value']);
 			$widget->appendChild($preference);
 		}
 

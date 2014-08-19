@@ -40,10 +40,15 @@ class AppConfListener implements EventSubscriberInterface
 		$iosPem = $form['configPackages']['keosu-push']['iosPem']->getData();
 		if($iosPem !== null) {
 			$iosPem->move($appData,'ios.pem');
-			$configPackage = $app->getConfigPackages();
-			$configPackage[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['iosPem'] = $appData.'ios.pem';
-			$app->setConfigPackages($configPackage);
 		}
+
+		$configPackage = $app->getConfigPackages();
+		if(is_file($appData.'ios.pem')) {
+			$configPackage[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['iosPem'] = $appData.'ios.pem';
+		} else {
+			$configPackage[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['iosPem'] = '';
+		}
+		$app->setConfigPackages($configPackage);
 	}
 }
 

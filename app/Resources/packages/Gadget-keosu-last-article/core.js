@@ -37,19 +37,23 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 		$scope.parts(false, true);
 	};
 	$scope.next = function(){
-		$scope.isFirstPage = true;
-		$scope.isLastPage = true;
-		$scope.slide="slideInRight";
-		$scope.activePage++;
-		$scope.getPage($scope.activePage,true);
+		if(!$scope.isLastPage){
+			$scope.isFirstPage = true;
+			$scope.isLastPage = true;
+			$scope.slide="slideInRight";
+			$scope.activePage++;
+			$scope.getPage($scope.activePage,true);
+		}
 		
 	};
 	$scope.previous = function(){
-		$scope.isFirstPage = true;
-		$scope.isLastPage = true;
-		$scope.slide="slideInLeft";
-		$scope.activePage--;
-		$scope.getPage($scope.activePage,true);
+		if(!$scope.isFirstPage){
+			$scope.isFirstPage = true;
+			$scope.isLastPage = true;
+			$scope.slide="slideInLeft";
+			$scope.activePage--;
+			$scope.getPage($scope.activePage,true);
+		}
 	};
 	$scope.more = function(){
 		$scope.activePage++;

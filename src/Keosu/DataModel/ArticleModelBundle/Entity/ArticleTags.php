@@ -52,20 +52,6 @@ class ArticleTags
 	 */
 	private $tagName;
 	
-	
-	/**
-	 * Set Id.
-	 *
-	 * @param integer
-	 * @return ArticlesTags
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-	
-		return $this;
-	}
-	
 	/**
 	 * Get id.
 	 *

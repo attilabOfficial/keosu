@@ -248,28 +248,19 @@ class Exporter {
 		$appJs = 'var importedPackages = '.\json_encode($importedPackages).";\n";
 		$appJs .= $jsInit.$jsCore.$jsEnd;
 		$this->writeFile($appJs,'app.js','/simulator/www/js/');
-		
-		////////////////////////////////////////////////////
-		// import folder if they exist
-		////////////////////////////////////////////////////
-		/* TODO
-		foreach($importedGadget as $gadget) {
-		
-			$path = TemplateUtil::getAbsolutePath().DIRECTORY_SEPARATOR.'gadget'.DIRECTORY_SEPARATOR.$gadget;
-			$dirs = scandir($path);
-			foreach($dirs as $dir) {
-				if($dir != '.' && $dir != '..' && is_dir($path. DIRECTORY_SEPARATOR .$dir)) {
-					FilesUtil::copyFolder($path. DIRECTORY_SEPARATOR .$dir,
-						$this::getExportAbsolutePath() . DIRECTORY_SEPARATOR .'simulator'. DIRECTORY_SEPARATOR .'www'. DIRECTORY_SEPARATOR .$dir);
-				}
-			}
-		}*/
 
 		//Enable individual API permissions here.
 		//The "device" permission is required for the 'deviceready' event.
-		$device = $configXml->createElement('feature');
-		$device->setAttribute('name','http://api.phonegap.com/1.0/device');
-		$widget->appendChild($device);
+		$basePlugin = array(
+			'org.apache.cordova.device',
+			'org.apache.cordova.device-motion',
+			'org.apache.cordova.device-orientation'
+		);
+		foreach($basePlugin as $plugin) {
+			$device = $configXml->createElement('gap:plugin');
+			$device->setAttribute('name',$plugin);
+			$widget->appendChild($device);
+		}
 
 		// Render preferences
 		$preferences = $app->getPreferences();

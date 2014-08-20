@@ -33,6 +33,7 @@ $(document).ready(function() {
                             null,
                             null,
                             null,
+                            null,
                             null 
 			]});
 });
@@ -53,6 +54,7 @@ $(document).ready(function() {
 					<thead>
 						<tr>
 							<th>Title</th>
+							<th>Tag</th>
 							<th>Reader</th>
 							<th></th>
 							<th></th>
@@ -63,6 +65,11 @@ $(document).ready(function() {
 					{% for article in articles %}
 							<tr>
 								<td>{{ article.title }}</td>
+								<td>
+									{% for tag in article.tags %}
+										{{tag.tagName}},
+									{% endfor %}
+								</td>
 								<td>{% if article.reader %} {{article.reader.name}}{% endif %}</td>
 								<td>{% if article.reader == false or (article.reader and article.reader.allowupdate == false) %} <a href={{ path('keosu_article_edit',{'id':article.id}) }}><i class='glyphicon glyphicon-edit'></i></a>{% endif %}</td>
 								<td>{% if article.reader == false or (article.reader and article.reader.allowupdate == false) %} <a href={{ path('keosu_article_delete',{'id':article.id}) }}><i class='glyphicon glyphicon-remove'></i></a>{% endif %}</td>
@@ -72,6 +79,7 @@ $(document).ready(function() {
 					<tfoot>
 						<tr>
 							<th>Title</th>
+							<th>Tag</th>
 							<th>Reader</th>
 							<th></th>
 							<th></th>

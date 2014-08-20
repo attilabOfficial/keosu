@@ -35,19 +35,33 @@ class ServiceController extends Controller {
 				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
 		$articlesperpage=$gadgetConfig['articlesPerPage'];
-
-		$queryCount = $this->get('doctrine')->getManager()->createQuery('SELECT COUNT(u.id) FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody u');
-		$count = $queryCount->getSingleScalarResult();
+		$tag=$gadgetConfig['tag'];
 	
+		//Preparation of queries count and listArticle
 		$qb = $this->get('doctrine')->getManager()->createQueryBuilder();
-		$qb->add('select', 'a')
-				->add('from',
-						'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a')
-				->add('orderBy', 'a.date DESC')
+		
+		$qb->add('select', 'a');
+		
+		if($tag!=""){
+			$where = "a.id = t.articleBody and t.tagName='".$tag."'";
+			$queryCount = $this->get('doctrine')->getManager()->createQuery('SELECT COUNT(DISTINCT a.id) 
+					FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a, Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t
+					WHERE '.$where);
+			$qb->add('from', 'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a, Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t')
+				->add('where', $where);
+		}else{
+			$queryCount = $this->get('doctrine')->getManager()->createQuery('SELECT COUNT(u.id) FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody u');
+			$qb->add('from',
+						'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a');
+		}	
+		$qb->add('orderBy', 'a.date DESC')
 				->setFirstResult($page*$articlesperpage)
 				->setMaxResults($articlesperpage);
 		
 		$query = $qb->getQuery();
+		
+		//Execution of queries
+		$count = $queryCount->getSingleScalarResult();
 		$articleList = $query->execute();
 		foreach ($articleList as $article){
 			$article->setBody(TemplateUtil::formatTemplateString($article->getBody()));

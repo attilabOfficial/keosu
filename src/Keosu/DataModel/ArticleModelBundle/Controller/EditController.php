@@ -36,15 +36,14 @@ class EditController extends Controller {
 	 * Delete action
 	 */
 	public function deleteAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelArticleModelBundle:ArticleBody');
+		$em = $this->get('doctrine')->getManager();
+		$repo = $em->getRepository('KeosuDataModelArticleModelBundle:ArticleBody');
 
 		$article = $repo->find($id);
 
 		if ($article->getReader() === null || $article->getReader()->allowupdate !== false) {
-			$this->get('doctrine')->getManager()->remove($article);
-			$this->get('doctrine')->getManager()->flush();
+			$this->$em->remove($article);
+			$this->$em->flush();
 		}
 		return $this
 				->redirect($this->generateUrl('keosu_article_viewlist'));

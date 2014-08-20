@@ -31,8 +31,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ServiceController extends Controller {
 
 	public function viewListAction($gadgetId, $page, $format) {
-		$gadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+		$em = $this->get('doctrine')->getManager();
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
 		$articlesperpage=$gadgetConfig['articlesPerPage'];
 		$tag=$gadgetConfig['tag'];
@@ -44,13 +44,13 @@ class ServiceController extends Controller {
 		
 		if($tag!=""){
 			$where = "a.id = t.articleBody and t.tagName='".$tag."'";
-			$queryCount = $this->get('doctrine')->getManager()->createQuery('SELECT COUNT(DISTINCT a.id) 
+			$queryCount = $em->createQuery('SELECT COUNT(DISTINCT a.id) 
 					FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a, Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t
 					WHERE '.$where);
 			$qb->add('from', 'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a, Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t')
 				->add('where', $where);
 		}else{
-			$queryCount = $this->get('doctrine')->getManager()->createQuery('SELECT COUNT(u.id) FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody u');
+			$queryCount = $em->createQuery('SELECT COUNT(u.id) FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody u');
 			$qb->add('from',
 						'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a');
 		}	

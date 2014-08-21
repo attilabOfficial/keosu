@@ -60,6 +60,7 @@ class ServiceController extends Controller {
 		
 		//Execution of queries
 		$count = $queryCount->getQuery()->execute();
+		$count = $count[0][1];
 		$articleList = $queryArticle->getQuery()->execute();
 		foreach ($articleList as $article){
 			$article->setBody(TemplateUtil::formatTemplateString($article->getBody()));

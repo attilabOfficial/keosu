@@ -30,14 +30,12 @@ class GadgetListener implements EventSubscriberInterface
 	{
 		return array(
 			KeosuEvents::GADGET_CONF_FORM_BUILD.KeosuGadgetLastArticleGadgetBundle::PACKAGE_NAME => 'onGadgetConfFormBuild',
-			KeosuEvents::GADGET_CONF_SAV.KeosuGadgetLastArticleGadgetBundle::PACKAGE_NAME        => 'onGadgetConfSav',
 		);
 	}
 
 	public function onGadgetConfFormBuild(GadgetFormBuilderEvent $event)
 	{
 		$event->setOverrideForm(true);
-		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 		$em = $this->container->get('doctrine')->getManager();
 		
 		//Get list of tag
@@ -59,11 +57,6 @@ class GadgetListener implements EventSubscriberInterface
 				'required'	=> false	
 		));
 		
-	}
-	
-	public function onGadgetConfSav(GadgetSaveConfigEvent $event)
-	{
-
 	}
 }
 

@@ -44,6 +44,7 @@ class GadgetListener implements EventSubscriberInterface
 						->add('from', 'Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t');
 		$tagListTmp=$queryTagList->getQuery()->execute();
 
+		//Prepare the list of tag for the form
 		$tagList=array();
 		foreach($tagListTmp as $tag){
 			$tagList[$tag['tagName']]=$tag['tagName'];

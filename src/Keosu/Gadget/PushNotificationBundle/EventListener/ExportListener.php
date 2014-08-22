@@ -41,13 +41,11 @@ class ExportListener implements EventSubscriberInterface
 		if(isset($app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['enablePush'])
 			&& $app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['enablePush'] === true) {
 		
-			$googleGcmApiKey = $app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['googleGcmApiKey'];
+			$googleGcmProjectNumber = $app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['googleGcmProjectNumber'];
 
-			$event->addToJsEnd('
-document.addEventListener("deviceready", function(){
-	var pushNotification = window.plugins.pushNotification;
-	pushNotification.register(appPushNotification.successHandler, appPushNotification.errorHandler,{"senderID":"'.$googleGcmApiKey.'","ecb":"appPushNotification.onNotificationGCM"});
-});'         );
+			$event->addToJsInit('
+var pushNotificationData = { senderID : \''.$googleGcmProjectNumber.'\'};
+'         );
 		}
 	}
 }

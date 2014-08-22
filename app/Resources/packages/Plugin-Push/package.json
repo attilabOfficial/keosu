@@ -18,6 +18,9 @@
       { "name" : "enablePush", "type" : "checkbox", "options" : {
          "required" : 0
       }},
+      { "name" : "googleGcmProjectNumber", "type" : "text", "options" : {
+         "required" : 0
+      }},
       { "name" : "googleGcmApiKey", "type" : "text", "options" : {
          "required" : 0
       }},

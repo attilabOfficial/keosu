@@ -7,7 +7,7 @@ app.directive('keosuComments', function(){
 			enableComments: '=enableComments'
 		},
 		templateUrl : 'plugins/keosu-comments/templates/default.html',
-		controller : ['$scope','$http','usSpinnerService', function ($scope, $http, usSpinnerService) {
+		controller : ['$scope','$http', function ($scope, $http) {
 
 			$scope.init = function() {
 				$http.get('data/globalParam.json').success(function(data){

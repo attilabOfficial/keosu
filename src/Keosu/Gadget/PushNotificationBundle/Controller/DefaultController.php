@@ -28,10 +28,15 @@ class DefaultController extends Controller
 			if($form->isValid()) {
 				try {
 					$pushService = $this->container->get('keosu.plugin.push.notification.service');
-					$devices = $em->getRepository('KeosuGadgetPushNotificationBundle:Devices');
+					$devices = $em->getRepository('KeosuGadgetPushNotificationBundle:Devices')->findAll();
+					
 					$androidMessage = new AndroidMessage();
 					$androidMessage->setGCM(true);
+					$androidMessage->setMessage($form['message']->getData());
+					
 					$appleMessage = new AppleMessage();
+					$appleMessage->setMessage($form['message']->getData());
+					
 					foreach($devices as $device) {
 						if($device->getType() === Devices::TYPE_APPLE) {
 							$appleMessage->setDeviceIdentifier($device->getToken());

@@ -19,8 +19,7 @@
       "angular-local-storage.js",
       "cache-manager.js",
       "spin.js",
-      "utilString.js",
-      "https://maps.googleapis.com/maps/api/js?sensor=false"
+      "utilString.js"
    ],
    "appParam" : []
 }

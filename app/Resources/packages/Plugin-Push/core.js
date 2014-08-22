@@ -11,7 +11,7 @@ app.directive('keosuPush', function(){
 				console.log('function init');
 				document.addEventListener('deviceready', function() {
 					console.log('i\'m ready');
-				// if push notification is enabled
+					// if push notification is enabled
 					pushNotification = window.plugins.pushNotification;
 					if(typeof(device) != 'undefined' && typeof(pushNotificationData) != 'undefined') {
 						$http.get('data/globalParam.json').success(function(data) {

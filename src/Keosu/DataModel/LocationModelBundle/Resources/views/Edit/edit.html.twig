@@ -23,10 +23,92 @@ Edit point of interest
 {% endblock %}
 
 {% block content %}
+<style>
+	.map-canvas{
+        height: 500px;
+        width: 500px;
+        margin-left: auto;
+    	margin-right: auto;
+      }
+</style>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+<script>
+		var place;
+		function initialize() {
+			var mapOptions = {
+			    center: new google.maps.LatLng({{poilat}}, {{poilng}}),
+			    zoom: 13
+			};
+			var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		
+            var input = document.getElementById('search');
+            console.log(input);
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo('bounds', map);
+            
+            var infowindow = new google.maps.InfoWindow();
+            var marker = new google.maps.Marker({
+			    map: map,
+			    anchorPoint: new google.maps.Point(0, -29)
+			});
+			
+			marker.setPosition(mapOptions.center);
+			marker.setVisible(true);
+			
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
+				infowindow.close();
+			    marker.setVisible(false);
+			    place = autocomplete.getPlace();
+			    if (!place.geometry) {
+			      return;
+			    }
+			
+			    // If the place has a geometry, then present it on a map.
+			    if (place.geometry.viewport) {
+			      map.fitBounds(place.geometry.viewport);
+			    } else {
+			      map.setCenter(place.geometry.location);
+			    }
+			    marker.setPosition(place.geometry.location);
+			    marker.setVisible(true);
+			
+			    var address = '';
+			    if (place.address_components) {
+			      address = [
+			        (place.address_components[0] && place.address_components[0].short_name || ''),
+			        (place.address_components[1] && place.address_components[1].short_name || ''),
+			        (place.address_components[2] && place.address_components[2].short_name || '')
+			      ].join(' ');
+			    }
+			
+			    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+			    infowindow.open(map, marker);
+			  });
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+        
+        function setLocation(){
+        	lat=document.getElementById('form_lat');
+            lng=document.getElementById('form_lng');
+            lat.value = place.geometry.location.k;
+            lng.value = place.geometry.location.B;
+        }
+</script>
+
 <div>
     <form method="post" {{ form_enctype(form) }}>
     	{{ form_widget(form) }}
 
+		<h4>Search a location</h4>
+		<label class="control-label col-lg-3">Search</label>
+		<div class="col-lg-7">
+			<input type="text" id="search" placeholder="Enter a location" class="form-control">
+		</div>
+		<button type="button" class="btn btn-primary col-lg-2" onClick="setLocation()">Add this location</button>
+		<br class="clear"/>
+		<div id="map-canvas" class="map-canvas"></div>
+		<br class="clear"/>
     	<input type="submit" class="btn btn-success" /><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
     </form>
 </div>

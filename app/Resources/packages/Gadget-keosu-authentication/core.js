@@ -34,53 +34,6 @@ app.controller('keosu-authenticationController',function ($scope, $http, usSpinn
 		if($scope.param == null)
 			$http.get(params.host+'service/gadget/authentication/'+params.gadgetId+'/json/init').success(function(data) {
 				$scope.param = params;
-
-/*
-				// Facebook login part
-				if($scope.param.facebookConnect) {
-				
-					FB.getLoginStatus(function(response) {
-						if (response.status === 'connected') {
-							usSpinnerService.spin('spinner');
-							var data = 'facebook_token='+$scope.token;
-							$http.post($scope.param.host + '/service/gadget/authentication/'+$scope.param.gadget+'/loginFacebook',data).success(function(data) {
-								usSpinnerService.stop('spinner');
-								if(data.success) {
-									$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
-								} else {
-									$scope.loginInit(data.message);
-								}
-							});
-							$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
-						}
-					});
-				
-					FB.Event.subscribe('auth.login', function(response) {
-						if(response.status === 'connected') {
-							usSpinnerService.spin('spinner');
-							var data = 'facebook_token='+$scope.token;
-							$http.post($scope.param.host + '/service/gadget/authentication/'+$scope.param.gadget+'/loginFacebook',data).success(function(data) {
-								usSpinnerService.stop('spinner');
-								if(data.success) {
-									$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
-								} else {
-									$scope.loginInit(data.message);
-								}
-							});
-							$location.path('/Page/'+$scope.param.pageToGoAfterLogin);
-						}
-					});
-
-					FB.Event.subscribe('auth.logout', function(response) {
-						$http.get($scope.param.host + 'service/gadget/authentication/'+$scope.param.gadget+'/logout').success(function(data) {
-							$scope.logged = false;
-							if(data.appPrivate) {
-								window.location.replace("index.html");
-							}
-						})
-					});
-				}
-*/
 				$scope.loginInit();
 			});
 		else

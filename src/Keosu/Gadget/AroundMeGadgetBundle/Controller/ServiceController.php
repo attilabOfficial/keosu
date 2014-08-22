@@ -24,7 +24,7 @@ class ServiceController extends Controller {
 
 	public function viewListAction($gadgetId, $format, $offset, $limit, $lat, $lng) {
 		$em = $this->get('doctrine')->getManager();
-		
+			
 		$queryString = 'SELECT DISTINCT a.id,';
 		$queryString = $queryString.'( 6355 * acos(cos(radians(' . $lat . '))' .
 				'* cos( radians( a.lat ) )' .

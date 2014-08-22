@@ -76,7 +76,7 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 							$tmp = [];		
 							for (i = 0; i < data.data.length; i++) {
 								$tmp[i] = data.data[i];
-								$tmp[i].title = decodedContent(data.data[i].title);
+								$tmp[i].title = $('<div/>').html(data.data[i].title).text();
 							}
 							$scope.pages = $tmp;
 							usSpinnerService.stop('spinner');

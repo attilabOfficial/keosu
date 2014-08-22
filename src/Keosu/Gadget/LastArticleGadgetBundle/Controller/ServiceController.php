@@ -38,35 +38,35 @@ class ServiceController extends Controller {
 		$tag=$gadgetConfig['tag'];
 	
 		//Preparation of queries count and listArticle
-		$qb = $this->get('doctrine')->getManager()->createQueryBuilder();
-		
-		$qb->add('select', 'a');
-		
+		$queryArticle = $em->createQueryBuilder();
+		$queryCount = $em->createQueryBuilder();
+		$queryArticle->add('select', 'a');
+		$queryCount->add('select', 'count(DISTINCT a.id)');
 		if($tag!=""){
-			$where = "a.id = t.articleBody and t.tagName='".$tag."'";
-			$queryCount = $em->createQuery('SELECT COUNT(DISTINCT a.id) 
-					FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a, Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t
-					WHERE '.$where);
-			$qb->add('from', 'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a, Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t')
-				->add('where', $where);
+			$where = 'a.id = t.articleBody and t.tagName= ?1 ';
+			$queryCount->add('from', 'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a, Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t') 
+						->add('where', $where);
+			$queryCount->setParameter(1,$tag);
+			$queryArticle->add('from', 'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a, Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t')
+				->add('where', $where)
+				->setParameter(1,$tag);
 		}else{
-			$queryCount = $em->createQuery('SELECT COUNT(u.id) FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody u');
-			$qb->add('from',
-						'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a');
+			$queryCount->add('from', 'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a');
+			$queryArticle->add('from','Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a');
 		}	
-		$qb->add('orderBy', 'a.date DESC')
+		$queryArticle->add('orderBy', 'a.date DESC')
 				->setFirstResult($page*$articlesperpage)
 				->setMaxResults($articlesperpage);
 		
-		$query = $qb->getQuery();
-		
 		//Execution of queries
-		$count = $queryCount->getSingleScalarResult();
-		$articleList = $query->execute();
+		$count = $queryCount->getQuery()->execute();
+		$count = $count[0][1];
+		$articleList = $queryArticle->getQuery()->execute();
 		foreach ($articleList as $article){
 			$article->setBody(TemplateUtil::formatTemplateString($article->getBody()));
 		}
 
+		//Prepare data result
 		$data=array();
 		foreach($articleList as $key=>$article){
 			$data[$key]['id'] = $article->getId();

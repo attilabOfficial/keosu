@@ -34,6 +34,8 @@ class EditController extends Controller {
 	 */
 	public function addAction() {
 		$poi = new Location();
+		$poi->setLat(48.117266);
+		$poi->setLng(-1.6777925999999752);
 		return $this->editLocation($poi);
 	}
 
@@ -83,7 +85,9 @@ class EditController extends Controller {
 		return $this
 				->render('KeosuDataModelLocationModelBundle:Edit:edit.html.twig',
 						array('form' => $form->createView(),
-								'poiid' => $poi->getId()));
+								'poiid' => $poi->getId(),
+								'poilat' => $poi->getLat(),
+								'poilng' => $poi->getLng()));
 	}
 
 	/**

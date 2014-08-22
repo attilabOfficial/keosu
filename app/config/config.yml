@@ -58,7 +58,15 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
+        entity_managers:
+            default:
+                auto_mapping: true
+                dql:
+                    numeric_functions:
+                        acos:    Keosu\CoreBundle\DQL\Mysql\Acos
+                        cos:     Keosu\CoreBundle\DQL\Mysql\Cos
+                        radians: Keosu\CoreBundle\DQL\Mysql\Radians
+                        sin:     Keosu\CoreBundle\DQL\Mysql\Sin
 
 # Swiftmailer Configuration
 swiftmailer:

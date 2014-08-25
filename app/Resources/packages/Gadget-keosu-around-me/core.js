@@ -44,6 +44,7 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 					$scope.myMap.description = $sce.trustAsHtml(decodedContent(data[0].description));
 					$scope.myMap.nom = $('<div/>').html(data[0].nom).text();
 					var map=$scope.initialize();
+					map.setZoom($scope.param.gadgetParam.zoom);
 					google.maps.event.trigger($("#map_canvas")[0], 'resize');
 					var latitudeAndLongitude = new google.maps.LatLng(data[0].lat,data[0].lng);
 					map.setCenter(latitudeAndLongitude);

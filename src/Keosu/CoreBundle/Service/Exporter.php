@@ -107,6 +107,7 @@ class Exporter {
 
 		// list of imported gadgets
 		$importedPackages = array();
+		$httpLinks = array();
 		$jsInit = $jsCore = $jsEnd = '';
 		
 		// load index.html (main template)
@@ -172,7 +173,7 @@ class Exporter {
 					// import if it's needed
 					if(array_search($gadget->getName(),$importedPackages) === false) {
 						try {
-							$this->importPackage($gadget->getName(),$indexHtml,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app);
+							$this->importPackage($gadget->getName(),$indexHtml,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app,$httpLinks);
 						} catch(\Exception $e) {
 							throw new \LogicException('Unable to import '.$gadget->getName().' because '.$e->getMessage());
 						}
@@ -443,8 +444,9 @@ class Exporter {
 	 * @param string $jsEnd end part of the js
 	 * @param array $importedPackages list of imported gadget
 	 * @param App $app app to export
+	 * @param array of http link already imported
 	 */
-	private function importPackage($packageName,\DOMDocument &$indexDocument,\DOMDocument &$configXml,&$jsInit,&$jsCore,&$jsEnd,&$importedPackages,App &$app)
+	private function importPackage($packageName,\DOMDocument &$indexDocument,\DOMDocument &$configXml,&$jsInit,&$jsCore,&$jsEnd,&$importedPackages,App &$app,&$jsHttpLink)
 	{
 		$package = $this->packageManager->findPackage($packageName);
 		$importedPackages[] = $package->getName();
@@ -457,7 +459,7 @@ class Exporter {
 			if(count($require)) {
 				foreach($require as $r) {
 					if(array_search($r['name'],$importedPackages) === false) {
-						$this->importPackage($r['name'],$indexDocument,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app);
+						$this->importPackage($r['name'],$indexDocument,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app,$jsHttpLink);
 					}
 				}
 			}
@@ -483,7 +485,10 @@ class Exporter {
 				foreach($libJs as $l) {
 					$script = $indexDocument->createElement('script');
 					if(substr($l,0,8) === 'https://' || substr($l,0,7) === 'http://') {
-						$script->setAttribute('src',$l);
+						if(array_search($l,$jsHttpLink) === false) {
+							$jsHttpLink[] = $l;
+							$script->setAttribute('src',$l);
+						}
 					} else {
 						copy($package->getPath().DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.$l,
 							$simulatorPath.'js'.DIRECTORY_SEPARATOR.$l);

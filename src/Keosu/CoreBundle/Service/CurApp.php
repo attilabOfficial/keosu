@@ -33,7 +33,7 @@ class CurApp {
 		$appid = $this->session->get("appid");
 		if($appid === null){
 			$apps = $this->doctrine->getManager()->getRepository('KeosuCoreBundle:App')->findAll();
-			if($apps === null){
+			if($apps === null || sizeof($apps)=== 0){
 				return 0;
 			}
 			$firstApp = reset($apps);

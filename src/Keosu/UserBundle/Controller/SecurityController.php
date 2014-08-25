@@ -26,12 +26,6 @@ class SecurityController extends BaseController{
 	
 	public function loginAction(Request $request)
     {
-    	//Redirect to install page if keosu is not configured
-    	if (!file_exists(__DIR__ . '/../../../../app/config/parameters_custom.yml')) {
-    		$route = $this->container->get('router')->generate('keosu_core_install_check');
-    		return new RedirectResponse($route);
-
-    	}
     	return parent::loginAction($request);
     	
     }

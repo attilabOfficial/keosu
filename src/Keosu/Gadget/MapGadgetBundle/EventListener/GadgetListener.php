@@ -38,16 +38,30 @@ class GadgetListener implements EventSubscriberInterface
 		$event->setOverrideForm(true);
 		$em = $this->container->get('doctrine')->getManager();
 		
+		//Get list of Point of interest
+		$queryPOIList = $em->createQueryBuilder();
+		$queryPOIList->add('select','l.id, l.name')
+						->add('from', 'Keosu\DataModel\LocationModelBundle\Entity\Location l');
+		$poiListTmp=$queryPOIList->getQuery()->execute();
 		
+
+		//Prepare the list of poi for the form
+		$articleList=array();
+		foreach($poiListTmp as $poi){
+			$poiList[$poi['id']]=$poi['name'];
+		}
 		
-		$zoomList = array();
+		//Prepare the list of zoom choices
 		for ($i = 1; $i <= 17; $i++) {
 			$zoomList[$i]=$i;
 		}
 		
 		//Overide form
 		$builder = $event->getFormBuilder();
-		$builder->add('poiId','number')
+		$builder->add('poiId','choice',array(
+						'label' 	=> 'Point of interest',
+						'choices'	=> $poiList
+					))
 					->add('zoom','choice',array(
 							'choices'	=> $zoomList,
 					));

@@ -7,6 +7,7 @@
         { "name" : "poiId", "type":"number"},
     	{ "name" : "zoom", "type" : "number"}
     ],
+    "libJs" : ["https://maps.googleapis.com/maps/api/js?sensor=false"],
     "require" : [
         { "name" : "keosu-base" , "version" : ">=0.1" }
     ]

@@ -5,7 +5,6 @@ keosu_core_mainhomepage:
 keosu_core_configuration:
     pattern:  /configuration
     defaults: { _controller: KeosuCoreBundle:MainViews:configuration }
-    
 
 keosu_core_homepage:
     pattern:  /content

@@ -78,6 +78,12 @@ class ArticleBody extends DataModel {
 	private $attachments;
 	
 	/**
+	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags", mappedBy="articleBody", cascade={"persist","remove"})
+	 */
+	private $tags;
+	
+	
+	/**
 	 * @ORM\Column(name="enableComments", type="boolean")
 	 */
 	private $enableComments;
@@ -235,6 +241,7 @@ class ArticleBody extends DataModel {
 	 */
 	public function __construct() {
 		$this->attachments = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->tags = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->enableComments = false;
 	}
 
@@ -271,7 +278,47 @@ class ArticleBody extends DataModel {
 		return $this->attachments;
 	}
 	
+	
+	/**
+	 * Add tags
+	 *
+	 * @param \Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags $tags
+	 * @return ArticleBody
+	 */
+	public function addTag(
+			\Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags $tags) {
+		$this->tags[] = $tags;
+		$tags->setArticleBody($this);
+	
+		return $this;
+	}
+	
+	/**
+	 * Remove tags
+	 *
+	 * @param \Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags $tags
+	 */
+	public function removeTag(
+			\Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags $tag) {
+		$this->tags->removeElement($tag);
+	}
+	
+	/**
+	 * Get tags
+	 *
+	 * @return Doctrine\Common\Collections\Collection
+	 */
+	public function getTags() {
+		return $this->tags;
+	}
+	
+	public function setTags(\Doctrine\Common\Collections\ArrayCollection $tags)
+	{
+		$this->tags = $tags;
+	}
+	
 	public function getDataModelObjectName() {
 		return 'article';
 	}
+	
 }

@@ -1,0 +1,38 @@
+{
+	"name" : "facebookPlugins",
+	"description" : "social plugins packages",
+	"version" : "0.1",
+	"type" : "plugin",
+	"configCordova" : [
+		{ "gap:plugin" : [
+			{ "@attributes" : {"name" : "com.phonegap.plugins.facebookconnect" , "version":"0.4.0"} },
+			{ "param" : [
+				{ "@attributes" :{"name" : "APP_ID", "value":"@@fbAppId@@"} }
+			]},
+			{ "param" : [
+				{"@attributes" : {"name" : "APP_NAME","value":"@@fbAppName@@"}}
+			]}
+		]},
+		{"gap:plugin":[
+			{ "@attributes":{"name":"nl.x-services.plugins.socialsharing","version":"4.3.0"} }
+		]}
+	],
+	"libJs" : [
+		"cdv-plugin-fb-connect.js",
+		"facebook-js-sdk.js"
+	],
+	"appParam" : [
+		{"name" : "fbAppId" , "type" : "text" },
+		{"name" : "fbAppName" , "type" : "text"},
+		{"name" : "fbAppSecret", "type" : "text", "backOfficeOnly": 1}
+	]
+}
+
+
+
+
+
+
+
+
+

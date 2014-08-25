@@ -23,10 +23,19 @@ Edit article
 {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-{{ tinymce_init() }}
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
+<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
 <script type="text/javascript">
+
+	tinymce.init({
+	    selector: "textarea",
+	    plugins: [
+	        "advlist autolink lists link image charmap print preview anchor",
+	        "searchreplace visualblocks code fullscreen",
+	    ],
+	    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+	});
+	
 	$(document).ready(function() {
 		$('.date').datepicker({ dateFormat: 'dd-mm-y' });
 		
@@ -74,7 +83,43 @@ Edit article
 			return false;
 		});
 		
+		///// TAGS /////
+		
+		var liste = new Array();
+		{% for tag in tagsList %}
+			liste.push("{{tag}}");
+		{% endfor %}
+		var $tagContainer = $('.tags');
+		
+		function add_tag(){
+			index = $tagContainer.children().length;
+			prototype='<div class="image-collection-entry">';
+			prototype+='<a class="badge remove-button">';
+			prototype+='<span class="glyphicon glyphicon-remove"></span></a>';
+			prototype+='<span class="clear">&nbsp;</span>';
+			widget=$tagContainer.attr('data-prototype').replace(/__name__/g, index);
+			prototype+=widget;
+			$tagContainer.append($(prototype));
+			
+			//Autocompletion
+			$('.tags input').each(function(){
+				$(this).autocomplete({
+			    	source : liste
+				});
+			});
+		}
+		$('#add_tag').click(function(){
+			add_tag();
+			return false;
+		});
+		$('.tags input').each(function(){
+				$(this).autocomplete({
+			    	source : liste
+				});
+		});
 	});
+	
+
 </script>
 <div id="articleform">
 	{{ form_start(form) }}
@@ -103,8 +148,28 @@ Edit article
 		<br class="clear"/>
 		<br class="clear"/>
 		
+		<a href="#" id="add_tag" class="btn btn-info">Add a tag</a>
+	    <div class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
+	        {% for tag in form.tags %}
+	        	<div class="image-collection-entry">
+		        	<a class="badge remove-button">
+						<span class="glyphicon glyphicon-remove"></span>
+					</a>
+					<span class="clear"/>
+		            {{ form_row(tag) }}
+		    	</div>
+	        {% endfor %}
+	    </div>
+    
+		<br class="clear"/>
+		<br class="clear"/>
+		
+		
+		
+		
 		<input type="submit" class="btn btn-success" /><span>&nbsp;</span>
 		<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
 	{{ form_end(form) }}
 </div>
 {% endblock %}
+

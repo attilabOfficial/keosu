@@ -32,32 +32,9 @@
 			$( this ).append(input);
 			$( this ).append(img);
 		});
-		$( ".imgTemplate .radio" ).each(function( index ) {
-			input = $(this).find('input');
-			templateName=input.attr('value');
-			id = templateName;
-			id = id.replace('.','');
-			input.attr('id',id+'Radio');
-			img='<label for="'+id+'Radio"><img alt="'+templateName+'" src="{{url_base}}/{{ templateDir }}/'+templateName+'.png"/></label>';
-			$( this ).text("");
-			$( this ).append(input);
-			$( this ).append(img);
-		});
+		templateButton("{{url_base}}", "{{templateDir}}", "");
 	});
 </script>
-<style type="text/css">
-.imgTemplate .radio {
-	height:250px;
-	display:inline;
-
-}
-.imgTemplate .radio input[type="radio"]{
-	float:none;
-	clear:both;
-	margin-left:0px;
-}
-</style>
-
 <div class="panel">
 	<h1>Edit page</h1>
 

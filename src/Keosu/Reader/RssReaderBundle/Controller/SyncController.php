@@ -36,18 +36,11 @@ class SyncController extends Controller {
 	 * Synchronise RSS remote contents with articles
 	 * @param $id of the curent reader
 	 */
-	public function syncAction($id) {
+	public function syncAction($id)
+	{
+		$em = $this->get('doctrine')->getManager();
+		$reader = $em->getRepository('KeosuCoreBundle:Reader')->find($id);
 
-		/**
-		 * Init Keosu (local) connection and managers
-		 */
-		$Keosu_manager = $this->get('doctrine')->getManager();
-
-		/**
-		 * Get the curent reader to initialize  connection
-		 */
-		$reader = $Keosu_manager->getRepository('KeosuCoreBundle:Reader')
-				->find($id);
 		//Convert it to a RssReader
 		$rssReader = RssReader::constructfromReader($reader);
 		
@@ -65,17 +58,14 @@ class SyncController extends Controller {
 		$craw = new Crawler($feedstring);
 		$entries = $craw->filter('item');//Item tag is an entry
 		foreach ($entries as $entry) {
-			$this
-				->parseAndImportArticle($entry, $reader,$rssReader->striphtml);
+			$this->parseAndImportArticle($entry, $reader,$rssReader->striphtml);
 		}
-		//return $this
-			//	->render('KeosuCoreBundle:Reader:debug.html.twig'
-				//		);
-		return $this
-				->redirect($this->generateUrl('keosu_article_viewlist'));
+		return $this->redirect($this->generateUrl('keosu_article_viewlist'));
 	}
-	private function parseAndImportArticle($entry, $reader, $striphtml) {
-		//Seting default value to avoid doctrine errors
+
+	private function parseAndImportArticle($entry, $reader, $striphtml)
+	{
+		//Setting default value to avoid doctrine errors
 		$title="";
 		$body="";
 		$date=new \DateTime("now");
@@ -107,18 +97,13 @@ class SyncController extends Controller {
 			$author=$entry->getElementsByTagName("dc:creator")->item(0)->nodeValue;
 
 		//Store in database
-		$this->storeArticle($title, $body, $date, $idext, $img, $author,
-			$reader);
-		
+		$this->storeArticle($title, $body, $date, $idext, $img, $author,$reader);
 	}
 	
-	private function storeArticle($title, $body, $date, $idext, $img, $author,
-			$reader) {
-		//Test if article already exist
-		$article = $this->get('doctrine')->getManager()
-			->getRepository(
-				'KeosuDataModelArticleModelBundle:ArticleBody')
-				->findOneByIdext($idext);
+	private function storeArticle($title, $body, $date, $idext, $img, $author,$reader)
+	{
+		$em = $this->get('doctrine')->getManager();
+		$article = $em->getRepository('KeosuDataModelArticleModelBundle:ArticleBody')->findOneByIdext($idext);
 	
 		//Create a new article if we can't find one in database
 		if ($article == null) {
@@ -146,8 +131,8 @@ class SyncController extends Controller {
 		}
 		
 		$article->setDate($date);
-		$this->get('doctrine')->getManager('default')->persist($article);
-		$this->get('doctrine')->getManager('default')->flush();
+		$em->persist($article);
+		$em->flush();
 	
 	}
 

@@ -20,4 +20,5 @@ namespace Keosu\Gadget\LastArticleGadgetBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class KeosuGadgetLastArticleGadgetBundle extends Bundle {
+	const PACKAGE_NAME = 'keosu-last-article';
 }

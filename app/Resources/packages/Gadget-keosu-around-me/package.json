@@ -1,0 +1,10 @@
+{
+    "name" : "keosu-around-me",
+    "description" : "display a map that show where your are",
+    "version" : "0.1",
+    "type" : "gadget",
+    "libJs" : ["https://maps.googleapis.com/maps/api/js?sensor=false"],
+    "require" : [
+        { "name" : "keosu-base" , "version" : ">=0.1" }
+    ]
+}

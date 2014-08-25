@@ -11,11 +11,30 @@
    ],
    "configCordova": [
       { "gap:plugin" : [
-         { "@attributes" : {"name":"com.adobe.plugins.pushplugin"} }
+         { "@attributes" : {"name" : "com.phonegap.plugins.pushplugin", "version" : "2.1.1"} }
       ]}
    ],
    "appParam" : [
-      { "name" : "privateApp", "type" : "checkbox" , "options" : {
+      { "name" : "enablePush", "type" : "checkbox", "options" : {
+         "required" : 0
+      }},
+      { "name" : "googleGcmProjectNumber", "type" : "text", "options" : {
+         "required" : 0
+      }},
+      { "name" : "googleGcmApiKey", "type" : "text", "options" : {
+         "required" : 0
+      }},
+      { "name" : "googleUseMultiCurl", "type" : "checkbox", "options" : {
+         "required" : 0
+      }},
+      { "name" : "iosSandbox", "type" : "checkbox", "options" : {
+         "required" : 0
+      }},
+      { "name" : "iosPem" , "type" : "file" , "options" : {
+         "required" : 0,
+         "mapped" : 0
+      }},
+      { "name" : "iosPassPhrase", "type" : "password", "options": {
          "required" : 0
       }}
    ]

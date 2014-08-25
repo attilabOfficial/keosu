@@ -19,10 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\Reader\RssReaderBundle;
 
 use Keosu\CoreBundle\Entity\Reader;
-use Keosu\CoreBundle\iReader;
+use Keosu\CoreBundle\ReaderInterface;
 
 //Custom properties stecific to this reader
-class RssReader implements iReader {
+class RssReader implements ReaderInterface {
 	public $name;
 	private $service = "RssReader";
 	public $feed_url; //Url of RSS feed

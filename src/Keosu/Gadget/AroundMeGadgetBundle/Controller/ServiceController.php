@@ -23,47 +23,41 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ServiceController extends Controller {
 
 	public function viewListAction($gadgetId, $format, $offset, $limit, $lat, $lng) {
-		$gadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
-		
-		$queryString= 'SELECT DISTINCT a.id,';
-		$queryString=$queryString.'( 6355 * acos(cos(radians(' . $lat . '))' .
+		$em = $this->get('doctrine')->getManager();
+			
+		$queryString = 'SELECT DISTINCT a.id,';
+		$queryString = $queryString.'( 6355 * acos(cos(radians(' . $lat . '))' .
 				'* cos( radians( a.lat ) )' .
 				'* cos( radians( a.lng )' .
 				'- radians(' . $lng . ') )' .
 				'+ sin( radians(' . $lat . ') )' .
 				'* sin( radians( a.lat ) ) ) ) as distance';
-		$queryString=$queryString.' FROM Keosu\DataModel\LocationModelBundle\Entity\Location a';
-		$queryString=$queryString.' ORDER BY distance';
+		$queryString = $queryString.' FROM Keosu\DataModel\LocationModelBundle\Entity\Location a';
+		$queryString = $queryString.' ORDER BY distance';
 		
-		$query=$this->get('doctrine')->getManager()->createQuery($queryString);
+		$query = $em->createQuery($queryString);
 		$query->setFirstResult( $offset);
 		$query->setMaxResults( 10 );
-		$poisORM=Array();
-		$poisORM=$query->execute();
+		$poisORM = Array();
+		$poisORM = $query->execute();
 		
 		//TODO fix this
 		$pois = Array();
-		foreach($poisORM as $poiORM)
-		{
-			$repo = $this->get('doctrine')->getManager()
-				->getRepository('KeosuDataModelLocationModelBundle:Location');
-			$poi = $repo->find($poiORM['id']);
+		foreach($poisORM as $poiORM) {
+			$poi = $em->getRepository('KeosuDataModelLocationModelBundle:Location')->find($poiORM['id']);
 			$poi->setDistance($poiORM['distance']);
-			$pois[]=$poi;
+			$pois[] = $poi;
 		}
 
-		return $this
-				->render(
+		return $this->render(
 						'KeosuGadgetAroundMeGadgetBundle:service:viewlist.'
 								. $format . '.twig',
 						array('pois' => $pois));
 	}
 	
 	public function viewOneAction($poiid,$format){
-		$repo = $this->get('doctrine')->getManager()
-			->getRepository('KeosuDataModelLocationModelBundle:Location');
-		$poi = $repo->find($poiid);
+		$em = $this->get('doctrine')->getManager();
+		$poi = $em->getRepository('KeosuDataModelLocationModelBundle:Location')->find($poiid);
 		return $this
 			->render(
 				'KeosuGadgetAroundMeGadgetBundle:service:view.'

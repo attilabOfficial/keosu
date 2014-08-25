@@ -2,7 +2,10 @@
 
 namespace Keosu\CoreBundle\Twig;
 
+use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\KeosuExtension;
+
+use Keosu\CoreBundle\Event\PackageSideMenuEvent;
 
 /**
  * This class allow to personalise differents screen in the app
@@ -25,6 +28,9 @@ class TwigMenuExtension extends \Twig_Extension {
 			)),
 			new \Twig_SimpleFunction('appListPage',array($this,'appListPage'), array(
 					'is_safe' => array('html')
+			)),
+			new \Twig_SimpleFunction('addItemToMenuConfiguration',array($this,'addItemToMenuConfiguration'), array(
+					'is_safe' => array('html')
 			))
 		);
 	}
@@ -34,10 +40,11 @@ class TwigMenuExtension extends \Twig_Extension {
 		$em = $this->container->get('doctrine')->getManager();
 		$apps = $em->getRepository('KeosuCoreBundle:App')->findAll();
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
-		$curAppName = "";
+		$curAppName = '';
 		foreach($apps as $app) {
-			if($app->getId() === $appid)
+			if($app->getId() == $appid) {
 				$curAppName = $app->getName();
+			}
 		}
 		return $this->container->get('templating')->render('KeosuCoreBundle:Menu:app.html.twig', array(
 								'apps'       => $apps,
@@ -61,6 +68,20 @@ class TwigMenuExtension extends \Twig_Extension {
 		return $this->container->get('templating')->render('KeosuCoreBundle:Menu:page.html.twig', array(
 								'pages' => $pages
 							));
+	}
+
+	public function addItemToMenuConfiguration()
+	{
+		$dispatcher = $this->container->get('event_dispatcher');
+		$event = new PackageSideMenuEvent();
+		$packageManager = $this->container->get('keosu_core.packagemanager');
+		$packages = $packageManager->getPackageList();
+		foreach($packages as $package) {
+			$dispatcher->dispatch(KeosuEvents::PACKAGE_GLOBAL_MENU_CONFIG.$package->getName(),$event);
+		}
+		return $this->container->get('templating')->render('KeosuCoreBundle:Menu:addToConfig.html.twig',array(
+				'links' => $event->getUrl()
+		));
 	}
 
 

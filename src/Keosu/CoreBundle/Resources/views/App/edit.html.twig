@@ -22,29 +22,10 @@
 {% block body %}
 <script>
 	$(document).ready(function() {
-		$( ".radio" ).each(function( index ) {
-			input = $(this).find('input');
-			themeName=input.attr('value');
-			input.attr('id',themeName);
-			img='<label for="'+themeName+'"><img alt="'+themeName+'" src="{{url_base}}/{{ themeDir }}'+themeName+'/'+themeName+'.png"/></label>';
-			
-			$( this ).text("");
-			$( this ).append(input);
-			$( this ).append(img);
-		});
-
-		$(".imgtheme input[checked=checked]").parent(".radio").find("img").css("border","red solid 3px");
-		
-		// switch border color
-		$(".imgtheme img").click(function(){
-			$(".imgtheme img").css("border","none");
-			$(this).css("border","red solid 3px");
-		});
+		themeButton("{{url_base}}" , "{{themeDir}}");
 	});
 
 	var _URL = window.URL || window.webkitURL;
-	
-	
 	/*
 	*Test the size of an image uploaded
 	*@param input : tag input controler
@@ -85,19 +66,6 @@
 	    }
 	}
 </script>
-<style type="text/css">
-.imgtheme .radio {
-	display:inline;
-	padding-left:0px;
-	padding-right:10px;
-}
-.imgtheme img {
-	height:250px;
-}
-.imgtheme .radio input[type="radio"]{
-	display:none;
-}
-</style>
 <div class="panel">
 	<div class="row">
 		<div class="col-md-12">

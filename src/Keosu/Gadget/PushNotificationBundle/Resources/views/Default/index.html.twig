@@ -1,0 +1,29 @@
+{% extends 'KeosuCoreBundle:MainViews:configuration.html.twig' %}
+
+{% block body %}
+<div class="panel">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="wellcustom">
+			{{ form_start(form) }}
+				<fieldset>
+					<legend>Send a push notification</legend>
+					
+					{% if valid %}
+						<div class="alert alert-success" role="alert">Your push notification has been send.</div>
+					{% endif %}
+					
+					{% if error %}
+						<div class="alert alert-danger" role="alert">{{ error }}</div>
+					{% endif %}
+					
+					
+					{{ form_row(form.message)}}
+					<input type="submit" class="btn btn-success" />
+				</fieldset>
+			{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock body %}

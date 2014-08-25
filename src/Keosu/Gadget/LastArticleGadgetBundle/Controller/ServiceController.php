@@ -21,6 +21,7 @@ namespace Keosu\Gadget\LastArticleGadgetBundle\Controller;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * REST Service controller dedicated to the curent gadget
@@ -30,46 +31,69 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ServiceController extends Controller {
 
 	public function viewListAction($gadgetId, $page, $format) {
-		$gadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+		$em = $this->get('doctrine')->getManager();
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
 		$articlesperpage=$gadgetConfig['articlesPerPage'];
-
-		$queryCount = $this->get('doctrine')->getManager()->createQuery('SELECT COUNT(u.id) FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody u');
-		$count = $queryCount->getSingleScalarResult();
+		$tag=$gadgetConfig['tag'];
 	
-		$qb = $this->get('doctrine')->getManager()->createQueryBuilder();
-		$qb->add('select', 'a')
-				->add('from',
-						'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a')
-				->add('orderBy', 'a.date DESC')
+		//Preparation of queries count and listArticle
+		$queryArticle = $em->createQueryBuilder();
+		$queryCount = $em->createQueryBuilder();
+		$queryArticle->add('select', 'a');
+		$queryCount->add('select', 'count(DISTINCT a.id)');
+		if($tag!=""){
+			$where = 'a.id = t.articleBody and t.tagName= ?1 ';
+			$queryCount->add('from', 'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a, Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t') 
+						->add('where', $where);
+			$queryCount->setParameter(1,$tag);
+			$queryArticle->add('from', 'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a, Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags t')
+				->add('where', $where)
+				->setParameter(1,$tag);
+		}else{
+			$queryCount->add('from', 'Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a');
+			$queryArticle->add('from','Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody a');
+		}	
+		$queryArticle->add('orderBy', 'a.date DESC')
 				->setFirstResult($page*$articlesperpage)
 				->setMaxResults($articlesperpage);
 		
-		$query = $qb->getQuery();
-		$articleList = $query->execute();
+		//Execution of queries
+		$count = $queryCount->getQuery()->execute();
+		$count = $count[0][1];
+		$articleList = $queryArticle->getQuery()->execute();
 		foreach ($articleList as $article){
-			$article
-			->setBody(
-					TemplateUtil::formatTemplateString($article->getBody()));
+			$article->setBody(TemplateUtil::formatTemplateString($article->getBody()));
 		}
-		
+
+		//Prepare data result
+		$data=array();
+		foreach($articleList as $key=>$article){
+			$data[$key]['id'] = $article->getId();
+			$data[$key]['title'] = $article->getTitle();
+			$data[$key]['content'] = $article->getBody();
+			$data[$key]['dataModelObjectName'] = $article->getDataModelObjectName();
+			$data[$key]['enableComments'] = $article->getEnableComments();
+			
+			$attachments = $article->getAttachments();
+			if (count($attachments) > 0){
+				foreach ($attachments as $k=>$attachment){
+					$data[$key]['attachments'][$k]['path'] =  $this->container->getParameter('url_base') . $attachment->getWebPath();
+				}
+			}
+		}	
+		$ret= array('data'=>$data);
 		$isFirst = false;
 		if($page == 0){
 			$isFirst = true;
 		}
-		
 		$isLast = false;
 		if(($page+1)*$articlesperpage >= $count){
 			$isLast = true;
-		}  
-		
-		
-		return $this
-				->render(
-						'KeosuGadgetLastArticleGadgetBundle:Service:viewlist.'
-								. $format . '.twig',
-						array('articles' => $articleList, 'articleperpage' => $articlesperpage, 'isFirst' => $isFirst, 'isLast' => $isLast));
+		}
+		$ret['isFirst'] = $isFirst;
+		$ret['isLast'] = $isLast;
+		return new JsonResponse($ret);
 	}
 }
 

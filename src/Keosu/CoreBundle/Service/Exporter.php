@@ -107,6 +107,7 @@ class Exporter {
 
 		// list of imported gadgets
 		$importedPackages = array();
+		$httpLinks = array();
 		$jsInit = $jsCore = $jsEnd = '';
 		
 		// load index.html (main template)
@@ -172,7 +173,7 @@ class Exporter {
 					// import if it's needed
 					if(array_search($gadget->getName(),$importedPackages) === false) {
 						try {
-							$this->importPackage($gadget->getName(),$indexHtml,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app);
+							$this->importPackage($gadget->getName(),$indexHtml,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app,$httpLinks);
 						} catch(\Exception $e) {
 							throw new \LogicException('Unable to import '.$gadget->getName().' because '.$e->getMessage());
 						}
@@ -194,8 +195,6 @@ class Exporter {
 															$app->getConfigPackages()[$gadget->getName()],
 															$packageConfig
 													);
-					
-					
 					
 					//Copy in HTML
 					$gadgetTemplateHtml = file_get_contents($package->getPath().'/templates/'.$gadget->getTemplate());
@@ -250,34 +249,26 @@ class Exporter {
 		$appJs = 'var importedPackages = '.\json_encode($importedPackages).";\n";
 		$appJs .= $jsInit.$jsCore.$jsEnd;
 		$this->writeFile($appJs,'app.js','/simulator/www/js/');
-		
-		////////////////////////////////////////////////////
-		// import folder if they exist
-		////////////////////////////////////////////////////
-		/* TODO
-		foreach($importedGadget as $gadget) {
-		
-			$path = TemplateUtil::getAbsolutePath().DIRECTORY_SEPARATOR.'gadget'.DIRECTORY_SEPARATOR.$gadget;
-			$dirs = scandir($path);
-			foreach($dirs as $dir) {
-				if($dir != '.' && $dir != '..' && is_dir($path. DIRECTORY_SEPARATOR .$dir)) {
-					FilesUtil::copyFolder($path. DIRECTORY_SEPARATOR .$dir,
-						$this::getExportAbsolutePath() . DIRECTORY_SEPARATOR .'simulator'. DIRECTORY_SEPARATOR .'www'. DIRECTORY_SEPARATOR .$dir);
-				}
-			}
-		}*/
 
 		//Enable individual API permissions here.
 		//The "device" permission is required for the 'deviceready' event.
-		$device = $configXml->createElement('feature');
-		$device->setAttribute('name','http://api.phonegap.com/1.0/device');
-		$widget->appendChild($device);
+		$basePlugin = array(
+			'org.apache.cordova.device',
+			'org.apache.cordova.device-motion',
+			'org.apache.cordova.device-orientation'
+		);
+		foreach($basePlugin as $plugin) {
+			$device = $configXml->createElement('gap:plugin');
+			$device->setAttribute('name',$plugin);
+			$widget->appendChild($device);
+		}
 
 		// Render preferences
 		$preferences = $app->getPreferences();
 		foreach($preferences as $p) {
 			$preference = $configXml->createElement('preference');
-			$preference->setAttribute($p['key'],$p['value']);
+			$preference->setAttribute('name',$p['key']);
+			$preference->setAttribute('value',$p['value']);
 			$widget->appendChild($preference);
 		}
 
@@ -453,8 +444,9 @@ class Exporter {
 	 * @param string $jsEnd end part of the js
 	 * @param array $importedPackages list of imported gadget
 	 * @param App $app app to export
+	 * @param array of http link already imported
 	 */
-	private function importPackage($packageName,\DOMDocument &$indexDocument,\DOMDocument &$configXml,&$jsInit,&$jsCore,&$jsEnd,&$importedPackages,App &$app)
+	private function importPackage($packageName,\DOMDocument &$indexDocument,\DOMDocument &$configXml,&$jsInit,&$jsCore,&$jsEnd,&$importedPackages,App &$app,&$jsHttpLink)
 	{
 		$package = $this->packageManager->findPackage($packageName);
 		$importedPackages[] = $package->getName();
@@ -467,7 +459,7 @@ class Exporter {
 			if(count($require)) {
 				foreach($require as $r) {
 					if(array_search($r['name'],$importedPackages) === false) {
-						$this->importPackage($r['name'],$indexDocument,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app);
+						$this->importPackage($r['name'],$indexDocument,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app,$jsHttpLink);
 					}
 				}
 			}
@@ -493,7 +485,10 @@ class Exporter {
 				foreach($libJs as $l) {
 					$script = $indexDocument->createElement('script');
 					if(substr($l,0,8) === 'https://' || substr($l,0,7) === 'http://') {
-						$script->setAttribute('src',$l);
+						if(array_search($l,$jsHttpLink) === false) {
+							$jsHttpLink[] = $l;
+							$script->setAttribute('src',$l);
+						}
 					} else {
 						copy($package->getPath().DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.$l,
 							$simulatorPath.'js'.DIRECTORY_SEPARATOR.$l);

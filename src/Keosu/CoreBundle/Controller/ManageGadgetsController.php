@@ -216,7 +216,7 @@ class ManageGadgetsController extends Controller {
 	 * Create the form to edit/add the gadget
 	 */
 	private function formGadget($gadget) {
-
+		
 		$em = $this->get('doctrine')->getManager();
 		$request = $this->get('request');
 		$dispatcher = $this->get('event_dispatcher');
@@ -224,15 +224,25 @@ class ManageGadgetsController extends Controller {
 		$formBuilder = $this->createFormBuilder($gadget);
 
 		$configType = new ConfigGadgetType($dispatcher,$request,$this->container->get('keosu_core.packagemanager'),$gadget);
-		$formBuilder->add('template', 'choice',array(
-							'choices'  => $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName()),
-							'required' => true,
-							'expanded' => true))
-					->add('shared', 'checkbox', array(
-							'label'    => 'Shared with all pages',
-							'required' => false))
-					->add('config',$configType);
 
+		$listTemplate = $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName());
+		if(count($listTemplate) > 1){
+			$formBuilder->add('template', 'choice',array(
+					'choices'  => $listTemplate,
+					'required' => true,
+					'expanded' => true));
+		}else{
+			$formBuilder->add('template', 'text',array(
+					'label' => false,
+					'data' => PackageManager::DEFAULT_TEMPLATE_GADGET_NAME,
+					'attr'=>array('style'=>'display:none;')));
+		}
+	
+		$formBuilder->add('shared', 'checkbox', array(
+				'label'    => 'Shared with all pages',
+				'required' => false))
+				->add('config',$configType);
+					
 		$form = $formBuilder->getForm();
 
 		if ($request->getMethod() == 'POST') {
@@ -265,7 +275,8 @@ class ManageGadgetsController extends Controller {
 		
 		return $this->render('KeosuCoreBundle:Page:editGadget.html.twig', array(
 								'form'      => $form->createView(),
-								'gadgetDir' => $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName())
+								'gadgetDir' => TemplateUtil::getTemplateGadgetDir(),
+								'gadgetName' => $gadget->getName(),
 							));
 	}
 

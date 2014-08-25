@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Keosu\DataModel\ArticleModelBundle\Controller;
 use Keosu\DataModel\ArticleModelBundle\Form\ArticleAttachmentType;
+use Keosu\DataModel\ArticleModelBundle\Form\ArticleTagsType;
 
 use Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody;
 
@@ -35,15 +36,14 @@ class EditController extends Controller {
 	 * Delete action
 	 */
 	public function deleteAction($id) {
-		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelArticleModelBundle:ArticleBody');
+		$em = $this->get('doctrine')->getManager();
+		$repo = $em->getRepository('KeosuDataModelArticleModelBundle:ArticleBody');
 
 		$article = $repo->find($id);
 
 		if ($article->getReader() === null || $article->getReader()->allowupdate !== false) {
-			$this->get('doctrine')->getManager()->remove($article);
-			$this->get('doctrine')->getManager()->flush();
+			$this->$em->remove($article);
+			$this->$em->flush();
 		}
 		return $this
 				->redirect($this->generateUrl('keosu_article_viewlist'));
@@ -74,12 +74,24 @@ class EditController extends Controller {
 	 * Manage and store
 	 */
 	private function editArticle($article) {
+		
+		//Get tags list from database
+		$em = $this->get('doctrine')->getManager();
+		$query = $em->createQuery('SELECT DISTINCT u.tagName FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags u');
+		$tagsResult = $query->getResult();
+		$tagsList=array();
+		foreach ($tagsResult as $tag){
+			$tagsList[]=$tag['tagName'];
+		}
+		
 		$formBuilder = $this->createFormBuilder($article);
 		$this->buildArticleForm($formBuilder);
 		$form = $formBuilder->getForm();
-		//List of original attachment
+		//List of original attachment / tag
 		$originalAttachments = array();
+		$originalTags = array();
 		foreach ($article->getAttachments() as $attachment) $originalAttachments[] = $attachment;
+		foreach ($article->getTags() as $tag) $originalTags[] = $tag;
 		$request = $this->get('request');
 		//If we are in POST method, form is submit
 		if ($request->getMethod() == 'POST') {
@@ -100,6 +112,20 @@ class EditController extends Controller {
 					$em->remove($attachment);
 				}
 				
+				//Identify tags to delete
+				foreach ($article->getTags() as $tag) {
+					foreach ($originalTags as $key => $toDel) {
+						if ($toDel->getId() === $tag->getId()) {
+							unset($originalTags[$key]);
+						}
+					}
+				}
+				//Deleting tag from article and database
+				foreach ($originalTags as $tag) {
+					$tag->getArticleBody()->removeTag($tag);
+					$em->remove($tag);
+				}
+				
 				$em->persist($article);
 				$em->flush();
 				return $this
@@ -113,15 +139,16 @@ class EditController extends Controller {
 				->render(
 						'KeosuDataModelArticleModelBundle:Edit:edit.html.twig',
 						array('form' => $form->createView(),
-								'articleid' => $article->getId()));
+								'articleid' => $article->getId(),
+								'tagsList'=> $tagsList));
 	}
 	/**
 	 * Specific form
 	 */
 	private function buildArticleForm($formBuilder) {
 		$formBuilder->add('title', 'text')
-					->add('body', 'textarea', array(
-							'attr' => array('class' => 'tinymce')
+					->add('body', 'textarea',array(
+							'required'     => false,
 					))
 					->add('author', 'text')
 					->add('date', 'date', array(
@@ -135,6 +162,14 @@ class EditController extends Controller {
 							'allow_add'    => true, 
 							'allow_delete' => true,
 							'by_reference' => false, 
+							'required'     => false,
+							'label'        => false
+					))
+					->add('tags', 'collection', array(
+							'type'         => new ArticleTagsType(),
+							'allow_add'    => true,
+							'allow_delete' => true,
+							'by_reference' => false,
 							'required'     => false,
 							'label'        => false
 					))

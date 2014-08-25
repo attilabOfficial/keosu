@@ -1,0 +1,7 @@
+keosu_gadget_push_notification_homepage:
+    path:     /view/push/plugin/sendPushNotification
+    defaults: { _controller: KeosuGadgetPushNotificationBundle:Default:sendPushNotification }
+
+keosu_service_push_notification_add_device:
+    path:     /service/push/plugin/addDevice/{type}
+    defaults: { _controller: KeosuGadgetPushNotificationBundle:Service:registerDevice }

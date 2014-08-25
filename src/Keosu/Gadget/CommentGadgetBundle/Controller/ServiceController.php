@@ -44,8 +44,6 @@ class ServiceController extends Controller
 			$ret['comments'][] = $tmp;
 		}
 
-		$response = new JsonResponse();
-		$response->setData($ret);
-		return $response;
+		return new JsonResponse($ret);
 	}
 }

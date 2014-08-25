@@ -46,7 +46,7 @@ class ServiceController extends Controller
 				// the user doesn't have account
 				if($user == null) {
 					$user = $userManager->createUser();
-					$user->setUsername(rand());
+					$user->setUsername($email);
 					$user->setEnabled(true);
 					$user->setPlainPassword(\md5($email.\rand()));
 					$user->setEmail($email);
@@ -71,9 +71,6 @@ class ServiceController extends Controller
 		} else {
 			$ret['message'] = 'unable to login with facebook';
 		}
-
-		$response = new JsonResponse();
-		$response->setData($ret);
-		return $response;
+		return new JsonResponse($ret);
 	}
 }

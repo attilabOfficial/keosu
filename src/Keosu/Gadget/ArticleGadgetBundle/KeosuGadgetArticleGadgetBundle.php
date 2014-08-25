@@ -20,4 +20,5 @@ namespace Keosu\Gadget\ArticleGadgetBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class KeosuGadgetArticleGadgetBundle extends Bundle {
+	const PACKAGE_NAME = 'keosu-article';
 }

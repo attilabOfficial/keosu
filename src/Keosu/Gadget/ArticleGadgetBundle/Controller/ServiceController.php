@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\Gadget\ArticleGadgetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * REST Service controller dedicated to the curent gadget
@@ -32,10 +33,20 @@ class ServiceController extends Controller {
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
 		$article = $em->getRepository('KeosuDataModelArticleModelBundle:ArticleBody')->find($gadgetConfig["article-id"]);
-		return $this->render(
-						'KeosuGadgetArticleGadgetBundle:Service:viewone.'
-								. $format . '.twig',
-						array('article' => $article));
+		$ret=array(array(
+				'id' => $article->getId(),
+				'dataModelObjectName' => $article->getDataModelObjectName(),
+				'title' => $article->getTitle(),
+				'enableComments' => $article->getEnableComments(),
+				'content' => $article->getBody()		
+		));
+		$attachments = $article->getAttachments();
+		if (count($attachments) > 0){
+			foreach ($attachments as $key=>$attachment){
+				$ret[0]['attachments'][$key]['path'] =  $this->container->getParameter('url_base') . $attachment->getWebPath();
+			}
+		}
+		return new JsonResponse($ret);
 	}
 }
 

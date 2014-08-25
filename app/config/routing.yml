@@ -1,3 +1,7 @@
+keosu_gadget_push_notification:
+    resource: "@KeosuGadgetPushNotificationBundle/Resources/config/routing.yml"
+    prefix:   /
+
 keosu_gadget_face_book:
     resource: "@KeosuGadgetFaceBookBundle/Resources/config/routing.yml"
     prefix:   /
@@ -35,7 +39,7 @@ keosu_reader_rss_reader:
     prefix:   /
     
 keosu_readerics_reader:
-    resource: "@KeosuReadericsReaderBundle/Resources/config/routing.yml"
+    resource: "@KeosuReaderIcsReaderBundle/Resources/config/routing.yml"
     prefix:   /
 
 keosu_reader_rss_event_reader:

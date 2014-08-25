@@ -30,6 +30,12 @@ Edit point of interest
         margin-left: auto;
     	margin-right: auto;
       }
+    .warning{
+	    margin-left: auto;
+    	margin-right: auto;
+    	text-align: center;
+    	display:none;
+	}
 </style>
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
@@ -37,13 +43,12 @@ Edit point of interest
 		var place;
 		function initialize() {
 			var mapOptions = {
-			    center: new google.maps.LatLng({{poilat}}, {{poilng}}),
+			    center: new google.maps.LatLng({{poi.lat}}, {{poi.lng}}),
 			    zoom: 13
 			};
 			var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 		
             var input = document.getElementById('search');
-            console.log(input);
             var autocomplete = new google.maps.places.Autocomplete(input);
             autocomplete.bindTo('bounds', map);
             
@@ -59,9 +64,14 @@ Edit point of interest
 			google.maps.event.addListener(autocomplete, 'place_changed', function() {
 				infowindow.close();
 			    marker.setVisible(false);
+			    document.getElementById('warning').style.display="none";
 			    place = autocomplete.getPlace();
-			    if (!place.geometry) {
-			      return;
+			    if (!place.geometry) { 
+			    	console.log("test");
+			    	document.getElementById('warning').style.display="block";
+			    	
+			    	console.log(document.getElementById('warning'));
+			      	return;
 			    }
 			
 			    // If the place has a geometry, then present it on a map.
@@ -72,7 +82,7 @@ Edit point of interest
 			    }
 			    marker.setPosition(place.geometry.location);
 			    marker.setVisible(true);
-			
+				console.log(place.geometry.location=="undefined");
 			    var address = '';
 			    if (place.address_components) {
 			      address = [
@@ -101,11 +111,14 @@ Edit point of interest
     	{{ form_widget(form) }}
 
 		<h4>Search a location</h4>
-		<label class="control-label col-lg-3">Search</label>
-		<div class="col-lg-7">
-			<input type="text" id="search" placeholder="Enter a location" class="form-control">
+		<div class="row">
+			<label class="control-label col-sm-3">Search</label>
+			<div class="col-sm-7">
+				<input type="text" id="search" placeholder="Enter a location" class="form-control">
+			</div>
+			<button type="button" class="btn btn-primary col-sm-2" onClick="setLocation()">Add this location</button>
 		</div>
-		<button type="button" class="btn btn-primary col-lg-2" onClick="setLocation()">Add this location</button>
+		<div id="warning" class="bg-warning warning"><strong>Warning!</strong> Google doesn't found latitude or longitude of this point.</div>
 		<br class="clear"/>
 		<div id="map-canvas" class="map-canvas"></div>
 		<br class="clear"/>

@@ -3,6 +3,10 @@
     "description" : "contains all the required package and template for keosu",
     "version" : "0.1",
     "type" : "base",
+    "configCordova" : [
+        { "gap:plugin" : [
+            { "@attributes" : {"name" : "org.apache.cordova.network-information" , "version":"0.2.7" } }
+    ]}],
     "require" : [
         { "name" : "angularJs" , "version" : ">=1.2" },
         { "name" : "jQuery", "version" : ">=2" },

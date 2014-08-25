@@ -85,9 +85,7 @@ class EditController extends Controller {
 		return $this
 				->render('KeosuDataModelLocationModelBundle:Edit:edit.html.twig',
 						array('form' => $form->createView(),
-								'poiid' => $poi->getId(),
-								'poilat' => $poi->getLat(),
-								'poilng' => $poi->getLng()));
+								'poi' => $poi));
 	}
 
 	/**

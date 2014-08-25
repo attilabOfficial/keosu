@@ -37,8 +37,7 @@ class ServiceController extends Controller {
 				->render(
 						'KeosuGadgetMapGadgetBundle:Service:viewone.'
 								. $format . '.twig',
-						array('poi' => $poi,
-								'zoom' => $gadgetConfig['zoom']));
+						array('poi' => $poi));
 	}
 }
 

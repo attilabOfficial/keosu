@@ -24,7 +24,7 @@ app.controller('keosu-mapController', function ($scope, $http, $sce, usSpinnerSe
 	// init part
 	////////////////////////////
 	$scope.init = function (params){
-		$scope.param = params;
+		$scope.param = params;	
 		$scope.showMapAction();
 	};
 	
@@ -40,7 +40,7 @@ app.controller('keosu-mapController', function ($scope, $http, $sce, usSpinnerSe
 					var map = $scope.initialize();
 					$scope.title = $('<div/>').html(data[0].name).text();
 					$scope.content = $sce.trustAsHtml(data[0].description);
-					map.setZoom(8);
+					map.setZoom($scope.param.gadgetParam.zoom);
 					google.maps.event.trigger($("#map_canvas")[0], 'resize');
 					var latitudeAndLongitude = new google.maps.LatLng(data[0].lat,data[0].lng);
 					map.setCenter(latitudeAndLongitude);

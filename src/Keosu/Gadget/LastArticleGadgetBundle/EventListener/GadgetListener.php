@@ -53,9 +53,12 @@ class GadgetListener implements EventSubscriberInterface
 		
 		//Overide form
 		$builder = $event->getFormBuilder();
-		$builder->add('tag','choice',array(
-				'choices'	=> $tagList,
-				'required'	=> false	
+		$builder->add('articlesPerPage','choice',array(
+					'choices'	=> array("3" => 3 ,"5" => 5, "10" => 10, "50" => 50, "100" => 100)
+				))
+				->add('tag','choice',array(
+					'choices'	=> $tagList,
+					'required'	=> false	
 		));
 		
 	}

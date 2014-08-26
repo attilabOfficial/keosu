@@ -19,7 +19,7 @@ app.controller('keosu-menuController', function ($scope, $http,$location) {
 	$scope.init = function (params) {
 		$scope.pages = params.gadgetParam.pages;
 	};
-	
+
 	// @see https://stackoverflow.com/questions/12592472/how-to-highlight-a-current-menu-item-in-angularjs
 	$scope.getClass = function(page) {
 		return $location.path() == "/Page/"+page ? "active" : ""

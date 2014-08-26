@@ -22,6 +22,7 @@ use Keosu\CoreBundle\KeosuEvents;
 
 use Keosu\CoreBundle\Entity\App;
 
+use Keosu\CoreBundle\Event\ExportConfigPackageEvent;
 use Keosu\CoreBundle\Event\ExportPackageEvent;
 
 use Keosu\CoreBundle\Util\ZipUtil;
@@ -73,6 +74,7 @@ class Exporter {
 	{
 		$em = $this->doctrine->getManager();
 		$baseurl = $this->container->getParameter('url_base');
+		$dispatcher = $this->container->get('event_dispatcher');
 
 		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appId);
 
@@ -192,10 +194,12 @@ class Exporter {
 					// globalParam
 					$paramGadget['appParam'] = array();
 					if(isset($app->getConfigPackages()[$gadget->getName()]))
-						$paramGadget['appParam'] = $this->secureParameters(
-															$app->getConfigPackages()[$gadget->getName()],
-															$packageConfig
-													);
+						$paramGadget['appParam'] = $this->secureParameters($app->getConfigPackages()[$gadget->getName()],$packageConfig);
+					
+					$event = new ExportConfigPackageEvent($paramGadget);
+					$dispatcher->dispatch(KeosuEvents::PACKAGE_EXPORT_CONFIG.$package->getName(),$event);
+					if($event->getNewConfig() !== null)
+						$paramGadget = $event->getNewConfig();
 					
 					//Copy in HTML
 					$gadgetTemplateHtml = file_get_contents($package->getPath().'/templates/'.$gadget->getTemplate());

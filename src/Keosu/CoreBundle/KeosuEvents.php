@@ -122,6 +122,14 @@ final class KeosuEvents
 	const PACKAGE_EXPORT = 'keosu.package.export.';
 
 	/**
+	 * The GADGET_EXPORT_CONFIG[Name of the gadget] event occurs when the package config is about to be rendered for the plugin or gadget
+	 *
+	 * This event allows to add information to the gadget or plugin param during the export
+	 * The event listener method receives a Keosu\CoreBundle\Event\ExportConfigPackageEvent instance
+	 */
+	const PACKAGE_EXPORT_CONFIG = 'keosu.package.export.config.';
+
+	/**
 	 * The PACKAGE_GLOBAL_CONFIG_BUILD_FORM[Name of the gadget] event occurs when the form of the app is about to be builded
 	 *
 	 * This event allows to add specific config in global config

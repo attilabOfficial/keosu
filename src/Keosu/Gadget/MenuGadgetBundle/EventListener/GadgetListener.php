@@ -3,8 +3,8 @@
 namespace Keosu\Gadget\MenuGadgetBundle\EventListener;
 
 use Keosu\CoreBundle\KeosuEvents;
+use Keosu\CoreBundle\Event\ExportConfigPackageEvent;
 use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
-use keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 
 use Keosu\Gadget\MenuGadgetBundle\KeosuGadgetMenuGadgetBundle;
 
@@ -30,7 +30,7 @@ class GadgetListener implements EventSubscriberInterface
 	{
 		return array(
 			KeosuEvents::GADGET_CONF_FORM_BUILD.KeosuGadgetMenuGadgetBundle::PACKAGE_NAME => 'onGadgetConfFormBuild',
-			KeosuEvents::GADGET_CONF_SAV.KeosuGadgetMenuGadgetBundle::PACKAGE_NAME        => 'onGadgetConfSav',
+			KeosuEvents::PACKAGE_EXPORT_CONFIG.KeosuGadgetMenuGadgetBundle::PACKAGE_NAME  => 'onGadgetExportConf',
 		);
 	}
 
@@ -62,24 +62,26 @@ class GadgetListener implements EventSubscriberInterface
 				));
 	}
 	
-	public function onGadgetConfSav(GadgetSaveConfigEvent $event)
+	public function onGadgetExportConf(ExportConfigPackageEvent $event)
 	{
-		$conf = array();
-		$conf['pages'] = array();
+		$pages = array();
 		$em = $this->container->get('doctrine')->getManager();
 
-		$gadget = $event->getGadget();
-		$listPageId = $gadget->getConfig()['page'];
+		$currentConfig = $event->getCurrentConfig();
+		$listPageId = $currentConfig['gadgetParam']['page'];
 		$tmp = array();
 		// add icon to page id
 		foreach($listPageId as $pageId) {
 			$page = $em->getRepository('KeosuCoreBundle:Page')->find($pageId);
 			$tmp['id'] = $pageId;
 			$tmp['icon'] = $page->getIcon();
-			$conf['pages'][] = $tmp;
+			$pages[] = $tmp;
 		}
 		
-		$gadget->setConfig($conf);
+		$newConfig = $currentConfig;
+		unset($newConfig['gadgetParam']['page']);
+		$newConfig['gadgetParam']['pages'] = $pages;
+		$event->setNewConfig($newConfig);
 	}
 }
 

@@ -28,7 +28,7 @@ body {
 
 
 .content {
-	margin-top: 75px;
+	margin-top: 85px;
 	margin-bottom: 45px;
 }
 
@@ -357,6 +357,11 @@ img.center, .img-min {
 	OFFLINE
 ****************************/
 .offline{
+	position: fixed;
+	display:block;
+	top: 60px;
+	right:0px; 
+	left: 0px;
 	background-color: #19a6d4;
 	text-align: center;
 	color:white;

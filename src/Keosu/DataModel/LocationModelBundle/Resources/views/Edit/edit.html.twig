@@ -30,9 +30,7 @@ Edit point of interest
         margin-left: auto;
     	margin-right: auto;
       }
-    .warning{
-	    margin-left: auto;
-    	margin-right: auto;
+    .alert{
     	text-align: center;
     	display:none;
 	}
@@ -118,7 +116,7 @@ Edit point of interest
 			</div>
 			<button type="button" class="btn btn-primary col-sm-2" onClick="setLocation()">Add this location</button>
 		</div>
-		<div id="warning" class="bg-warning warning"><strong>Warning!</strong> Google doesn't found latitude or longitude of this point.</div>
+		<div id="warning" class="alert alert-warning" role="alert"><strong>Warning!</strong> Google doesn't found latitude or longitude of this point.</div>
 		<br class="clear"/>
 		<div id="map-canvas" class="map-canvas"></div>
 		<br class="clear"/>

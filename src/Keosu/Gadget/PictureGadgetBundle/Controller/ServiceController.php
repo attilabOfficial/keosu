@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\Gadget\PictureGadgetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * REST Service controller dedicated to the current gadget
@@ -27,19 +28,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class ServiceController extends Controller {
 
-	public function viewOneAction($gadgetId, $format) {
-		$gadget = $this->get('doctrine')->getManager()
-				->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+	public function viewOneAction($gadgetId)
+	{
+		$em = $this->get('doctrine')->getManager();
+		$baseurl = $this->container->getParameter('url_base');
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
-		$picture = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelPictureModelBundle:Picture')
-				->find($gadgetConfig["pictureId"]);
-		return $this
-				->render(
-						'KeosuGadgetPictureGadgetBundle:Service:viewone.'
-								. $format . '.twig',
-						array('picture' => $picture));
+		$picture = $em->getRepository('KeosuDataModelPictureModelBundle:Picture')->find($gadgetConfig["pictureId"]);
+
+		return new JsonResponse(array(
+			"id" => $picture->getId(),
+			"dataModelObjectName" => $picture->getDataModelObjectName(),
+			"name" => $picture->getName(),
+			"description" => $picture->getDescription(),
+			"path" => $baseurl.$picture->getWebPath(),
+			"enableComments" => $picture->getEnableComments()
+		));
 	}
 }
 

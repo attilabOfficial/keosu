@@ -123,10 +123,10 @@ class SyncController extends Controller {
 		//RSS attachment
 		if($img!=null){
 			$attachment = new ArticleAttachment();
-			$filePath=$this->downloadFile($img,$attachment->getUploadRootDir());
-			$baseName=basename($img);
+			$filePath = $this->downloadFile($img,$attachment->getUploadRootDir());
+			$baseName = basename($img);
 			$attachment->setName($baseName);
-			$attachment->setPath($baseName);
+			$attachment->setPath($filePath);
 			$article->addAttachment($attachment);
 		}
 		

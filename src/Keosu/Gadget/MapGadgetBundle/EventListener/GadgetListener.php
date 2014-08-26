@@ -4,7 +4,6 @@ namespace Keosu\Gadget\MapGadgetBundle\EventListener;
 
 use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
-use keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 
 use Keosu\Gadget\MapGadgetBundle\KeosuGadgetMapGadgetBundle;
 

@@ -13,3 +13,4 @@ keosu_article_edit:
 keosu_article_add:
     pattern:  /content/article/add
     defaults: { _controller: KeosuDataModelArticleModelBundle:Edit:add }
+

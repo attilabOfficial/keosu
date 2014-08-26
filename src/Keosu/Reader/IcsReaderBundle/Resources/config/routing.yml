@@ -9,3 +9,4 @@ keosu_ReaderManager_icsReader_edit:
 keosu_ReaderManager_icsReader_sync:
     pattern:  /content/reader/sync/ics/{id}
     defaults: { _controller: KeosuReadericsReaderBundle:Sync:sync }
+

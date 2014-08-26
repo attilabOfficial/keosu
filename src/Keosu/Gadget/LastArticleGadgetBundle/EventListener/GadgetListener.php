@@ -4,7 +4,6 @@ namespace Keosu\Gadget\LastArticleGadgetBundle\EventListener;
 
 use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
-use keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 
 use Keosu\Gadget\LastArticleGadgetBundle\KeosuGadgetLastArticleGadgetBundle;
 
@@ -58,7 +57,7 @@ class GadgetListener implements EventSubscriberInterface
 				))
 				->add('tag','choice',array(
 					'choices'	=> $tagList,
-					'required'	=> false	
+					'required'	=> false
 		));
 		
 	}

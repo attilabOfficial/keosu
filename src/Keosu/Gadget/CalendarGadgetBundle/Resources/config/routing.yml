@@ -17,3 +17,4 @@ keosu_gadget_calendar_gadget_service_view:
 keosu_gadget_calendar_gadget_service_viewtable:
     pattern:  /service/gadget/calendar/{gadgetId}/{format}
     defaults: { _controller: KeosuGadgetCalendarGadgetBundle:Service:viewtable }
+

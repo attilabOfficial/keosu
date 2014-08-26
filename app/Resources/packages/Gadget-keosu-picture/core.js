@@ -30,10 +30,10 @@ app.controller('keosu-pictureController', function ($scope, $http, usSpinnerServ
 
 	$scope.showPictureAction = function() {
 		usSpinnerService.spin('spinner');
-		cacheManagerService.get($scope.param.host+'service/gadget/picture/'+$scope.param.gadgetId+'/json').success( function (data) {
+		cacheManagerService.get($scope.param.host+'service/gadget/picture/'+$scope.param.gadgetId).success( function (data) {
 				usSpinnerService.stop('spinner');
 				$scope.picture = data[0];
-				$scope.title = $('<div/>').html(data[0].name).text();
+				$scope.title = data[0].name;
 				$scope.image = data[0].path;
 		});
 	};

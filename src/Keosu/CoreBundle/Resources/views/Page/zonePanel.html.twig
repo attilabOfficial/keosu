@@ -38,5 +38,14 @@
 		{% endif %}
 		{% block pageExtensionActionGadget %}
 		{% endblock pageExtensionActionGadget%}
+		<script>
+			$( "#panel{{ zoneId }}" ).hover(
+			function() {
+				$("iframe").contents().find("#{{ zoneId }}").css("border","5px solid red");
+			}, function() {
+				$("iframe").contents().find("#{{ zoneId }}").css("border","none");
+			}
+			);
+		</script>
 	</div>
 </div>

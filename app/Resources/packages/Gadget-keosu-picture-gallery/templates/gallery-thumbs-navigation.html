@@ -9,8 +9,8 @@
 		<div class="row-fluid">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 gallery">
 				<div ng-repeat="apage in page" class="animated {{slidePage}}">
-					<div class="picture-gallery center" ng-class="{'is-active': (apage.id==indexSlide+1)}">
-						<img src="{{ apage.path }}" alt="" ng-click="open(apage, apage.id)" class="thumb" />
+					<div class="picture-gallery center " >
+						<img src="{{ apage.path }}" alt="" ng-click="open(apage, apage.id)" class="thumb" ng-class="{'is-active': (apage.id==indexSlide+1),'is-not-active': (apage.id!=indexSlide+1) }"/>
 					</div>
 				</div>
 			</div>

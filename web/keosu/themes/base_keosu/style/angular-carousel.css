@@ -108,8 +108,15 @@
     max-width:100%;
     margin-left: auto;
     margin-right: auto;
-    transition: border 0.2s ease-in;
 }
-.is-active {
-    border:1px solid red;
+
+.is-active {        
+    -webkit-transform: scale(1.2);
+        -moz-transform: scale(1.2);
+        -o-transform: scale(1.2);
+        transform: scale(1.2);
 }
+.is-not-active {
+	opacity:0.7;
+}
+

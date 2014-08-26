@@ -9,4 +9,4 @@ class KeosuUserBundle extends Bundle {
 	}
 }
 
-?>
+

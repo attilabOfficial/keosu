@@ -13,3 +13,4 @@ keosu_picture_edit:
 keosu_picture_add:
     pattern:  /content/picture/add
     defaults: { _controller: KeosuDataModelPictureModelBundle:Edit:add }
+

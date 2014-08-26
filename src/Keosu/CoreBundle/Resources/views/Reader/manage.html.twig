@@ -17,28 +17,27 @@
     #}
 {% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
 
-{% block title %}
-	Add a new reader
-{% endblock %}
+{% block title %}Add a new reader{% endblock %}
+
 {% block content %}
 <div class="row">
 	<div class="col-md-4 table-actions-column">
 	<form method="post" {{ form_enctype(form) }}>
-    	<div>
-    	<strong>Redear Type</strong>
-    	<br/> 
-    	{{ form_widget(form.readertype) }}
-    	{{ form_rest(form) }}
-    	</div>
-    	
-    	<br/>
-    	
-    	<input type="submit" class="btn btn-success" value="Add a reader" ></input><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-    </form>
-    </div>
-    <div class="col-md-8">
-    	<fieldset>
-    		<legend>Readers</legend>
+		<div>
+		<strong>Redear Type</strong>
+		<br/> 
+		{{ form_widget(form.readertype) }}
+		{{ form_rest(form) }}
+		</div>
+	
+		<br/>
+	
+		<input type="submit" class="btn btn-success" value="Add a reader" ></input><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
+	</form>
+	</div>
+	<div class="col-md-8">
+		<fieldset>
+			<legend>Readers</legend>
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
@@ -53,9 +52,7 @@
 				<tr>
 					<td>{{ content.name }}</td>
 					<td>
-						{% if not(content.islivereader) %}
 						<a href="{{ path('keosu_ReaderManager_'~content.service~'_sync',{'id':content.id}) }}"><i class="glyphicon glyphicon-refresh" title="Sync"></i></a>
-						{% endif %}
 					</td>
 					<td>
 						<a href="{{ path('keosu_ReaderManager_' ~ content.service ~ '_edit',{'id':content.id}) }}"><i class="glyphicon glyphicon-edit" title="Edit"></i></a>

@@ -48,13 +48,6 @@ class Reader {
 	 * @ORM\Column(name="service", type="string", length=255)
 	 */
 	private $service;
-	
-	/**
-	 * @var boolean $isLiveReader
-	 * Live Readers don't copy content into Keosu
-	 * @ORM\Column(name="islivereader", type="boolean")
-	 */
-	private $isLiveReader = false;
 
 	/**
 	 * @var array $config
@@ -125,27 +118,6 @@ class Reader {
 	 */
 	public function getService() {
 		return $this->service;
-	}
-	
-	/**
-	 * Set isLiveReader
-	 *
-	 * @param boolean $isLiveReader
-	 * @return Reader
-	 */
-	public function setIsLiveReader($isLiveReader) {
-		$this->isLiveReader = $isLiveReader;
-	
-		return $this;
-	}
-	
-	/**
-	 * Get isLiveReader
-	 *
-	 * @return boolean
-	 */
-	public function getIsLiveReader() {
-		return $this->isLiveReader;
 	}
 
 	/**

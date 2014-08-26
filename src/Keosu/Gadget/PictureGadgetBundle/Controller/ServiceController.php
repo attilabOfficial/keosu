@@ -36,14 +36,14 @@ class ServiceController extends Controller {
 		$gadgetConfig = $gadget->getConfig();
 		$picture = $em->getRepository('KeosuDataModelPictureModelBundle:Picture')->find($gadgetConfig["pictureId"]);
 
-		return new JsonResponse(array(array(
+		return new JsonResponse(array(
 			"id" => $picture->getId(),
 			"dataModelObjectName" => $picture->getDataModelObjectName(),
 			"name" => $picture->getName(),
 			"description" => $picture->getDescription(),
 			"path" => $baseurl.$picture->getWebPath(),
 			"enableComments" => $picture->getEnableComments()
-		)));
+		));
 	}
 }
 

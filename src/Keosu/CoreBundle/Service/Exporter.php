@@ -33,7 +33,7 @@ use Keosu\CoreBundle\Util\TemplateUtil;
 class Exporter {
 
 	const EXPORT_WEB_PATH = '/web/keosu/export/';
-	
+
 	/**
 	 * Return image dir
 	 * @param string $app name for app
@@ -42,12 +42,13 @@ class Exporter {
 	public static function getImageDir($app) {
 		return __DIR__ . '/../../../../web/keosu/res/'.$app.'/';
 	}
-	
+
 	/**
 	 * Return dir where to export app
 	 */
-	public static function getExportAbsolutePath() {
-		return __DIR__ . '/../../../../web/keosu/export/'; //TODO edit this path
+	private function getExportAbsolutePath() {
+		$kernel = $this->container->get('kernel');
+		return $kernel->getRootDir().'/../web/keosu/export/';
 	}
 
 	private $doctrine;
@@ -85,25 +86,25 @@ class Exporter {
 							'appId' => $appId
 		));
 		
-		FilesUtil::copyContent($json, $this::getExportAbsolutePath() . '/simulator/www/data/globalParam.json');
+		FilesUtil::copyContent($json, $this->getExportAbsolutePath() . '/simulator/www/data/globalParam.json');
 		
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/style',
-				$this::getExportAbsolutePath() . '/simulator/www/theme');
+				$this->getExportAbsolutePath() . '/simulator/www/theme');
 
 		//cordova_plugins.json
 		copy(TemplateUtil::getAbsolutePath() . '/main-header/cordova_plugins.js',
-			$this::getExportAbsolutePath() . '/simulator/www/cordova_plugins.js');
+			$this->getExportAbsolutePath() . '/simulator/www/cordova_plugins.js');
 		
 		copy(TemplateUtil::getAbsolutePath() . '/main-header/index.html',
-			$this::getExportAbsolutePath() . '/simulator/www/index.html');
+			$this->getExportAbsolutePath() . '/simulator/www/index.html');
 
 		
 		//Copy all theme/header/js dir to web/export/www/js
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/header/js',
-			$this::getExportAbsolutePath() . '/simulator/www/js');
+			$this->getExportAbsolutePath() . '/simulator/www/js');
 			
 		//Copy Splashcreens and icons
-		FilesUtil::copyFolder($this::getImageDir($app->getId()).'/', $this::getExportAbsolutePath().'/simulator/www/res/');
+		FilesUtil::copyFolder($this::getImageDir($app->getId()).'/', $this->getExportAbsolutePath().'/simulator/www/res/');
 
 		// list of imported gadgets
 		$importedPackages = array();
@@ -112,7 +113,7 @@ class Exporter {
 		
 		// load index.html (main template)
 		$indexHtml = new \DOMDocument();
-		@$indexHtml->loadHtmlFile($this::getExportAbsolutePath() . '/simulator/www/index.html');
+		@$indexHtml->loadHtmlFile($this->getExportAbsolutePath() . '/simulator/www/index.html');
 		
 		///////////////////////////////////////////////////
 		// Generate config.xml
@@ -341,74 +342,74 @@ class Exporter {
 			$widget->appendChild($accesses);
 		}
 
-		$configXml->save($this::getExportAbsolutePath().DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR.'config.xml');
+		$configXml->save($this->getExportAbsolutePath().DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR.'config.xml');
 
 
 		/**
 		 * Duplicate Export for ios, android and phonegapbuild
 		 */
 		//For ios
-		FilesUtil::copyFolder($this::getExportAbsolutePath().'/simulator/www',
-			$this::getExportAbsolutePath().'/ios/www');
+		FilesUtil::copyFolder($this->getExportAbsolutePath().'/simulator/www',
+			$this->getExportAbsolutePath().'/ios/www');
 		
 		copy(TemplateUtil::getAbsolutePath().'/main-header/ios/cordova.js',
-			$this::getExportAbsolutePath().'/ios/www/cordova.js');
+			$this->getExportAbsolutePath().'/ios/www/cordova.js');
 		
 		//For Android
-		FilesUtil::copyFolder($this::getExportAbsolutePath().'/simulator/www',
-			$this::getExportAbsolutePath().'/android/www');
+		FilesUtil::copyFolder($this->getExportAbsolutePath().'/simulator/www',
+			$this->getExportAbsolutePath().'/android/www');
 		
 		copy(TemplateUtil::getAbsolutePath().'/main-header/android/cordova.js',
-			$this::getExportAbsolutePath().'/android/www/cordova.js');
+			$this->getExportAbsolutePath().'/android/www/cordova.js');
 		
 		//For phonegapbuild
-		FilesUtil::copyFolder($this::getExportAbsolutePath().'/simulator/www',
-			$this::getExportAbsolutePath().'/phonegapbuild/www');
+		FilesUtil::copyFolder($this->getExportAbsolutePath().'/simulator/www',
+			$this->getExportAbsolutePath().'/phonegapbuild/www');
 		//No cordova.js in phonegapbuild
 		
 		copy(TemplateUtil::getAbsolutePath().'/main-header/ios/cordova.js',
-			$this::getExportAbsolutePath().'/simulator/www/cordova.js');
+			$this->getExportAbsolutePath().'/simulator/www/cordova.js');
 		
 		
 		//Generate ZIP files for all
 
 		//ios
-		ZipUtil::ZipFolder($this::getExportAbsolutePath().'/ios/www',
-			$this::getExportAbsolutePath().'/ios/export.zip');
+		ZipUtil::ZipFolder($this->getExportAbsolutePath().'/ios/www',
+			$this->getExportAbsolutePath().'/ios/export.zip');
 		//android
-		ZipUtil::ZipFolder($this::getExportAbsolutePath().'/android/www',
-			$this::getExportAbsolutePath().'/android/export.zip');
+		ZipUtil::ZipFolder($this->getExportAbsolutePath().'/android/www',
+			$this->getExportAbsolutePath().'/android/export.zip');
 		//Phonegapbuild
-		ZipUtil::ZipFolder($this::getExportAbsolutePath().'/phonegapbuild/www',
-			$this::getExportAbsolutePath().'/phonegapbuild/export.zip');
+		ZipUtil::ZipFolder($this->getExportAbsolutePath().'/phonegapbuild/www',
+			$this->getExportAbsolutePath().'/phonegapbuild/export.zip');
 
 	}
 
 	private function cleanDir()
 	{
 		//Clean existing export dir
-		FilesUtil::deleteDir($this::getExportAbsolutePath() .'/simulator/www');
-		FilesUtil::deleteDir($this::getExportAbsolutePath() .'/ios/www');
-		FilesUtil::deleteDir($this::getExportAbsolutePath() .'/android/www');
-		FilesUtil::deleteDir($this::getExportAbsolutePath() .'/phonegapbuild/www');
+		FilesUtil::deleteDir($this->getExportAbsolutePath() .'/simulator/www');
+		FilesUtil::deleteDir($this->getExportAbsolutePath() .'/ios/www');
+		FilesUtil::deleteDir($this->getExportAbsolutePath() .'/android/www');
+		FilesUtil::deleteDir($this->getExportAbsolutePath() .'/phonegapbuild/www');
 		
 		//Creating dir www and js
-		mkdir($this::getExportAbsolutePath() . '/simulator/www/plugins', 0777, true);
-		mkdir($this::getExportAbsolutePath() . '/simulator/www/theme', 0777, true);
-		mkdir($this::getExportAbsolutePath() . '/simulator/www/data', 0777, true);
-		mkdir($this::getExportAbsolutePath() . '/simulator/www/js', 0777, true);
-		mkdir($this::getExportAbsolutePath() . '/simulator/www/res', 0777, true);
+		mkdir($this->getExportAbsolutePath() . '/simulator/www/plugins', 0777, true);
+		mkdir($this->getExportAbsolutePath() . '/simulator/www/theme', 0777, true);
+		mkdir($this->getExportAbsolutePath() . '/simulator/www/data', 0777, true);
+		mkdir($this->getExportAbsolutePath() . '/simulator/www/js', 0777, true);
+		mkdir($this->getExportAbsolutePath() . '/simulator/www/res', 0777, true);
 		
-		mkdir($this::getExportAbsolutePath() . '/ios/www', 0777, true);
-		mkdir($this::getExportAbsolutePath() . '/android/www', 0777, true);
-		mkdir($this::getExportAbsolutePath() . '/phonegapbuild/www', 0777, true);
+		mkdir($this->getExportAbsolutePath() . '/ios/www', 0777, true);
+		mkdir($this->getExportAbsolutePath() . '/android/www', 0777, true);
+		mkdir($this->getExportAbsolutePath() . '/phonegapbuild/www', 0777, true);
 	}
 
 	//write a file
 	private function writeFile($html, $fileName, $path)
 	{
 		//Writting the html content in file
-		$destiPath = $this::getExportAbsolutePath() . $path;
+		$destiPath = $this->getExportAbsolutePath() . $path;
 	
 		$fileName = $destiPath . $fileName;
 	
@@ -451,7 +452,7 @@ class Exporter {
 		$package = $this->packageManager->findPackage($packageName);
 		$importedPackages[] = $package->getName();
 		$config = $this->packageManager->getConfigPackage($package->getPath());
-		$simulatorPath = $this::getExportAbsolutePath() .DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR;
+		$simulatorPath = $this->getExportAbsolutePath() .DIRECTORY_SEPARATOR.'simulator'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR;
 		
 		// check dependency
 		if(isset($config['require'])) {

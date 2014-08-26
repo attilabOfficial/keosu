@@ -65,5 +65,3 @@ class ServiceController extends Controller {
 				array('poi' => $poi));
 	}
 }
-
-?>

@@ -46,7 +46,6 @@ class GadgetListener implements EventSubscriberInterface
 		
 
 		//Prepare the list of poi for the form
-		$articleList=array();
 		foreach($poiListTmp as $poi){
 			$poiList[$poi['id']]=$poi['name'];
 		}

@@ -9,8 +9,7 @@ app.controller('main_Controller', function($http, $scope) {
 		document.addEventListener("offline",
 				function(){
 					$scope.offline=true;
-					console.log($('#checkOffline'));
-					alert("Perte du r&eacute;seau. La page sera recharg&eacute;e; d&eacute;s que possible");
+					alert("Network unreachable. The page will be reload soon as possible.");
 					document.addEventListener("online",function(){
 						$scope.offline=false;
 						alert("Reconnection !");

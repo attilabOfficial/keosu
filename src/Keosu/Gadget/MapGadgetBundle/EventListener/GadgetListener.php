@@ -62,6 +62,7 @@ class GadgetListener implements EventSubscriberInterface
 					))
 					->add('zoom','choice',array(
 							'choices'	=> $zoomList,
+							'label'		=> 'Zoom level when opening'
 					));
 		
 	}

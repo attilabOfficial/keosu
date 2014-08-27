@@ -7,7 +7,12 @@
 		<script type="text/javascript" src="cordova.js"></script>
 	</head>
 	<body ng-controller="main_Controller">
+		<!-- To enable keosu push -->
 		<keosu-push></keosu-push>
+		<!-- to enable spinner -->
+		<span
+		us-spinner="{lines: 17, length: 0, width: 2, radius: 10, corners: 1, rotate: 0, direction: 1, color: '#FFFFFF', speed: 1, trail: 60, shadow: false, hwaccel: false, className: 'spinner', zIndex: 1030}"
+		spinner-key="spinner"></span>
 		<div ng-view></div>
 	</body>
 </html>

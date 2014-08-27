@@ -18,10 +18,9 @@
 
 //Main function
 
-app.controller('keosu-chronoController', function ($scope, chronoService, usSpinnerService) {
+app.controller('keosu-chronoController', function ($scope, chronoService) {
 
 	// Initialization
-	usSpinnerService.stop('spinner');
 	$scope.isStart = "";
 	$scope.isStop = "";
 	$scope.init = function (params){

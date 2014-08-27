@@ -14,11 +14,11 @@
       "angular-resource.js",
       "angular-route.js",
       "angular-sanitize.min.js",
+      "spin.js",
       "angular-spinner.js",
       "angular-touch.js",
       "angular-local-storage.js",
       "cache-manager.js",
-      "spin.js",
       "utilString.js"
    ],
    "appParam" : []

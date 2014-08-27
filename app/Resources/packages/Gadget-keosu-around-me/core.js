@@ -30,28 +30,53 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 				zoom: 8,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
-		$('#map_canvas').html('');
-		var map = new google.maps.Map(document.getElementById("map_canvas"),
-				mapOptions);
+		var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
 		return map;
 	}
+	
 	$scope.open = function (page) {
+		$scope.distance = page.distance;
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		cacheManagerService.get($scope.param.host + 'service/gadget/aroundme/view/'
 				+ page.id + '/json').success(function (data){
 					usSpinnerService.stop('spinner');
+					console.log(document.getElementById("map_canvas"));
+					//Init map
 					$scope.myMap = data[0];
 					$scope.myMap.description = $sce.trustAsHtml(decodedContent(data[0].description));
 					$scope.myMap.nom = $('<div/>').html(data[0].nom).text();
+					
 					var map=$scope.initialize();
 					map.setZoom($scope.param.gadgetParam.zoom);
 					google.maps.event.trigger($("#map_canvas")[0], 'resize');
 					var latitudeAndLongitude = new google.maps.LatLng(data[0].lat,data[0].lng);
 					map.setCenter(latitudeAndLongitude);
+					
+					//Init my marquer / info window
+					$scope.myMarker.setMap(map);
+					$scope.myInfowindow.open(map, $scope.myMarker);
+					
+					//Init POI marker / info window
 					markerOne = new google.maps.Marker({
 						position: latitudeAndLongitude,
+						title: $scope.myMap.nom,
 						map: map
 					});
+					var infowindow = new google.maps.InfoWindow();
+					infowindow.setContent('<p>'+$scope.myMap.nom+'</p>');
+					infowindow.open(map, markerOne);
+					
+					//Trace line between two point
+					var newLineCoordinates = [$scope.myMarker.position,latitudeAndLongitude];
+					console.log(newLineCoordinates);
+					var newLine = new google.maps.Polyline({
+						  path: newLineCoordinates,        
+						  strokeColor: "#FF0000",
+						  strokeOpacity: 1.0,
+						  strokeWeight: 2
+						});
+					newLine.setMap(map);
+					
 					window.setTimeout(function(){
                         google.maps.event.trigger($("#map_canvas")[0], 'resize');
                         map.setCenter(latitudeAndLongitude);
@@ -66,6 +91,7 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 	
 	$scope.init = function (params) {
 			$scope.parts(true, false, $scope);
+			$scope.initialize();
 			usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 			$scope.param = params;
 	
@@ -88,7 +114,13 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 			}	
 			cacheManagerService.getLocation($scope.param.host + 'service/gadget/aroundme/'+$scope.param.gadgetId+'/location')
 			.success(function (position) {
+				var latitudeAndLongitude = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+				$scope.myInfowindow = new google.maps.InfoWindow();
+				$scope.myInfowindow.setContent('<p>You</p>');
+				$scope.myMarker = new google.maps.Marker({
+					position: latitudeAndLongitude,
+				});
 				onGpsSuccess(position);
 			});
-		}
+		}	
 });

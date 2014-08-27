@@ -20,9 +20,12 @@
 	</div>
 </div>
 <div ng-show="isMap" class="animated zoomIn">
-	<a href="#" ng-click="close()"><i
-		class="fui-cross basic-icon-cross"></i></a>
+	<div ng-click="close()"><i
+		class="fui-cross basic-icon-cross"></i></div>
 	<h4 class="title">{{ myMap.nom }}</h4>
+	<div class="list-elem-right">
+		<p>{{ distance }} km</p>
+	</div>
 	<hr>
 	<div class="gadget-content">
 		<div class="row-fluid">

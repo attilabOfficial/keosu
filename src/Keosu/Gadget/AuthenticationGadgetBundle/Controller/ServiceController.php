@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\Gadget\AuthenticationGadgetBundle\Controller;
 
+use Keosu\Gadget\AuthenticationGadgetBundle\KeosuGadgetAuthenticationGadgetBundle;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -64,7 +66,9 @@ class ServiceController extends Controller {
 			$app = $em->getRepository('KeosuCoreBundle:App')->find($page->getAppId());
 			
 			$ret['appPrivate'] = false;
-			if($app->isPrivate()) {
+			$packageConfig = $app->getConfigPackages();
+			if(isset($packageConfig[KeosuGadgetAuthenticationGadgetBundle::PACKAGE_NAME]['privateApp'])
+				&& $packageConfig[KeosuGadgetAuthenticationGadgetBundle::PACKAGE_NAME]['privateApp']) {
 				$ret['appPrivate'] = true;
 			}
 		}

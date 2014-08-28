@@ -132,7 +132,7 @@ class ServiceController extends Controller {
 				'csrf_token'=> $this->getCsrfToken($action)
 			);
 		}
-		return JsonResponse($response);
+		return new JsonResponse($response);
 	
 	}
 	

@@ -32,3 +32,9 @@ services:
         arguments: [@service_container]
         tags:
             - { name: kernel.event_subscriber }
+    
+    keosu_gadget.authentication.gadget:
+        class: Keosu\Gadget\AuthenticationGadgetBundle\EventListener\GadgetListener
+        arguments: [@service_container]
+        tags:
+            - { name: kernel.event_subscriber }

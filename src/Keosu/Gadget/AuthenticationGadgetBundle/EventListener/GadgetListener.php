@@ -4,6 +4,7 @@ namespace Keosu\Gadget\AuthenticationGadgetBundle\EventListener;
 use Keosu\CoreBundle\KeosuEvents;
 
 use Keosu\CoreBundle\Event\GadgetActionEvent;
+use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
 use Keosu\CoreBundle\Event\GadgetPanelEvent;
 
 use Keosu\Gadget\AuthenticationGadgetBundle\KeosuGadgetAuthenticationGadgetBundle;
@@ -32,6 +33,7 @@ class GadgetListener implements EventSubscriberInterface
 			KeosuEvents::GADGET_ADD_OLD.KeosuGadgetAuthenticationGadgetBundle::PACKAGE_NAME => 'onGadgetAction',
 			KeosuEvents::GADGET_DELETE.KeosuGadgetAuthenticationGadgetBundle::PACKAGE_NAME  => 'onGadgetAction',
 			KeosuEvents::GADGET_PANEL.KeosuGadgetAuthenticationGadgetBundle::PACKAGE_NAME   => 'onGadgetRenderPanel',
+			KeosuEvents::GADGET_CONF_FORM_BUILD.KeosuGadgetAuthenticationGadgetBundle::PACKAGE_NAME => 'onGadgetConfFormBuild',
 		);
 	}
 
@@ -62,5 +64,30 @@ class GadgetListener implements EventSubscriberInterface
 				'gadget'     => $event->getGadget(),
 				'gadgetList' => $event->getGadgetList()
 			)));
+	}
+	
+	public function onGadgetConfFormBuild(GadgetFormBuilderEvent $event)
+	{
+		$event->setOverrideForm(true);
+		$em = $this->container->get('doctrine')->getManager();
+		
+		//Get list of picture
+		$queryPageList = $em->createQueryBuilder();
+		$queryPageList->add('select','p.id , p.name')
+							->add('from', 'Keosu\CoreBundle\Entity\Page p');
+		$pageListTmp=$queryPageList->getQuery()->execute();
+		
+		//Prepare the list of picture for the form
+		$pageList=array();
+		foreach($pageListTmp as $page){
+			$pageList[$page['id']]=$page['name'];
+		}
+		
+		
+		//Overide form
+		$builder = $event->getFormBuilder();
+		$builder->add('pageToGoAfterLogin','choice',array(
+				'choices'	=> $pageList,
+		));
 	}
 }

@@ -43,8 +43,9 @@ class GadgetListener implements EventSubscriberInterface
 						->add('from', 'Keosu\DataModel\LocationModelBundle\Entity\Location l');
 		$poiListTmp=$queryPOIList->getQuery()->execute();
 		
-
+		
 		//Prepare the list of poi for the form
+		$poiList=array();
 		foreach($poiListTmp as $poi){
 			$poiList[$poi['id']]=$poi['name'];
 		}

@@ -78,7 +78,7 @@ app.directive('keosuPush', function(){
 						console.log('iphone id');
 						console.log(result);
 						if( result.length > 0 ) {
-							$http.post($scope.host+'/service/push/plugin/addDevice/1','token='+result);
+							$http.post($scope.host+'service/push/plugin/addDevice/1','token='+result);
 						}
 					},
 					errorHandler: function(error){console.log('the eoor is '+error)},

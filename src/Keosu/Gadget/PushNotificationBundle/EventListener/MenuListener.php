@@ -35,13 +35,15 @@ class MenuListener implements EventSubscriberInterface
 	public function onMenuConfigRender(PackageSideMenuEvent $event)
 	{
 		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
-		$em = $this->container->get('doctrine')->getManager();
-		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
-		
-		if(isset($app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['enablePush'])
-			&& $app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['enablePush'] === true) {
-			$url = $this->container->get('router')->getGenerator()->generate('keosu_gadget_push_notification_homepage');
-			$event->addUrl('Send push',$url);
+		if($appId!=null){
+			$em = $this->container->get('doctrine')->getManager();
+			$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
+
+			if(isset($app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['enablePush'])
+				&& $app->getConfigPackages()[KeosuGadgetPushNotificationBundle::PACKAGE_NAME]['enablePush'] === true) {
+				$url = $this->container->get('router')->getGenerator()->generate('keosu_gadget_push_notification_homepage');
+				$event->addUrl('Send push',$url);
+			}
 		}
 	}
 }

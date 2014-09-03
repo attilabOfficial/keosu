@@ -12,6 +12,7 @@ app.controller('main_Controller', function($http, $scope) {
 					alert("Network unreachable. The page will be reload soon as possible.");
 					document.addEventListener("online",function(){
 						$scope.offline=false;
+						alert("Reconnection !");
 						document.removeEventListener("online",function(){},false);
 						location.reload();
 				}, false);

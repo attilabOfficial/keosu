@@ -22,9 +22,15 @@
 		"facebook-js-sdk.js"
 	],
 	"appParam" : [
-		{"name" : "fbAppId" , "type" : "text" },
-		{"name" : "fbAppName" , "type" : "text"},
-		{"name" : "fbAppSecret", "type" : "text", "backOfficeOnly": 1}
+		{"name" : "fbAppId" , "type" : "text", "options" : {
+         "required" : 0
+      	}},
+		{"name" : "fbAppName" , "type" : "text", "options" : {
+         "required" : 0
+      	}},
+		{"name" : "fbAppSecret", "type" : "text", "backOfficeOnly": 1, "options" : {
+         "required" : 0
+      	}}
 	]
 }
 

@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php
-$error=$_GET["error"];
+$error=@$_GET["error"];
 
 ?>
 

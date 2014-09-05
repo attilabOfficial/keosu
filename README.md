@@ -24,7 +24,7 @@ With packaged version (easy way)
 =
 Go to release page (<a href="https://github.com/vleborgne/keosu/releases">here</a>) and download the last ralease zip file.<br/>
 Unzip it in your apache webdir<br/>
-Move to your web/app.php with your navigator (ie http://localhost/keosu/web/install/check.php)<br /> 
+Move to your web/install/check.php with your navigator (ie http://localhost/keosu/web/install/check.php)<br /> 
 
 
 From sources (nerd only)

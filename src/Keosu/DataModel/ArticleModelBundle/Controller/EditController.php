@@ -42,8 +42,8 @@ class EditController extends Controller {
 		$article = $repo->find($id);
 
 		if ($article->getReader() === null || $article->getReader()->allowupdate !== false) {
-			$this->$em->remove($article);
-			$this->$em->flush();
+			$em->remove($article);
+			$em->flush();
 		}
 		return $this
 				->redirect($this->generateUrl('keosu_article_viewlist'));

@@ -38,12 +38,13 @@ class SyncController extends Controller {
 	 */
 	public function syncAction($id)
 	{
+		$logger = $this->get('logger');
 		$em = $this->get('doctrine')->getManager();
 		$reader = $em->getRepository('KeosuCoreBundle:Reader')->find($id);
 
 		//Convert it to a RssReader
 		$rssReader = RssReader::constructfromReader($reader);
-		
+
 		//geting the feed as a string
 		$rssurl=$rssReader->feed_url;
 		$curl = curl_init($rssurl);
@@ -51,13 +52,19 @@ class SyncController extends Controller {
 					array('Content-Type: text/xml',
 					'User-Agent: Keosu-UA'));
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		$feedstring = utf8_decode(curl_exec($curl));
+		$feedstring = curl_exec($curl);
 		curl_close($curl);
-		
+		$logger->debug($feedstring);
+
 		//Parse feed to get all elements
-		$craw = new Crawler($feedstring);
-		$entries = $craw->filter('item');//Item tag is an entry
+		//$craw = new Crawler($feedstring);
+
+		//$entries = $craw->filter('item');//Item tag is an entry
+		$document = new \DOMDocument();
+		$document->loadXml($feedstring);
+		$entries = $document->getElementsByTagName('item');
 		foreach ($entries as $entry) {
+			$logger->debug("aaaaaaaaaaaaaaaaaaaaaaaaa");
 			$this->parseAndImportArticle($entry, $reader,$rssReader->striphtml);
 		}
 		return $this->redirect($this->generateUrl('keosu_article_viewlist'));
@@ -65,6 +72,7 @@ class SyncController extends Controller {
 
 	private function parseAndImportArticle($entry, $reader, $striphtml)
 	{
+		$logger = $this->get('logger');
 		//Setting default value to avoid doctrine errors
 		$title="";
 		$body="";
@@ -126,7 +134,7 @@ class SyncController extends Controller {
 			$filePath = $this->downloadFile($img,$attachment->getUploadRootDir());
 			$baseName = basename($img);
 			$attachment->setName($baseName);
-			$attachment->setPath($filePath);
+			$attachment->setPath($baseName);
 			$article->addAttachment($attachment);
 		}
 		

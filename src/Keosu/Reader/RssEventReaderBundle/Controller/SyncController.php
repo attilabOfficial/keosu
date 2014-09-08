@@ -40,7 +40,6 @@ class SyncController extends Controller {
 		$reader = $em->getRepository('KeosuCoreBundle:Reader')->find($id);
 		//Convert it to a RssReader
 		$rssReader = RssEventReader::constructfromReader($reader);
-		
 		//geting the feed as a string
 		$rssurl = $rssReader->feed_url;
 		$curl = curl_init($rssurl);

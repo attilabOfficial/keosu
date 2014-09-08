@@ -42,17 +42,17 @@ class App
         $this->description = 'Keosu demo';
         $this->author = 'keosu team';
         $this->website = 'http://keosu.com';
-        $this->email = 'vleborgne@keosu.com';
+        $this->email = 'mail@localhost.com';
         $this->theme = array_keys(ThemeUtil::getThemeList())[0];
         $this->preferences = array(
                 // If you do not want any permissions to be added to your app, add the
                 // following tag to your config.xml; you will still have the INTERNET
                 // permission on your app, which PhoneGap requires.
                 array("key" => "permissions"                ,"value" => "none"),
-                array("key" => "phonegap-version"           ,"value" => "3.1.0" ), // all: current version of PhoneGap
+                array("key" => "phonegap-version"           ,"value" => "3.5.0" ), // all: current version of PhoneGap
                 array("key" => "orientation"                ,"value" => "default" ), // all: default means both landscape and portrait are enabled
                 array("key" => "target-device"              ,"value" => "universal" ), // all: possible values handset, tablet, or universal
-                array("key" => "Fullscreen"                 ,"value" => "true" ), // all: hides the status bar at the top of the screen
+                array("key" => "fullscreen"                 ,"value" => "true" ), // all: hides the status bar at the top of the screen
                 array("key" => "webviewbounce"              ,"value" => "true" ), // ios: control whether the screen 'bounces' when scrolled beyond the top
                 array("key" => "prerendered-icon"           ,"value" => "true" ), // ios: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen
                 array("key" => "stay-in-webview"            ,"value" => "false" ), // ios: external links should open in the default browser, 'true' would use the webview the app lives in
@@ -387,7 +387,7 @@ class App
      */
     public function setPreferences($preferences) {
         $this->preferences = $preferences;
-        return this;
+        return $this;
     }
 
     /**

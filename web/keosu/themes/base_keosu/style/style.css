@@ -26,6 +26,11 @@ body {
 	word-wrap: break-word;
 }
 
+hr{
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
 
 .content {
 	margin-top: 85px;

@@ -20,9 +20,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 { "data": [
 	{% for event in events %}
 		{
-			"id" : "{{event.id |escape('html_attr') }}",
-			"name" : "{{event.name |escape('html_attr')  }}",
-			"date" : "{{event.getDateString() |escape('html_attr') }}"
+			"id" : "{{event.id }}",
+			"name" : "{{event.name}}",
+			"date" : "{{event.getDateString() }}",
+			"datems":"{{ event.getDateMs() }}
+			"lat" :"{{event.latitude}}",
+			"lng" :"{{event.longitude}}",
+			"place":"{{ event.lieu }}"
 		}
 		{% if loop.last ==false%}
 		,

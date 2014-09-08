@@ -1,0 +1,37 @@
+<div ng-show="isList" ng-swipe-left="next()" ng-swipe-right="previous()">
+		<div class="panel list">
+			<div class="panel-body list-content">
+				<div class="row-fluid list-elements animated {{slide}}" ng-repeat="apage in pages">
+					<div class="media" ng-click="open(apage)">
+						<div class="media-body list-title">
+							<h6 class="title">{{ apage.date }}&nbsp;{{ apage.name }}</h6>
+						</div>
+					</div>
+					<hr>
+				</div>
+			</div>
+		</div>
+
+	</li>
+
+</div>
+<div ng-show="isEvent" class="animated zoomIn">
+	<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a>
+	<div class="row-fluid">
+		<h4 class="title" style="text-align: center">{{ event.name }}</h4>
+	</div>
+	<hr>
+	<div class="gadget-content">
+		<div class="row-fluid">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div ng-bind-html="event.date"></div>
+			</div>
+		</div>
+	</div>
+	<button ng-click="addToCalendar(event)"
+			class="btn btn-default btn-page animated fadeIn">Add to my phone calendar
+	</button>
+
+	<hr>
+	<div id="map_canvas"></div>
+</div>

@@ -34,37 +34,14 @@ class ServiceController extends Controller {
 		$qb->add('select', 'p')
 				->add('from','Keosu\DataModel\EventModelBundle\Entity\Event p')
 				->add('orderBy', 'p.date DESC')
-				->setFirstResult($offset)
-				->setMaxResults(15);
+				->setFirstResult($offset*$eventsperpage)
+				->setMaxResults($eventsperpage);
 		$query = $qb->getQuery();
 		$eventsList = $query->execute();
 
 		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewlist.'. $format . '.twig',array(
 									'events'        => $eventsList,
 									'eventsperpage' => $eventsperpage
-				));
-	}
-	
-	public function viewOneAction($eventid,$format){
-		$em = $this->get('doctrine')->getManager();
-		$event = $em->getRepository('KeosuDataModelEventModelBundle:Event')->find($eventid);
-		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:view.'. $format . '.twig',array(
-									'event' => $event
-				));
-	}
-		
-	public function viewTableAction($gadgetId, $format) {
-
-		$em = $this->get('doctrine')->getManager();
-		$qb = $em->createQueryBuilder();
-		$qb->add('select', 'p')
-				->add('from','Keosu\DataModel\EventModelBundle\Entity\Event p')
-				->add('orderBy', 'p.date DESC');
-		$query = $qb->getQuery();
-		$eventsList = $query->execute();
-	
-		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewtable.'. $format . '.twig',array(
-									'events' => $eventsList
 				));
 	}
 	

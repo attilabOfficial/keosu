@@ -17,6 +17,9 @@
 			{ "@attributes":{"name":"nl.x-services.plugins.socialsharing","version":"4.3.0"} }
 		]}
 	],
+	"pluginToInstall" : [
+		"cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git"
+	],
 	"libJs" : [
 		"cdv-plugin-fb-connect.js",
 		"facebook-js-sdk.js"

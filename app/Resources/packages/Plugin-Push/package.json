@@ -14,6 +14,9 @@
          { "@attributes" : {"name" : "com.phonegap.plugins.pushplugin", "version" : "2.1.1"} }
       ]}
    ],
+	"pluginToInstall" : [
+		"cordova plugin add https://github.com/phonegap-build/PushPlugin.git"
+	],
    "appParam" : [
       { "name" : "enablePush", "type" : "checkbox", "options" : {
          "required" : 0

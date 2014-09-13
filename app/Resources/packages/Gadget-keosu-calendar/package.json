@@ -22,5 +22,8 @@
 			{ "@attributes":{"name":"nl.x-services.plugins.calendar","version":"4.2.4"} }
 		]}
 	],
+	"pluginToInstall" : [
+		"cordova plugin add https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git"
+	],
    "appParam" : []
 }

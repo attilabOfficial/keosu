@@ -56,20 +56,17 @@ app.controller('keosu-calendarController', function ($scope, $http, $sce, usSpin
 		$scope.parts(false, true, $scope);
 	};
 
-	$scope.addToCalendar = function(event){
+	$scope.addToCalendar = function(eventObj){
 		if(window.plugins.calendar==null){
 			alert("not available on desktop")
 		}else{
-			startDate = new Date(parseInt(event.datems));
+			startDate = new Date(parseInt(eventObj.datems));
+			startDate = new Date(parseInt(eventObj.datems)+25000);
 			//TODO Fix this
-			window.plugins.calendar.createEvent(event.name,event.place,event.name,startDate,startDate,
-				function(message) {
-					alert("Success: " + JSON.stringify(message));
-				}
-				,
-				function(message) {
-					alert("Error: " + message);
-				});
+			$scope.successCal = function() { alert("Success: " + JSON.stringify("Event Added!")); };
+			$scope.errorCal = function(message) { alert("Error: " + JSON.stringify(message)); };
+
+			window.plugins.calendar.createEvent(eventObj.name,eventObj.place,eventObj.name,startDate,startDate,$scope.successCal,$scope.errorCal);
 		}
 	}
 
@@ -101,6 +98,7 @@ app.controller('keosu-calendarController', function ($scope, $http, $sce, usSpin
 			$scope.isFirstPage = data.isFirst;
 			$scope.isLastPage = data.isLast;
 			start = $scope.pages.length;
+			console.log("Data lenght"+data.data.length);
 			for (i = 0; i < data.data.length; i++) {
 				$scope.pages[start+i] = data.data[i];
 				$scope.pages[start+i].id = $sce.trustAsHtml(decodedContent(data.data[i].id));
@@ -110,6 +108,7 @@ app.controller('keosu-calendarController', function ($scope, $http, $sce, usSpin
 		});
 	}
 	$scope.init = function (params){
+		console.log("init calendar gadget");
 		$scope.slide="fadeIn";
 		$scope.param = params;
 		$scope.pages = new Array();

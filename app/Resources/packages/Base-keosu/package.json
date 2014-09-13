@@ -7,6 +7,9 @@
         { "gap:plugin" : [
             { "@attributes" : {"name" : "org.apache.cordova.network-information" , "version":"0.2.7" } }
     ]}],
+	"pluginToInstall" : [
+		"cordova plugin add org.apache.cordova.network-information"
+	],
     "require" : [
         { "name" : "angularJs" , "version" : ">=1.2" },
         { "name" : "jQuery", "version" : ">=2" },

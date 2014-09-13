@@ -350,39 +350,35 @@ class Exporter {
 
 
 		/**
-		 * Duplicate Export for ios, android and phonegapbuild
+		 * Duplicate Export for cordova and phonegapbuild
 		 */
 		//For ios
 		FilesUtil::copyFolder($this->getExportAbsolutePath().'/simulator/www',
-			$this->getExportAbsolutePath().'/ios/www');
-		
-		copy(TemplateUtil::getAbsolutePath().'/main-header/ios/cordova.js',
-			$this->getExportAbsolutePath().'/ios/www/cordova.js');
-		
-		//For Android
-		FilesUtil::copyFolder($this->getExportAbsolutePath().'/simulator/www',
-			$this->getExportAbsolutePath().'/android/www');
-		
-		copy(TemplateUtil::getAbsolutePath().'/main-header/android/cordova.js',
-			$this->getExportAbsolutePath().'/android/www/cordova.js');
+			$this->getExportAbsolutePath().'/cordova/www');
+
+		copy($this->getExportAbsolutePath().'/cordova/www/config.xml',
+			$this->getExportAbsolutePath().'/cordova/config/config.xml');
+
+		unlink($this->getExportAbsolutePath().'/cordova/www/config.xml');
+
+
 		
 		//For phonegapbuild
 		FilesUtil::copyFolder($this->getExportAbsolutePath().'/simulator/www',
 			$this->getExportAbsolutePath().'/phonegapbuild/www');
-		//No cordova.js in phonegapbuild
-		
+
 		copy(TemplateUtil::getAbsolutePath().'/main-header/ios/cordova.js',
 			$this->getExportAbsolutePath().'/simulator/www/cordova.js');
 		
 		
 		//Generate ZIP files for all
+		//Cordova
+		ZipUtil::ZipFolder($this->getExportAbsolutePath().'/cordova/www',
+			$this->getExportAbsolutePath().'/cordova/export.zip');
+		ZipUtil::ZipFolder($this->getExportAbsolutePath().'/cordova/config',
+			$this->getExportAbsolutePath().'/cordova/config.zip');
 
-		//ios
-		ZipUtil::ZipFolder($this->getExportAbsolutePath().'/ios/www',
-			$this->getExportAbsolutePath().'/ios/export.zip');
-		//android
-		ZipUtil::ZipFolder($this->getExportAbsolutePath().'/android/www',
-			$this->getExportAbsolutePath().'/android/export.zip');
+
 		//Phonegapbuild
 		ZipUtil::ZipFolder($this->getExportAbsolutePath().'/phonegapbuild/www',
 			$this->getExportAbsolutePath().'/phonegapbuild/export.zip');
@@ -393,10 +389,14 @@ class Exporter {
 	{
 		//Clean existing export dir
 		FilesUtil::deleteDir($this->getExportAbsolutePath() .'/simulator/www');
-		FilesUtil::deleteDir($this->getExportAbsolutePath() .'/ios/www');
-		FilesUtil::deleteDir($this->getExportAbsolutePath() .'/android/www');
+		FilesUtil::deleteDir($this->getExportAbsolutePath() .'/cordova/www');
+		FilesUtil::deleteDir($this->getExportAbsolutePath() .'/cordova/config');
 		FilesUtil::deleteDir($this->getExportAbsolutePath() .'/phonegapbuild/www');
-		
+
+		//Delete required cordova plugins file
+		if (file_exists($this->getExportAbsolutePath() .'/cordova/config/required-cordova-plugins.txt')) {
+			unlink($this->getExportAbsolutePath() .'/cordova/config/required-cordova-plugins.txt');
+		}
 		//Creating dir www and js
 		mkdir($this->getExportAbsolutePath() . '/simulator/www/plugins', 0777, true);
 		mkdir($this->getExportAbsolutePath() . '/simulator/www/theme', 0777, true);
@@ -404,8 +404,8 @@ class Exporter {
 		mkdir($this->getExportAbsolutePath() . '/simulator/www/js', 0777, true);
 		mkdir($this->getExportAbsolutePath() . '/simulator/www/res', 0777, true);
 		
-		mkdir($this->getExportAbsolutePath() . '/ios/www', 0777, true);
-		mkdir($this->getExportAbsolutePath() . '/android/www', 0777, true);
+		mkdir($this->getExportAbsolutePath() . '/cordova/www', 0777, true);
+		mkdir($this->getExportAbsolutePath() . '/cordova/config', 0777, true);
 		mkdir($this->getExportAbsolutePath() . '/phonegapbuild/www', 0777, true);
 	}
 
@@ -481,6 +481,14 @@ class Exporter {
 			if(count($configCordova)) {
 				$this->convertToXml($configCordova,$configXml,$configXml->getElementsByTagName('widget')->item(0),$appConfig);
 			}
+		}
+		//Plugins to install manually
+		if(isset($config['pluginToInstall'])){
+			$pluginsToInstall = $config['pluginToInstall'];
+			if(count($pluginsToInstall)) {
+				file_put_contents($this->getExportAbsolutePath() .'/cordova/config/required-cordova-plugins.txt',json_encode($pluginsToInstall). PHP_EOL,FILE_APPEND);
+			}
+
 		}
 
 		// javascript lib

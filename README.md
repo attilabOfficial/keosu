@@ -56,7 +56,7 @@ Test it
 ==
 Move to your web/app.php with your navigator (ie http://localhost/keosu/web/app.php)<br /> 
 Login : admin<br /> 
-Password: lagoutte<br /> 
+Password: YouChooseIt<br /> 
 
 
 Note

@@ -37,15 +37,17 @@ class ExportListener implements EventSubscriberInterface
 		$configPackages = $app->getConfigPackages();
 		$fbAppId = $configPackages[KeosuGadgetFaceBookBundle::PLUGIN_NAME]['fbAppId'];
 
-		$event->addToJsInit('
-document.addEventListener(\'deviceready\',function(){
-	FB.init({
-		appId:'.$fbAppId.',
-		nativeInterface:CDV.FB,
-		useCacheDialogs:false
-	});
-});');
+		if($fbAppId!=null){
+			$event->addToJsInit('
+				document.addEventListener(\'deviceready\',function(){
+					FB.init({
+						appId:'.$fbAppId.',
+						nativeInterface:CDV.FB,
+						useCacheDialogs:false
+					});
+				});');
 		}
+	}
 }
 
 

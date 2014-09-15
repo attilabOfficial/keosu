@@ -70,17 +70,14 @@ class GadgetListener implements EventSubscriberInterface
 	{
 		$event->setOverrideForm(true);
 		$em = $this->container->get('doctrine')->getManager();
-		
-		//Get list of picture
-		$queryPageList = $em->createQueryBuilder();
-		$queryPageList->add('select','p.id , p.name')
-							->add('from', 'Keosu\CoreBundle\Entity\Page p');
-		$pageListTmp=$queryPageList->getQuery()->execute();
+		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
+
+		$pageListTmp = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appId);
 		
 		//Prepare the list of picture for the form
 		$pageList=array();
 		foreach($pageListTmp as $page){
-			$pageList[$page['id']]=$page['name'];
+			$pageList[$page->getId()]=$page->getName();
 		}
 		
 		

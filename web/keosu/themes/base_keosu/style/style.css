@@ -60,7 +60,6 @@ hr{
 }
 
 #logo, .center {
-	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 5px;
@@ -268,8 +267,8 @@ a {
   position:relative  !important;
   margin-left: auto;
   margin-right: auto;
-  height:64px  !important;
-  width:64px  !important;
+  max-height:64px  !important;
+  max-width:128px  !important;
   overflow:hidden  !important;
 }
 

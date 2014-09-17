@@ -18,7 +18,6 @@
 		header("Location: configure.php?error=already");
 		exit;
 	}
-	echo($dbhost.":".$dbport);
 	//Testing mysql connection
 	$link = mysql_connect($dbhost.":".$dbport, $dbusername, $dbpassword);
 	if (!$link) {
@@ -90,7 +89,6 @@
 	}
 	function writeFile($content, $fileName){
 		$fileName = __DIR__ . '/../../app/config/' . $fileName;
-		echo($fileName);
 		if (file_exists($fileName)) {
 			unlink($fileName);
 		}

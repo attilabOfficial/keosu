@@ -19,20 +19,20 @@
 		exit;
 	}
 	//Testing mysql connection
-	$link = mysql_connect($dbhost.":".$dbport, $dbusername, $dbpassword);
+	$link = mysqli_connect($dbhost.":".$dbport, $dbusername, $dbpassword);
 	if (!$link) {
 		header("Location: configure.php?error=bdd");
 		exit;
 	}
 	//Creating database
 	$sql = 'CREATE DATABASE '.$dbname;
-	if (!mysql_query($sql, $link)) {
+	if (!mysqli_query($link,$sql)) {
 		header("Location: configure.php?error=bdd");
 		exit;
 	}
 	//Import mysql dump file
 	$templine = '';
-	mysql_select_db($dbname);
+	mysqli_select_db($link,$dbname);
 	$lines = file(__DIR__ . '/sql/dump.sql');
 	foreach ($lines as $line){
 		// Skip it if it's a comment
@@ -43,14 +43,12 @@
 		// If it has a semicolon at the end, it's the end of the query
 		if (substr(trim($line), -1, 1) == ';'){
 			// Perform the query
-			mysql_query($templine);
+			mysqli_query($link,$templine);
 			// Reset temp variable to empty
 			$templine = '';
 		}
 	}
-
-
-	mysql_close($link);
+	mysqli_close($link);
 
 	//Generating parameter.yml file
 	generateParameters($dbhost, $dbport,$dbname,$dbusername,$dbpassword,$adminpassword);

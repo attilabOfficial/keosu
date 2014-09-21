@@ -27,7 +27,7 @@
 	//Creating database
 	$sql = 'CREATE DATABASE '.$dbname;
 	if (!mysqli_query($link,$sql)) {
-		header("Location: configure.php?error=bdd");
+		header("Location: configure.php?error=bdd_already");
 		exit;
 	}
 	//Import mysql dump file

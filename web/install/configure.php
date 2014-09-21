@@ -24,7 +24,10 @@ $error=@$_GET["error"];
 					Your installation is already done. If you want to modify it please edit app/config/parameters.yml file
 				<?php }?>
 				<?php if($error=="bdd"){?>
-					Can't connect to your database
+					Can't connect to your database. Check your parameters.
+				<?php }?>
+				<?php if($error=="bdd_already"){?>
+					Your database name already exist, please choose a new name
 				<?php }?>
 			</p>
 		<?php }?>

@@ -21,7 +21,7 @@
 	<div class="col-md-2"></div>
 	<div class="wellcustom col-md-8">
 		<h1>Checking your installation</h1>
-		<?php if ($phpversion){?>
+		<?php if ($phpversion>=0){?>
 			<p class="alert alert-success">
 				Php version installed : <?php echo($phpversion);?>
 			</p>

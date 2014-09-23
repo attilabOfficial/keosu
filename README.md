@@ -4,7 +4,7 @@ Keosu is an open source CMS for mobile app.
 
 Requirement
 ===
-- PHP (Min 5.3)
+- PHP (Min 5.4)
 - Apache (Min 2.2)
 - Mysql
 
@@ -25,6 +25,8 @@ With packaged version (easy way)
 Go to release page (<a href="https://github.com/vleborgne/keosu/releases">here</a>) and download the last ralease zip file.<br/>
 Unzip it in your apache webdir<br/>
 Move to your web/install/check.php with your navigator (ie http://localhost/keosu/web/install/check.php)<br /> 
+
+Note : Don't create your database manually before executing the script
 
 
 From sources (nerd only)

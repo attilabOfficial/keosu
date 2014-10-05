@@ -21,14 +21,14 @@
 	<div class="col-md-2"></div>
 	<div class="wellcustom col-md-8">
 		<h1>Checking your installation</h1>
-		<?php if ($phpversion>=0){?>
+		<?php if ($isPhpVersion){?>
 			<p class="alert alert-success">
 				Php version installed : <?php echo($phpversion);?>
 			</p>
 		<?php }else{?>
 			<p class="alert alert-danger">
 				Php version installed : <?php echo($phpversion);?><br/>
-				Upgrade to php 5.3.0 or upper to use Keosu
+				Upgrade to php 5.4.0 or upper to use Keosu
 			</p>
 		<?php }?>
 		<?php if ($isCurlInstall){?>

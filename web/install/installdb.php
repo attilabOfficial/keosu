@@ -21,7 +21,7 @@
 		exit;
 	}
 	//Testing mysql connection
-	$link = mysqli_connect($dbhost.":".$dbport, $dbusername, $dbpassword);
+	$link = mysqli_connect($dbhost, $dbusername, $dbpassword,null,$dbport);
 	if (!$link) {
 		header("Location: configure.php?error=bdd");
 		exit;

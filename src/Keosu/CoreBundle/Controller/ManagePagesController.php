@@ -1,6 +1,6 @@
 <?php
 /************************************************************************
- Keosu is an open source CMS for mobile app
+Keosu is an open source CMS for mobile app
 Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
 This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@ GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-************************************************************************/
+ ************************************************************************/
 namespace Keosu\CoreBundle\Controller;
 
 use Keosu\CoreBundle\KeosuEvents;
@@ -30,7 +30,7 @@ class ManagePagesController extends Controller {
 	//List of available icons
 	//Can be extend using http://getbootstrap.com/components/#glyphicons
 	public $iconList = array(
-		'glyphicon-home'=>'glyphicon-home', 
+		'glyphicon-home'=>'glyphicon-home',
 		'glyphicon-star'=>'glyphicon-star',
 		'glyphicon-asterisk'=>'glyphicon-asterisk',
 		'glyphicon-envelope'=>'glyphicon-envelope',
@@ -82,7 +82,7 @@ class ManagePagesController extends Controller {
 		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
 
 		return $this->render('KeosuCoreBundle:Page:manage.html.twig',
-						array('pages' => $pages));
+			array('pages' => $pages));
 	}
 
 	/**
@@ -103,14 +103,14 @@ class ManagePagesController extends Controller {
 		$em = $this->get('doctrine')->getManager();
 		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
 		$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($id);
-		
+
 		foreach ($gadgets as $gadget) {
 			$event = new GadgetPageActionEvent($page,$gadget);
 			$dispatcher->dispatch(KeosuEvents::GADGET_PAGE_EDIT.$gadget->getName(),$event);
 			if($event->getResponse() !== null)
 				return $event->getResponse();
 		}
-		
+
 		return $this->editPage($page);
 	}
 
@@ -123,11 +123,24 @@ class ManagePagesController extends Controller {
 		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
 		$gadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($id);
 
+		//Dispatch event to gadget in page
 		foreach ($gadgets as $gadget) {
 			$event = new GadgetPageActionEvent($page,$gadget);
 			$dispatcher->dispatch(KeosuEvents::GADGET_PAGE_DELETE.$gadget->getName(),$event);
 			if($event->getResponse() !== null)
 				return $event->getResponse();
+		}
+		//Dispatch event to all the gadget in app
+		$appPages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($page->getAppId());
+		foreach ($appPages as $appPage) {
+			$appGadgets = $em->getRepository('KeosuCoreBundle:Gadget')->findByPage($appPage->getId());
+			foreach ($appGadgets as $appGadget) {
+				$event = new GadgetPageActionEvent($page,$appGadget);
+				$dispatcher->dispatch(KeosuEvents::APPGADGET_PAGE_DELETE.$appGadget->getName(),$event);
+				if($event->getResponse() !== null)
+					return $event->getResponse();
+			}
+
 		}
 
 		foreach($gadgets as $gadget)
@@ -151,11 +164,11 @@ class ManagePagesController extends Controller {
 		$theme = $em->getRepository('KeosuCoreBundle:App')->find($appId);
 		//page edit form
 		$formBuilder = $this->createFormBuilder($page,array(
-									'label' => 'Page edit'
-					));
+			'label' => 'Page edit'
+		));
 		$this->buildPageForm($formBuilder);
 		$form = $formBuilder->getForm();
-		
+
 		//If we are in POST method, form is submit
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
@@ -166,15 +179,15 @@ class ManagePagesController extends Controller {
 				//Export app to see new page in simulator
 				$this->get('keosu_core.exporter')->exportApp();
 				return $this->redirect(
-								$this->generateUrl('keosu_core_views_page_manage'));
+					$this->generateUrl('keosu_core_views_page_manage'));
 			}
 		}
-		
+
 		return $this->render('KeosuCoreBundle:Page:edit.html.twig',array(
-							'form' => $form->createView(),
-							'theme'=>$theme->getTheme(),
-							'templateDir'=>TemplateUtil::getPageTemplateWebPath()
-						));
+			'form' => $form->createView(),
+			'theme'=>$theme->getTheme(),
+			'templateDir'=>TemplateUtil::getPageTemplateWebPath()
+		));
 	}
 
 	/**
@@ -182,20 +195,20 @@ class ManagePagesController extends Controller {
 	 */
 	private function buildPageForm($formBuilder) {
 		$formBuilder
-				->add('name', 'text')
-				->add('icon', 'choice',array(
-						'choices' => $this->iconList,
-						'required' => true,
-						'expanded'=>true
-				))
-				->add('isMain', 'checkbox', array(
-						'required' => false
-				))
-				->add('templateId', 'choice', array(
-						'choices' => TemplateUtil::getTemplateList(),
-						'required'  => true, 
-						'expanded'=>true
-				));
+			->add('name', 'text')
+			->add('icon', 'choice',array(
+				'choices' => $this->iconList,
+				'required' => true,
+				'expanded'=>true
+			))
+			->add('isMain', 'checkbox', array(
+				'required' => false
+			))
+			->add('templateId', 'choice', array(
+				'choices' => TemplateUtil::getTemplateList(),
+				'required'  => true,
+				'expanded'=>true
+			));
 	}
 
 	/**
@@ -207,8 +220,8 @@ class ManagePagesController extends Controller {
 		//Count number of isMain
 		$nbrIsMain = $em->getRepository('KeosuCoreBundle:Page')->countIsMainByAppId($appid);
 		return $this->render('KeosuCoreBundle:Page:check.html.twig',array(
-														'nbrIsMain' => $nbrIsMain
-							));
+			'nbrIsMain' => $nbrIsMain
+		));
 	}
 
 }

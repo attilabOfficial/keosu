@@ -100,7 +100,7 @@ final class KeosuEvents
 	/**
 	 * The GADGET_PAGE_EDIT[Name of the gadget] event occurs when the page is about to be edited
 	 *
-	 * This event allows to modify the edit action of a page with a specific gadget
+	 * This event allows to modify the edit action of a page with a specific gadget  in page
 	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPageActionEvent instance
 	 */
 	const GADGET_PAGE_EDIT = 'keosu.gadget.page.edit.';
@@ -112,6 +112,23 @@ final class KeosuEvents
 	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPageActionEvent instance
 	 */
 	const GADGET_PAGE_DELETE = 'keosu.gadget.page.delete.';
+
+	/**
+	 * The APPGADGET_PAGE_EDIT[Name of the gadget] event occurs when the page is about to be edited
+	 *
+	 * This event allows to modify the edit action of a page with a specific gadget all app
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPageActionEvent instance
+	 */
+	const APPGADGET_PAGE_EDIT = 'keosu.appgadget.page.edit.';
+
+
+	/**
+	 * The APPGADGET_PAGE_DELETE[Name of the gadget] event occurs when the page is about to be deleted
+	 *
+	 * This event allows to modify the delete action of a page with a specific gadget in all app
+	 * The event listener method receives a Keosu\CoreBundle\Event\GadgetPageActionEvent instance
+	 */
+	const APPGADGET_PAGE_DELETE= 'keosu.appgadget.page.edit.';
 
 	/**
 	 * The GADGET_EXPORT[Name of the gadget] event occurs when the package is about to be exported

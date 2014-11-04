@@ -237,7 +237,8 @@ class Exporter {
 		// @see https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html
 		if($app->getDebugMode() == true) {
 			$script = $indexHtml->createElement('script');
-			$script->setAttribute('src',\substr($baseurl,0,\strlen($baseurl)-10).':8080/target/target-script-min.js#anonymous');
+            $domainName = parse_url($baseurl);
+			$script->setAttribute('src','http://'.$domainName['host'].':8080/target/target-script-min.js#anonymous');
 			$indexHtml->getElementsByTagName('head')->item(0)->appendChild($script);
 		}
 

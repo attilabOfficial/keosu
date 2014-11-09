@@ -59,7 +59,7 @@ class ConfigGadgetType extends AbstractType {
 				$params = $config['param'];
 				foreach($params as $p) {
 					if($builder->has($p['name']))
-						throw new \LogicException('The property '.$p['name'].' allready exist maybe you forget to enable overrideForm ?');
+						throw new \LogicException('The property '.$p['name'].' already exists, maybe you forgot to enable overrideForm ?');
 				
 					if(isset($p['options']))
 						$builder->add($p['name'],$p['type'],$p['options']);

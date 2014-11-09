@@ -84,14 +84,14 @@ class SyncController extends Controller {
 		//Getting all elements from entry (DOMElement) object
 		if($entry->getElementsByTagName("title")->item(0)!=null)
 			$title=$entry->getElementsByTagName("title")->item(0)->nodeValue;
-		if($entry->getElementsByTagName("description")->item(0)!=null){
+		if($entry->getElementsByTagName("description")->item(0)!=null)
 			$body=$entry->getElementsByTagName("description")->item(0)->nodeValue;
-			if($striphtml){
-				$body = strip_tags($body);
-			}
-		}
-		
-		if($entry->getElementsByTagName("pubdate")->item(0)!=null){
+        if($entry->getElementsByTagName("encoded")->item(0)!=null)
+            $body=$entry->getElementsByTagName("encoded")->item(0)->nodeValue;
+        if($striphtml)
+            $body = strip_tags($body);
+
+        if($entry->getElementsByTagName("pubdate")->item(0)!=null){
 			$dateString = $entry->getElementsByTagName("pubdate")->item(0)->nodeValue;
 			//Converting datestring to DateTime Object
 			$date=\DateTime::createFromFormat(\DateTime::RFC2822,$dateString );	
@@ -100,7 +100,9 @@ class SyncController extends Controller {
 			$idext=$entry->getElementsByTagName("guid")->item(0)->nodeValue;
 		if($entry->getElementsByTagName("enclosure")->item(0)!=null){
 			$img=$entry->getElementsByTagName("enclosure")->item(0)->getAttribute('url');
-		}
+		} elseif ($entry->getElementsByTagName("image")->item(0)!=null){
+            $img=$entry->getElementsByTagName("image")->item(0)->nodeValue;
+        }
 		if($entry->getElementsByTagName("dc:creator")->item(0)!=null)
 			$author=$entry->getElementsByTagName("dc:creator")->item(0)->nodeValue;
 

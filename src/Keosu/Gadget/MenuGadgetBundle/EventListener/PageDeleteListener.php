@@ -36,22 +36,19 @@ class PageDeleteListener implements EventSubscriberInterface
 	 */
 	public function onPageAction(GadgetPageActionEvent $event)
 	{
-		$logger = $this->container->get('logger');
-		$logger->debug("Delete unused pages in menu gadget");
 		$curPage=$event->getPage();
 		$gadget = $event->getGadget();
 		$pages=$gadget->getConfig()['page'];
 		$newConfig = array();
-		$logger->debug("Deleted page is ".$curPage->getId());
+        $newConfig['page'] = array();
 		foreach($pages as $page) {
-			$logger->debug("Cur page is ".$page['id']);
-			if($page['id']!=$curPage->getId()){
-				$pages[] = $page;
+			if($page != $curPage->getId()){
+				$newConfig['page'][] = $page;
 			}
 		}
 		$gadget->setConfig($newConfig);
 		$em = $this->container->get('doctrine')->getManager();
-		//$em->persist($gadget);
-		//$em->flush();
+		$em->persist($gadget);
+		$em->flush();
 	}
 }

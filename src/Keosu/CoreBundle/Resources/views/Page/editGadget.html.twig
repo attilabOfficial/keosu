@@ -26,26 +26,43 @@
 <br/>
 <div>
 	{{ form_start(form) }}
-	
+
 		<div class="imgTemplate">
 			{{ form_row(form.template) }}
 		</div>
-		
+
 		{{ form_row(form.shared) }}
 		{{ form_row(form.config) }}
-		
+
 		<br class="clear"/><br class="clear"/>
 		<input type="submit" class="btn btn-success" />&nbsp;
 		<a class="confirmModal" href="javascript:history.go(-1);" >
 			<button type="button" class="btn btn-danger">Cancel</button>
 		</a>
-		
+
 	{{ form_end(form) }}
 
 </div>
 <script>
-	$(document).ready(function() {	
+	$(document).ready(function() {
 		templateButton("{{url_base}}", "{{gadgetDir}}", "{{gadgetName}}");
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        // This is a very nasty hack for resolving a issue encountered during the save of the menu gadget
+        // Sometimes, a page included in the config is not taken into account
+        // TODO : fix the bug properly
+        var path       = window.location.pathname;
+        var splitPath  = path.split('/');
+        var gadgetType = splitPath[splitPath.length-1];
+
+        if (gadgetType == 'menu') {
+            $('#content form').submit(function() {
+                $('#content .collection-items select').each(function(index) {
+                    $(this).attr('name', 'form[config][page][' + (index+1) + ']')
+                });
+            });
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
 	});
 </script>
 {% endblock %}

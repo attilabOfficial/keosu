@@ -100,7 +100,7 @@ class Exporter {
 		copy(TemplateUtil::getAbsolutePath() . '/main-header/index.html',
 			$this->getExportAbsolutePath() . '/simulator/www/index.html');
 
-		
+
 		//Copy all theme/header/js dir to web/export/www/js
 		FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme().'/header/js',
 			$this->getExportAbsolutePath() . '/simulator/www/js');
@@ -141,6 +141,15 @@ class Exporter {
 		
 		$paramGadget = array();
 		$paramGadget['host'] = $baseurl.$this->container->getParameter('url_param');
+
+        ////////////////////////////////////////
+        // Generate Keosu's base
+        ////////////////////////////////////////
+        try {
+            $this->importPackage('keosu-base', $indexHtml, $configXml, $jsInit, $jsCore, $jsEnd, $importedPackages, $app, $httpLinks);
+        } catch(\Exception $e) {
+            throw new \LogicException('Unable to import keosu-base because '.$e->getMessage());
+        }
 	
 		////////////////////////////////////////
 		// Generate view for each page

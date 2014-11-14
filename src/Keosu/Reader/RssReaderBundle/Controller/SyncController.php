@@ -26,8 +26,6 @@ use Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
 
-require_once('../vendor/simplepie/php/autoloader.php');
-
 /**
  * Synchronise a RSS feed with Article data model
  * @author vleborgne
@@ -40,56 +38,77 @@ class SyncController extends Controller {
 	 */
 	public function syncAction($id)
 	{
+		$logger = $this->get('logger');
 		$em = $this->get('doctrine')->getManager();
 		$reader = $em->getRepository('KeosuCoreBundle:Reader')->find($id);
 
 		//Convert it to a RssReader
 		$rssReader = RssReader::constructfromReader($reader);
+
 		//geting the feed as a string
-		$rssUrl=$rssReader->feed_url;
+		$rssurl=$rssReader->feed_url;
+		$curl = curl_init($rssurl);
+		curl_setopt($curl, CURLOPT_HTTPHEADER,
+					array('Content-Type: text/xml',
+					'User-Agent: Keosu-UA'));
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		$feedstring = curl_exec($curl);
+		curl_close($curl);
+		$logger->debug($feedstring);
 
-        $feed = new \SimplePie();
-        $feed->set_feed_url($rssUrl);
-        $feed->init();
-        $items = $feed->get_items();
-        foreach ($items as $item) {
-            $this->parseAndImportArticle($item, $reader, $rssReader->striphtml);
-        }
+		//Parse feed to get all elements
+		//$craw = new Crawler($feedstring);
 
-        return $this->redirect($this->generateUrl('keosu_article_viewlist'));
+		//$entries = $craw->filter('item');//Item tag is an entry
+		$document = new \DOMDocument();
+		$document->loadXml($feedstring);
+		$entries = $document->getElementsByTagName('item');
+		foreach ($entries as $entry) {
+			$logger->debug("aaaaaaaaaaaaaaaaaaaaaaaaa");
+			$this->parseAndImportArticle($entry, $reader,$rssReader->striphtml);
+		}
+		return $this->redirect($this->generateUrl('keosu_article_viewlist'));
 	}
 
-    private function parseAndImportArticle($item, $reader, $stripHtml)
-    {
-        $title  = ($item->get_title()       ? $item->get_title()                  : '');
-        $body   = ($item->get_description() ? $item->get_description()            : '');
-        $id     = ($item->get_id()          ? $item->get_id()                     : '');
-        $author = ($item->get_authors()     ? $item->get_authors()[0]->get_name() : '');
+	private function parseAndImportArticle($entry, $reader, $striphtml)
+	{
+		$logger = $this->get('logger');
+		//Setting default value to avoid doctrine errors
+		$title="";
+		$body="";
+		$date=new \DateTime("now");
+		$idext="";
+		$img="";
+		$author="";
 
-        if ($item->get_content())
-            $body = $item->get_content();
-        if ($stripHtml)
+		//Getting all elements from entry (DOMElement) object
+		if($entry->getElementsByTagName("title")->item(0)!=null)
+			$title=$entry->getElementsByTagName("title")->item(0)->nodeValue;
+		if($entry->getElementsByTagName("description")->item(0)!=null)
+			$body=$entry->getElementsByTagName("description")->item(0)->nodeValue;
+        if($entry->getElementsByTagName("encoded")->item(0)!=null)
+            $body=$entry->getElementsByTagName("encoded")->item(0)->nodeValue;
+        if($striphtml)
             $body = strip_tags($body);
 
-        if ($item->get_enclosure() && $item->get_enclosure()->get_link())
-            $img = $item->get_enclosure()->get_link();
-        else
-            $img = '';
-        $images = $item->get_item_tags('', 'image');
-        if (count($images) > 0)
-            $img = $images[0]['data'];
-
-        if ($item->get_date() != null) {
-            $dateString = $item->get_date(\DateTime::RFC2822);
-            //Converting datestring to DateTime Object
-            $date = \DateTime::createFromFormat(\DateTime::RFC2822, $dateString);
-        } else {
-            $date = new \DateTime('now');
+        if($entry->getElementsByTagName("pubdate")->item(0)!=null){
+			$dateString = $entry->getElementsByTagName("pubdate")->item(0)->nodeValue;
+			//Converting datestring to DateTime Object
+			$date=\DateTime::createFromFormat(\DateTime::RFC2822,$dateString );	
+		}
+		if($entry->getElementsByTagName("guid")->item(0)!=null)
+			$idext=$entry->getElementsByTagName("guid")->item(0)->nodeValue;
+		if($entry->getElementsByTagName("enclosure")->item(0)!=null){
+			$img=$entry->getElementsByTagName("enclosure")->item(0)->getAttribute('url');
+		} elseif ($entry->getElementsByTagName("image")->item(0)!=null){
+            $img=$entry->getElementsByTagName("image")->item(0)->nodeValue;
         }
+		if($entry->getElementsByTagName("dc:creator")->item(0)!=null)
+			$author=$entry->getElementsByTagName("dc:creator")->item(0)->nodeValue;
 
-        //Store in database
-        $this->storeArticle($title, $body, $date, $id, $img, $author, $reader);
-    }
+		//Store in database
+		$this->storeArticle($title, $body, $date, $idext, $img, $author,$reader);
+	}
 	
 	private function storeArticle($title, $body, $date, $idext, $img, $author,$reader)
 	{

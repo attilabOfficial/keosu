@@ -1,0 +1,16 @@
+{
+    "name" : "keosu-rss",
+    "description" : "RSS feed reader",
+    "version" : "0.1",
+    "type" : "gadget",
+    "param" : [
+        { "name" : "url", "type":"text"},
+        {"name": "articlesPerPage", "type" : "choice","options": {
+         "choices" : {"3":"3","5":"5","10":"10","50":50,"100":"100"},
+         "required" : 1}}
+    ],
+    "libJs" : ["jsapi.js"],
+    "require" : [
+        { "name" : "keosu-base" , "version" : ">=0.1" }
+    ]
+}

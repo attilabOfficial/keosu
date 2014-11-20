@@ -23,15 +23,17 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$( "#form_icon .radio" ).each(function( index ) {
-			input = $(this).find('input');
-			templateName=input.attr('value');
-			input.attr('id',templateName+'Icon')
-			img='<label for="'+templateName+'Icon"><span class="glyphicon '+templateName+'"></span></label>';
-			$( this ).text("");
-			$( this ).append(input);
-			$( this ).append(img);
+		$( "#form_icon .radio" ).each(function(index) {
+            var label = $(this).find('label');
+			var input = $(this).find('input');
+            var iconPath = window.location.href.split('web')[0] + 'web/' + label.text().trim();
+            var img = '<img src="'+iconPath+'" style="height: 16px;" />';
+			label.attr('for', input.attr('id'));
+			label.text("");
+            label.append(input);
+            label.append(img);
 		});
+
 		templateButton("{{url_base}}", "{{templateDir}}", "");
 	});
 </script>

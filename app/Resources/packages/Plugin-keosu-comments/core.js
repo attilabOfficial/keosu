@@ -8,8 +8,13 @@ app.directive('keosuComments', function(){
 		},
 		templateUrl : 'plugins/keosu-comments/templates/default.html',
 		controller : ['$scope','$http', function ($scope, $http) {
-
-			$scope.init = function() {
+		
+			$scope.$watch('objectId', function() {
+				$scope.myinit();
+        	});
+			
+			$scope.myinit = function() {
+				//alert($scope.objectId + ' - ' + $scope.objectName + ' - ' + $scope.enableComments);
 				$http.get('data/globalParam.json').success(function(data){
 					$scope.host = data.host;
 					$scope.commentListAction();

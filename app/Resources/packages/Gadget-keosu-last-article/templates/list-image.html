@@ -46,4 +46,5 @@
 		<li ng-repeat="img in article.attachments"><img class="center"
 			ng-if="img" src="{{ img.path }}" alt=""></li>
 	</ul>
+	<keosu-comments object-id="article.id" object-name="article.dataModelObjectName" enable-comments="article.enableComments" ></keosu-comments>
 </div>

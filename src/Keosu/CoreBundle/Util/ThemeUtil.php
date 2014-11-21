@@ -43,7 +43,20 @@ class ThemeUtil {
 		return $templateList;
 
 	}
-	
+
+    public static function getIconList($themeName) {
+        $themeDir = ThemeUtil::getAbsolutePath().$themeName.'/style/icons/';
+        $fileList = scandir($themeDir);
+        $iconList = array();
+
+        foreach ($fileList as $file) {
+            if ($file != 'active' && $file != "." && $file != '..' && $file != 'LICENSE') {
+                $iconList[$file] = 'keosu/themes/'.$themeName.'/style/icons/'.$file;
+            }
+        }
+
+        return $iconList;
+    }
 
 
 	public static function getAbsolutePath() {

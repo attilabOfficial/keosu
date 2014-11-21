@@ -21,55 +21,12 @@ namespace Keosu\CoreBundle\Controller;
 use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Entity\Page;
 use Keosu\CoreBundle\Event\GadgetPageActionEvent;
+use Keosu\CoreBundle\Util\ThemeUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ManagePagesController extends Controller {
-
-	//List of available icons
-	//Can be extend using http://getbootstrap.com/components/#glyphicons
-	public $iconList = array(
-		'glyphicon-home'=>'glyphicon-home',
-		'glyphicon-star'=>'glyphicon-star',
-		'glyphicon-asterisk'=>'glyphicon-asterisk',
-		'glyphicon-envelope'=>'glyphicon-envelope',
-		'glyphicon-pencil'=>'glyphicon-pencil',
-		'glyphicon-glass'=>'glyphicon-glass',
-		'glyphicon-music'=>'glyphicon-music',
-		'glyphicon-search'=>'glyphicon-search',
-		'glyphicon-heart'=>'glyphicon-heart',
-		'glyphicon-user'=>'glyphicon-user',
-		'glyphicon-th-large'=>'glyphicon-th-large',
-		'glyphicon-cog'=>'glyphicon-cog',
-		'glyphicon-trash'=>'glyphicon-trash',
-		'glyphicon-file'=>'glyphicon-file',
-		'glyphicon-time'=>'glyphicon-time',
-		'glyphicon-road'=>'glyphicon-road',
-		'glyphicon-inbox'=>'glyphicon-inbox',
-		'glyphicon-repeat'=>'glyphicon-repeat',
-		'glyphicon-lock'=>'glyphicon-lock',
-		'glyphicon-flag'=>'glyphicon-flag',
-		'glyphicon-tag'=>'glyphicon-tag',
-		'glyphicon-qrcode'=>'glyphicon-qrcode',
-		'glyphicon-book'=>'glyphicon-book',
-		'glyphicon-print'=>'glyphicon-print',
-		'glyphicon-camera'=>'glyphicon-camera',
-		'glyphicon-facetime-video'=>'glyphicon-facetime-video',
-		'glyphicon-picture'=>'glyphicon-picture',
-		'glyphicon-map-marker'=>'glyphicon-map-marker',
-		'glyphicon-tint'=>'glyphicon-tint',
-		'glyphicon-plus-sign'=>'glyphicon-plus-sign',
-		'glyphicon-question-sign'=>'glyphicon-question-sign',
-		'glyphicon-info-sign'=>'glyphicon-info-sign',
-		'glyphicon-info-sign'=>'glyphicon-info-sign',
-		'glyphicon-gift'=>'glyphicon-gift',
-		'glyphicon-leaf'=>'glyphicon-leaf',
-		'glyphicon-calendar'=>'glyphicon-calendar',
-		'glyphicon-comment'=>'glyphicon-comment',
-		'glyphicon-shopping-cart'=>'glyphicon-shopping-cart',
-		'glyphicon-phone-alt'=>'glyphicon-phone-alrt',
-	);
 
 	/**
 	 * "Manage pages" page
@@ -161,7 +118,7 @@ class ManagePagesController extends Controller {
 		$request = $this->get('request');
 
 		//Get Curent theme
-		$theme = $em->getRepository('KeosuCoreBundle:App')->find($appId);
+		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
 		//page edit form
 		$formBuilder = $this->createFormBuilder($page,array(
 			'label' => 'Page edit'
@@ -185,7 +142,7 @@ class ManagePagesController extends Controller {
 
 		return $this->render('KeosuCoreBundle:Page:edit.html.twig',array(
 			'form' => $form->createView(),
-			'theme'=>$theme->getTheme(),
+			'theme'=>$app->getTheme(),
 			'templateDir'=>TemplateUtil::getPageTemplateWebPath()
 		));
 	}
@@ -194,10 +151,14 @@ class ManagePagesController extends Controller {
 	 * Edit page form
 	 */
 	private function buildPageForm($formBuilder) {
+        $appId = $this->container->get('keosu_core.curapp')->getCurApp();
+        $em = $this->get('doctrine')->getManager();
+        $app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
+
 		$formBuilder
 			->add('name', 'text')
-			->add('icon', 'choice',array(
-				'choices' => $this->iconList,
+			->add('icon', 'choice', array(
+				'choices' => ThemeUtil::getIconList($app->getTheme()),
 				'required' => true,
 				'expanded'=>true
 			))
@@ -207,7 +168,7 @@ class ManagePagesController extends Controller {
 			->add('templateId', 'choice', array(
 				'choices' => TemplateUtil::getTemplateList(),
 				'required'  => true,
-				'expanded'=>true
+				'expanded'=> true
 			));
 	}
 

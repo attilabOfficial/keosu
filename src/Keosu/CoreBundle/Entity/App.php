@@ -49,10 +49,10 @@ class App
                 // following tag to your config.xml; you will still have the INTERNET
                 // permission on your app, which PhoneGap requires.
                 array("key" => "permissions"                ,"value" => "none"),
-                array("key" => "phonegap-version"           ,"value" => "3.5.0" ), // all: current version of PhoneGap
-                array("key" => "orientation"                ,"value" => "default" ), // all: default means both landscape and portrait are enabled
+                array("key" => "phonegap-version"           ,"value" => "3.6.3" ), // all: current version of PhoneGap
+                array("key" => "Orientation"                ,"value" => "default" ), // all: default means both landscape and portrait are enabled
                 array("key" => "target-device"              ,"value" => "universal" ), // all: possible values handset, tablet, or universal
-                array("key" => "fullscreen"                 ,"value" => "true" ), // all: hides the status bar at the top of the screen
+                array("key" => "Fullscreen"                 ,"value" => "true" ), // all: hides the status bar at the top of the screen
                 array("key" => "webviewbounce"              ,"value" => "true" ), // ios: control whether the screen 'bounces' when scrolled beyond the top
                 array("key" => "prerendered-icon"           ,"value" => "true" ), // ios: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen
                 array("key" => "stay-in-webview"            ,"value" => "false" ), // ios: external links should open in the default browser, 'true' would use the webview the app lives in

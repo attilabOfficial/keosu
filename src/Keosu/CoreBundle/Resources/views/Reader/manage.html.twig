@@ -22,18 +22,22 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-4 table-actions-column">
-	<form method="post" {{ form_enctype(form) }}>
-		<div>
-		<strong>Redear Type</strong>
-		<br/> 
-		{{ form_widget(form.readertype) }}
-		{{ form_rest(form) }}
-		</div>
-	
-		<br/>
-	
-		<input type="submit" class="btn btn-success" value="Add a reader" ></input><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-	</form>
+		<form method="post" {{ form_enctype(form) }}>
+			<strong>Reader Type</strong>
+			<br/>
+			<br/>
+			<div>
+				{{ form_widget(form.readertype) }}
+				{{ form_rest(form) }}
+			</div>
+			<br/>
+			<br/>
+			<br/>
+			<input type="submit" class="btn btn-success" value="Add a reader" ></input> 
+			<a class="confirmModal" href="javascript:history.go(-1);" >
+				<button type="button" class="btn btn-danger">Cancel</button>
+			</a>
+		</form>
 	</div>
 	<div class="col-md-8">
 		<fieldset>

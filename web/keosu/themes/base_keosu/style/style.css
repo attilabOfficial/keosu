@@ -323,6 +323,15 @@ img.center, .img-min {
 	right: 0;
 }
 
+.photo-center {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    margin: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
 /***************************
    PAGE
 ***************************/

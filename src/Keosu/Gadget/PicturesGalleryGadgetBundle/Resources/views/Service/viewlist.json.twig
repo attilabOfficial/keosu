@@ -20,9 +20,11 @@
 	{% for picture in pictures %}
 		{
 			"id" : "{{ loop.index }}",
-			"name" :"{{ picture.name }}",
-			"description" :"{{ picture.description}}",
-			"path" :"{{url_base}}{{ picture.webPath }}"
+            "dataModelObjectName" : "{{ picture.dataModelObjectName }}",
+			"name" : "{{ picture.name }}",
+			"description" : "{{ picture.description }}",
+			"path" : "{{ url_base }}{{ picture.webPath }}",
+            "enableComments" : "{{ picture.enableComments }}"
 		}
 		{% if loop.last ==false%}
 			,

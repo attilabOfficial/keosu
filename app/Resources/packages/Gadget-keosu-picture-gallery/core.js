@@ -107,6 +107,9 @@ app.controller('keosu-picture-galleryController', function ($scope, $http, usSpi
 						nb++;
 					}
 					$scope.pages = pages;
+                    // For the template gallery-thumbs-navigation, we need to set the first image to get the comments
+                    if (pages[0] && pages[0][0])
+                        $scope.image = pages[0][0];
 				});
 	};
 });

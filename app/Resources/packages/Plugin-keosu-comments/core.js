@@ -14,7 +14,6 @@ app.directive('keosuComments', function(){
         	});
 			
 			$scope.myinit = function() {
-				//alert($scope.objectId + ' - ' + $scope.objectName + ' - ' + $scope.enableComments);
 				$http.get('data/globalParam.json').success(function(data){
 					$scope.host = data.host;
 					$scope.commentListAction();

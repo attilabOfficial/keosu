@@ -25,6 +25,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
+use Keosu\UserBundle\Entity\User as KeosuUser;
 
 class ServiceController extends Controller {
 
@@ -41,7 +42,7 @@ class ServiceController extends Controller {
 		$loggedRemembered = false;
 
 		$securityContext = $this->container->get('security.context');
-		if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+		if($securityContext->getToken()->getUser() instanceof KeosuUser && $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')){
 			$loggedRemembered = true;
 		}
 

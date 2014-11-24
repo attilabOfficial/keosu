@@ -8,6 +8,7 @@ use Keosu\Gadget\CommentGadgetBundle\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Keosu\UserBundle\Entity\User as KeosuUser;
 
 class ServiceController extends Controller
 {
@@ -18,7 +19,7 @@ class ServiceController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$securityContext = $this->container->get('security.context');
 
-		if($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+		if($securityContext->getToken()->getUser() instanceof KeosuUser && $securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
 			$ret["connect"] = true;
 		}
 		$dataModel = $em->getRepository(KeosuExtension::$dataModelList[$dataModelObjectName])->find($idDataModel);

@@ -22,7 +22,7 @@
 <div ng-show="isMap" class="animated zoomIn">
 	<div ng-click="close()"><i
 		class="fui-cross basic-icon-cross"></i></div>
-	<h4 class="title">{{ myMap.nom }}</h4>
+	<h4 class="title">{{ myMap.name }}</h4>
 	<div class="list-elem-right">
 		<p>{{ distance }} km</p>
 	</div>
@@ -36,4 +36,5 @@
 	</div>
 	<hr>
 	<div id="map_canvas"></div>
+    <keosu-comments object-id="myMap.id" object-name="myMap.dataModelObjectName" enable-comments="myMap.enableComments" ></keosu-comments>
 </div>

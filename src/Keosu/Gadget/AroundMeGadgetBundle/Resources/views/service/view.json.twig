@@ -17,10 +17,13 @@
     #}
 [
 	{
-		"nom" :"{{poi.name |escape('html_attr') }}",
-		"description" :"{{poi.description|escape('html_attr')}}",
-		"lat" :"{{poi.lat}}",
-		"lng" :"{{poi.lng}}"
+        "id" : "{{ poi.id }}",
+		"name" : "{{ poi.name|escape('html_attr') }}",
+		"description" : "{{ poi.description|escape('html_attr') }}",
+		"lat" : "{{ poi.lat }}",
+		"lng" : "{{ poi.lng }}",
+        "dataModelObjectName" : "location",
+        "enableComments" : "{{ poi.enableComments }}"
 	}
 ]
 

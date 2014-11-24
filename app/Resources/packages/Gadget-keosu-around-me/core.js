@@ -43,7 +43,7 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 					//Init map
 					$scope.myMap = data[0];
 					$scope.myMap.description = $sce.trustAsHtml(decodedContent(data[0].description));
-					$scope.myMap.nom = $('<div/>').html(data[0].nom).text();
+					$scope.myMap.name = $('<div/>').html(data[0].name).text();
 					
 					var map=$scope.initialize();
 					map.setZoom($scope.param.gadgetParam.zoom);
@@ -57,7 +57,7 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 					//Init POI marker
 					markerOne = new google.maps.Marker({
 						position: latitudeAndLongitude,
-						title: $scope.myMap.nom,
+						title: $scope.myMap.name,
 						map: map
 					});
 					

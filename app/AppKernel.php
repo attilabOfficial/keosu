@@ -46,6 +46,7 @@ class AppKernel extends Kernel
             new Keosu\Gadget\BaseBundle\KeosuGadgetBaseBundle(),
             new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
             new Keosu\Gadget\PushNotificationBundle\KeosuGadgetPushNotificationBundle(),
+            new Fkr\SimplePieBundle\FkrSimplePieBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {

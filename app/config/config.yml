@@ -91,3 +91,9 @@ stfalcon_tinymce:
     theme:
       simple:
         theme: "modern"
+
+# SimplePie Configuration
+fkr_simple_pie:
+    cache_enabled: true
+    cache_dir: %kernel.cache_dir%/rss
+    cache_duration: 3600

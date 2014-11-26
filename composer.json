@@ -31,7 +31,9 @@
 		"friendsofsymfony/user-bundle" : "*",
 		"stfalcon/tinymce-bundle" : "dev-master",
 		"facebook/php-sdk-v4" : "4.0.*",
-		"richsage/rms-push-notifications-bundle": "dev-master"
+		"richsage/rms-push-notifications-bundle" : "dev-master",
+        "simplepie/simplepie" : "~1.3.1",
+        "fkr/simplepie-bundle" : "~1.0.2"
 	},
 	"scripts": {
 		"post-root-package-install": [

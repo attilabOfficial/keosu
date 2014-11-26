@@ -7,7 +7,7 @@
 
 		this.cacheExpiration=100000;
 
-		this.$get = ['$http','$q','localStorageService', function($http,$q,localStorageService) {
+		this.$get = ['$rootScope','$http','$q','localStorageService', function($rootScope, $http,$q,localStorageService) {
 			
 			var cacheExpiration = this.cacheExpiration; //TODO put this in gadget config
 
@@ -30,20 +30,20 @@
 					lastUpdate=0;
 					now=0;
 				}
+
 				var dif = now - lastUpdate;
 				var currentCache = localStorageService.get(cachekey);
-				if((currentCache && (dif < cacheExpiration && dif != 0))
-						/*|| $scope.offline */){
+
+				if((currentCache && (dif < cacheExpiration && dif != 0)) || (currentCache && $rootScope.offline)){
 					deferred.resolve(currentCache);
 				}else{
-					console.log(url);
 					$http.get(url)
 					.success( function (data) {
 						localStorageService.set(cachekey,data);
 						localStorageService.set('lastup'+cachekey,now);
 						deferred.resolve(data);
 					})
-					.error(function(data){
+					.error(function(){
 						if(currentCache !=null){
 							deferred.resolve(currentCache);
 						}else{

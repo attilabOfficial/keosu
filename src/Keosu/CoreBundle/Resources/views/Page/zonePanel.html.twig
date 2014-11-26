@@ -31,8 +31,8 @@
 			{% endblock pageEditActionGadget %}
 
 			{% block pageDeleteActionGadget %}
-				<a class="badge" href="{{ path('keosu_gadget_delete',{'pageId':pageId, 'zoneName':zoneId}) }}" title="Clean zone">
-					<span class="glyphicon glyphicon-minus"></span>
+				<a class="removegadget" href="{{ path('keosu_gadget_delete',{'pageId':pageId, 'zoneName':zoneId}) }}" title="Clean zone">
+					<span class="glyphicon glyphicon-remove-circle"></span>
 				</a>
 			{% endblock pageDeleteActionGadget %}
 		{% endif %}

@@ -61,6 +61,9 @@
                     $(this).attr('name', 'form[config][page][' + (index+1) + ']')
                 });
             });
+            // By the way, we fix a little design issue
+            $('.form_config_page_form_group label a').before(document.createElement('br'));
+            $('.form_config_page_form_group label a ').css('margin-left', '20px');
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////
 	});

@@ -5954,11 +5954,11 @@ div.dashboard div div.well:hover {
   height: auto;
   border-top: 1px solid #777777;
 }
+.panel-body a:hover {
+    color: #fff !important;
+}
 .editgadget {
   margin-left: 15px;
-}
-.editgadget:hover {
-  color: #fff !important;
 }
 .removegadget {
   color: #888;

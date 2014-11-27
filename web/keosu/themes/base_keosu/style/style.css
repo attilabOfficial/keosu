@@ -400,3 +400,10 @@ img.center, .img-min {
 	color:white;
 }
 
+/****************************
+		COMMENT PLUGIN
+****************************/
+.add_comment{
+	float:right;
+	margin:4%;
+}

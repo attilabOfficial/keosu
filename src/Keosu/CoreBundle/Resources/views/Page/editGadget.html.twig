@@ -34,7 +34,7 @@
 		{{ form_row(form.shared) }}
 		{{ form_row(form.config) }}
 
-		<br class="clear"/><br class="clear"/>
+		<br class="clear"/><br class="clear"/><br class="clear"/>
 		<input type="submit" class="btn btn-success" />&nbsp;
 		<a class="confirmModal" href="javascript:history.go(-1);" >
 			<button type="button" class="btn btn-danger">Cancel</button>
@@ -47,10 +47,8 @@
 	$(document).ready(function() {
 		templateButton("{{url_base}}", "{{gadgetDir}}", "{{gadgetName}}");
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////
         // This is a very nasty hack for resolving a issue encountered during the save of the menu gadget
         // Sometimes, a page included in the config is not taken into account
-        // TODO : fix the bug properly
         var path       = window.location.pathname;
         var splitPath  = path.split('/');
         var gadgetType = splitPath[splitPath.length-1];
@@ -61,11 +59,11 @@
                     $(this).attr('name', 'form[config][page][' + (index+1) + ']')
                 });
             });
-            // By the way, we fix a little design issue
-            $('.form_config_page_form_group label a').before(document.createElement('br'));
-            $('.form_config_page_form_group label a ').css('margin-left', '20px');
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Fix a little design issue when editing a menu gadget
+        $('.form_config_page_form_group label a').before(document.createElement('br'));
+        $('.form_config_page_form_group label a ').css('margin-left', '20px');
 	});
 </script>
 {% endblock %}

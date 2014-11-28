@@ -1,4 +1,4 @@
-<div class="row-fluid center animated fadeIn" style="min-height: 1000px;">
+<div class="row-fluid center animated fadeIn">
 
 	<section ng-show="login">
 
@@ -34,7 +34,7 @@
 		</div>
 	</section>
 
-	<section ng-show="register" id="register">
+	<section ng-show="register" id="register" style="min-height: 1000px">
 		<a ng-click="loginInit()"> < Go back to login</a>
 		<div ng-show="registerError" class="alert alert-danger">{{ registerError }}</div>
 		<form role="form" ng-submit="registerAction()">
@@ -56,9 +56,6 @@
 			</div>
 			<button type="submit" class="btn btn-default">Register</button>
 		</form>
-		<div style="height:20%;">
-		<!-- Fix keyboard bug on smartphone (can't see field) -->
-		</div>
 	</section>
 
 	<section ng-show="forgotPassword">

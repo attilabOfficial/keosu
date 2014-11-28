@@ -26,6 +26,10 @@ body {
     font-family: "amatic";
     src: url('../fonts/Amatic-Bold.ttf') format("truetype");
 }
+@font-face {
+  font-family: "din-medium";
+  src: url('../fonts/ufonts.com_din-medium.ttf') format("truetype");
+}
 #body{
 	margin-top:40px;
 }
@@ -57,8 +61,9 @@ body {
 /*Left side bar */
 div.logotop{
 	font-family: "amatic", Verdana, Tahoma;
-	font-size:8em;
-	line-height:125px;
+	font-size:5em;
+	line-height:80px;
+  	color:@sidebarfontcolor;
 }
 
 .maintitle{
@@ -72,6 +77,10 @@ div.logotop{
 	height:100%;
 	padding-right:0px;
 	background-color: @sidebarbackground;
+  	box-shadow: 1px 1px 12px #555;
+  	font-family: "din-medium";
+  	text-align: right;
+  	padding-right: 20px;
  }
  .leftcol{
  	height:100%;
@@ -79,14 +88,13 @@ div.logotop{
  .sidebartitle{
  	margin-top:10px;
 	color:@sidebarfontcolor;
-	font-weight:bold;
-	height:35px;
-	font-size:18px;
+	height:25px;
+	font-size:13px;
 	padding-left:40px;
+   	text-transform: uppercase;
 }
 .activesidebartitle{
 	margin-top:10px;
-	font-weight:bold;
 	height:35px;
 	font-size:18px;
 	padding-left:40px;
@@ -103,8 +111,11 @@ div.logotop{
 .sidebarlink{
 	color:@sidebarfontcolor;
 	height:30px;
-	font-size:15px;
-	padding-left:55px
+	font-size:13px;
+	padding-right:5px
+}
+.activesidebar{
+  //background-color:#272727;
 }
 #applist{
 	color:@sidebarfontcolor;
@@ -129,8 +140,15 @@ div.logotop{
  	color:@sidebarfontcolor;
  }
 .separator{
- 	border-bottom:1px solid @separatorcolor;
- 	height:2px;
+  border-top: 1px dashed @separatorcolor;
+  display: block;
+  list-style: outside none none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  height:1px;
+  line-height:2px;
+  margin-top: 10px;
  }
 
 .logininfo{

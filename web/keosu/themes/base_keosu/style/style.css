@@ -400,3 +400,61 @@ img.center, .img-min {
 	color:white;
 }
 
+/****************************
+	   COMMENT PLUGIN
+****************************/
+.comment-list{
+    margin-top: 5%
+}
+.add-comment{
+	float: right;
+	margin: 5%;
+}
+
+/****************************
+		RSS GADGET
+****************************/
+.rss-list {
+    padding-bottom: 20%;
+
+}
+.rss-title-wrapper {
+    margin-bottom: 7%;
+}
+.rss-title h6 {
+    margin-bottom: 0;
+
+}
+.rss-article {
+    margin-top: 7%;
+    text-align: justify;
+
+}
+.rss-article img {
+    max-width: 100%;
+    height: auto;
+}
+
+/****************************
+    AUTHENTICATION GADGET
+****************************/
+@media screen and (min-height: 400px) {
+    #register {
+        min-height: 550px;
+    }
+}
+@media screen and (min-height: 600px) {
+    #register {
+        min-height: 800px;
+    }
+}
+@media screen and (min-height: 800px) {
+    #register {
+        min-height: 1050px;
+    }
+}
+@media screen and (min-height: 1000px) {
+    #register {
+        min-height: 1300px;
+    }
+}

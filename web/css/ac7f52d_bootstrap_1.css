@@ -5954,21 +5954,24 @@ div.dashboard div div.well:hover {
   height: auto;
   border-top: 1px solid #777777;
 }
-.editgadget {
+.panel-body a:hover {
+    color: #fff !important;
+}
+.edit-gadget {
   margin-left: 15px;
 }
-.editgadget:hover {
-  color: #fff !important;
-}
-.removegadget {
+.remove-gadget {
   color: #888;
   font-size: 20px;
   position: relative;
   top: 5px;
   margin-left: 2px;
 }
-.removegadget:hover span {
+.remove-gadget:hover span {
     color: #444 !important;
+}
+.form_config_page_form_group label a {
+ margin-left: 10px;
 }
 .zone h4 {
   margin-left: 15px;

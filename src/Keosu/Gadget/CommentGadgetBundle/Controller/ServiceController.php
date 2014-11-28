@@ -39,7 +39,7 @@ class ServiceController extends Controller
 		$ret['comments'] = array();
 		foreach($comments as $comment) {
 			$tmp['message'] = $comment->getMessage();
-			$tmp['date'] = $comment->getDate()->format('Y-m-d H:i:s');
+			$tmp['date'] = $comment->getDate()->format('Y-m-d H:i');
 			$tmp['user'] = $comment->getUser()->getUsername();
 			$ret['comments'][] = $tmp;
 		}

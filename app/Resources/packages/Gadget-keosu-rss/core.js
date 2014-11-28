@@ -27,6 +27,8 @@ app.controller('keosu-rssController', function ($scope)
         $scope.title = elem.title;
         $scope.body = elem.body;
         $scope.path = elem.image;
+        $scope.hasImage = (elem.image != "");
+        window.scrollTo(0, 0);
     }
 
     $scope.next = function() {

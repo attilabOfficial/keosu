@@ -403,7 +403,34 @@ img.center, .img-min {
 /****************************
 		COMMENT PLUGIN
 ****************************/
-.add_comment{
-	float:right;
-	margin:4%;
+.comment-list{
+    margin-top: 5%
+}
+.add-comment{
+	float: right;
+	margin: 5%;
+}
+
+/****************************
+		RSS GADGET
+****************************/
+.rss-list {
+    padding-bottom: 20%;
+
+}
+.rss-title-wrapper {
+    margin-bottom: 7%;
+}
+.rss-title h6 {
+    margin-bottom: 0;
+
+}
+.rss-article {
+    margin-top: 7%;
+    text-align: justify;
+
+}
+.rss-article img {
+    max-width: 100%;
+    height: auto;
 }

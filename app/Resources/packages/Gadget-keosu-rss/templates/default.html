@@ -1,11 +1,11 @@
 <!-- TITLE LIST -->
-<div ng-show="isList" ng-swipe-left="next()" ng-swipe-right="prev()">
+<div class="rss-list" ng-show="isList" ng-swipe-left="next()" ng-swipe-right="prev()">
 	<div class="panel list">
 		<div class="panel-body list-content">
-			<div class="row-fluid list-elements animated {{slide}}" ng-repeat="elem in currentlist">
+			<div class="row-fluid list-elements animated {{slide}} rss-title-wrapper" ng-repeat="elem in currentlist">
 				<div class="media" ng-click="open(elem)">
-					<div class="media-body list-title">
-						<h6 class="title">{{ elem.title }} </h6>
+					<div class="media-body list-title rss-title">
+						<h6 class="title">{{ elem.title }}</h6>
 						<img class="center" src="{{elem.image}}" alt="" />
 					</div>
 				</div>
@@ -13,7 +13,6 @@
 			</div>
 		</div>
 	</div>
-	<br />
 	<button ng-show="page > 0" ng-click="prev()"
 			class="previous btn btn-default btn-page animated fadeIn">Previous</button>
 	<button ng-show="page < (last - 1)" ng-click="next()"
@@ -23,13 +22,13 @@
 <!-- ARTICLE -->
 <div ng-hide="isList" class="animated zoomIn">
 	<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a>
-	<div class="row-fluid">
+	<div class="row-fluid rss-title">
 		<h6 class="title" style="text-align: center">{{title}}</h6>
-			<img class="center" ng-if="img" src="{{ path }}" alt="" />
+		<img class="center" ng-if="hasImage" src="{{ path }}" alt="" />
 	</div>
 	<hr>
 	<div class="gadget-content">
-		<div class="row-fluid">
+		<div class="row-fluid rss-article">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div ng-bind-html="body"></div>
 			</div>

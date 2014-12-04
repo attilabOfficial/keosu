@@ -3,6 +3,10 @@ var app = angular.module('keosuApp', ['angular-chrono', 'angularSpinner','angula
 app.controller('main_Controller', function($http, $rootScope) {
 		$http.get('data/globalParam.json').success( function (data) {
 			$rootScope.appName = data.name;
+			 // $rootScope;previousButton : used to display a return button in the header
+			 // to show the button you should set the value true to the boolean
+			 // when you click on the button, the method $rootScope.prev is called 
+			$rootScope.previousButton = false;
 		});
 		//alert("Connection :"+navigator.connection.type);
         $rootScope.offline=false;

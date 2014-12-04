@@ -1,3 +1,4 @@
+<!-- ARTICLE LIST -->
 <div ng-show="isList" class="list"  ng-swipe-left="next()" ng-swipe-right="previous()">
 	<div class="list-content">
 		<div class="media list-elements animated {{slide}}" ng-repeat="apage in pages">
@@ -29,8 +30,8 @@
 		class="next btn btn-default btn-page pull-right animated fadeIn">Next</button>
 </div>
 
+<!-- ONE ARTICLE -->
 <div ng-show="isArticle" class="animated zoomIn">
-	<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a>
 	<div class="row-fluid">
 		<h4 class="title" style="text-align: center">{{ article.title }}</h4>
 	</div>

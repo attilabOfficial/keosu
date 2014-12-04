@@ -1,3 +1,4 @@
+<!-- ARTICLE LIST -->
 <div ng-show="isList" ng-swipe-left="next()" ng-swipe-right="previous()">
 		<div class="panel list">
 			<div class="panel-body list-content">
@@ -19,8 +20,9 @@
 	</li>
 
 </div>
+
+<!-- ONE ARTICLE -->
 <div ng-show="isArticle" class="animated zoomIn">
-	<a ng-click="close()"><i class="fui-cross basic-icon-cross"></i></a>
 	<div class="row-fluid">
 		<h4 class="title" style="text-align: center">{{ article.title }}</h4>
 	</div>

@@ -19,7 +19,7 @@
 
 
 //Main function
-app.controller('keosu-last-articleController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {	
+app.controller('keosu-last-articleController', function ($rootScope, $scope, $http, $sce, usSpinnerService, cacheManagerService) {	
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -27,12 +27,14 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 		$scope.isList = isList;
 		$scope.isArticle = isArticle;
 	}
-	$scope.close = function () {
+	$rootScope.previous = function () {
+		$rootScope.previousButton = false;
 		$scope.slide="fadeIn";
 		$scope.parts(true, false);
 		
 	};
 	$scope.open = function (page) {
+		$rootScope.previousButton = true;
 		$scope.article = page;
 		$scope.parts(false, true);
 	};
@@ -81,6 +83,7 @@ app.controller('keosu-last-articleController', function ($scope, $http, $sce, us
 		});
 	}
 	$scope.init = function (params){
+		$rootScope.previousButton = false;
 		$scope.slide="fadeIn";
 		$scope.param = params;
 		$scope.pages = new Array();

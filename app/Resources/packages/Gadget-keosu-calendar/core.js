@@ -19,7 +19,7 @@
 
 
 //Main function
-app.controller('keosu-calendarController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {
+app.controller('keosu-calendarController', function ($rootScope, $scope, $http, $sce, usSpinnerService, cacheManagerService) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -27,12 +27,14 @@ app.controller('keosu-calendarController', function ($scope, $http, $sce, usSpin
 		$scope.isList = isList;
 		$scope.isEvent = isEvent;
 	}
-	$scope.close = function () {
+	$rootScope.previous = function () {
+		$rootScope.previousButton = false;
 		$scope.slide="fadeIn";
 		$scope.parts(true, false);
 
 	};
 	$scope.open = function (page) {
+		$rootScope.previousButton = true;
 		$scope.event = page;
 		$scope.parts(false, true);
 		var map=$scope.initialize();
@@ -108,6 +110,7 @@ app.controller('keosu-calendarController', function ($scope, $http, $sce, usSpin
 		});
 	}
 	$scope.init = function (params){
+		$rootScope.previousButton = false;
 		console.log("init calendar gadget");
 		$scope.slide="fadeIn";
 		$scope.param = params;

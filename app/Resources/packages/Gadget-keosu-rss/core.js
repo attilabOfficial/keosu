@@ -1,7 +1,8 @@
 
-app.controller('keosu-rssController', function ($scope)
+app.controller('keosu-rssController', function ($rootScope, $scope)
 {
 	$scope.init = function(params) {
+        $rootScope.previousButton = false;
         $scope.param = params;
         $scope.isList = true;
         $scope.list = [];
@@ -18,11 +19,13 @@ app.controller('keosu-rssController', function ($scope)
         }
     }
 
-    $scope.close = function() {
+    $rootScope.previous = function() {
+        $rootScope.previousButton = false;
         $scope.isList = !$scope.isList;
     }
 
     $scope.open = function(elem) {
+        $rootScope.previousButton = true;
         $scope.isList = !$scope.isList;
         $scope.title = elem.title;
         $scope.body = elem.body;

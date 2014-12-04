@@ -17,7 +17,7 @@
  ************************************************************************/
 
 //Main controller
-app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService) {
+app.controller('keosu-around-meController', function ($rootScope, $scope, $http, $sce, usSpinnerService, cacheManagerService) {
 	//Functions
 	$scope.parts=function(isList, isMap, $scope) {
 		$scope.isList = isList;
@@ -35,6 +35,7 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 	}
 	
 	$scope.open = function (page) {
+		$rootScope.previousButton = true;
 		$scope.distance = page.distance;
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		cacheManagerService.get($scope.param.host + 'service/gadget/aroundme/view/'
@@ -79,11 +80,13 @@ app.controller('keosu-around-meController', function ($scope, $http, $sce, usSpi
 					$scope.parts(false, true, $scope);
 				});
 	};
-	$scope.close = function () {
+	$rootScope.previous = function () {
+		$rootScope.previousButton = false;
 		$scope.parts(true, false, $scope);
 	};
 	
 	$scope.init = function (params) {
+			$rootScope.previousButton = false;
 			$scope.parts(true, false, $scope);
 			$scope.initialize();
 			usSpinnerService.spin('spinner'); // While loading, there will be a spinner

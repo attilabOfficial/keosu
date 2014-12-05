@@ -22,11 +22,6 @@
 	</li>
 </div>
 
-<div ng-show="isPicture" class="animated fadeIn" ng-click="close()">
-	<i class="fui-cross basic-icon-cross" style="position:absolute;z-index:2"></i>
-	<br />
-</div>
-
 <ul rn-carousel rn-carousel-control rn-carousel-index="indexSlide" ng-show="isPicture" class="animated fadeIn">
 	<li ng-repeat="image in images">
 		<img class="center" src="{{image.path}}" />

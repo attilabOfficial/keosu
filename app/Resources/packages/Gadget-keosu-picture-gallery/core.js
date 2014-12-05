@@ -20,7 +20,7 @@
 
 //Main function
 
-app.controller('keosu-picture-galleryController', function ($scope, $http, usSpinnerService, cacheManagerService) {
+app.controller('keosu-picture-galleryController', function ($rootScope, $scope, $http, usSpinnerService, cacheManagerService) {
 	$scope.parts = function (isGallery, isPicture, $scope) {
 		$scope.isGallery = isGallery;
 		$scope.isPicture = isPicture;
@@ -39,13 +39,15 @@ app.controller('keosu-picture-galleryController', function ($scope, $http, usSpi
 			$scope.activePage.page = $scope.activePage.page-1;
 		}
 	};
-	$scope.close = function () {
+	$rootScope.previous = function () {
+		$rootScope.previousButton = false;
 		$scope.slideElement="zoomIn";
 		$scope.activePage.page-1
 		$scope.slide="fadeIn";
 		$scope.parts(true, false, $scope);
 	};
 	$scope.open = function (page, id) {
+		$rootScope.previousButton = true;
 		$scope.indexSlide=id-1;
 		$scope.slidePage="fadeIn";
 		$scope.image = page;
@@ -67,6 +69,7 @@ app.controller('keosu-picture-galleryController', function ($scope, $http, usSpi
 			$scope.index--;
 	}
 	$scope.init = function (params) {
+		$rootScope.previousButton = false;
 		$scope.indexSlide=0;
 		$scope.slideElement="zoomIn";
 		$scope.slidePage="fadeIn";

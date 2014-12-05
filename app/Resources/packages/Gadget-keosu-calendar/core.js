@@ -26,12 +26,30 @@ app.controller('keosu-calendarController', function ($rootScope, $scope, $http, 
 	$scope.parts = function (isList, isEvent) {
 		$scope.isList = isList;
 		$scope.isEvent = isEvent;
-	}
+	};
 	$rootScope.previous = function () {
 		$rootScope.previousButton = false;
 		$scope.slide="fadeIn";
 		$scope.parts(true, false);
-
+		
+	};
+	$scope.next = function(){
+		if(!$scope.isLastPage){
+			$scope.isFirstPage = true;
+			$scope.isLastPage = true;
+			$scope.slide="slideInRight";
+			$scope.activePage++;
+			$scope.getPage($scope.activePage,true);
+		}
+	};
+	$scope.previous = function(){
+		if(!$scope.isFirstPage){
+			$scope.isFirstPage = true;
+			$scope.isLastPage = true;
+			$scope.slide="slideInLeft";
+			$scope.activePage--;
+			$scope.getPage($scope.activePage,true);
+		}
 	};
 	$scope.open = function (page) {
 		$rootScope.previousButton = true;
@@ -80,7 +98,7 @@ app.controller('keosu-calendarController', function ($rootScope, $scope, $http, 
 	$scope.initialize=function() {
 		var mapOptions = {
 			center: new google.maps.LatLng(47.21677,-1.553307),
-			zoom: 8,
+			zoom: 3,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);

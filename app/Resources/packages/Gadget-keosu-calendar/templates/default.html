@@ -1,20 +1,35 @@
+<!-- EVENT LIST -->
 <div ng-show="isList" ng-swipe-left="next()" ng-swipe-right="previous()">
 		<div class="panel list">
 			<div class="panel-body list-content">
 				<div class="row-fluid list-elements animated {{slide}}" ng-repeat="apage in pages">
-					<div class="media" ng-click="open(apage)">
+					<div class="alert alert-info" role="alert" ng-click="open(apage)">
 						<div class="media-body list-title">
-							<h6 class="title">{{ apage.date }}&nbsp;{{ apage.name }}</h6>
+							<h4 class="title" >{{ apage.name }}</h4>
+							<h6 class="title" style="display:inline;">
+								<span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;
+								{{ apage.date }}
+							</h6>
+							<br />
+							<h6 class="title" style="display:inline;">
+								<span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;
+								{{ apage.place }}
+							</h6>
 						</div>
 					</div>
-					<hr>
 				</div>
 			</div>
 		</div>
-
 	</li>
-
+	<button ng-hide="isFirstPage" ng-click="previous()" class="previous btn btn-default btn-page animated fadeIn">
+		Previous
+	</button>
+	<button ng-hide="isLastPage" ng-click="next()" class="next btn btn-default btn-page pull-right animated fadeIn">
+		Next
+	</button>
 </div>
+
+<!-- ONE EVENT -->
 <div ng-show="isEvent" class="animated zoomIn">
 	<div class="row-fluid">
 		<h4 class="title" style="text-align: center">{{ event.name }}</h4>
@@ -24,13 +39,13 @@
 		<div class="row-fluid">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div ng-bind-html="event.date"></div>
+				<div ng-bind-html="event.place"></div>
 			</div>
 		</div>
 	</div>
-	<button ng-click="addToCalendar(event)" class="btn btn-default btn-page animated fadeIn">
-		Add to my phone calendar
-	</button>
-
-	<hr>
 	<div id="map_canvas"></div>
+	<br />
+		<button ng-click="addToCalendar(event)" class="btn btn-default btn-page animated fadeIn" style="float:right;">
+			Add to my phone calendar
+		</button>
 </div>

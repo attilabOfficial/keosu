@@ -15,242 +15,242 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #}
-    
- <style>
- 	.preview{ 
-		max-height: 200px;
- 	}
- </style>
- 
-					<h4>Splashscreens Android</h4>
-					
-    	    		<div class="col-lg-3 configurelabel">
-						320x436
-					</div>
-					<div id="A320x436">
-						<img class="preview" id="previewA320x436" src="/keosu/web/keosu/res/tmp/splashscreens/android/splashscreenA320x436.png">
-						{{ form_row(form.splashscreens.splashscreenA320x436) }}
-					</div>	
-					<br class="clear"/>
-					<hr />
-					
-					<div class="col-lg-3 configurelabel">
-						320x470
-					</div>
-					<div id="A320x470">
-						<img class="preview" id="previewA320x470" src="/keosu/web/keosu/res/tmp/splashscreens/android/splashscreenA320x470.png">
-				    	{{ form_row(form.splashscreens.splashscreenA320x470) }}
-				    </div>	
-				    <br class="clear"/>
-				    <hr />
-				    
-					<div class="col-lg-3 configurelabel">
-						640x480
-					</div>
-					<div id="A640x480">
-						<img class="preview" id="previewA640x480" src="/keosu/web/keosu/res/tmp/splashscreens/android/splashscreenA640x480.png">			    
-				    	{{ form_row(form.splashscreens.splashscreenA640x480) }}
-				    </div>
-				    <br class="clear"/>
-				    <hr />
-				
-					<div class="col-lg-3 configurelabel">
-						960x720
-					</div>
-					<div id="A960x720">
-						<img class="preview" id="previewA960x720" src="/keosu/web/keosu/res/tmp/splashscreens/android/splashscreenA960x720.png">			
-				    	{{ form_row(form.splashscreens.splashscreenA960x720) }}
-				    </div>	
-				    <br class="clear"/>
-				    <hr />
-				    
-				    
-				    
-				    
-				    <h4>Splashscreens IOS</h4>
-				    
-				    <div class="col-lg-3 configurelabel">
-						320x480
-					</div>
-					<div id="I320x480">
-						<img class="preview" id="previewI320x480" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI320x480.png">			
-				    	{{ form_row(form.splashscreens.splashscreenI320x480) }}
-				    </div>
-				    <br class="clear"/>
-				    <hr />
-				    
-				    <div class="col-lg-3 configurelabel">
-						640x960
-					</div>
-					<div id="I640x960">
-						<img class="preview" id="previewI640x960" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI640x960.png">			  
-				    	{{ form_row(form.splashscreens.splashscreenI640x960) }}
-				    </div>	
-				    <br class="clear"/>
-				    <hr />
-				
-					<div class="col-lg-3 configurelabel">
-						640x1136
-					</div>
-					<div id="I640x1136">
-						<img class="preview" id="previewI640x1136" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI640x1136.png">			  
-				    	{{ form_row(form.splashscreens.splashscreenI640x1136) }}
-				    </div>	
-				    <br class="clear"/>
-				    <hr />
-					
-					<div class="col-lg-3 configurelabel">
-						1024x748
-					</div>
-					<div id="I1024x748">
-						<img class="preview" id="previewI1024x748" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI1024x748.png">			  
-				    	{{ form_row(form.splashscreens.splashscreenI1024x748) }}
-				    </div>
-				    <br class="clear"/>
-				    <hr />
-				    
-				    <div class="col-lg-3 configurelabel">
-						768x1004
-					</div>
-					<div id="I768x1004">
-						<img class="preview" id="previewI768x1004" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI768x1004.png">			  
-				    	{{ form_row(form.splashscreens.splashscreenI768x1004) }}
-				    </div>
-				    <br class="clear"/>
-				    <hr />
-				    
-				    <div class="col-lg-3 configurelabel">
-						2048x1496
-					</div>
-				    <div id="I2048x1496">
-						<img class="preview" id="previewI2048x1496" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI2048x1496.png">			  
-				    	{{ form_row(form.splashscreens.splashscreenI2048x1496) }}
-				    </div>
-				    <br class="clear"/>
-				    <hr />
-				    
-				    <div class="col-lg-3 configurelabel">
-						1536x2008
-					</div>
-				    <div id="I1536x2008">
-						<img class="preview" id="previewI1536x2008" src="/keosu/web/keosu/res/tmp/splashscreens/ios/splashscreenI1536x2008.png">			  
-				    	{{ form_row(form.splashscreens.splashscreenI1536x2008) }}
-				    </div>
-				    <br class="clear"/>
-				    <hr />
-				   
-				    
-				    
+
+<style>
+    .preview{
+        max-height: 200px;
+    }
+</style>
+
+<h4>Splashscreens Android</h4>
+
+<div class="col-lg-3 configurelabel">
+    320x436
+</div>
+<div id="A320x436">
+    <img class="preview" id="previewA320x436" src="{{ asset('keosu/res/tmp/splashscreens/android/splashscreenA320x436.png') }}">
+    {{ form_row(form.splashscreens.splashscreenA320x436) }}
+</div>
+<br class="clear"/>
+<hr />
+
+<div class="col-lg-3 configurelabel">
+    320x470
+</div>
+<div id="A320x470">
+    <img class="preview" id="previewA320x470" src="{{ asset('keosu/res/tmp/splashscreens/android/splashscreenA320x470.png') }}">
+    {{ form_row(form.splashscreens.splashscreenA320x470) }}
+</div>
+<br class="clear"/>
+<hr />
+
+<div class="col-lg-3 configurelabel">
+    640x480
+</div>
+<div id="A640x480">
+    <img class="preview" id="previewA640x480" src="{{ asset('keosu/res/tmp/splashscreens/android/splashscreenA640x480.png') }}">
+    {{ form_row(form.splashscreens.splashscreenA640x480) }}
+</div>
+<br class="clear"/>
+<hr />
+
+<div class="col-lg-3 configurelabel">
+    960x720
+</div>
+<div id="A960x720">
+    <img class="preview" id="previewA960x720" src="{{ asset('keosu/res/tmp/splashscreens/android/splashscreenA960x720.png') }}">
+    {{ form_row(form.splashscreens.splashscreenA960x720) }}
+</div>
+<br class="clear"/>
+<hr />
+
+
+
+
+<h4>Splashscreens IOS</h4>
+
+<div class="col-lg-3 configurelabel">
+    320x480
+</div>
+<div id="I320x480">
+    <img class="preview" id="previewI320x480" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI320x480.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI320x480) }}
+</div>
+<br class="clear"/>
+<hr />
+
+<div class="col-lg-3 configurelabel">
+    640x960
+</div>
+<div id="I640x960">
+    <img class="preview" id="previewI640x960" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI640x960.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI640x960) }}
+</div>
+<br class="clear"/>
+<hr />
+
+<div class="col-lg-3 configurelabel">
+    640x1136
+</div>
+<div id="I640x1136">
+    <img class="preview" id="previewI640x1136" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI640x1136.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI640x1136) }}
+</div>
+<br class="clear"/>
+<hr />
+
+<div class="col-lg-3 configurelabel">
+    1024x748
+</div>
+<div id="I1024x748">
+    <img class="preview" id="previewI1024x748" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI1024x748.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI1024x748) }}
+</div>
+<br class="clear"/>
+<hr />
+
+<div class="col-lg-3 configurelabel">
+    768x1004
+</div>
+<div id="I768x1004">
+    <img class="preview" id="previewI768x1004" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI768x1004.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI768x1004) }}
+</div>
+<br class="clear"/>
+<hr />
+
+<div class="col-lg-3 configurelabel">
+    2048x1496
+</div>
+<div id="I2048x1496">
+    <img class="preview" id="previewI2048x1496" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI2048x1496.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI2048x1496) }}
+</div>
+<br class="clear"/>
+<hr />
+
+<div class="col-lg-3 configurelabel">
+    1536x2008
+</div>
+<div id="I1536x2008">
+    <img class="preview" id="previewI1536x2008" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI1536x2008.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI1536x2008) }}
+</div>
+<br class="clear"/>
+<hr />
+
+
+
 <script type="text/javascript">
 
-	$("#A320x436").on("change",'input[type="file"]',function() {
-		check(this,320,436,function(ok,x){
-			if(ok){
-				readURL(x,"previewA320x436");
-			}else{
-				x.value="";
-			}
-		});
-	});
-	
-	$("#A320x470").on("change",'input[type="file"]',function() {
-		check(this,320,470,function(ok,x){
-			if(ok){
-				readURL(x,"previewA320x470");
-			}else{
-				x.value="";
-			}
-		});
-	});
-	
-	$("#A640x480").on("change",'input[type="file"]',function() {
-		check(this,640,480,function(ok,x){
-			if(ok){
-				readURL(this,"previewA640x480");
-			}else{
-				x.value="";
-			}
-		});
-	});
-	
-	$("#A960x720").on("change",'input[type="file"]',function() {
-		check(this,960,720,function(ok,x){
-			if(ok){
-				readURL(this,"previewA960x720");
-			}else{
-				x.value="";
-			}
-		});
-	});
-	
-	$("#I320x480").on("change",'input[type="file"]',function() {
-		check(this,320,480,function(ok,x){
-			if(ok){
-				readURL(x,"previewA320x436");
-			}else{
-				x.value="";
-			}
-		});
-	});
-	
-	$("#I640x960").on("change",'input[type="file"]',function() {
-		check(this,640,960,function(ok,x){
-			if(ok){
-				readURL(this,"previewI640x960");
-			}else{
-				x.value="";
-			}
-		});
-	});
-	
-	$("#I640x1136").on("change",'input[type="file"]',function() {
-		check(this,640,1136,function(ok,x){
-			if(ok){
-				readURL(this,"previewI640x1136");
-			}else{
-				x.value="";
-			}
-		});
-	});
-	
-	$("#I1024x748").on("change",'input[type="file"]',function() {
-		check(this,1024,748,function(ok,x){
-			if(ok){
-				readURL(this,"previewI1024x748");
-			}else{
-				x.value="";
-			}
-		});
-	});
-	
-	$("#I768x1004").on("change",'input[type="file"]',function() {
-		check(this,768,1004,function(ok,x){
-			if(ok){
-				readURL(this,"previewI768x1004");
-			}else{
-				x.value="";
-			}
-		});
-	});
-	
-	$("#I2048x1496").on("change",'input[type="file"]',function() {
-		check(this,2048,1496,function(ok,x){
-			if(ok){
-				readURL(this,"previewI2048x1496")
-			}else{
-				x.value="";
-			}
-		});
-	});
-	
-	$("#I1536x2008").on("change",'input[type="file"]',function() {
-		check(this,1536,2008,function(ok,x){
-			if(ok){
-				readURL(this,"previewI1536x2008");
-			}else{
-				x.value="";
-			}
-		});
-	});
+    $("#A320x436").on("change",'input[type="file"]',function() {
+        check(this,320,436,function(ok,x){
+            if(ok){
+                readURL(x,"previewA320x436");
+            }else{
+                x.value="";
+            }
+        });
+    });
+
+    $("#A320x470").on("change",'input[type="file"]',function() {
+        check(this,320,470,function(ok,x){
+            if(ok){
+                readURL(x,"previewA320x470");
+            }else{
+                x.value="";
+            }
+        });
+    });
+
+    $("#A640x480").on("change",'input[type="file"]',function() {
+        check(this,640,480,function(ok,x){
+            if(ok){
+                readURL(this,"previewA640x480");
+            }else{
+                x.value="";
+            }
+        });
+    });
+
+    $("#A960x720").on("change",'input[type="file"]',function() {
+        check(this,960,720,function(ok,x){
+            if(ok){
+                readURL(this,"previewA960x720");
+            }else{
+                x.value="";
+            }
+        });
+    });
+
+    $("#I320x480").on("change",'input[type="file"]',function() {
+        check(this,320,480,function(ok,x){
+            if(ok){
+                readURL(x,"previewA320x436");
+            }else{
+                x.value="";
+            }
+        });
+    });
+
+    $("#I640x960").on("change",'input[type="file"]',function() {
+        check(this,640,960,function(ok,x){
+            if(ok){
+                readURL(this,"previewI640x960");
+            }else{
+                x.value="";
+            }
+        });
+    });
+
+    $("#I640x1136").on("change",'input[type="file"]',function() {
+        check(this,640,1136,function(ok,x){
+            if(ok){
+                readURL(this,"previewI640x1136");
+            }else{
+                x.value="";
+            }
+        });
+    });
+
+    $("#I1024x748").on("change",'input[type="file"]',function() {
+        check(this,1024,748,function(ok,x){
+            if(ok){
+                readURL(this,"previewI1024x748");
+            }else{
+                x.value="";
+            }
+        });
+    });
+
+    $("#I768x1004").on("change",'input[type="file"]',function() {
+        check(this,768,1004,function(ok,x){
+            if(ok){
+                readURL(this,"previewI768x1004");
+            }else{
+                x.value="";
+            }
+        });
+    });
+
+    $("#I2048x1496").on("change",'input[type="file"]',function() {
+        check(this,2048,1496,function(ok,x){
+            if(ok){
+                readURL(this,"previewI2048x1496")
+            }else{
+                x.value="";
+            }
+        });
+    });
+
+    $("#I1536x2008").on("change",'input[type="file"]',function() {
+        check(this,1536,2008,function(ok,x){
+            if(ok){
+                readURL(this,"previewI1536x2008");
+            }else{
+                x.value="";
+            }
+        });
+    });
 </script>
 

@@ -12,8 +12,9 @@
 				</div>
 			</div>
 		</div>
-		<button ng-show="!isLastPage" ng-click="more()"
-			class="next btn btn-default btn-page pull-right animated fadeIn">More</button>
+		<button ng-init="setInfinitList()" ng-show="!isLastPage"  ng-click="more()" class="next btn btn-default btn-page pull-right animated fadeIn">
+			More
+		</button>
 	</li>
 </div>
 

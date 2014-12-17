@@ -64,7 +64,7 @@ $(document).ready(function() {
 					
 					{% for article in articles %}
 							<tr>
-								<td>{{ article.title }}</td>
+								<td>{{ article.title|raw }}</td>
 								<td>
 									{% for tag in article.tags %}
 										{{tag.tagName}},

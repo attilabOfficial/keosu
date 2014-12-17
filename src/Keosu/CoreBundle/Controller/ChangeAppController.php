@@ -29,6 +29,6 @@ class ChangeAppController extends Controller {
 		$session = $this->get("session");
 		$session->set("appid",$appid);
 		$this->get('keosu_core.exporter')->exportApp($appid);
-		return $this->redirect($this->get('request')->headers->get('referer'));
+		return $this->redirect($this->generateUrl('keosu_core_mainhomepage'));
 	}
 }

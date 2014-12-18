@@ -21,19 +21,23 @@ app.directive('keosuComments', function(){
 			}
 
 			$scope.commentListAction = function() {
-				$http.get($scope.host+'service/gadget/comment/'+$scope.objectName+'/'+$scope.objectId).success(function(data){
-					$scope.comments = data.comments;
-					$scope.connect = data.connect;
-				});
+				if ($scope.objectId) {
+					$http.get($scope.host+'service/gadget/comment/'+$scope.objectName+'/'+$scope.objectId).success(function(data){
+						$scope.comments = data.comments;
+						$scope.connect = data.connect;
+					});
+				}
 			};
 
 			$scope.commentAddAction = function() {
 				var data = "message="+$scope.messageComment;
 				$scope.messageComment = "";
-				$http.post($scope.host+'service/gadget/comment/'+$scope.objectName+'/'+$scope.objectId,data).success(function(data){
-					$scope.comments = data.comments;
-					$scope.connect = data.connect;
-				});
+				if (data != "message=") {//check if the commentaire is not empty
+					$http.post($scope.host+'service/gadget/comment/'+$scope.objectName+'/'+$scope.objectId,data).success(function(data){
+						$scope.comments = data.comments;
+						$scope.connect = data.connect;
+					});
+				};
 			};
 		}]
 	};

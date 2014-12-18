@@ -3,41 +3,9 @@
 ****************************/
 
 .back {
-  float:left;
-  margin:0%; margin-top:3%; margin-left:6%;
-  position: relative;
-  background: #000000;
-  background: -moz-linear-gradient(top, #C3C3C3, #8A8585);
-  background: -webkit-linear-gradient(top, #C3C3C3, #8A8585);
-  background: linear-gradient(to bottom, #C3C3C3, #8A8585);
-  display: inline-block;
-  padding: 6px 8px 6px 4px;
-  color: #000000;
-  text-decoration: none;
-  font: 14px helvetica, arial, sans-serif;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  z-index: 1;
-}
-.back:before {
-  content: "";
-  height: 20px;
-  width: 20px;
-  position: absolute;
-  background: #000000;
-  background: -moz-linear-gradient(top left, #C3C3C3, #8A8585);
-  background: -webkit-linear-gradient(top left, #C3C3C3, #8A8585);
-  background: linear-gradient(to bottom right, #C3C3C3, #8A8585);
-  left: -9px;
-  display: block;
-  top: 4px;
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-  z-index: -1;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+    float:left;
+    display: inline;
+    margin:0%;
+    margin-top:3%;
+    margin-left:8%;
 }

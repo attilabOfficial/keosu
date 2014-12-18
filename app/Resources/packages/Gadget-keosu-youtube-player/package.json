@@ -1,0 +1,13 @@
+{
+    "name" : "keosu-youtube-player",
+    "description" : "show a youtube video",
+    "version" : "0.1",
+    "type" : "gadget",
+    "param" : [
+        { "name" : "url", "type":"text"}
+    ],
+    "require" : [
+        { "name" : "keosu-base" , "version" : ">=0.1" },
+        { "name" : "keosu-youtube" , "version" : ">=0.1" }   
+    ]
+}

@@ -1,0 +1,22 @@
+<div class="clear" ng-show="enableComments == 1" ng-init="init()">
+	<div ng-repeat="comment in comments" class="comment-list">
+		<dl>
+			<dt>{{comment.user}} - {{comment.date}}</dt>
+			<dd>{{comment.message}}</dd>
+		</dl>
+	</div>
+	<div ng-show="connect">
+		<div class="comment-box">
+			<form role="form" ng-submit="commentAddAction()">
+				<!--fieldset-->
+					<legend>Add a new comment</legend>
+					<textarea class="form-control" rows="3" ng-model="messageComment"></textarea>
+					<button type="submit" class="btn btn-primary btn-lg add-comment">Add a new Comment</button>
+				<!--/fieldset>-->
+			</form>
+		</div>
+	</div>
+	<div ng-hide="connect">
+		<div class="alert alert-warning" role="alert">You must be connected to add a new comment</div>
+	</div>
+</div>

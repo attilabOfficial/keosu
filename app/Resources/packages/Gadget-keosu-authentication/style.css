@@ -1,0 +1,23 @@
+/****************************
+    AUTHENTICATION GADGET
+****************************/
+@media screen and (min-height: 400px) {
+    #register {
+        min-height: 550px;
+    }
+}
+@media screen and (min-height: 600px) {
+    #register {
+        min-height: 800px;
+    }
+}
+@media screen and (min-height: 800px) {
+    #register {
+        min-height: 1050px;
+    }
+}
+@media screen and (min-height: 1000px) {
+    #register {
+        min-height: 1300px;
+    }
+}

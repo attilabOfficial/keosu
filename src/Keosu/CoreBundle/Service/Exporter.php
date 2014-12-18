@@ -112,6 +112,7 @@ class Exporter {
         $importedPackages = array();
         $httpLinks = array();
         $jsInit = $jsCore = $jsEnd = '';
+        $css = '';
 
         // load index.html (main template)
         $indexHtml = new \DOMDocument();
@@ -146,7 +147,7 @@ class Exporter {
         // Generate Keosu's base
         ////////////////////////////////////////
         try {
-            $this->importPackage('keosu-base', $indexHtml, $configXml, $jsInit, $jsCore, $jsEnd, $importedPackages, $app, $httpLinks);
+            $this->importPackage('keosu-base', $indexHtml, $configXml, $jsInit, $jsCore, $jsEnd, $css, $importedPackages, $app, $httpLinks);
         } catch(\Exception $e) {
             throw new \LogicException('Unable to import keosu-base because '.$e->getMessage());
         }
@@ -185,7 +186,7 @@ class Exporter {
                     // import if it's needed
                     if(array_search($gadget->getName(),$importedPackages) === false) {
                         try {
-                            $this->importPackage($gadget->getName(),$indexHtml,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app,$httpLinks);
+                            $this->importPackage($gadget->getName(),$indexHtml,$configXml,$jsInit,$jsCore,$jsEnd,$css,$importedPackages,$app,$httpLinks);
                         } catch(\Exception $e) {
                             throw new \LogicException('Unable to import '.$gadget->getName().' because '.$e->getMessage());
                         }
@@ -256,14 +257,23 @@ class Exporter {
         $script->setAttribute('src','js/app.js');
         $indexHtml->getElementsByTagName('head')->item(0)->appendChild($script);
 
+        $link = $indexHtml->createElement('link');
+        $link->setAttribute('rel','stylesheet');
+        $link->setAttribute('type','text/css');
+        $link->setAttribute('href','js/app.css');
+        $indexHtml->getElementsByTagName('head')->item(0)->appendChild($link);
+
         $this->writeFile(StringUtil::decodeString($indexHtml->saveHTML()),'index.html','/simulator/www/');
 
         ////////////////////////////////////////////////////
-        // import all gadget requiered controller
+        // import all gadget required controller
         ////////////////////////////////////////////////////
         $appJs = 'var importedPackages = '.\json_encode($importedPackages).";\n";
         $appJs .= $jsInit.$jsCore.$jsEnd;
         $this->writeFile($appJs,'app.js','/simulator/www/js/');
+
+        // import CSS of all packages
+        $this->writeFile($css,'app.css','/simulator/www/js/');
 
         //Enable individual API permissions here.
         //The "device" permission is required for the 'deviceready' event.
@@ -458,11 +468,12 @@ class Exporter {
      * @param string $jsInit js init part
      * @param string $jsCore main part of the js
      * @param string $jsEnd end part of the js
+     * @param string $css CSS stylesheet
      * @param array $importedPackages list of imported gadget
      * @param App $app app to export
      * @param array of http link already imported
      */
-    private function importPackage($packageName,\DOMDocument &$indexDocument,\DOMDocument &$configXml,&$jsInit,&$jsCore,&$jsEnd,&$importedPackages,App &$app,&$jsHttpLink)
+    private function importPackage($packageName,\DOMDocument &$indexDocument,\DOMDocument &$configXml,&$jsInit,&$jsCore,&$jsEnd,&$css,&$importedPackages,App &$app,&$jsHttpLink)
     {
         $package = $this->packageManager->findPackage($packageName);
         $importedPackages[] = $package->getName();
@@ -475,7 +486,7 @@ class Exporter {
             if(count($require)) {
                 foreach($require as $r) {
                     if(array_search($r['name'],$importedPackages) === false) {
-                        $this->importPackage($r['name'],$indexDocument,$configXml,$jsInit,$jsCore,$jsEnd,$importedPackages,$app,$jsHttpLink);
+                        $this->importPackage($r['name'],$indexDocument,$configXml,$jsInit,$jsCore,$jsEnd,$css,$importedPackages,$app,$jsHttpLink);
                     }
                 }
             }
@@ -531,6 +542,10 @@ class Exporter {
             $jsCore .= file_get_contents($package->getPath().DIRECTORY_SEPARATOR.'core.js');
         if(is_file($package->getPath().DIRECTORY_SEPARATOR.'end.js'))
             $jsEnd .= file_get_contents($package->getPath().DIRECTORY_SEPARATOR.'end.js');
+
+        // CSS stylesheet
+        if(is_file($package->getPath().DIRECTORY_SEPARATOR.'style.css'))
+            $css .= file_get_contents($package->getPath().DIRECTORY_SEPARATOR.'style.css');
 
         // event to add new feature
         $dispatcher = $this->container->get('event_dispatcher');

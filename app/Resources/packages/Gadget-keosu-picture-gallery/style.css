@@ -1,0 +1,88 @@
+/***************************
+   IMAGE
+***************************/
+.gallery {
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
+.picture-gallery {
+	width: 20%;
+	height: 90px;
+	overflow: hidden;
+	float: left;
+	
+}
+
+.picture-horizontal, picture-vertical {
+	position: relative;
+	max-width: none !important;
+}
+
+.picture-horizontal {
+	height: 90px;
+	width: auto;
+}
+
+.picture-vertical {
+	width: 90px;
+	height: auto;
+}
+
+.img-min-list {
+  position:relative  !important;
+  margin-left: auto;
+  margin-right: auto;
+  max-height:64px  !important;
+  max-width:128px  !important;
+  overflow:hidden  !important;
+}
+
+.img-min {
+	min-width: 170px;
+  	left: -20;
+	height: auto;
+	position:absolute  !important;
+}
+
+img.center, .img-min {
+	width: 100%;
+}
+
+.img-list {
+	list-style-type: none !important;
+	margin: auto 0 !important;
+	padding: 5px !important;
+}
+
+.photo-full {
+	max-width: 100%;
+	max-height: 100%;
+	overflow: auto;
+	margin: auto;
+	position: absolute;
+	padding-top: 60px;
+	padding-bottom: 40px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+.photo-center {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    margin: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+/***************************
+   THUMBNAILS
+***************************/
+
+.thumbnails-left {
+	 margin:0  !important; 
+	 margin-right:10px  !important;
+}

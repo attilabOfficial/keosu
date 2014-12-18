@@ -1,0 +1,23 @@
+/****************************
+	RSS GADGET
+****************************/
+.rss-list {
+    padding-bottom: 20%;
+
+}
+.rss-title-wrapper {
+    margin-bottom: 7%;
+}
+.rss-title h6 {
+    margin-bottom: 0;
+
+}
+.rss-article {
+    margin-top: 7%;
+    text-align: justify;
+
+}
+.rss-article img {
+    max-width: 100%;
+    height: auto;
+}

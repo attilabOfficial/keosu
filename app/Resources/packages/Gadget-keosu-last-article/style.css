@@ -1,0 +1,39 @@
+/***************************
+   LIST
+***************************/
+.list {
+	margin: 0px 5px !important;
+	padding: 5px !important;
+	background-color: #ffffff !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.list-content {
+	border: none !important;
+}
+
+.list-elements {
+	margin: 0 auto;
+	padding: 0px !important;
+}
+
+.list-title > .ng-scope > h6, h6.title.ng-binding {
+	height:50px;
+	word-wrap: break-word;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.list-elem-right {
+	color: #bdc3c7 !important;
+}
+
+.list-elem-left {
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none !important;
+}

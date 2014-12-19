@@ -1,0 +1,12 @@
+{
+    "name" : "keosu-video",
+    "description" : "show a video",
+    "version" : "0.1",
+    "type" : "gadget",
+    "param" : [
+        { "name" : "url", "type":"text"}
+    ],
+    "require" : [
+        { "name" : "keosu-base" , "version" : ">=0.1" }
+    ]
+}

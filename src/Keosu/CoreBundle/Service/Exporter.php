@@ -544,8 +544,14 @@ class Exporter {
             $jsEnd .= file_get_contents($package->getPath().DIRECTORY_SEPARATOR.'end.js');
 
         // CSS stylesheet
-        if(is_file($package->getPath().DIRECTORY_SEPARATOR.'style.css'))
-            $css .= file_get_contents($package->getPath().DIRECTORY_SEPARATOR.'style.css');
+        $packageStylesheet = ThemeUtil::getAbsolutePath().$app->getTheme().'/style/packages/'.$packageName.'.css';
+        if (is_file($packageStylesheet)) { // If there's a CSS stylesheet for this package in the current theme
+            $css .= file_get_contents($packageStylesheet);
+        } else { // Otherwise, we check if there's one in the package directory
+            $packageStylesheet = $package->getPath().DIRECTORY_SEPARATOR.'style.css';
+            if (is_file($packageStylesheet))
+                $css .= file_get_contents($packageStylesheet);
+        }
 
         // event to add new feature
         $dispatcher = $this->container->get('event_dispatcher');

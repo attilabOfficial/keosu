@@ -13,10 +13,10 @@
 				<div class="col-xs-7 vcenter">
 					<span class="list-title"> 
 						<span ng-if="apage.attachments[0].path">
-							<h6>{{ apage.title }}</h6>
+							<h6 ng-bind-html="apage.title"></h6>
 						</span> 
 						<span ng-if="!(apage.attachments[0].path)">
-								<h6 class="title list-title">{{ apage.title }}</h6>
+								<h6 class="title list-title" ng-bind-html="apage.title"></h6>
 						</span>
 					</span>
 				</div>
@@ -33,7 +33,7 @@
 <!-- ONE ARTICLE -->
 <div ng-show="isArticle" class="animated zoomIn">
 	<div class="row-fluid">
-		<h4 class="title" style="text-align: center">{{ article.title }}</h4>
+		<h4 class="title" ng-bind-html="article.title" style="text-align: center"></h4>
 	</div>
 	<hr>
 	<div class="gadget-content">

@@ -5,7 +5,7 @@
 				<div class="row-fluid list-elements animated {{slide}}" ng-repeat="apage in pages">
 					<div class="media" ng-click="open(apage)">
 						<div class="media-body list-title">
-							<h6 class="title">{{ apage.title }}</h6>
+							<h6 class="title" ng-bind-html="apage.title"></h6>
 						</div>
 					</div>
 					<hr>
@@ -24,7 +24,7 @@
 <!-- ONE ARTICLE -->
 <div ng-show="isArticle" class="animated zoomIn">
 	<div class="row-fluid">
-		<h4 class="title" style="text-align: center">{{ article.title }}</h4>
+		<h4 class="title" ng-bind-html="article.title" style="text-align: center"></h4>
 	</div>
 	<hr>
 	<div class="gadget-content">

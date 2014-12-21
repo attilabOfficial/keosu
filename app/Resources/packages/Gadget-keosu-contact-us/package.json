@@ -1,0 +1,20 @@
+{
+   "name" : "keosu-contact-us",
+   "description" : "Infomation about the application owner",
+   "version" : "0.1",
+   "type" : "gadget",
+   "param" : [
+      {"name" : "pictureId" , "type" : "number"},
+      { "name" : "companyName", "type":"text"},
+      { "name" : "desc", "type" : "text"},
+      { "name" : "address", "type" : "text"},
+      { "name" : "phone", "type" : "text"},
+      { "name" : "mail", "type" : "text"}
+   ],
+   "require" : [
+      { "name" : "keosu-base" , "version" : ">=0.1" }
+   ],
+   "configCordova" : {},
+   "libJs" : [],
+   "appParam" : []
+}

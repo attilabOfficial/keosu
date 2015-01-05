@@ -37,3 +37,34 @@
     vertical-align: middle;
     float: none !important;
 }
+
+.img-min-list {
+    position:relative  !important;
+    margin-left: auto;
+    margin-right: auto;
+    max-height:64px  !important;
+    max-width:128px  !important;
+    overflow:hidden  !important;
+}
+
+.img-min {
+    min-width: 170px;
+    left: -20;
+    height: auto;
+    position:absolute  !important;
+}
+
+img.center, .img-min {
+    width: 100%;
+}
+
+.img-list {
+    list-style-type: none !important;
+    margin: auto 0 !important;
+    padding: 5px !important;
+}
+
+.one-article img, .one-article iframe {
+    max-width: 100%;
+    height: auto;
+}

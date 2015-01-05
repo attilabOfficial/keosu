@@ -213,7 +213,6 @@ class Exporter {
 
                     //Copy in HTML
                     $gadgetTemplateHtml = file_get_contents($package->getPath().'/templates/'.$gadget->getTemplate());
-                    $gadgetTemplateHtml = utf8_encode($gadgetTemplateHtml);
                     $zone->nodeValue = $gadgetTemplateHtml;
                     //Add the angularJS directive to zone
                     // import param

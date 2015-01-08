@@ -2,23 +2,26 @@
 app.controller('keosu-rssController', function ($rootScope, $scope)
 {
 	$scope.init = function(params) {
+        $scope.infinitList = false;
         $rootScope.previousButton = false;
         $scope.param = params;
         $scope.isList = true;
         $scope.list = [];
         $scope.currentlist = [];
         $scope.page = 0;
+        $scope.max = parseInt($(document).height()) - parseInt($(window).height());
         google.load('feeds', '1', {"callback": $scope.displayRss});
 	}
 
     $scope.buildPage = function() {
-        $scope.currentlist = [];
+        if ($scope.infinitList == false)
+            $scope.currentlist = [];
         var offset = $scope.page * $scope.param.gadgetParam.articlesPerPage;
         for (var i = offset; i < offset + $scope.param.gadgetParam.articlesPerPage && i < $scope.list.length; i++){
             $scope.currentlist.push($scope.list[i]);
         }
     }
-
+    
     $rootScope.previous = function() {
         $rootScope.previousButton = false;
         $scope.isList = !$scope.isList;
@@ -34,7 +37,8 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
         window.scrollTo(0, 0);
     }
 
-    $scope.next = function() {
+    $scope.next = function() {      
+    console.log("next");
         if ($scope.page < $scope.last)
             $scope.page += 1;
         $scope.buildPage();
@@ -78,5 +82,22 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
         }
       });
     }
+
+    $scope.setInfinitList = function(){
+        $scope.infinitList = true;
+    }
+
+    $(window).on('scroll', function() {
+        console.log("> " + $(window).scrollTop() + " max " + $scope.max)
+        if ($(window).scrollTop() >= $scope.max) {
+            $scope.max = parseInt($(document).height()) - parseInt($(window).height());
+            if ($scope.infinitList == true){
+                console.log($scope.currentlist.length);
+                $scope.next();
+                $scope.$apply();
+                console.log($scope.currentlist.length);
+            }
+        }
+    });
 });
 /* RSS Feed lemonde:  http://rss.lemonde.fr/c/205/f/3050/index.rss */

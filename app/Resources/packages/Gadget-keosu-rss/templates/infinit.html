@@ -1,22 +1,21 @@
 <!-- TITLE LIST -->
-<div class="rss-list" ng-show="isList" ng-swipe-left="next()" ng-swipe-right="prev()">
+<div class="rss-list" ng-show="isList">
 	<div class="panel list">
 		<div class="panel-body list-content">
 			<div class="row-fluid list-elements animated {{slide}} rss-title-wrapper" ng-repeat="elem in currentlist">
 				<div class="media" ng-click="open(elem)">
 					<div class="media-body list-title rss-title">
 						<h6 class="title">{{ elem.title }}</h6>
-						<img class="center" src="{{elem.image}}" alt="" style="width:100%; height: auto; overflow:hidden;"/>
+						<img class="center" src="{{elem.image}}" alt="" style=" width:100%; height: auto; overflow:hidden;"/>
 					</div>
 				</div>
 				<hr>
 			</div>
 		</div>
 	</div>
-	<button ng-show="page > 0" ng-click="prev() "
-			class="previous btn btn-default btn-page animated fadeIn" style="float:left;">Prev</button>
-	<button ng-show="page < (last - 1)" ng-click="next()"
-			class="next btn btn-default btn-page pull-right animated fadeIn" style="float:right;">Next</button>
+	<button ng-init="setInfinitList()" ng-show="page < (last - 1)"  ng-click="next()" class="next btn btn-default btn-page pull-right animated fadeIn">
+		More
+	</button>
 </div>
 
 <!-- ARTICLE -->

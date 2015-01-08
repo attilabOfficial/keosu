@@ -38,7 +38,6 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
     }
 
     $scope.next = function() {      
-    console.log("next");
         if ($scope.page < $scope.last)
             $scope.page += 1;
         $scope.buildPage();
@@ -88,14 +87,12 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
     }
 
     $(window).on('scroll', function() {
-        console.log("> " + $(window).scrollTop() + " max " + $scope.max)
         if ($(window).scrollTop() >= $scope.max) {
             $scope.max = parseInt($(document).height()) - parseInt($(window).height());
             if ($scope.infinitList == true){
-                console.log($scope.currentlist.length);
                 $scope.next();
                 $scope.$apply();
-                console.log($scope.currentlist.length);
+                console.log("Load more arcticle.");
             }
         }
     });

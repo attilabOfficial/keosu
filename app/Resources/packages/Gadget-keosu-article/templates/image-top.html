@@ -1,9 +1,9 @@
 <div class="animated fadeIn">
 	<h4 class="title">{{ article.title }}</h4>
 	<hr>
-	<ul class="img-list">
+	<ul class="img-list" style="list-style: none; margin: 0;padding: 0;">
 		<li ng-repeat="img in article.attachments">
-			<img class="center" ng-if="img" src="{{ img.path }}" alt="" />
+			<img class="center" ng-if="img" src="{{ img.path }}" alt="" style="width:100%; height: auto; overflow:hidden;"/>
 		</li>
 	</ul>
 	<hr>

@@ -3,19 +3,28 @@
 ****************************/
 .rss-list {
     padding-bottom: 20%;
-
+}
+.rss-list button:first-child {
+    float: left;
+}
+.rss-list button:last-child {
+    float: right;
 }
 .rss-title-wrapper {
     margin-bottom: 7%;
 }
 .rss-title h6 {
     margin-bottom: 0;
-
 }
+.rss-title img {
+    width:100%;
+    height: auto;
+    overflow: hidden;
+}
+
 .rss-article {
     margin-top: 7%;
     text-align: justify;
-
 }
 .rss-article img {
     max-width: 100%;

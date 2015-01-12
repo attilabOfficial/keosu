@@ -6,7 +6,7 @@
 				<div class="media" ng-click="open(elem)">
 					<div class="media-body list-title rss-title">
 						<h6 class="title">{{ elem.title }}</h6>
-						<img class="center" src="{{elem.image}}" alt="" style="width:100%; height: auto; overflow:hidden;"/>
+						<img class="center" src="{{elem.image}}" alt=""/>
 					</div>
 				</div>
 				<hr>
@@ -14,16 +14,16 @@
 		</div>
 	</div>
 	<button ng-show="page > 0" ng-click="prev() "
-			class="previous btn btn-default btn-page animated fadeIn" style="float:left;">Prev</button>
+			class="previous btn btn-default btn-page animated fadeIn">Prev</button>
 	<button ng-show="page < (last - 1)" ng-click="next()"
-			class="next btn btn-default btn-page pull-right animated fadeIn" style="float:right;">Next</button>
+			class="next btn btn-default btn-page pull-right animated fadeIn">Next</button>
 </div>
 
 <!-- ARTICLE -->
 <div ng-hide="isList" class="animated zoomIn">
 	<div class="row-fluid rss-title">
 		<h6 class="title" style="text-align: center">{{title}}</h6>
-		<img class="center" ng-if="hasImage" src="{{ path }}" alt="" style="width:100%; height: auto; overflow:hidden;"/>
+		<img class="center" ng-if="hasImage" src="{{ path }}" alt="" />
 	</div>
 	<hr>
 	<div class="gadget-content">

@@ -6,7 +6,7 @@
 				<div class="media" ng-click="open(elem)">
 					<div class="media-body list-title rss-title">
 						<h6 class="title">{{ elem.title }}</h6>
-						<img class="center" src="{{elem.image}}" alt="" style=" width:100%; height: auto; overflow:hidden;"/>
+						<img class="center" src="{{elem.image}}" alt="" />
 					</div>
 				</div>
 				<hr>
@@ -22,7 +22,7 @@
 <div ng-hide="isList" class="animated zoomIn">
 	<div class="row-fluid rss-title">
 		<h6 class="title" style="text-align: center">{{title}}</h6>
-		<img class="center" ng-if="hasImage" src="{{ path }}" alt="" style="width:100%; height: auto; overflow:hidden;"/>
+		<img class="center" ng-if="hasImage" src="{{ path }}" alt="" />
 	</div>
 	<hr>
 	<div class="gadget-content">

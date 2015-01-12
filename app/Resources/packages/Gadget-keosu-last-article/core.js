@@ -92,18 +92,18 @@ app.controller('keosu-last-articleController', function ($rootScope, $scope, $ht
 		$scope.isFirstPage = true;
 		$scope.isLastPage = true;
 		$scope.max = parseInt($(document).height()) - parseInt($(window).height());
-		$scope.infinitList = false;
+		$scope.infiniteList = false;
 		$scope.getPage($scope.activePage,true);
 	};
 
-	$scope.setInfinitList = function(){
-		$scope.infinitList = true;
+	$scope.setInfiniteList = function(){
+		$scope.infiniteList = true;
 	}
 
 	$(window).on('scroll', function() {
 		if ($(window).scrollTop() >= $scope.max) {
 			$scope.max = parseInt($(document).height()) - parseInt($(window).height());
-			if (!$scope.isLastPage && $scope.infinitList)
+			if (!$scope.isLastPage && $scope.infiniteList)
     			$scope.more();
     	}
 	});

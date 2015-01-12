@@ -2,7 +2,7 @@
 app.controller('keosu-rssController', function ($rootScope, $scope)
 {
 	$scope.init = function(params) {
-        $scope.infinitList = false;
+        $scope.infiniteList = false;
         $rootScope.previousButton = false;
         $scope.param = params;
         $scope.isList = true;
@@ -14,7 +14,7 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
 	}
 
     $scope.buildPage = function() {
-        if ($scope.infinitList == false)
+        if ($scope.infiniteList == false)
             $scope.currentlist = [];
         var offset = $scope.page * $scope.param.gadgetParam.articlesPerPage;
         for (var i = offset; i < offset + $scope.param.gadgetParam.articlesPerPage && i < $scope.list.length; i++){
@@ -55,17 +55,14 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
         $scope.feed.setNumEntries(100);
       	$scope.feed.load(function(result){
         if (!result.error){
-            console.log(result.feed.entries.length + " elem");
             for(var i = 0; i < result.feed.entries.length; i++) {
                 var image = "";
                 try {
                     image = result.feed.entries[i].xmlNode.getElementsByTagName("image")[0].innerHTML;
-                    console.log("<image>");
                 }
                 catch(err) {
                     try {
                         image = result.feed.entries[i].xmlNode.getElementsByTagName("enclosure")[0].getAttribute("url");
-                        console.log("<enclosure>");
                     }
                     catch(err){
                         image = "";                        
@@ -82,17 +79,16 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
       });
     }
 
-    $scope.setInfinitList = function(){
-        $scope.infinitList = true;
+    $scope.setInfiniteList = function(){
+        $scope.infiniteList = true;
     }
 
     $(window).on('scroll', function() {
         if ($(window).scrollTop() >= $scope.max) {
             $scope.max = parseInt($(document).height()) - parseInt($(window).height());
-            if ($scope.infinitList == true){
+            if ($scope.infiniteList == true){
                 $scope.next();
                 $scope.$apply();
-                console.log("Load more arcticle.");
             }
         }
     });

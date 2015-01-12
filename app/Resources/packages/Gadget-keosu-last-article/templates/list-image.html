@@ -1,5 +1,5 @@
 <!-- ARTICLE LIST -->
-<div ng-show="isList" class="list"  ng-swipe-left="next()" ng-swipe-right="previous()">
+<div ng-show="isList" class="list list-articles"  ng-swipe-left="next()" ng-swipe-right="previous()">
 	<div class="list-content">
 		<div class="media list-elements animated {{slide}}" ng-repeat="apage in pages">
 			<div class="row" ng-click="open(apage)">
@@ -25,15 +25,15 @@
 		</div>
 	</div>
 	<button ng-show="!isFirstPage" ng-click="previous()"
-		class="previous btn btn-default btn-page animated fadeIn" style="float:left;">Prev</button>
+		class="previous btn btn-default btn-page animated fadeIn">Prev</button>
 	<button ng-show="!isLastPage" ng-click="next()"
-		class="next btn btn-default btn-page pull-right animated fadeIn" style="float:right;">Next</button>
+		class="next btn btn-default btn-page pull-right animated fadeIn">Next</button>
 </div>
 
 <!-- ONE ARTICLE -->
 <div ng-show="isArticle" class="one-article animated zoomIn">
 	<div class="row-fluid">
-		<h4 class="title" ng-bind-html="article.title" style="text-align: center"></h4>
+		<h4 class="title" ng-bind-html="article.title"></h4>
 	</div>
 	<hr>
 	<div class="gadget-content">

@@ -1,30 +1,27 @@
 <!-- ARTICLE LIST -->
-<div ng-show="isList" ng-swipe-left="next()" ng-swipe-right="previous()">
-		<div class="panel list">
-			<div class="panel-body list-content">
-				<div class="row-fluid list-elements animated {{slide}}" ng-repeat="apage in pages">
-					<div class="media" ng-click="open(apage)">
-						<div class="media-body list-title">
-							<h6 class="title" ng-bind-html="apage.title"></h6>
-						</div>
-					</div>
-					<hr>
-				</div>
-			</div>
-		</div>
-		<button ng-show="!isFirstPage" ng-click="previous()"
-			class="previou btn btn-default btn-page animated fadeIn" style="float:left;" >Prev</button>
-		<button ng-show="!isLastPage" ng-click="next()"
-			class="next btn btn-default btn-page pull-right animated fadeIn" style="float:right;">Next</button>
-
-	</li>
-
+<div class="list-articles" ng-show="isList" ng-swipe-left="next()" ng-swipe-right="previous()">
+    <div class="panel list">
+        <div class="panel-body list-content">
+            <div class="row-fluid list-elements animated {{slide}}" ng-repeat="apage in pages">
+                <div class="media" ng-click="open(apage)">
+                    <div class="media-body list-title">
+                        <h6 class="title" ng-bind-html="apage.title"></h6>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <button ng-show="!isFirstPage" ng-click="previous()"
+        class="previou btn btn-default btn-page animated fadeIn">Prev</button>
+    <button ng-show="!isLastPage" ng-click="next()"
+        class="next btn btn-default btn-page pull-right animated fadeIn">Next</button>
 </div>
 
 <!-- ONE ARTICLE -->
 <div ng-show="isArticle" class="one-article animated zoomIn">
 	<div class="row-fluid">
-		<h4 class="title" ng-bind-html="article.title" style="text-align: center"></h4>
+		<h4 class="title" ng-bind-html="article.title"></h4>
 	</div>
 	<hr>
 	<div class="gadget-content">

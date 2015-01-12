@@ -32,6 +32,14 @@
 .list-elem-left {
 }
 
+.list-articles button:first-child {
+    float: left;
+}
+
+.list-articles button:last-child {
+    float: right;
+}
+
 .vcenter {
     display: inline-block;
     vertical-align: middle;
@@ -67,4 +75,8 @@ img.center, .img-min {
 .one-article img, .one-article iframe {
     max-width: 100%;
     height: auto;
+}
+
+.one-article h4 {
+    text-align: center;
 }

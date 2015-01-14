@@ -74,7 +74,7 @@ class EditController extends Controller {
 	 * Manage and store
 	 */
 	private function editArticle($article) {
-		
+
 		//Get tags list from database
 		$em = $this->get('doctrine')->getManager();
 		$query = $em->createQuery('SELECT DISTINCT u.tagName FROM Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags u');

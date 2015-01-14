@@ -33,17 +33,17 @@ class ServiceController extends Controller {
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
 		$article = $em->getRepository('KeosuDataModelArticleModelBundle:ArticleBody')->find($gadgetConfig["article-id"]);
-		$ret=array(array(
+		$ret = array(
 				'id' => $article->getId(),
 				'dataModelObjectName' => $article->getDataModelObjectName(),
 				'title' => $article->getTitle(),
 				'enableComments' => $article->getEnableComments(),
 				'content' => $article->getBody()		
-		));
+		);
 		$attachments = $article->getAttachments();
 		if (count($attachments) > 0){
 			foreach ($attachments as $key=>$attachment){
-				$ret[0]['attachments'][$key]['path'] =  $this->container->getParameter('url_base') . $attachment->getWebPath();
+				$ret['attachments'][$key]['path'] =  $this->container->getParameter('url_base') . $attachment->getWebPath();
 			}
 		}
 		return new JsonResponse($ret);

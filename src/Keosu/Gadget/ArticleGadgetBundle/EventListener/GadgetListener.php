@@ -52,10 +52,10 @@ class GadgetListener implements EventSubscriberInterface
 		
 		//Overide form
 		$builder = $event->getFormBuilder();
-		$builder->add('article-id','choice',array(
+		$builder->add('article-id', 'choice', array(
 				'label' 	=> 'Article',
-				'choices'	=> $articleList
-		));
+				'choices'	=> $articleList));
+        $builder->add('offline', 'checkbox');
 	}
 	
 	public function onGadgetConfSav(GadgetSaveConfigEvent $event)

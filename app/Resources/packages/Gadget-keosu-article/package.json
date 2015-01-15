@@ -5,7 +5,7 @@
    "type" : "gadget",
    "param" : [
       { "name" : "article-id", "type" : "number"},
-      { "name" : "offline", "type" : "checkbox"}
+      { "name" : "offline", "type" : "checkbox", "required" : 0}
    ],
    "require" : [
       { "name" : "keosu-base" , "version" : ">=0.1" },

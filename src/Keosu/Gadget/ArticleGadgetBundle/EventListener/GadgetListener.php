@@ -55,7 +55,7 @@ class GadgetListener implements EventSubscriberInterface
 		$builder->add('article-id', 'choice', array(
 				'label' 	=> 'Article',
 				'choices'	=> $articleList));
-        $builder->add('offline', 'checkbox');
+        $builder->add('offline', 'checkbox',  array('required' => false));
 	}
 	
 	public function onGadgetConfSav(GadgetSaveConfigEvent $event)

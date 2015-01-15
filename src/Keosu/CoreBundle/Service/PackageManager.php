@@ -302,7 +302,7 @@ class PackageManager {
 		// get list of template
 		$ret = array();
 		$templates = scandir($pathToGadget.'/templates');
-		$templatesGadgetFolder = $kernel->getRootDir().$this::ROOT_DIR_TEMPLATE.'/'.$gadgetName.'/';
+		$templatesGadgetFolder = $kernel->getRootDir().$this::ROOT_DIR_TEMPLATE.$gadgetName.'/';
 		if(!is_dir($templatesGadgetFolder))
 			mkdir($templatesGadgetFolder);
 

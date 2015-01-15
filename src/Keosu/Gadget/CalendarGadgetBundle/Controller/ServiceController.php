@@ -30,6 +30,15 @@ class ServiceController extends Controller {
 		$gadgetConfig = $gadget->getConfig();
 		$eventsperpage = $gadgetConfig['events-per-page'];
 
+        // Count the number of events, and determine if it's the last page
+        $queryCount = $em->createQueryBuilder();
+        $queryCount->add('select', 'count(p.id)')
+            ->add('from','Keosu\DataModel\EventModelBundle\Entity\Event p');
+        $count = $queryCount->getQuery()->execute();
+        $count = $count[0][1];
+        $isLast = ((($offset+1)*$eventsperpage >= $count) ? true : false);
+
+        // Get the articles
 		$qb = $em->createQueryBuilder();
 		$qb->add('select', 'p')
 				->add('from','Keosu\DataModel\EventModelBundle\Entity\Event p')
@@ -39,10 +48,11 @@ class ServiceController extends Controller {
 		$query = $qb->getQuery();
 		$eventsList = $query->execute();
 
-		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewlist.'. $format . '.twig',array(
+		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewlist.'.$format.'.twig', array(
 									'events'        => $eventsList,
-									'eventsperpage' => $eventsperpage
-				));
+									'eventsperpage' => $eventsperpage,
+                                    'isLast'        => $isLast
+        ));
 	}
 	
 }

@@ -115,7 +115,7 @@ app.controller('keosu-calendarController', function ($rootScope, $scope, $http, 
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
 		cacheManagerService.get($scope.param.host+'service/gadget/calendar/'+$scope.param.gadgetId+'/'+pageNum+'/json').success(function(data) {
 			usSpinnerService.stop('spinner');
-			$scope.isFirstPage = data.isFirst;
+			$scope.isFirstPage = (pageNum == 0);
 			$scope.isLastPage = data.isLast;
 			start = $scope.pages.length;
 			console.log("Data lenght"+data.data.length);

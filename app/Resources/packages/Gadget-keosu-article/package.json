@@ -4,11 +4,11 @@
    "version" : "0.1",
    "type" : "gadget",
    "param" : [
-      { "name" : "article-id", "type" : "number"},
-      { "name" : "offline", "type" : "checkbox", "required" : 0}
+      { "name" : "article-id", "type" : "number" },
+      { "name" : "offline",    "type" : "checkbox", "options" : { "required" : 0 } }
    ],
    "require" : [
-      { "name" : "keosu-base" , "version" : ">=0.1" },
-      { "name" : "keosu-comments" , "version" : ">=0.1" }
+      { "name" : "keosu-base", "version" : ">=0.1" },
+      { "name" : "keosu-comments", "version" : ">=0.1" }
    ]
 }

@@ -1,0 +1,14 @@
+{
+   "name" : "plugin-youtube",
+   "description" : "Display a youtube video",
+   "version" : "0.1",
+   "type" : "plugin",
+   "param" : [
+      { "videoId" : "string" },
+      { "width"  :  "string" },
+      { "height" :  "string" }
+   ],
+   "require" : [
+      { "name" : "keosu-base" , "version" : ">=0.1" }
+   ]
+}

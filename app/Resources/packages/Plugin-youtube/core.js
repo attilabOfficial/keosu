@@ -1,12 +1,11 @@
-app.directive('pluginKeosuYoutube', function($window) {
+app.directive('youtubePlayer', function($window) {
   return {
     restrict: "E",
     scope: {
-      height:   "@",
-      width:    "@",
-      id:  "@"  
+      height: "@",
+      width:  "@",
+      id:     "="
     },
-
     template: '<div></div>',
 
     link: function(scope, element, attrs) {
@@ -24,6 +23,6 @@ app.directive('pluginKeosuYoutube', function($window) {
           videoId: scope.id
         });
       };
-    },  
+    }
   }
 });

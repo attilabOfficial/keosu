@@ -4,10 +4,10 @@
     "version" : "0.1",
     "type" : "gadget",
     "param" : [
-        { "name" : "url", "type":"text"}
+        { "name" : "videoId", "type" : "text" }
     ],
     "require" : [
-        { "name" : "keosu-base" , "version" : ">=0.1" },
-        { "name" : "keosu-youtube" , "version" : ">=0.1" }   
+        { "name" : "keosu-base",    "version" : ">=0.1" },
+        { "name" : "plugin-youtube", "version" : ">=0.1" }
     ]
 }

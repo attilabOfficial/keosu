@@ -1,15 +1,13 @@
-<h4 class="title">{{ title }}</h4>
-<hr>
 <div class="gadget-content contact-us">
 	<div class="row-fluid">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<img class="center" ng-if="image" src="{{ image }}" alt="" />
-			<h1>{{ companyName }}</h1>
-			<h5>{{ description }}</h5>
+			<h1>{{ name }}</h1>
+			<h5>{{ presentation }}</h5>
 			<br />
-			<span class="glyphicon glyphicon-home" aria-hidden="true"></span><h6>{{ address }}</h6><br />
-			<span class="glyphicon glyphicon-earphone" aria-hidden="true" ></span><h6>{{ phone }}</h6><br />
-			<span class="glyphicon glyphicon-envelope" aria-hidden="true" ></span><h6 >{{ email }}</h6>
+			<span ng-if="address" class="glyphicon glyphicon-home" aria-hidden="true"></span><h6>{{ address }}</h6><br />
+			<span ng-if="phone" class="glyphicon glyphicon-earphone" aria-hidden="true"></span><h6>{{ phone }}</h6><br />
+			<span ng-if="email" class="glyphicon glyphicon-envelope" aria-hidden="true"></span><h6 >{{ email }}</h6>
 		</div>
 	</div>
 </div>

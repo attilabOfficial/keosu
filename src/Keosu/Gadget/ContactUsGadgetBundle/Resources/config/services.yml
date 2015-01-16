@@ -1,0 +1,7 @@
+services:
+    keosu_gadget.contact_us.gadget:
+        class: Keosu\Gadget\ContactUsGadgetBundle\EventListener\GadgetListener
+        arguments: [@service_container]
+        tags:
+            - { name: kernel.event_subscriber }
+

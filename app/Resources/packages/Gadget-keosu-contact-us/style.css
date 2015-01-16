@@ -1,0 +1,13 @@
+/****************************
+	     CONTACT US
+****************************/
+
+.contact-us img {
+    width:   100%;
+    hegiht:  auto;
+}
+
+.contact-us h6 {
+    display:     inline;
+    margin-left: 10px;
+}

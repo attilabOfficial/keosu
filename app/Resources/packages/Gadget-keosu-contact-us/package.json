@@ -4,12 +4,12 @@
    "version" : "0.1",
    "type" : "gadget",
    "param" : [
-      {"name" : "pictureId" , "type" : "number"},
-      { "name" : "companyName", "type":"text"},
-      { "name" : "desc", "type" : "text"},
-      { "name" : "address", "type" : "text"},
-      { "name" : "phone", "type" : "text"},
-      { "name" : "mail", "type" : "text"}
+      { "name" : "pictureId" ,  "type" : "number" },
+      { "name" : "companyName", "type" : "text"   },
+      { "name" : "description", "type" : "textarea"   },
+      { "name" : "address",     "type" : "textarea"   },
+      { "name" : "phone",       "type" : "text"   },
+      { "name" : "email",       "type" : "email"  }
    ],
    "require" : [
       { "name" : "keosu-base" , "version" : ">=0.1" }

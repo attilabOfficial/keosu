@@ -34,12 +34,14 @@ app.controller('keosu-articleController', function ($scope, $http, $sce, usSpinn
         if ($scope.param.gadgetParam.offline == true) {
             $http.get('data/article'+$scope.param.gadgetParam['article-id']+'.json').success(function(data) {
                 $scope.article = data;
+                $scope.article.content = $sce.trustAsHtml(data.content);
             });
         } else {
             usSpinnerService.spin('spinner'); // While loading, there will be a spinner
             cacheManagerService.get($scope.param.host+ 'service/gadget/article/' + $scope.param.gadgetId + '/json').success(function(data) {
                 usSpinnerService.stop('spinner');
                 $scope.article = data;
+                $scope.article.content = $sce.trustAsHtml(data.content);
             });
         }
 	};

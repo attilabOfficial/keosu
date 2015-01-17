@@ -125,6 +125,9 @@ class EditController extends Controller {
 					$tag->getArticleBody()->removeTag($tag);
 					$em->remove($tag);
 				}
+
+                //Enable html tags
+                $article->setBody(html_entity_decode($article->getBody()));
 				
 				$em->persist($article);
 				$em->flush();

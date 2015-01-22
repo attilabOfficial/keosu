@@ -99,8 +99,8 @@ Edit point of interest
         function setLocation(){
         	lat=document.getElementById('form_lat');
             lng=document.getElementById('form_lng');
-            lat.value = place.geometry.location.k;
-            lng.value = place.geometry.location.B;
+            lat.value = place.geometry.location.lat();
+            lng.value = place.geometry.location.lng();
         }
 </script>
 

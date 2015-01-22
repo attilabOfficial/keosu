@@ -58,6 +58,7 @@ app.controller('keosu-last-articleController', function ($rootScope, $scope, $ht
 		}
 	};
 	$scope.more = function(){
+		alert("Load more article");
 		$scope.activePage++;
 		$scope.getPage($scope.activePage,false);
 	}
@@ -91,9 +92,10 @@ app.controller('keosu-last-articleController', function ($rootScope, $scope, $ht
 		$scope.activePage=0;
 		$scope.isFirstPage = true;
 		$scope.isLastPage = true;
-		$scope.max = parseInt($(document).height()) - parseInt($(window).height());
 		$scope.infiniteList = false;
 		$scope.getPage($scope.activePage,true);
+		$scope.max = parseInt($(document).height()) - parseInt($(window).height());
+		console.log("max " + $scope.max);
 	};
 
 	$scope.setInfiniteList = function(){
@@ -101,10 +103,12 @@ app.controller('keosu-last-articleController', function ($rootScope, $scope, $ht
 	}
 
 	$(window).on('scroll', function() {
-		if ($(window).scrollTop() >= $scope.max) {
-			$scope.max = parseInt($(document).height()) - parseInt($(window).height());
-			if (!$scope.isLastPage && $scope.infiniteList)
-    			$scope.more();
-    	}
+		console.log("> " + $(window).scrollTop() + " max = " + $scope.max + " " + $scope.pages.length +  " articles loaded");
+		if ($scope.isList && !$scope.isLastPage && $scope.infiniteList){
+			$scope.max = parseInt($(document).height()) - parseInt($(window).height()) - 1;
+			if ($(window).scrollTop() >= $scope.max) {
+    				$scope.more();
+			}
+	    }
 	});
 });

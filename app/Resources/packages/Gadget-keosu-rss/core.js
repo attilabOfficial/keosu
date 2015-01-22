@@ -16,6 +16,7 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
     $scope.buildPage = function() {
         if ($scope.infiniteList == false)
             $scope.currentlist = [];
+        console.log("update page");
         var offset = $scope.page * $scope.param.gadgetParam.articlesPerPage;
         for (var i = offset; i < offset + $scope.param.gadgetParam.articlesPerPage && i < $scope.list.length; i++){
             $scope.currentlist.push($scope.list[i]);
@@ -52,7 +53,7 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
     $scope.displayRss = function() {
         $scope.feed = new google.feeds.Feed($scope.param.gadgetParam.url);
         $scope.feed.setResultFormat(google.feeds.Feed.MIXED_FORMAT);
-        $scope.feed.setNumEntries(100);
+        $scope.feed.setNumEntries(50);
       	$scope.feed.load(function(result){
         if (!result.error){
             for(var i = 0; i < result.feed.entries.length; i++) {
@@ -84,9 +85,9 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
     }
 
     $(window).on('scroll', function() {
-        if ($(window).scrollTop() >= $scope.max) {
-            $scope.max = parseInt($(document).height()) - parseInt($(window).height());
-            if ($scope.infiniteList == true){
+        if ($scope.isList && !$scope.isLastPage && $scope.infiniteList){
+            $scope.max = parseInt($(document).height()) - parseInt($(window).height()) - 1;
+            if ($(window).scrollTop() >= $scope.max) {
                 $scope.next();
                 $scope.$apply();
             }

@@ -26,10 +26,10 @@
 		$( "#form_icon .radio" ).each(function(index) {
             var label = $(this).find('label');
 			var input = $(this).find('input');
-            var iconPath = window.location.href.split('web')[0] + 'web/' + label.text().trim();
+            var iconPath = '{{ url_base }}/' + label.text().trim();
             var img = '<img src="'+iconPath+'" style="height: 16px;" />';
 			label.attr('for', input.attr('id'));
-			label.text("");
+			label.text('');
             label.append(input);
             label.append(img);
 		});

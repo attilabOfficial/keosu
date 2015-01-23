@@ -8,20 +8,19 @@
 app.directive('facebookConnect', function () {
 	return {
 		scope: {
-			pageId: '=pageId'
+			pageId: '=pageId',
+			nextPage: '=nextPage'
 		},
 		restrict: 'E',
 		templateUrl: 'plugins/facebookPlugins/templates/faceBookConnect.html',
 
-		controller: ['$scope', '$http', function ($scope, $http) {
+		controller: ['$scope', '$http', '$location', function ($scope, $http, $location) {
 			$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
-			$scope.checkLogin = function () {
-				FB.login(null, {scope: "email"});
-			};
-
 			$scope.init = function () {
-
+				if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+        	    if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+            	if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
 				if ($scope.param == null) {
 					$http.get('data/globalParam.json').success(function (data) {
 						$scope.param = data;
@@ -32,40 +31,47 @@ app.directive('facebookConnect', function () {
 							FB.getLoginStatus(function (response) {
 
 								if (response.status == 'connected') {
-
+									alert("Already connected to Facebook");
 									var uid = response.authResponse.userID;
 									var accessToken = response.authResponse.accessToken;
-
 									var data = 'facebook_token=' + accessToken;
 									$http.post($scope.param.host + 'service/gadget/facebook/app/' + $scope.param.appId + '/login', data).success(function (data) {
-
 										if (data.success) {
 											$location.path('/Page/' + $scope.pageId);
 										} else {
 											alert("please first login the facebook!!!");
 										}
 									});
-
 									$location.path('/Page' + $scope.pageId);
 								}
-
+								else 
+									alert("Not already connected to Facebook");
 							});
 						}
 
-						FB.Event.subscribe('auth.login', function (response) {
-							//window.location.reload();
+				$scope.login = function() {
+					FB.login(function(response) {
+						$scope.isConnected();
+    	            }, { scope: "email" });
+            	}
 
-							if (response.status == 'connected') {
-								var data = 'facebook_token=' + response.authResponse.accessToken;
-								$http.post($scope.param.host + 'service/gadget/facebook/app/' + $scope.param.appId + '/login', data).success(function (data) {
-									if (data.success) {
-										$location.path('/Page/' + $scope.pageId);
-									} else {
-										alert("wrong!!!");
-									}
-								});
-							}
-						});
+				$scope.isConnected = function() {
+                	FB.getLoginStatus(function (response) {
+						if (response.status == 'connected'){
+							var FbToken = 'facebook_token=' + response.authResponse.accessToken;
+							$http.post($scope.param.host + 'service/gadget/facebook/app/' + $scope.param.appId + '/login', FbToken).success(function (data) {
+								if (data.success)
+									$location.path('/Page/' + $scope.nextPage);
+								else
+									alert("Can not get the facebook token");
+							});
+						}
+						else
+							alert("Not connected");
+				});
+            }
+
+						
 
 						FB.Event.subscribe('auth.logout', function (response) {
 							$http.get($scope.param.host + 'service/gadget/facebook/app/' + $scope.param.appId + '/logout', data).success(function (data) {
@@ -84,98 +90,10 @@ app.directive('facebookConnect', function () {
 					})
 
 				}
-
 			};
-
-
-//			$scope.setFaceBookUserName = function () {
-//
-//				if (typeof ($scope.username) == "undefined" || $scope.username.length == 0) {
-//
-//					var data = 'username=' + $scope.username;
-//					$http.post($scope.param.host + 'service/gadget/facebook/app/' + $scope.param.appId + '/login', data).success(function (data) {
-//
-//						if (data.success) {
-//							$scope.init();
-//						} else {
-//
-//							alert("please type your username in keosu");
-//						}
-//
-//					})
-//
-//				}
-//
-//			}
 		}]
 	};
 });
-
-app.directive('facebookShare',function(){
-	return{
-		$scope:{
-			pageId:'=pageId'
-		},
-
-	    restrict: 'E',
-	    templateUrl: 'plugins/facebookPlugins/templates/faceBookShare.html'
-	};
-
-});
-//app.directive('facebookShare',function(){
-//
-//	return{
-//	        restrict:'E',
-//			templateUrl: 'plugins/facebookPlugins/templates/faceBookConnect.html',
-//
-//
-//			controller:['$scope','$http',function($scope,$http){
-//				$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-//
-//
-//				$scope.shareStatus = function(responde){
-//					FB.ui({
-//						method:'share',
-//						href:'https://developers.facebook.com/docs/'
-//					});
-//				};
-//
-//
-//				$scope.checkedStatus = function(){
-//
-//					if ($scope.param == null) {
-//						$http.get('data/globalParam.json').success(function (data) {
-//							$scope.param = data;
-//
-//						if($scope.param.facebookConnect){
-//							FB.getLoginStatus(function(response){
-//								if(response.status == 'connected'){
-//
-//
-//									console.log('share ok');
-//
-//
-//								}else{
-//									facebookconnect.checkLogin();
-//
-//								}
-//
-//							});
-//
-//						}else{
-//							facebookconnect.checkLogin();
-//						}
-//						})
-//					}
-//
-//				};
-//	}]
-//
-//};
-//
-//});
-
-
 
 
 

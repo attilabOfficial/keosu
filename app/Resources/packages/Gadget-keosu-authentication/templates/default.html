@@ -1,9 +1,7 @@
 <div class="row-fluid center animated fadeIn">
-
+	<!-- LOGIN -->
 	<section ng-show="login">
-
-		<facebook-connect page-id="2"></facebook-connect>
-
+		<facebook-connect page-id="pageId" next-page="nextPage"> </facebook-connect>
 		<div ng-show="loginSuccess" class="alert alert-success">{{ loginSuccess}}</div>
 		<div ng-show="loginError" class="alert alert-danger">{{ loginError }}</div>
 		<form role="form">
@@ -20,22 +18,16 @@
 					<input type="checkbox" ng-model="rememberMe"> Remember me
 				</label>
 			</div>
-			<div style="margin-left:2%;margin-right:2%;">
-				<div style="float:left;">
-					<button ng-click="registerInit()" class="btn btn-default">Register</button>
-				</div>
-				<div style="float:right;">
-					<button ng-click="loginAction()" class="btn btn-default">Log in</button>
-				</div>
-			</div>
+				<h4><span class="label label-primary" ng-click="registerInit()" style="float:left;">Register</span></h4>
+				<h4><span class="label label-primary" ng-click="loginAction()" style="float:right;">Login</span></h4>
 		</form>
-		<div style="clear:both;">
-			<a ng-click="forgotPasswordInit()">You forgot your username or password ?</a>
-		</div>
+		<br />
+		<br />
+			<h5><span class="label label-primary" ng-click="forgotPasswordInit()" style="float:right;">Forgot Password ?</span></h5>
 	</section>
 
+	<!-- REGISTER -->
 	<section ng-show="register" id="register" style="min-height: 1000px">
-		<a ng-click="loginInit()"> < Go back to login</a>
 		<div ng-show="registerError" class="alert alert-danger">{{ registerError }}</div>
 		<form role="form" ng-submit="registerAction()">
 			<div class="form-group">
@@ -51,22 +43,21 @@
 				<input type="password" class="form-control" id="inputPasswordRegister" placeholder="Enter your password" ng-model="password">
 			</div>
 			<div class="form-group">
-				<label for="inputPasswordRegister2">Password re-type</label>
-				<input type="password" class="form-control" id="inputPasswordRegister2" placeholder="Re enter your password" ng-model="password2">
+				<label for="inputPasswordRegister2">Password confirmation</label>
+				<input type="password" class="form-control" id="inputPasswordRegister2" placeholder="Password confirmation" ng-model="password2">
 			</div>
-			<button type="submit" class="btn btn-default">Register</button>
+			<h4 type="submit"><span class="label label-primary" ng-click="loginAction()" style="float:right;">Register</span></h4>
 		</form>
 	</section>
 
 	<section ng-show="forgotPassword">
-		<a ng-click="loginInit()"> < Go back to login</a>
 		<div ng-show="forgotPasswordError" class="alert alert-danger">{{ forgotPasswordError }}</div>
 		<form role="form" ng-submit="forgotPasswordAction()">
 			<div class="form-group">
 				<label for="inputUsernameRegister">Username or Email</label>
 				<input type="text" class="form-control" id="inputUsernameRegister" placeholder="Enter your username or email" ng-model="username">
 			</div>
-			<button type="submit" class="btn btn-default">Send request</button>
+			<h4 type="submit"><span class="label label-primary" ng-click="loginAction()" style="float:right;">Send request</span></h4>
 		</form>
 	</section>
 

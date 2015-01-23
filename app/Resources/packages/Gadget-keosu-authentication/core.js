@@ -1,4 +1,4 @@
-app.controller('keosu-authenticationController',function ($scope, $http, usSpinnerService,$location) {
+app.controller('keosu-authenticationController',function ($rootScope, $scope, $http, usSpinnerService,$location) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -25,15 +25,23 @@ app.controller('keosu-authenticationController',function ($scope, $http, usSpinn
 			break;
 		}
 	}
+
+	$rootScope.previous = function()
+	{
+		$rootScope.previousButton = false;	
+		$scope.loginInit();
+	}
 	
 	//////////////////////////////////////
 	// Init part
 	//////////////////////////////////////
 	$scope.init = function(params){
-
+		$rootScope.previousButton = false;
+		$scope.nextPage = "0";
 		if($scope.param == null)
 			$http.get(params.host+'service/gadget/authentication/'+params.gadgetId+'/json/init').success(function(data) {
 				$scope.param = params;
+				$scope.nextPage= $scope.param.gadgetParam.pageToGoAfterLogin;
 				$scope.loginInit();
 			});
 		else
@@ -44,9 +52,7 @@ app.controller('keosu-authenticationController',function ($scope, $http, usSpinn
 	// Login part
 	/////////////////////////////////
 	$scope.loginInit = function(message,success) {
-	
 		usSpinnerService.spin('spinner');
-		
 		$scope.loginError = message;
 		$scope.loginSuccess = success;
 		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadgetId + '/json/loginInit').success(function(data) {
@@ -82,6 +88,7 @@ app.controller('keosu-authenticationController',function ($scope, $http, usSpinn
 	///////////////////////////////
 	$scope.registerInit = function(message) {
 		usSpinnerService.spin('spinner');
+		$rootScope.previousButton = true;
 		$scope.routing('register');
 		$scope.registerError = message;
 		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadgetId + '/json/register').success(function(data) {
@@ -131,6 +138,7 @@ app.controller('keosu-authenticationController',function ($scope, $http, usSpinn
 	// Forgot password part
 	/////////////////////////////////////
 	$scope.forgotPasswordInit = function(message) {
+		$rootScope.previousButton = true;
 		usSpinnerService.spin('spinner');
 		$scope.routing('forgotPassword');
 		$scope.forgotPasswordError = message;

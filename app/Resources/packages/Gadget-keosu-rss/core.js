@@ -18,9 +18,8 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
             $scope.currentlist = [];
         console.log("update page");
         var offset = $scope.page * $scope.param.gadgetParam.articlesPerPage;
-        for (var i = offset; i < offset + $scope.param.gadgetParam.articlesPerPage && i < $scope.list.length; i++){
+        for (var i = offset; i < offset + $scope.param.gadgetParam.articlesPerPage && i < $scope.list.length; i++)
             $scope.currentlist.push($scope.list[i]);
-        }
     }
     
     $rootScope.previous = function() {
@@ -34,6 +33,7 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
         $scope.title = elem.title;
         $scope.body = elem.body;
         $scope.path = elem.image;
+        $scope.link = elem.link;
         $scope.hasImage = (elem.image != "");
         window.scrollTo(0, 0);
     }
@@ -71,6 +71,7 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
                 }
                 $scope.list.push({"title": result.feed.entries[i].title,
                                   "body": result.feed.entries[i].content,
+                                  "link": result.feed.entries[i].link,
                                   "image": image});
             }
             $scope.last = Math.ceil($scope.list.length / $scope.param.gadgetParam.articlesPerPage);

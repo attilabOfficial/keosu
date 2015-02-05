@@ -103,7 +103,7 @@ app.controller('keosu-last-articleController', function ($rootScope, $scope, $ht
 	$(window).on('scroll', function() {
 		//console.log("> " + $(window).scrollTop() + " max = " + $scope.max + " " + $scope.pages.length +  " articles loaded");
 		if ($scope.isList && !$scope.isLastPage && $scope.infiniteList){
-			$scope.max = parseInt($(document).height()) - parseInt($(window).height()) - 1;
+			$scope.max = parseInt($(document).height()) - parseInt($(window).height()) - 2;
 			if ($(window).scrollTop() >= $scope.max) {
     				$scope.more();
 			}

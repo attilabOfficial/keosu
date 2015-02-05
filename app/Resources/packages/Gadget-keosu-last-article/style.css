@@ -80,3 +80,13 @@ img.center, .img-min {
 .one-article h4 {
     text-align: center;
 }
+
+.next_btn {
+    float: right;
+    diplay: inline;
+}
+
+.prev_btn {
+    float: left;
+    diplay: inline;
+}

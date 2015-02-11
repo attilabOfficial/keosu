@@ -75,6 +75,7 @@ class GadgetListener implements EventSubscriberInterface
 			$page = $em->getRepository('KeosuCoreBundle:Page')->find($pageId);
 			$tmp['id'] = $pageId;
 			$tmp['icon'] = $page->getIcon();
+			$tmp['name'] = $page->getName();
 			$pages[] = $tmp;
 		}
 		

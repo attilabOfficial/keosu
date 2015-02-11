@@ -171,8 +171,6 @@ class PackageManager {
 			foreach($templates as $t) {
 				if($t == '.' || $t == '..')
 					continue;
-				if($t != $this::DEFAULT_TEMPLATE_GADGET_NAME && StringUtil::endsWith($t,'.html') && array_search($t.'.png',$templates) === false)
-					throw new \LogicException('Missing previsualisation for template '.$t.' to your gadget '.$packageName.' located at '.$packageLocation);
 			}
 		}
 	}

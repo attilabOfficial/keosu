@@ -9,6 +9,10 @@
 	box-shadow: none !important;
 }
 
+.list h6{
+	font-size: 14px;
+}
+
 .list-content {
 	border: none !important;
 }

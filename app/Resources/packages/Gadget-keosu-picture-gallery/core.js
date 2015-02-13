@@ -83,6 +83,7 @@ app.controller('keosu-picture-galleryController', function ($rootScope, $scope, 
 		cacheManagerService.get( $scope.param.host + 'service/gadget/picturesgallery/'+$scope.param.gadgetId+'/0/json').success(function (data) {
 					usSpinnerService.stop('spinner');
 					$tmp = [];
+					alert(data.data.length + "  " + data.picturesperpage);
 					for (i = 0; i < data.data.length; i++) {
 						$tmp[i] = data.data[i];
 						toto = new Image;
@@ -97,6 +98,7 @@ app.controller('keosu-picture-galleryController', function ($rootScope, $scope, 
 					$scope.imageLength = $tmp.length;
 					nb = 0;
 					pages = new Array();
+					alert($tmp.length);
 					for (i = 0; i < $tmp.length; i++) {
 						tmpPage = [];
 						for (j = 0; j < data.picturesperpage; j++) {

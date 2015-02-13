@@ -42,6 +42,7 @@ class ServiceController extends Controller {
 			"name" => $picture->getName(),
 			"description" => $picture->getDescription(),
 			"path" => $baseurl.$picture->getWebPath(),
+			"thumbpath" => $baseurl.$picture->getThumbWebPath(),
 			"enableComments" => $picture->getEnableComments()
 		));
 	}

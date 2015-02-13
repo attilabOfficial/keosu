@@ -116,6 +116,7 @@ class SyncController extends Controller {
             $baseName = basename($img);
             $attachment->setName($baseName);
             $attachment->setPath($baseName);
+			$attachment->createThumb($attachment->getUploadRootDir().'/'.basename($img));
             $article->addAttachment($attachment);
         }
 

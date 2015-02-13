@@ -24,6 +24,7 @@
 			"name" : "{{ picture.name }}",
 			"description" : "{{ picture.description }}",
 			"path" : "{{ url_base }}{{ picture.webPath }}",
+			"thumbpath" : "{{ url_base }}{{ picture.thumbWebPath }}",
             "enableComments" : "{{ picture.enableComments }}"
 		}
 		{% if loop.last ==false%}

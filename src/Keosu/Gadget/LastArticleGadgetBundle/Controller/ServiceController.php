@@ -79,6 +79,7 @@ class ServiceController extends Controller {
 			if (count($attachments) > 0){
 				foreach ($attachments as $k=>$attachment){
 					$data[$key]['attachments'][$k]['path'] =  $this->container->getParameter('url_base') . $attachment->getWebPath();
+					$data[$key]['attachments'][$k]['thumbpath'] =  $this->container->getParameter('url_base') . $attachment->getThumbWebPath();
 				}
 			}
 		}	

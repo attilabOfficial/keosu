@@ -40,9 +40,9 @@ abstract class MediaDataModel extends DataModel
 	/**
      * @Assert\Image(
      *     minWidth = 200,
-     *     maxWidth = 400,
+     *     maxWidth = 1000,
      *     minHeight = 200,
-     *     maxHeight = 400
+     *     maxHeight = 1000
      * )
      */
 	private $file;
@@ -77,6 +77,10 @@ abstract class MediaDataModel extends DataModel
 		return null === $this->path ? null
 				: '/' . $this->getUploadDir() . '/' . $this->path;
 	}
+	public function getThumbWebPath() {
+		return null === $this->path ? null
+			: '/' . $this->getUploadDir() . '/min.' . $this->path;
+	}
 
 	public function getUploadRootDir() {
 		// the absolute directory path where uploaded
@@ -96,12 +100,34 @@ abstract class MediaDataModel extends DataModel
 	 */
 	public function setFile($file) {
 		$time = time();
-		$file->move($this->getUploadRootDir(), $time."_".$file->getClientOriginalName());
-
 		$this->path = $time."_".$file->getClientOriginalName();
+		$this->createThumb($file);
+		$file->move($this->getUploadRootDir(), $time."_".$file->getClientOriginalName());
 	}
 	public function getFile() {
 		return $this->file;
+	}
+
+	public function createThumb($file){
+		$size = getimagesize($file);
+		if ($size['mime'] == 'image/jpeg'){
+			$ratio = $size[0]/$size[1]; // width/height
+			if( $ratio > 1) {
+				$width = 100;
+				$height = 100/$ratio;
+			}
+			else {
+				$width = 100*$ratio;
+				$height = 100;
+			}
+			$src = imagecreatefromstring(file_get_contents($file));
+			$dst = imagecreatetruecolor($width,$height);
+			imagecopyresampled($dst,$src,0,0,0,0,$width,$height,$size[0],$size[1]);
+			imagedestroy($src);
+			imagejpeg($dst,$this->getUploadRootDir()."/min.".$this->path);
+		}else{
+			copy($file,$this->getUploadRootDir()."/min.".$this->pathŒ);
+		}
 
 	}
 

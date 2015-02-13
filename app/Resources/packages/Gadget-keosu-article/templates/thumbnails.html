@@ -7,13 +7,13 @@
 				</div>
 			</div>
 			<div class="medias-body">
-				<h5>{{ article.title }}</h5>
+				<h5 ng-bind-html="::article.title"></h5>
 			</div>
 		</div>
 		<hr>
 	</div>
 	<div class="gadget-content article">
-		<div ng-bind-html="article.content"></div>
+		<div ng-bind-html="::article.content"></div>
 	</div>
 	<keosu-comments object-id="article.id" object-name="article.dataModelObjectName" enable-comments="article.enableComments" ></keosu-comments>
 </div>

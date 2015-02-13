@@ -99,7 +99,6 @@ abstract class MediaDataModel extends DataModel
 		$file->move($this->getUploadRootDir(), $time."_".$file->getClientOriginalName());
 
 		$this->path = $time."_".$file->getClientOriginalName();
-
 	}
 	public function getFile() {
 		return $this->file;

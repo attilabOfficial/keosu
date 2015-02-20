@@ -126,7 +126,7 @@ abstract class MediaDataModel extends DataModel
 			imagedestroy($src);
 			imagejpeg($dst,$this->getUploadRootDir()."/min.".$this->path);
 		}else{
-			copy($file,$this->getUploadRootDir()."/min.".$this->pathŒ);
+			copy($file,$this->getUploadRootDir()."/min.".$this->path);
 		}
 
 	}

@@ -64,6 +64,11 @@ class Location extends DataModel{
 	private $enableComments;
 
 	/**
+	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\LocationModelBundle\Entity\LocationTags", mappedBy="Location", cascade={"persist","remove"})
+	 */
+	private $tags;
+
+	/**
 	 * Set name
 	 *
 	 * @param string $name
@@ -181,6 +186,43 @@ class Location extends DataModel{
 	
 	public function getDataModelObjectName() {
 		return "location";
+	}
+	/**
+	 * Add tags
+	 *
+	 * @param \Keosu\DataModel\LocationModelBundle\Entity\LocationTags $tags
+	 * @return Location
+	 */
+	public function addTag(
+			\Keosu\DataModel\LocationModelBundle\Entity\LocationTags $tags) {
+		$this->tags[] = $tags;
+		$tags->setLocation($this);
+	
+		return $this;
+	}
+	
+	/**
+	 * Remove tags
+	 *
+	 * @param \Keosu\DataModel\LocationModelBundle\Entity\LocationTags $tags
+	 */
+	public function removeTag(
+			\Keosu\DataModel\LocationModelBundle\Entity\LocationTags $tag) {
+		$this->tags->removeElement($tag);
+	}
+	
+	/**
+	 * Get tags
+	 *
+	 * @return Doctrine\Common\Collections\Collection
+	 */
+	public function getTags() {
+		return $this->tags;
+	}
+	
+	public function setTags(\Doctrine\Common\Collections\ArrayCollection $tags)
+	{
+		$this->tags = $tags;
 	}
 }
 

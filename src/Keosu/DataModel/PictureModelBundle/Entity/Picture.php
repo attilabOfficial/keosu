@@ -54,6 +54,11 @@ class Picture extends MediaDataModel
      * @ORM\Column(name="enableComments", type="boolean")
      */
     private $enableComments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Keosu\DataModel\PictureModelBundle\Entity\pictureTag", mappedBy="picture", cascade={"persist","remove"})
+     */
+    private $tags;
     
     //By default remote is false
     public function __construct() {
@@ -152,5 +157,42 @@ class Picture extends MediaDataModel
 
     public function getDataModelObjectName() {
         return 'picture';
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \Keosu\DataModel\PictureModelBundle\Entity\pictureTag $tags
+     * @return Picture
+     */
+    public function addTag(\Keosu\DataModel\PictureModelBundle\Entity\pictureTag $tags) {
+        $this->tags[] = $tags;
+        $tags->setPicture($this);
+    
+        return $this;
+    }
+    
+    /**
+     * Remove tags
+     *
+     * @param \Keosu\DataModel\PictureModelBundle\Entity\pictureTag $tags
+     */
+    public function removeTag(
+            \Keosu\DataModel\PictureModelBundle\Entity\pictureTag $tag) {
+        $this->tags->removeElement($tag);
+    }
+    
+    /**
+     * Get tags
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getTags() {
+        return $this->tags;
+    }
+    
+   public function setTags(\Doctrine\Common\Collections\ArrayCollection $tags)
+    {
+        $this->tags = $tags;
     }
 }

@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\DataModel\PictureModelBundle\Controller;
 
 use Keosu\DataModel\PictureModelBundle\Entity\Picture;
+use Keosu\DataModel\PictureModelBundle\Entity\pictureTag;
+use Keosu\DataModel\PictureModelBundle\Form\PictureTagsType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -65,14 +67,43 @@ class EditController extends Controller {
 	private function editPicture($picture) {
 		$em = $this->get('doctrine')->getManager();
 		
+		//get tags
+		$query = $em->createQuery('SELECT DISTINCT u.tagName FROM Keosu\DataModel\PictureModelBundle\Entity\pictureTag u');
+		$tagsResult = $query->getResult();
+		$tagsList=array();
+		foreach ($tagsResult as $tag){
+			$tagsList[]=$tag['tagName'];
+		}
+
 		$formBuilder = $this->createFormBuilder($picture);
 		$this->buildPictureForm($formBuilder);
 		$form = $formBuilder->getForm();
+		$originalTags = array();
+		if ($picture->getTags() != [])
+			foreach ($picture->getTags() as $tmpp)
+				$originalTags[] = $tmpp;
+		
 		$request = $this->get('request');
 		//If we are in POST method, form is submit
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
+				/**/
+				
+				//Identify tags to delete
+				foreach ($picture->getTags() as $tag) {
+					foreach ($originalTags as $key => $toDel) {
+						if ($toDel->getId() === $tag->getId()) {
+							unset($originalTags[$key]);
+						}
+					}
+				}
+				//Deleting tag from picture and database
+				foreach ($originalTags as $tag) {
+					$tag->getPicture()->removeTag($tag);
+					$em->remove($tag);
+				}
+				/**/
 				$em->persist($picture);
 				$em->flush();
 				return $this->redirect($this->generateUrl('keosu_picture_viewlist'));
@@ -80,7 +111,8 @@ class EditController extends Controller {
 		}
 		return $this->render('KeosuDataModelPictureModelBundle:Edit:edit.html.twig',array(
 									'form' => $form->createView(),
-									'pictureid' => $picture->getId()
+									'pictureid' => $picture->getId(),
+									'tagsList'=> $tagsList
 							));
 	}
 	/**
@@ -92,14 +124,21 @@ class EditController extends Controller {
 					->add('enableComments','checkbox',array(
 							'required' => false,
 					))
+					->add('tags', 'collection', array(
+							'type'         => new PictureTagsType(),
+							'allow_add'    => true,
+							'allow_delete' => true,
+							'by_reference' => false,
+							'required'     => false,
+							'label'        => false
+					))
 					->add('file', 'file', array(
 							'required'   => false, 
 							'image_path' => 'webPath',
 							'label'      => false,
 							'attr'       => array(
-									'accept' => 'image/*'
-							)
-					));
+							'accept' => 'image/*'
+					)));
 
 	}
 }

@@ -21,6 +21,7 @@ namespace Keosu\DataModel\LocationModelBundle\Controller;
 
 use Keosu\DataModel\LocationModelBundle\Entity\Location;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Keosu\DataModel\LocationModelBundle\Form\LocationTagsType;
 
 /**
  * Controller to edit an Location element
@@ -66,7 +67,22 @@ class EditController extends Controller {
 	 * Manage form and store object in database
 	 */
 	private function editLocation($poi) {
+		
+		//Get tags list from database
+		$em = $this->get('doctrine')->getManager();
+		$query = $em->createQuery('SELECT DISTINCT u.tagName FROM Keosu\DataModel\LocationModelBundle\Entity\LocationTags u');
+		$tagsResult = $query->getResult();
+		$tagsList=array();
+		foreach ($tagsResult as $tag){
+			$tagsList[]=$tag['tagName'];
+		}
+	
 		$form = $this->getLocationForm($poi);
+
+		$originalTags = array();
+		if ($poi->getTags() != [])
+			foreach ($poi->getTags() as $tag)
+				$originalTags[] = $tag;
 
 		$request = $this->get('request');
 
@@ -75,6 +91,21 @@ class EditController extends Controller {
 			$form->bind($request);
 
 			if ($form->isValid()) {
+				//Identify tags to delete
+				foreach ($poi->getTags() as $tag) {
+					foreach ($originalTags as $key => $toDel) {
+						if ($toDel->getId() === $tag->getId()) {
+							unset($originalTags[$key]);
+						}
+					}
+				}
+				//Deleting tag from article and database
+				foreach ($originalTags as $tag) {
+					$tag->getLocation()->removeTag($tag);
+					$em->remove($tag);
+				}
+
+
 				$em = $this->get('doctrine')->getManager();
 				$em->persist($poi);
 				$em->flush();
@@ -85,7 +116,8 @@ class EditController extends Controller {
 		return $this
 				->render('KeosuDataModelLocationModelBundle:Edit:edit.html.twig',
 						array('form' => $form->createView(),
-								'poi' => $poi));
+								'poi' => $poi,
+								'tagsList'=> $tagsList));
 	}
 
 	/**
@@ -99,6 +131,14 @@ class EditController extends Controller {
 				->add('lng', 'text')
 				->add('enableComments','checkbox',array(
 						'required' => false,
+				))
+				->add('tags', 'collection', array(
+						'type'         => new LocationTagsType(),
+						'allow_add'    => true,
+						'allow_delete' => true,
+						'by_reference' => false,
+						'required'     => false,
+						'label'        => false
 				))
 				->getForm();
 	}

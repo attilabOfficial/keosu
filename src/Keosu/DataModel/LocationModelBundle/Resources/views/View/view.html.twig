@@ -37,6 +37,7 @@ $(document).ready(function() {
                             null,
                             null,
                             null,
+                            null,
                             null
 			]});
 });
@@ -59,6 +60,7 @@ $(document).ready(function() {
 						<tr>
 							<th>Name</th>
 							<th>Reader</th>
+							<th>Tag</th>
 							<th>Description</th>
 							<th>Latitude</th>
 							<th>Longitude</th>
@@ -71,6 +73,7 @@ $(document).ready(function() {
 							<tr>
 								<td>{{ poi.name }}</td>
 								<td>{% if poi.reader %} {{poi.reader.name}}{% endif %}</td>
+								<td>{% for tag in poi.tags %}{{tag.tagName}},{% endfor %}</td>
 								<td>{{ poi.description }}</td>
 								<td>{{ poi.lat }}</td>
 								<td>{{ poi.lng }}</td>
@@ -84,6 +87,7 @@ $(document).ready(function() {
 						<tr>
 							<th>Name</th>
 							<th>Reader</th>
+							<th>Tag</th>
 							<th>Description</th>
 							<th>Latitude</th>
 							<th>Longitude</th>

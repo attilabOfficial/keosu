@@ -15,6 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #}
+
 {% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
 {% form_theme form 'KeosuCoreBundle:Form:fields-image.html.twig' %}
 
@@ -46,8 +47,47 @@ Edit picture
 	        }
 		});
 		
+		 ///// TAGS /////
 		
+		var liste = new Array();
+		{% for tag in tagsList %}
+			liste.push("{{tag}}");
+		{% endfor %}
+		var $tagContainer = $('.tags');
+		
+		function add_tag(){
+			index = $tagContainer.children().length;
+			prototype='<div class="image-collection-entry">';
+			prototype+='<a class="badge remove-button">';
+			prototype+='<span class="glyphicon glyphicon-remove"></span></a>';
+			prototype+='<span class="clear">&nbsp;</span>';
+			widget=$tagContainer.attr('data-prototype').replace(/__name__/g, index);
+			prototype+=widget;
+			$tagContainer.append($(prototype));
+			
+			//Autocompletion
+			$('.tags input').each(function(){
+				$(this).autocomplete({
+			    	source : liste
+				});
+			});
+		}
+		$('#add_tag').click(function(){
+			add_tag();
+			return false;
+		});
+		$('.tags input').each(function(){
+				$(this).autocomplete({
+			    	source : liste
+				});
+		});
+		$(document).on("click",'.remove-button',function() {
+		      $(this).parent().remove(); 
+		      $(this).remove();
+		      return false;
+		 });
 	});
+
 </script>
 <div class="picture-edit">
 	{{ form_start(form) }}
@@ -55,12 +95,30 @@ Edit picture
 		{{ form_row(form.name) }}
 		{{ form_row(form.description) }}
 		{{ form_row(form.enableComments) }}
+	     
 		<div class="picture-upload image-collection-entry col-lg-12">
 			{{ form_row(form.file) }}
 			<center>
 				<button  type="button" class="btn btn-info uploader">Upload new File</button>
 			</center>
 		</div>
+		<br class="clear"/>
+		<br class="clear"/>
+
+ 		<a href="#" id="add_tag" class="btn btn-info">Add a tag</a>
+	    <div class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
+
+       {% for tag in form.tags %}
+	        	<div class="image-collection-entry">
+		        	<a class="badge remove-button">
+						<span class="glyphicon glyphicon-remove"></span>
+					</a>
+					<span class="clear"/>
+		            {{ form_widget(tag) }}
+		    	</div>
+	        {% endfor %}
+	    </div>
+	  <br class="clear"/>
 		<br class="clear"/>
 		<input type="submit" class="btn btn-success" />
 		<a class="confirmModal" href="javascript:history.go(-1);" >

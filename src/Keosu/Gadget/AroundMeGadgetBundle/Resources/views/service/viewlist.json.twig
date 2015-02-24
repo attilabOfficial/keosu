@@ -20,7 +20,7 @@
 { "data": [
 		  {% for content in pois %}
 		    {
-				"id" :"{{ content.id|escape('html_attr')}}",
+		    	"id" :"{{ content.id|escape('html_attr')}}",
 				"title" :"{{ content.name|escape('html_attr')}}",
 				"distance" :"{{  '%.2f'|format(content.distance)}}",
 				"desc" :"{{ (content.description |slice(0, 300) )|escape('html_attr')}}..."

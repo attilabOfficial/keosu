@@ -23,8 +23,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ServiceController extends Controller {
 
 	public function viewListAction($gadgetId, $format, $offset, $limit, $lat, $lng) {
+
+		//get Tag
 		$em = $this->get('doctrine')->getManager();
-			
+		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
+		$gadgetConfig = $gadget->getConfig();
+		$tag=$gadgetConfig['tag'];
+
 		$queryString = 'SELECT DISTINCT a.id,';
 		$queryString = $queryString.'( 6355 * acos(cos(radians(' . $lat . '))' .
 				'* cos( radians( a.lat ) )' .
@@ -32,12 +37,16 @@ class ServiceController extends Controller {
 				'- radians(' . $lng . ') )' .
 				'+ sin( radians(' . $lat . ') )' .
 				'* sin( radians( a.lat ) ) ) ) as distance';
-		$queryString = $queryString.' FROM Keosu\DataModel\LocationModelBundle\Entity\Location a';
+		$queryString = $queryString.' FROM Keosu\DataModel\LocationModelBundle\Entity\Location a, Keosu\DataModel\LocationModelBundle\Entity\LocationTags t';
+		if ($tag!="")
+			$queryString = $queryString.' where a.id=t.Location and t.tagName= :mytag ';// . $tag . ' ';
 		$queryString = $queryString.' ORDER BY distance';
 		
 		$query = $em->createQuery($queryString);
+		$query->setParameter('mytag', $tag);
+
 		$query->setFirstResult( $offset);
-		$query->setMaxResults( 10 );
+		$query->setMaxResults( 100 );
 		$poisORM = Array();
 		$poisORM = $query->execute();
 		

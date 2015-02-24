@@ -7,6 +7,9 @@
         {"name" : "picturesPerPage" , "type" : "choice" , "options" : {
             "required" : 1,
             "choices" : {"3":"3","5":"5","10":"10","20":"20","40":"40","50":"50","100":"100"}
+        }},
+        {"name" : "tag", "type" : "text", "options":{
+            "required" : 0
         }}
     ],
     "require" : [

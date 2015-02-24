@@ -4,7 +4,10 @@
     "version" : "0.1",
     "type" : "gadget",
     "param" : [
-        {"name" : "pictureId" , "type" : "number"}
+        {"name" : "pictureId" , "type" : "number"},
+        {"name" : "tag", "type" : "text", "options":{
+            "required" : 0
+        }}
     ],
     "require" : [
         { "name" : "keosu-base" , "version" : ">=0.1" },

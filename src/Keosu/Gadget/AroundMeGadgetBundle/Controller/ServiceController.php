@@ -28,7 +28,7 @@ class ServiceController extends Controller {
 		$em = $this->get('doctrine')->getManager();
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
-		$tag=$gadgetConfig['tag'];
+		$tag=$gadgetConfig['tag'];			
 
 		$queryString = 'SELECT DISTINCT a.id,';
 		$queryString = $queryString.'( 6355 * acos(cos(radians(' . $lat . '))' .
@@ -39,11 +39,12 @@ class ServiceController extends Controller {
 				'* sin( radians( a.lat ) ) ) ) as distance';
 		$queryString = $queryString.' FROM Keosu\DataModel\LocationModelBundle\Entity\Location a, Keosu\DataModel\LocationModelBundle\Entity\LocationTags t';
 		if ($tag!="")
-			$queryString = $queryString.' where a.id=t.Location and t.tagName= :mytag ';// . $tag . ' ';
+			$queryString = $queryString.' where a.id=t.Location and t.tagName= :mytag ';
 		$queryString = $queryString.' ORDER BY distance';
 		
 		$query = $em->createQuery($queryString);
-		$query->setParameter('mytag', $tag);
+		if ($tag!="")
+			$query->setParameter('mytag', $tag);
 
 		$query->setFirstResult( $offset);
 		$query->setMaxResults( 100 );

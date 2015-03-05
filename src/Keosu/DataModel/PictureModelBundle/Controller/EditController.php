@@ -89,19 +89,21 @@ class EditController extends Controller {
 			$form->bind($request);
 			if ($form->isValid()) {
 				/**/
-				
-				//Identify tags to delete
-				foreach ($picture->getTags() as $tag) {
-					foreach ($originalTags as $key => $toDel) {
-						if ($toDel->getId() === $tag->getId()) {
-							unset($originalTags[$key]);
+
+				if($picture->getTags()!=null){
+					//Identify tags to delete
+					foreach ($picture->getTags() as $tag) {
+						foreach ($originalTags as $key => $toDel) {
+							if ($toDel->getId() === $tag->getId()) {
+								unset($originalTags[$key]);
+							}
 						}
 					}
-				}
-				//Deleting tag from picture and database
-				foreach ($originalTags as $tag) {
-					$tag->getPicture()->removeTag($tag);
-					$em->remove($tag);
+					//Deleting tag from picture and database
+					foreach ($originalTags as $tag) {
+						$tag->getPicture()->removeTag($tag);
+						$em->remove($tag);
+					}
 				}
 				/**/
 				$em->persist($picture);

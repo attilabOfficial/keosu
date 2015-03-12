@@ -70,6 +70,7 @@ class EditController extends Controller {
 		
 		//Get tags list from database
 		$em = $this->get('doctrine')->getManager();
+		$tagsList=array();
 		$query = $em->createQuery('SELECT DISTINCT u.tagName FROM Keosu\DataModel\LocationModelBundle\Entity\LocationTags u');
 		$tagsResult = $query->getResult();
 		if(!empty($tagsResult)){

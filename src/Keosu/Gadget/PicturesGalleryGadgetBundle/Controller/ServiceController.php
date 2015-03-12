@@ -32,8 +32,8 @@ class ServiceController extends Controller {
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
 		$picturesperpage = $gadgetConfig['picturesPerPage'];
-		$tag=$gadgetConfig['tag'];
-		if ($tag != ""){
+		if(array_key_exists('tag',$gadgetConfig)){
+			$tag=$gadgetConfig['tag'];
 			$qb = $em->createQueryBuilder();
 			$qb->add('select', 'p')
 				->add('from', 'Keosu\DataModel\PictureModelBundle\Entity\Picture p, Keosu\DataModel\PictureModelBundle\Entity\pictureTag t')
@@ -41,10 +41,9 @@ class ServiceController extends Controller {
 				->add('orderBy', 'p.id DESC')
 				->setFirstResult($offset)
 				->setMaxResults(100);
-		$qb->setParameter(1,$tag);
+			$qb->setParameter(1,$tag);
 		}
-		else
-		{
+		else{
 			$qb = $em->createQueryBuilder();
 			$qb->add('select', 'p')
 				->add('from', 'Keosu\DataModel\PictureModelBundle\Entity\Picture p')

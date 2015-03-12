@@ -72,18 +72,20 @@ class EditController extends Controller {
 		$em = $this->get('doctrine')->getManager();
 		$query = $em->createQuery('SELECT DISTINCT u.tagName FROM Keosu\DataModel\LocationModelBundle\Entity\LocationTags u');
 		$tagsResult = $query->getResult();
-		$tagsList=array();
-		foreach ($tagsResult as $tag){
-			$tagsList[]=$tag['tagName'];
+		if(!empty($tagsResult)){
+			$tagsList=array();
+			foreach ($tagsResult as $tag){
+				$tagsList[]=$tag['tagName'];
+			}
 		}
 	
 		$form = $this->getLocationForm($poi);
 
 		$originalTags = array();
-		if ($poi->getTags() != [])
+		if ($poi->getTags() != [] && sizeof($poi->getTags()!=0)){
 			foreach ($poi->getTags() as $tag)
 				$originalTags[] = $tag;
-
+		}
 		$request = $this->get('request');
 
 		//If we are in POST method, form is submit
@@ -92,17 +94,19 @@ class EditController extends Controller {
 
 			if ($form->isValid()) {
 				//Identify tags to delete
-				foreach ($poi->getTags() as $tag) {
-					foreach ($originalTags as $key => $toDel) {
-						if ($toDel->getId() === $tag->getId()) {
-							unset($originalTags[$key]);
+				if ($poi->getTags() != [] && sizeof($poi->getTags()!=0)){
+					foreach ($poi->getTags() as $tag) {
+						foreach ($originalTags as $key => $toDel) {
+							if ($toDel->getId() === $tag->getId()) {
+								unset($originalTags[$key]);
+							}
 						}
 					}
-				}
-				//Deleting tag from article and database
-				foreach ($originalTags as $tag) {
-					$tag->getLocation()->removeTag($tag);
-					$em->remove($tag);
+					//Deleting tag from article and database
+					foreach ($originalTags as $tag) {
+						$tag->getLocation()->removeTag($tag);
+						$em->remove($tag);
+					}
 				}
 
 

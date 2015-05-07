@@ -43,6 +43,7 @@ class App
         $this->author = 'keosu team';
         $this->website = 'http://keosu.com';
         $this->email = 'mail@localhost.com';
+        $this->version = '1.0';
         $this->theme = array_keys(ThemeUtil::getThemeList())[0];
         $this->preferences = array(
                 // If you do not want any permissions to be added to your app, add the
@@ -95,8 +96,21 @@ class App
     /**
      * @var string
      *
+     * @ORM\Column(name="version", type="text")
+     */
+
+    private $version;
+
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="packageName", type="string", length=255)
      */
+
+
+
+
     private $packageName;
 
     /**
@@ -323,6 +337,32 @@ class App
     {
         return $this->email;
     }
+
+    /**
+     * Get version
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * Set version
+     *
+     * @param string $version
+     * @return string
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+
+        return $this;
+
+    }
+
+
 
     /**
      * Set debugMode

@@ -147,6 +147,7 @@ class ManageAppsController extends Controller {
 	private function buildAppForm($formBuilder) {
 		$formBuilder->add('name', 'text')
 					->add('packageName','text')
+                    ->add('version','text')
 					->add('description','textarea')
 					->add('author','text',array(
 							'required' => false
@@ -157,6 +158,8 @@ class ManageAppsController extends Controller {
 					->add('email','email',array(
 							'required' => false
 					))
+
+
 					->add('debugMode','checkbox', array(
 							'required' => false
 					))

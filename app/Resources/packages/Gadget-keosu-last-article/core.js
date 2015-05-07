@@ -98,7 +98,7 @@ app.controller('keosu-last-articleController', function ($rootScope, $scope, $ht
 
 	$scope.setInfiniteList = function(){
 		$scope.infiniteList = true;
-	}
+	};
 
 	$(window).on('scroll', function() {
 		//console.log("> " + $(window).scrollTop() + " max = " + $scope.max + " " + $scope.pages.length +  " articles loaded");

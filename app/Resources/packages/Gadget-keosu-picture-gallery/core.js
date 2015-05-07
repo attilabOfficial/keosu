@@ -28,7 +28,7 @@ app.controller('keosu-picture-galleryController', function ($rootScope, $scope, 
 	$scope.parts(true, false, $scope);
 	$scope.index = 0;
 	$scope.next = function(){
-		if($scope.activePage.page+1 < $scope.pages.length){
+		if($scope.isLastPage()){
 			$scope.slidePage="slideInRight";
 			$scope.activePage.page = $scope.activePage.page+1;
 		}
@@ -42,7 +42,6 @@ app.controller('keosu-picture-galleryController', function ($rootScope, $scope, 
 	$rootScope.previous = function () {
 		$rootScope.previousButton = false;
 		$scope.slideElement="zoomIn";
-		$scope.activePage.page-1
 		$scope.slide="fadeIn";
 		$scope.parts(true, false, $scope);
 	};
@@ -60,43 +59,45 @@ app.controller('keosu-picture-galleryController', function ($rootScope, $scope, 
 			$scope.index = 0;
 		else
 			$scope.index++;
-	}
+	};
 	$scope.swipeRight = function() {
 		$scope.slideElement="slideInLeft";
 		if ($scope.index == 0)
 			$scope.index = $scope.imageLength - 1;
 		else
 			$scope.index--;
-	}
+	};
+	$scope.isLastPage = function() {
+		return ($scope.activePage.page+1 < $scope.pages.length);
+	};
 	$scope.init = function (params) {
 		$rootScope.previousButton = false;
 		$scope.indexSlide=0;
 		$scope.slideElement="zoomIn";
 		$scope.slidePage="fadeIn";
 		$scope.param = params;
-		var offset = (0);
 		$scope.activePage = {
 				page:0
 		};
 		$scope.imgClass = [];
+		$scope.infiniteList = false;
 		usSpinnerService.spin('spinner');
 		cacheManagerService.get( $scope.param.host + 'service/gadget/picturesgallery/'+$scope.param.gadgetId+'/0/json').success(function (data) {
 					usSpinnerService.stop('spinner');
 					$tmp = [];
 					for (i = 0; i < data.data.length; i++) {
 						$tmp[i] = data.data[i];
-						toto = new Image;
-						toto.src = $tmp[i].path;
-						if (toto.width > toto.height)
+
+						if (data.data[i].orientation == 'landscape')
 							$scope.imgClass[$tmp[i].id] = "picture-horizontal";
 						else
 							$scope.imgClass[$tmp[i].id] = "picture-vertical";
-						
+
 					}
 					$scope.images = $tmp;
 					$scope.imageLength = $tmp.length;
 					nb = 0;
-					pages = new Array();
+					pages = [];
 					for (i = 0; i < $tmp.length; i++) {
 						tmpPage = [];
 						for (j = 0; j < data.picturesperpage; j++) {
@@ -115,4 +116,17 @@ app.controller('keosu-picture-galleryController', function ($rootScope, $scope, 
                         $scope.image = pages[0][0];
 				});
 	};
+
+	$scope.setInfiniteList = function(){
+		$scope.infiniteList = true;
+	};
+
+	$(window).on('scroll', function() {
+		if ($scope.isGallery && !$scope.isLastPage() && $scope.infiniteList){
+			$scope.max = parseInt($(document).height()) - parseInt($(window).height()) - 2;
+			if ($(window).scrollTop() >= $scope.max) {
+				$scope.next();
+			}
+		}
+	});
 });

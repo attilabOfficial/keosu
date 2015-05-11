@@ -52,7 +52,7 @@ $(document).ready(function() {
 			</a>
 		</div>
 			<fieldset>
-				<table class="table table-striped table-hover" id="content-table" width="100%">
+				<table class="table table-striped table-hover picture-edit-list" id="content-table" width="100%">
 					<thead>
 						<tr>
 							<th>Title</th>
@@ -68,7 +68,6 @@ $(document).ready(function() {
 					{% for picture in pictures %}
 							<tr>
 								<td>{{ picture.name }}</td>
-								
 								<td>{% if picture.reader %} {{picture.reader.name}}{% endif %}</td>
 								<td>
 									{% for tag in picture.tags %}

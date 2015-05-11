@@ -57,7 +57,7 @@ $(document).ready(function() {
 							<th>Title</th>
 							<th>Reader</th>
 							<th>Tag</th>
-                            <th>Thumb</th>
+							<th>Thumb</th>
 							<th></th>
 							<th></th>
 						</tr>
@@ -74,7 +74,7 @@ $(document).ready(function() {
 										{{tag.tagName}},
 									{% endfor %}
 								</td>
-                                <td><img src={{ (url_base ~ picture.getThumbWebPath())}}></td>
+								<td><img src={{ (url_base ~ picture.getThumbWebPath())}}></td>
 								<td>{% if picture.reader == false  %} <a href={{ path('keosu_picture_edit',{'id':picture.id}) }}><i class='glyphicon glyphicon-edit'></i></a>{% endif %}</td>
 								<td>{% if picture.reader == false %} <a href={{ path('keosu_picture_delete',{'id':picture.id}) }}><i class='glyphicon glyphicon-remove'></i></a>{% endif %}</td>
 							</tr>

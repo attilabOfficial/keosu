@@ -125,12 +125,12 @@ abstract class MediaDataModel extends DataModel
 		if ($size['mime'] == 'image/jpeg'){
 			$ratio = $size[0]/$size[1]; // width/height
 			if( $ratio > 1) {
-				$width = 100;
-				$height = 100/$ratio;
+				$width = 200;
+				$height = 200/$ratio;
 			}
 			else {
-				$width = 100*$ratio;
-				$height = 100;
+				$width = 200*$ratio;
+				$height = 200;
 			}
 			$src = imagecreatefromstring(file_get_contents($file));
 			$dst = imagecreatetruecolor($width,$height);

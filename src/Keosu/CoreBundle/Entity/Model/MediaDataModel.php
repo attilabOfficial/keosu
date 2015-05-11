@@ -30,6 +30,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class MediaDataModel extends DataModel
 {
+    /**
+     * Orientation constant
+     */
+    const PORTRAIT = 'portrait';
+    const LANDSCAPE = 'landscape';
+
 	/**
 	 * @var string $path
 	 *
@@ -47,6 +53,10 @@ abstract class MediaDataModel extends DataModel
      */
 	private $file;
 
+    /**
+     * @ORM\Column(name="orientation", type="string")
+     */
+    protected $orientation;
 
 	/**
 	 * Set path
@@ -70,7 +80,7 @@ abstract class MediaDataModel extends DataModel
 
 	public function getAbsolutePath() {
 		return null === $this->path ? null
-				: PathUtil::getRootDir() . '/' . $this->path;;
+				: PathUtil::getRootDir() . '/' . $this->path;
 	}
 
 	public function getWebPath() {
@@ -102,8 +112,10 @@ abstract class MediaDataModel extends DataModel
 		$time = time();
 		$this->path = $time."_".$file->getClientOriginalName();
 		$this->createThumb($file);
+		$this->setOrientation($file);
 		$file->move($this->getUploadRootDir(), $time."_".$file->getClientOriginalName());
 	}
+
 	public function getFile() {
 		return $this->file;
 	}
@@ -129,6 +141,32 @@ abstract class MediaDataModel extends DataModel
 			copy($file,$this->getUploadRootDir()."/min.".$this->path);
 		}
 
+	}
+
+	/**
+	 * Set orientation
+	 *
+	 * @param string $file
+	 */
+	public function setOrientation($file) {
+		$size = getimagesize($file);
+		$width = $size[0];
+		$height = $size[1];
+		if ($width > $height) {
+			$this->orientation = MediaDataModel::LANDSCAPE;
+		} else {
+			$this->orientation = MediaDataModel::PORTRAIT;
+		}
+	}
+
+	/**
+	 * Get orientation
+	 *
+	 * @return string
+	 */
+	public function getOrientation()
+	{
+		return $this->orientation;
 	}
 
 }

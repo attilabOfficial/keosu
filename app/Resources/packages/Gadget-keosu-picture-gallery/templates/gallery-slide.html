@@ -22,11 +22,11 @@
 	</li>
 </div>
 
-<ul rn-carousel rn-carousel-control rn-carousel-index="indexSlide" ng-show="isPicture" class="animated fadeIn">
+<ul rn-carousel rn-carousel-control rn-carousel-buffered="5" rn-carousel-index="indexSlide" ng-show="isPicture" class="animated fadeIn">
 	<li ng-repeat="image in images">
 		<img class="center" src="{{image.path}}" />
         <keosu-comments object-id="image.id" object-name="image.dataModelObjectName" enable-comments="image.enableComments" ></keosu-comments>
 	</li>
-</ul>		
+</ul>
 	
 

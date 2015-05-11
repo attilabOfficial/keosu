@@ -7,6 +7,12 @@
     hegiht:  auto;
 }
 
+@media (max-width: 400px)  {
+    .contact-us h1 {
+        font-size: 50px;
+    }
+}
+
 .contact-us h6 {
     display:     inline;
     margin-left: 10px;

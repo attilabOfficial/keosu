@@ -122,7 +122,7 @@ abstract class MediaDataModel extends DataModel
 
 	public function createThumb($file){
 		$size = getimagesize($file);
-		if ($size['mime'] == 'image/jpeg'){
+		if ($size['mime'] == 'image/jpeg' || $size['mime'] == 'image/png' ||$size['mime'] == 'image/gif' ){
 			$ratio = $size[0]/$size[1]; // width/height
 			if( $ratio > 1) {
 				$width = 100;
@@ -136,7 +136,14 @@ abstract class MediaDataModel extends DataModel
 			$dst = imagecreatetruecolor($width,$height);
 			imagecopyresampled($dst,$src,0,0,0,0,$width,$height,$size[0],$size[1]);
 			imagedestroy($src);
-			imagejpeg($dst,$this->getUploadRootDir()."/min.".$this->path);
+            if ($size['mime'] == 'image/jpeg')
+                imagejpeg($dst,$this->getUploadRootDir()."/min.".$this->path);
+            elseif($size['mime'] == 'image/png')
+                imagepng($dst,$this->getUploadRootDir()."/min.".$this->path);
+            else {
+                if (function_exists("imagegif"))
+                    imagegif($dst, $this->getUploadRootDir() . "/min." . $this->path);
+            }
 		}else{
 			copy($file,$this->getUploadRootDir()."/min.".$this->path);
 		}

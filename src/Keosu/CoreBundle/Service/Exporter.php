@@ -283,7 +283,8 @@ class Exporter
         $basePlugin = array(
             'org.apache.cordova.device',
             'org.apache.cordova.device-motion',
-            'org.apache.cordova.device-orientation'
+            'org.apache.cordova.device-orientation',
+			'org.apache.cordova.dialogs'
         );
         foreach ($basePlugin as $plugin) {
             $device = $configXml->createElement('gap:plugin');

@@ -7,5 +7,9 @@ keosu_ReaderManager_RssReader_edit:
     defaults: { _controller: KeosuReaderRssReaderBundle:Edit:edit }
     
 keosu_ReaderManager_RssReader_sync:
-    pattern:  /content/reader/sync/rss/{id}
+    pattern:  /sync/rss/{id}
     defaults: { _controller: KeosuReaderRssReaderBundle:Sync:sync }
+
+keosu_ReaderManager_RssReader_syncAll:
+    pattern:  /sync/rss
+    defaults: { _controller: KeosuReaderRssReaderBundle:Sync:syncAll }

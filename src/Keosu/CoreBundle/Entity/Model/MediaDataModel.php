@@ -30,6 +30,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class MediaDataModel extends DataModel
 {
+    /**
+     * Orientation constant
+     */
+    const PORTRAIT = 'portrait';
+    const LANDSCAPE = 'landscape';
+
 	/**
 	 * @var string $path
 	 *
@@ -47,6 +53,10 @@ abstract class MediaDataModel extends DataModel
      */
 	private $file;
 
+    /**
+     * @ORM\Column(name="orientation", type="string")
+     */
+    protected $orientation;
 
 	/**
 	 * Set path
@@ -70,7 +80,7 @@ abstract class MediaDataModel extends DataModel
 
 	public function getAbsolutePath() {
 		return null === $this->path ? null
-				: PathUtil::getRootDir() . '/' . $this->path;;
+				: PathUtil::getRootDir() . '/' . $this->path;
 	}
 
 	public function getWebPath() {
@@ -102,33 +112,69 @@ abstract class MediaDataModel extends DataModel
 		$time = time();
 		$this->path = $time."_".$file->getClientOriginalName();
 		$this->createThumb($file);
+		$this->setOrientation($file);
 		$file->move($this->getUploadRootDir(), $time."_".$file->getClientOriginalName());
 	}
+
 	public function getFile() {
 		return $this->file;
 	}
 
 	public function createThumb($file){
 		$size = getimagesize($file);
-		if ($size['mime'] == 'image/jpeg'){
+		if ($size['mime'] == 'image/jpeg' || $size['mime'] == 'image/png' ||$size['mime'] == 'image/gif' ){
 			$ratio = $size[0]/$size[1]; // width/height
 			if( $ratio > 1) {
-				$width = 100;
-				$height = 100/$ratio;
+				$width = 200;
+				$height = 200/$ratio;
 			}
 			else {
-				$width = 100*$ratio;
-				$height = 100;
+				$width = 200*$ratio;
+				$height = 200;
 			}
 			$src = imagecreatefromstring(file_get_contents($file));
 			$dst = imagecreatetruecolor($width,$height);
 			imagecopyresampled($dst,$src,0,0,0,0,$width,$height,$size[0],$size[1]);
 			imagedestroy($src);
-			imagejpeg($dst,$this->getUploadRootDir()."/min.".$this->path);
+			if ($size['mime'] == 'image/jpeg')
+        		    imagejpeg($dst,$this->getUploadRootDir()."/min.".$this->path);
+        		elseif($size['mime'] == 'image/png')
+        		    imagepng($dst,$this->getUploadRootDir()."/min.".$this->path);
+            		else {
+            			if (function_exists("imagegif"))
+            			  imagegif($dst, $this->getUploadRootDir() . "/min." . $this->path);
+            			
+            		}
 		}else{
 			copy($file,$this->getUploadRootDir()."/min.".$this->path);
 		}
 
+	}
+
+	/**
+	 * Set orientation
+	 *
+	 * @param string $file
+	 */
+	public function setOrientation($file) {
+		$size = getimagesize($file);
+		$width = $size[0];
+		$height = $size[1];
+		if ($width > $height) {
+			$this->orientation = MediaDataModel::LANDSCAPE;
+		} else {
+			$this->orientation = MediaDataModel::PORTRAIT;
+		}
+	}
+
+	/**
+	 * Get orientation
+	 *
+	 * @return string
+	 */
+	public function getOrientation()
+	{
+		return $this->orientation;
 	}
 
 }

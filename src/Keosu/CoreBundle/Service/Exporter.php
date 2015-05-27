@@ -30,6 +30,7 @@ use Keosu\CoreBundle\Util\ThemeUtil;
 use Keosu\CoreBundle\Util\FilesUtil;
 use Keosu\CoreBundle\Util\StringUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
+use Keosu\CoreBundle\Util\Classes\SmartDOMDocument;
 
 class Exporter
 {
@@ -117,9 +118,10 @@ class Exporter
         $jsInit = $jsCore = $jsEnd = '';
         $css = '';
 
-        // load index.html (main template)
-        $indexHtml = new \DOMDocument();
-        @$indexHtml->loadHtmlFile($this->getExportAbsolutePath() . '/simulator/www/index.html');
+		// load index.html (main template)
+		$indexHtml = new SmartDOMDocument();
+		$fileContent = file_get_contents($this->getExportAbsolutePath() . '/simulator/www/index.html');
+		@$indexHtml->loadHTML($fileContent);
 
         ///////////////////////////////////////////////////
         // Generate config.xml
@@ -168,8 +170,9 @@ class Exporter
                 $mainPage = $page->getId();
             }
 
-            $document = new \DOMDocument();
-            @$document->loadHtmlFile(TemplateUtil::getPageTemplateAbsolutePath() . $page->getTemplateId());
+			$document = new SmartDOMDocument();
+			$fileContent = file_get_contents(TemplateUtil::getPageTemplateAbsolutePath().$page->getTemplateId());
+			@$document->loadHTML($fileContent);
 
             $finder = new \DOMXPath($document);
             $classname = "zone";//Find all the zone div in page template
@@ -237,9 +240,10 @@ class Exporter
         // Generate main view index.html
         ///////////////////////////////////////////////////
 
-        // import theme in index.html
-        $tmpthemeHeader = new \DOMDocument();
-        @$tmpthemeHeader->loadHtmlFile(ThemeUtil::getAbsolutePath() . $app->getTheme() . '/header/header.html');
+		// import theme in index.html
+		$tmpthemeHeader = new SmartDOMDocument();
+		$fileContent = file_get_contents(ThemeUtil::getAbsolutePath() .$app->getTheme().'/header/header.html');
+		@$tmpthemeHeader->loadHTML($fileContent);
 
         $children = $tmpthemeHeader->getElementsByTagName('head')->item(0)->childNodes;
         foreach ($children as $child) {
@@ -283,7 +287,8 @@ class Exporter
         $basePlugin = array(
             'org.apache.cordova.device',
             'org.apache.cordova.device-motion',
-            'org.apache.cordova.device-orientation'
+            'org.apache.cordova.device-orientation',
+			'org.apache.cordova.dialogs'
         );
         foreach ($basePlugin as $plugin) {
             $device = $configXml->createElement('gap:plugin');

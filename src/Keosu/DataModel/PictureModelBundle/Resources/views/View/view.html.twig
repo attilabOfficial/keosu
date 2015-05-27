@@ -35,7 +35,8 @@ $(document).ready(function() {
                             null,
                             null,
                             null,
-                            null 
+                            null,
+							null
 			]});
 });
 </script>
@@ -51,12 +52,13 @@ $(document).ready(function() {
 			</a>
 		</div>
 			<fieldset>
-				<table class="table table-striped table-hover" id="content-table" width="100%">
+				<table class="table table-striped table-hover picture-edit-list" id="content-table" width="100%">
 					<thead>
 						<tr>
 							<th>Title</th>
 							<th>Reader</th>
 							<th>Tag</th>
+							<th>Thumb</th>
 							<th></th>
 							<th></th>
 						</tr>
@@ -66,13 +68,13 @@ $(document).ready(function() {
 					{% for picture in pictures %}
 							<tr>
 								<td>{{ picture.name }}</td>
-								
 								<td>{% if picture.reader %} {{picture.reader.name}}{% endif %}</td>
 								<td>
 									{% for tag in picture.tags %}
 										{{tag.tagName}},
 									{% endfor %}
 								</td>
+								<td><img src={{ (url_base ~ picture.getThumbWebPath())}}></td>
 								<td>{% if picture.reader == false  %} <a href={{ path('keosu_picture_edit',{'id':picture.id}) }}><i class='glyphicon glyphicon-edit'></i></a>{% endif %}</td>
 								<td>{% if picture.reader == false %} <a href={{ path('keosu_picture_delete',{'id':picture.id}) }}><i class='glyphicon glyphicon-remove'></i></a>{% endif %}</td>
 							</tr>

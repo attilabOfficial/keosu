@@ -17,14 +17,14 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 namespace Keosu\Reader\RssReaderBundle\Controller;
-use Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment;
-
-use Keosu\Reader\RssReaderBundle\RssReader;
-
-use Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+use Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment;
+use Keosu\Reader\RssReaderBundle\RssReader;
+use Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody;
+
 
 /**
  * Synchronise a RSS feed with Article data model
@@ -54,8 +54,50 @@ class SyncController extends Controller {
             $this->parseAndImportArticle($item, $reader, $rssReader->striphtml);
         }
 
-        return $this->redirect($this->generateUrl('keosu_article_viewlist'));
-    }
+		if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+			return $this->redirect($this->generateUrl('keosu_article_viewlist'));
+		} else {
+			return new JsonResponse(array(
+				'status' => 'OK',
+				'message' => 'The reader ' . $reader->getName() . ' has been successfully synchronized.'
+			));
+		}
+	}
+
+	/**
+	 * Synchronise all RSS remote contents with articles
+	 */
+	public function syncAllAction()
+	{
+		$em = $this->get('doctrine')->getManager();
+		$readers = $em->getRepository('KeosuCoreBundle:Reader')->findBy(
+			array('service' => 'RssReader')
+		);
+
+		foreach ($readers as $reader) {
+			//Convert it to a RssReader
+			$rssReader = RssReader::constructfromReader($reader);
+			//geting the feed as a string
+			$rssUrl=$rssReader->feed_url;
+
+			$feed = $this->get('fkr_simple_pie.rss');
+			$feed->set_feed_url($rssUrl);
+			$feed->init();
+			$items = $feed->get_items();
+			foreach ($items as $item) {
+				$this->parseAndImportArticle($item, $reader, $rssReader->striphtml);
+			}
+		}
+
+		if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+			return $this->redirect($this->generateUrl('keosu_article_viewlist'));
+		} else {
+			return new JsonResponse(array(
+				'status' => 'OK',
+				'message' => 'All RSS readers have been successfully synchronized.'
+			));
+		}
+	}
 
     private function parseAndImportArticle($item, $reader, $stripHtml)
     {
@@ -116,7 +158,8 @@ class SyncController extends Controller {
             $baseName = basename($img);
             $attachment->setName($baseName);
             $attachment->setPath($baseName);
-			$attachment->createThumb($attachment->getUploadRootDir().'/'.basename($img));
+			$attachment->createThumb($filePath);
+			$attachment->setOrientation($filePath);
             $article->addAttachment($attachment);
         }
 

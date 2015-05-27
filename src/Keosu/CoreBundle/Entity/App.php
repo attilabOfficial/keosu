@@ -51,7 +51,7 @@ class App
                 // permission on your app, which PhoneGap requires.
                 array("key" => "permissions"                ,"value" => "none"),
                 array("key" => "phonegap-version"           ,"value" => "3.6.3" ), // all: current version of PhoneGap
-                array("key" => "Orientation"                ,"value" => "default" ), // all: default means both landscape and portrait are enabled
+                array("key" => "orientation"                ,"value" => "default" ), // all: default means both landscape and portrait are enabled
                 array("key" => "target-device"              ,"value" => "universal" ), // all: possible values handset, tablet, or universal
                 array("key" => "Fullscreen"                 ,"value" => "true" ), // all: hides the status bar at the top of the screen
                 array("key" => "webviewbounce"              ,"value" => "true" ), // ios: control whether the screen 'bounces' when scrolled beyond the top

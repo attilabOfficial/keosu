@@ -77,7 +77,9 @@ class GadgetListener implements EventSubscriberInterface
 		//Prepare the list of picture for the form
 		$pageList=array();
 		foreach($pageListTmp as $page){
-			$pageList[$page->getId()]=$page->getName();
+			if ($page->getId() != $event->getGadget()->getPage()->getId()) {
+				$pageList[$page->getId()]=$page->getName();
+			}
 		}
 		
 		

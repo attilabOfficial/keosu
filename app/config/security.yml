@@ -58,6 +58,7 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: ROLE_SUPER_ADMIN }
         - { path: ^/service, role: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/sync, role: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/, role: ROLE_ADMIN }
 
         

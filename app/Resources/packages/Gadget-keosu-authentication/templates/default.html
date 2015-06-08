@@ -29,7 +29,7 @@
 	<!-- REGISTER -->
 	<section ng-show="register" id="register" style="min-height: 1000px">
 		<div ng-show="registerError" class="alert alert-danger">{{ registerError }}</div>
-		<form role="form" ng-submit="registerAction()">
+		<form role="form">
 			<div class="form-group">
 				<label for="inputUsernameRegister">Login</label>
 				<input type="text" class="form-control" id="inputUsernameRegister" placeholder="Enter your login" ng-model="username">
@@ -46,7 +46,7 @@
 				<label for="inputPasswordRegister2">Password confirmation</label>
 				<input type="password" class="form-control" id="inputPasswordRegister2" placeholder="Password confirmation" ng-model="password2">
 			</div>
-			<h4 type="submit"><span class="label label-primary" ng-click="loginAction()" style="float:right;">Register</span></h4>
+			<h4 type="submit"><span class="label label-primary" ng-click="registerAction()" style="float:right;">Register</span></h4>
 		</form>
 	</section>
 

@@ -5,7 +5,7 @@
 	"type" : "plugin",
 	"configCordova" : [
 		{ "gap:plugin" : [
-			{ "@attributes" : {"name" : "com.phonegap.plugins.facebookconnect" , "version":"0.4.0"} },
+			{ "@attributes" : {"name" : "com.phonegap.plugins.facebookconnect" , "version":"0.9.0"} },
 			{ "param" : [
 				{ "@attributes" :{"name" : "APP_ID", "value":"@@fbAppId@@"} }
 			]},
@@ -14,7 +14,7 @@
 			]}
 		]},
 		{"gap:plugin":[
-			{ "@attributes":{"name":"nl.x-services.plugins.socialsharing","version":"4.3.0"} }
+			{ "@attributes":{"name":"nl.x-services.plugins.socialsharing","version":"4.3.8"} }
 		]}
 	],
 	"pluginToInstall" : [

@@ -11,7 +11,7 @@
    ],
    "configCordova": [
       { "gap:plugin" : [
-         { "@attributes" : {"name" : "com.phonegap.plugins.pushplugin", "version" : "2.1.1"} }
+         { "@attributes" : {"name" : "com.phonegap.plugins.pushplugin", "version" : "2.4.0"} }
       ]}
    ],
 	"pluginToInstall" : [

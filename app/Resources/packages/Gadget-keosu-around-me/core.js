@@ -86,6 +86,7 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
 	};
 	
 	$scope.init = function (params) {
+			console.log("init around me gadget");
 			$rootScope.previousButton = false;
 			$scope.parts(true, false, $scope);
 			$scope.initialize();

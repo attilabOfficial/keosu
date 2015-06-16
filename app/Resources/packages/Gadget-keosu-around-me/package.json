@@ -3,6 +3,17 @@
     "description" : "display a map that show where your are",
     "version" : "0.1",
     "type" : "gadget",
+
+	"configCordova" : [
+		{ "gap:plugin" : [
+			{ "@attributes" : {"name" : "org.apache.cordova.geolocation" , "version":"0.3.10" } }
+		]},
+		{ "gap:config-file" : [
+			{ "@attributes" : {"platform" : "ios" , "parent":"NSLocationWhenInUseUsageDescription", "overwrite":"false" } },
+			{ "@value" :{"array":{"string":"Find locations around you"}}}
+		]}
+	],
+
     "libJs" : ["https://maps.googleapis.com/maps/api/js?sensor=false"],
     "param" : [
     	{ "name" : "zoom", "type" : "choice","options": {

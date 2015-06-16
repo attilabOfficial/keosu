@@ -599,7 +599,22 @@ class Exporter
             } elseif ($tagName === '@text') {
                 $text = $configXml->createTextNode($tag[$tagName]);
                 $currentNode->appendChild($text);
-            } else {
+             } elseif ($tagName === '@value') {
+				foreach ($tag[$tagName] as $key => $value) {
+					if(is_array($value)){
+						$newnode = $configXml->createElement($key);
+						foreach ($value as $subkey => $subvalue) {
+							$childNewNode = $configXml->createElement($subkey,$subvalue);
+							$newnode->appendChild($childNewNode);
+						}
+						$currentNode->appendChild($newnode);
+					}else{
+						$newnode = $configXml->createElement($key,$value);
+						$currentNode->appendChild($newnode);
+					}
+
+				}
+			} else {
                 $element = $configXml->createElement($tagName);
                 $this->convertToXml($tag[$tagName], $configXml, $element, $configAppForPackage);
                 $currentNode->appendChild($element);

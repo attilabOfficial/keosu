@@ -36,6 +36,8 @@ class DefaultController extends Controller
 					
 					$appleMessage = new AppleMessage();
 					$appleMessage->setMessage($form['message']->getData());
+					$appleMessage->setAPSBadge(1);
+					$appleMessage->setAPSSound('default');
 					
 					foreach($devices as $device) {
 						if($device->getType() === Devices::TYPE_APPLE) {

@@ -1,3 +1,8 @@
+/***
+ * Cache manager help keosu apps to store remote content and location in local storage
+ * We don't need to call remote services all the time
+ * If user is offline, cache manager give him the last stored result
+ */
 (function() {
 	/* Start angularCacheManager */
 	'use strict';
@@ -7,6 +12,10 @@
 
 		this.cacheExpiration=100000;
 
+		/**
+		 * HTTP Get cache
+		 * @type {*[]}
+		 */
 		this.$get = ['$rootScope','$http','$q','localStorageService', function($rootScope, $http,$q,localStorageService) {
 			
 			var cacheExpiration = this.cacheExpiration; //TODO put this in gadget config
@@ -64,15 +73,24 @@
 				}
 				return promise;
 			};
-
-			var getLocationFromCache = function(cachekey,cacheExp){	
+			/****
+			 * Location cache
+			 * @param cacheExp
+			 * @returns {promise|fd.g.promise}
+			 */
+			var getLocationFromCache = function(cacheExp){
 				if(cacheExp){
 					cacheExpiration=cacheExp;
 				}
+				var cachekey="lastpos";
+
 				var onGpsSuccess = function(position){
-					localStorageService.set(cachekey,position);
+					var newposition = new Object;
+					newposition["latitude"] = position.coords.latitude;
+					newposition["longitude"] = position.coords.longitude;
+					localStorageService.set(cachekey,newposition);
 					localStorageService.set('lastup'+cachekey,now);
-					deferred.resolve(position);
+					deferred.resolve(newposition);
 				};
 
 				var onGpsError = function(){

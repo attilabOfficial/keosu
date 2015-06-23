@@ -83,9 +83,9 @@ class EditController extends Controller {
 		$form = $this->getLocationForm($poi);
 
 		$originalTags = array();
-		if ($poi->getTags() != [] && sizeof($poi->getTags()!=0)){
-			foreach ($poi->getTags() as $tag)
-				$originalTags[] = $tag;
+		if ($poi->getTags() != []){
+				foreach ($poi->getTags() as $tag)
+					$originalTags[] = $tag;
 		}
 		$request = $this->get('request');
 
@@ -95,7 +95,7 @@ class EditController extends Controller {
 
 			if ($form->isValid()) {
 				//Identify tags to delete
-				if ($poi->getTags() != [] && sizeof($poi->getTags()!=0)){
+				if ($poi->getTags() != [] ){
 					foreach ($poi->getTags() as $tag) {
 						foreach ($originalTags as $key => $toDel) {
 							if ($toDel->getId() === $tag->getId()) {

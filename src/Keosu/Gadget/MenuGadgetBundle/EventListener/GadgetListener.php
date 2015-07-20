@@ -44,7 +44,7 @@ class GadgetListener implements EventSubscriberInterface
 
 		$pageList = array();
 		foreach ($pages as $page) {
-			$pageList[$page->getId()] = $page->getName();
+			$pageList[$page] = $page->getName();
 		}
 
 		$builder = $event->getFormBuilder();

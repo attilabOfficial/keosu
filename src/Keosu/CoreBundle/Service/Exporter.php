@@ -18,6 +18,7 @@
  ************************************************************************/
 namespace Keosu\CoreBundle\Service;
 
+use Keosu\CoreBundle\Event\ExportDataPackageEvent;
 use Keosu\CoreBundle\KeosuEvents;
 
 use Keosu\CoreBundle\Entity\App;
@@ -217,6 +218,11 @@ class Exporter
                     $dispatcher->dispatch(KeosuEvents::PACKAGE_EXPORT_CONFIG . $package->getName(), $event);
                     if ($event->getNewConfig() !== null)
                         $paramGadget = $event->getNewConfig();
+
+					$dataEvent = new ExportDataPackageEvent($appId);
+					$dispatcher->dispatch(KeosuEvents::PACKAGE_EXPORT_DATA . $package->getName(), $dataEvent);
+					if ($dataEvent->getData() !== null)
+						$this->writeFile($dataEvent->getData(), $gadget->getId().".json", '/simulator/www/data/');
 
                     //Copy in HTML
                     $gadgetTemplateHtml = file_get_contents($package->getPath() . '/templates/' . $gadget->getTemplate());

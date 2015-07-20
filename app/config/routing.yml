@@ -1,3 +1,7 @@
+keosu_data_model_search_model:
+    resource: "@KeosuDataModelSearchModelBundle/Resources/config/routing.yml"
+    prefix:   /
+
 keosu_gadget_push_notification:
     resource: "@KeosuGadgetPushNotificationBundle/Resources/config/routing.yml"
     prefix:   /

@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Keosu\DataModel\LocationModelBundle\KeosuDataModelLocationModelBundle(),
             new Keosu\Gadget\MapGadgetBundle\KeosuGadgetMapGadgetBundle(),
             new Keosu\Gadget\MenuGadgetBundle\KeosuGadgetMenuGadgetBundle(),
+			new Keosu\Gadget\SearchGadgetBundle\KeosuGadgetSearchGadgetBundle(),
             new Keosu\Reader\RssReaderBundle\KeosuReaderRssReaderBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Keosu\Gadget\AroundMeGadgetBundle\KeosuGadgetAroundMeGadgetBundle(),
@@ -48,6 +49,7 @@ class AppKernel extends Kernel
             new Keosu\Gadget\PushNotificationBundle\KeosuGadgetPushNotificationBundle(),
             new Fkr\SimplePieBundle\FkrSimplePieBundle(),
             new Keosu\Gadget\ContactUsGadgetBundle\KeosuGadgetContactUsGadgetBundle(),
+            new Keosu\DataModel\SearchModelBundle\KeosuDataModelSearchModelBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {

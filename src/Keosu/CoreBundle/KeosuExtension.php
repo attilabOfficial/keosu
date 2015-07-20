@@ -31,5 +31,6 @@ class KeosuExtension {
 			'location' => 'KeosuDataModelLocationModelBundle:Location',
 			'picture'  => 'KeosuDataModelPictureModelBundle:Picture',
 			'event'    => 'KeosuDataModelEventModelBundle:Event',
+			'search'    => 'KeosuDataModelSearchModelBundle:Search',
 	);
 }

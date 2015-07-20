@@ -1,0 +1,13 @@
+{
+   "name" : "keosu-search",
+   "description" : "This allow to make autocomplete search",
+   "version" : "0.1",
+   "type" : "gadget",
+   "param" : [
+   ],
+   "require" : [
+      { "name" : "keosu-base" , "version" : ">=0.1" }
+   ],
+   "appParam" : [
+   ]
+}

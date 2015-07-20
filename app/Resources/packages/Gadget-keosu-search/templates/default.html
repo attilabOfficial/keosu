@@ -1,0 +1,5 @@
+<div class="row-fluid center animated fadeIn">
+
+	Search: <input type="text" ng-model="selected" typeahead="key as (key.key + ' ' + key.name) for key in keys | filter:$viewValue" typeahead-editable="false" typeahead-on-select='onSelect($item, $model, $label)'/>
+
+</div>

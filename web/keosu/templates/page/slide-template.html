@@ -1,0 +1,17 @@
+<nav class="navbar navbar-default navbar-fixed-top classic-navbar" role="banner">
+	<div class="header" ng-click="menuOpen =!menuOpen" ng-class="{'open' : menuOpen}">
+		<img src="theme/img/menu.png"/>
+		<div class="title"><b>{{::appName}}</b></div>
+	</div>
+
+</nav>
+<div style="overflow-x: hidden"></div>
+<div class="slide-menu" ng-class="{'open' : menuOpen}">
+	<div id="menu" class="zone">&nbsp;</div>
+</div>
+<div class="content">
+	<div class="container-fluid">
+		<div id="body" class="zone">&nbsp;</div>
+	</div>
+</div>
+

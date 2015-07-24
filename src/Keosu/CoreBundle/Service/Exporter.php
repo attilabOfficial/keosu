@@ -351,10 +351,13 @@ class Exporter
             array("src" => "res/splashscreens/ios/splashscreenI320x480.png", "gap:platform" => "ios", "width" => "320", "height" => "480"),
             array("src" => "res/splashscreens/ios/splashscreenI640x960.png", "gap:platform" => "ios", "width" => "640", "height" => "960"),
             array("src" => "res/splashscreens/ios/splashscreenI640x1136.png", "gap:platform" => "ios", "width" => "640", "height" => "1136"),
-            array("src" => "res/splashscreens/ios/splashscreenI1024x748.png", "gap:platform" => "ios", "width" => "1024", "height" => "748"),
-            array("src" => "res/splashscreens/ios/splashscreenI768x1004.png", "gap:platform" => "ios", "width" => "768", "height" => "1004"),
-            array("src" => "res/splashscreens/ios/splashscreenI2048x1496.png", "gap:platform" => "ios", "width" => "2048", "height" => "1496"),
-            array("src" => "res/splashscreens/ios/splashscreenI1536x2008.png", "gap:platform" => "ios", "width" => "1536", "height" => "2008"),
+            array("src" => "res/splashscreens/ios/splashscreenI1024x768.png", "gap:platform" => "ios", "width" => "1024", "height" => "768"),
+            array("src" => "res/splashscreens/ios/splashscreenI768x1024.png", "gap:platform" => "ios", "width" => "768", "height" => "1024"),
+            array("src" => "res/splashscreens/ios/splashscreenI2048x1536.png", "gap:platform" => "ios", "width" => "2048", "height" => "1536"),
+            array("src" => "res/splashscreens/ios/splashscreenI1536x2048.png", "gap:platform" => "ios", "width" => "1536", "height" => "2048"),
+			array("src" => "res/splashscreens/ios/splashscreenI750x1334.png", "gap:platform" => "ios", "width" => "750", "height" => "1334"),
+			array("src" => "res/splashscreens/ios/splashscreenI1242x2208.png", "gap:platform" => "ios", "width" => "1242", "height" => "2208"),
+			array("src" => "res/splashscreens/ios/splashscreenI2208x1242.png", "gap:platform" => "ios", "width" => "2208", "height" => "1242"),
         );
 
         foreach ($splashScreen as $asplash) {

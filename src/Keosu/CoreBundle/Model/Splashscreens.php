@@ -38,10 +38,13 @@ class Splashscreens{
     private $splashscreenI320x480;
     private $splashscreenI640x960;
     private $splashscreenI640x1136;
-    private $splashscreenI1024x748;
-    private $splashscreenI768x1004;
-    private $splashscreenI2048x1496;
-    private $splashscreenI1536x2008;
+    private $splashscreenI1024x768;
+    private $splashscreenI768x1024;
+    private $splashscreenI2048x1536;
+    private $splashscreenI1536x2048;
+	private $splashscreenI750x1334;
+	private $splashscreenI1242x2208;
+	private $splashscreenI2208x1242;
 
 
     public function getAbsolutePath($os) {
@@ -176,59 +179,100 @@ class Splashscreens{
     }
 
     /**
-     * Get splashscreensI1024x748
+     * Get splashscreensI1024x768
      *
      * @return File
      */
-    public function getSplashscreenI1024x748(){
-        return $this->splashscreenI1024x748;
+    public function getSplashscreenI1024x768(){
+        return $this->splashscreenI1024x768;
     }
 
 
-    public function setSplashscreenI1024x748(File $splashscreen){
-        $splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI1024x748.png");
+    public function setSplashscreenI1024x768(File $splashscreen){
+        $splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI1024x768.png");
     }
 
     /**
-     * Get splashscreensI768x1004
+     * Get splashscreensI768x1024
      *
      * @return File
      */
-    public function getSplashscreenI768x1004(){
-        return $this->splashscreenI768x1004;
+    public function getSplashscreenI768x1024(){
+        return $this->splashscreenI768x1024;
     }
 
 
-    public function setSplashscreenI768x1004(File $splashscreen){
-        $splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI768x1004.png");
+    public function setSplashscreenI768x1024(File $splashscreen){
+        $splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI768x1024.png");
     }
 
     /**
-     * Get splashscreensI2048x1496
+     * Get splashscreensI2048x1536
      *
      * @return File
      */
-    public function getSplashscreenI2048x1496(){
-        return $this->splashscreenI2048x1496;
+    public function getSplashscreenI2048x1536(){
+        return $this->splashscreenI2048x1536;
     }
 
 
-    public function setSplashscreenI2048x1496(File $splashscreen){
-        $splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI2048x1496.png");
+    public function setSplashscreenI2048x1536(File $splashscreen){
+        $splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI2048x1536.png");
     }
 
     /**
-     * Get splashscreensI1536x2008
+     * Get splashscreensI1536x2048
      *
      * @return File
      */
-    public function getSplashscreenI1536x2008(){
-        return $this->splashscreenI1536x2008;
+    public function getSplashscreenI1536x2048(){
+        return $this->splashscreenI1536x2048;
     }
 
 
-    public function setSplashscreenI1536x2008(File $splashscreen){
-        $splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI1536x2008.png");
+    public function setSplashscreenI1536x2048(File $splashscreen){
+        $splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI1536x2048.png");
     }
+
+	/**
+	 * Get splashscreensI750x1334
+	 *
+	 * @return File
+	 */
+	public function getSplashscreenI750x1334(){
+		return $this->splashscreenI750x1334;
+	}
+
+
+	public function setSplashscreenI750x1334(File $splashscreen){
+		$splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI750x1334.png");
+	}
+
+	/**
+	 * Get splashscreensI1242x2208
+	 *
+	 * @return File
+	 */
+	public function getSplashscreenI1242x2208(){
+		return $this->splashscreenI1242x2208;
+	}
+
+
+	public function setSplashscreenI1242x2208(File $splashscreen){
+		$splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI1242x2208.png");
+	}
+	/**
+	 * Get splashscreensI2208x1242
+	 *
+	 * @return File
+	 */
+	public function getSplashscreenI2208x1242(){
+		return $this->splashscreenI2208x1242;
+	}
+
+
+	public function setSplashscreenI2208x1242(File $splashscreen){
+		$splashscreen->move($this->getUploadRootDir("ios"), "splashscreenI2208x1242.png");
+	}
     
 }

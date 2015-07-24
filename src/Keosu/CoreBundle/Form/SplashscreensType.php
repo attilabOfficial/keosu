@@ -54,30 +54,48 @@ class SplashscreensType extends AbstractType
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))							
-		->add('splashscreenI1024x748','file',array(
+		->add('splashscreenI1024x768','file',array(
 				'required'=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))							
-		->add('splashscreenI768x1004','file',array(
+		->add('splashscreenI768x1024','file',array(
 				'required'=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))							
-		->add('splashscreenI2048x1496','file',array(
+		->add('splashscreenI2048x1536','file',array(
 				'required'=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))							
-		->add('splashscreenI1536x2008','file',array(
+		->add('splashscreenI1536x2048','file',array(
 				'required'=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
-		)))							
+		)))
+		->add('splashscreenI750x1334','file',array(
+			'required'=>false,
+			'label'		=> false,
+			'attr'      => array(
+				'accept' => 'image/*'
+		)))
+		->add('splashscreenI1242x2208','file',array(
+			'required'=>false,
+			'label'		=> false,
+			'attr'      => array(
+				'accept' => 'image/*'
+			)))
+		->add('splashscreenI2208x1242','file',array(
+			'required'=>false,
+			'label'		=> false,
+			'attr'      => array(
+				'accept' => 'image/*'
+			)))
 		;
 	
 	}

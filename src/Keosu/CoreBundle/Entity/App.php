@@ -50,7 +50,7 @@ class App
                 // following tag to your config.xml; you will still have the INTERNET
                 // permission on your app, which PhoneGap requires.
                 array("key" => "permissions"                ,"value" => "none"),
-                array("key" => "phonegap-version"           ,"value" => "3.7.0" ), // all: current version of PhoneGap
+                array("key" => "phonegap-version"           ,"value" => "5.1.1" ), // all: current version of PhoneGap
                 array("key" => "orientation"                ,"value" => "default" ), // all: default means both landscape and portrait are enabled
                 array("key" => "target-device"              ,"value" => "universal" ), // all: possible values handset, tablet, or universal
                 array("key" => "Fullscreen"                 ,"value" => "true" ), // all: hides the status bar at the top of the screen

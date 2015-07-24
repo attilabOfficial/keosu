@@ -100,44 +100,74 @@
 <hr />
 
 <div class="col-lg-3 configurelabel">
-    1024x748
+    1024x768
 </div>
-<div id="I1024x748">
-    <img class="preview" id="previewI1024x748" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI1024x748.png') }}">
-    {{ form_row(form.splashscreens.splashscreenI1024x748) }}
+<div id="I1024x768">
+    <img class="preview" id="previewI1024x768" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI1024x768.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI1024x768) }}
 </div>
 <br class="clear"/>
 <hr />
 
 <div class="col-lg-3 configurelabel">
-    768x1004
+    768x1024
 </div>
 <div id="I768x1004">
-    <img class="preview" id="previewI768x1004" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI768x1004.png') }}">
-    {{ form_row(form.splashscreens.splashscreenI768x1004) }}
+    <img class="preview" id="previewI768x1024" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI768x1024.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI768x1024) }}
 </div>
 <br class="clear"/>
 <hr />
 
 <div class="col-lg-3 configurelabel">
-    2048x1496
+    2048x1536
 </div>
 <div id="I2048x1496">
-    <img class="preview" id="previewI2048x1496" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI2048x1496.png') }}">
-    {{ form_row(form.splashscreens.splashscreenI2048x1496) }}
+    <img class="preview" id="previewI2048x1536" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI2048x1536.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI2048x1536) }}
 </div>
 <br class="clear"/>
 <hr />
 
 <div class="col-lg-3 configurelabel">
-    1536x2008
+    1536x2048
 </div>
-<div id="I1536x2008">
-    <img class="preview" id="previewI1536x2008" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI1536x2008.png') }}">
-    {{ form_row(form.splashscreens.splashscreenI1536x2008) }}
+<div id="I1536x2048">
+    <img class="preview" id="previewI1536x2048" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI1536x2048.png') }}">
+    {{ form_row(form.splashscreens.splashscreenI1536x2048) }}
 </div>
 <br class="clear"/>
 <hr />
+
+<div class="col-lg-3 configurelabel">
+750x1334
+</div>
+<div id="I750x1334">
+	<img class="preview" id="previewI750x1334" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI750x1334.png') }}">
+	{{ form_row(form.splashscreens.splashscreenI750x1334) }}
+</div>
+<br class="clear"/>
+<hr />
+<div class="col-lg-3 configurelabel">
+	1242x2208
+</div>
+<div id="I1242x2208">
+	<img class="preview" id="previewI1242x2208" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI1242x2208.png') }}">
+	{{ form_row(form.splashscreens.splashscreenI1242x2208) }}
+</div>
+<br class="clear"/>
+<hr />
+
+<div class="col-lg-3 configurelabel">
+	2208x1242
+</div>
+<div id="I2208x1242">
+	<img class="preview" id="previewI2208x1242" src="{{ asset('keosu/res/tmp/splashscreens/ios/splashscreenI2208x1242.png') }}">
+	{{ form_row(form.splashscreens.splashscreenI2208x1242) }}
+</div>
+<br class="clear"/>
+<hr />
+
 
 
 
@@ -213,28 +243,28 @@
         });
     });
 
-    $("#I1024x748").on("change",'input[type="file"]',function() {
-        check(this,1024,748,function(ok,x){
+    $("#I1024x768").on("change",'input[type="file"]',function() {
+        check(this,1024,768,function(ok,x){
             if(ok){
-                readURL(this,"previewI1024x748");
+                readURL(this,"previewI1024x768");
             }else{
                 x.value="";
             }
         });
     });
 
-    $("#I768x1004").on("change",'input[type="file"]',function() {
-        check(this,768,1004,function(ok,x){
+    $("#I768x1024").on("change",'input[type="file"]',function() {
+        check(this,768,1024,function(ok,x){
             if(ok){
-                readURL(this,"previewI768x1004");
+                readURL(this,"previewI768x1024");
             }else{
                 x.value="";
             }
         });
     });
 
-    $("#I2048x1496").on("change",'input[type="file"]',function() {
-        check(this,2048,1496,function(ok,x){
+    $("#I2048x1536").on("change",'input[type="file"]',function() {
+        check(this,2048,1536,function(ok,x){
             if(ok){
                 readURL(this,"previewI2048x1496")
             }else{
@@ -243,8 +273,8 @@
         });
     });
 
-    $("#I1536x2008").on("change",'input[type="file"]',function() {
-        check(this,1536,2008,function(ok,x){
+    $("#I1536x2048").on("change",'input[type="file"]',function() {
+        check(this,1536,2048,function(ok,x){
             if(ok){
                 readURL(this,"previewI1536x2008");
             }else{
@@ -252,5 +282,32 @@
             }
         });
     });
+	$("#I750x1334").on("change",'input[type="file"]',function() {
+		check(this,740,1334,function(ok,x){
+			if(ok){
+				readURL(this,"previewI750x1334");
+			}else{
+				x.value="";
+			}
+		});
+	});
+	$("#I1242x2208").on("change",'input[type="file"]',function() {
+		check(this,1242,2208,function(ok,x){
+			if(ok){
+				readURL(this,"previewI1242x2208");
+			}else{
+				x.value="";
+			}
+		});
+	});
+	$("#I2208x1242").on("change",'input[type="file"]',function() {
+		check(this,2208,1242,function(ok,x){
+			if(ok){
+				readURL(this,"previewI2208x1242");
+			}else{
+				x.value="";
+			}
+		});
+	});
 </script>
 

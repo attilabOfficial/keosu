@@ -219,10 +219,16 @@ class Exporter
                     if ($event->getNewConfig() !== null)
                         $paramGadget = $event->getNewConfig();
 
-					$dataEvent = new ExportDataPackageEvent($appId);
+					$dataEvent = new ExportDataPackageEvent($appId,$paramGadget);
 					$dispatcher->dispatch(KeosuEvents::PACKAGE_EXPORT_DATA . $package->getName(), $dataEvent);
-					if ($dataEvent->getData() !== null)
-						$this->writeFile($dataEvent->getData(), $gadget->getId().".json", '/simulator/www/data/');
+					if ($dataEvent->getData() !== null){
+						if($dataEvent->getFileName() != null){
+							$this->writeFile($dataEvent->getData(), $dataEvent->getFileName(), '/simulator/www/data/');
+						}else{
+							$this->writeFile($dataEvent->getData(), $gadget->getId().".json", '/simulator/www/data/');
+						}
+					}
+
 
                     //Copy in HTML
                     $gadgetTemplateHtml = file_get_contents($package->getPath() . '/templates/' . $gadget->getTemplate());

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************
- Keosu is an open source CMS for mobile app
+Keosu is an open source CMS for mobile app
 Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
 This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@ GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-************************************************************************/
+ ************************************************************************/
 
 namespace Keosu\DataModel\ArticleModelBundle\Entity;
 use Keosu\CoreBundle\Entity\Model\DataModel;
@@ -76,13 +76,13 @@ class ArticleBody extends DataModel {
 	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment", mappedBy="articleBody", cascade={"persist","remove"})
 	 */
 	private $attachments;
-	
+
 	/**
 	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags", mappedBy="articleBody", cascade={"persist","remove"})
 	 */
 	private $tags;
-	
-	
+
+
 	/**
 	 * @ORM\Column(name="enableComments", type="boolean")
 	 */
@@ -122,7 +122,7 @@ class ArticleBody extends DataModel {
 	/**
 	 * Get title
 	 *
-	 * @return string 
+	 * @return string
 	 */
 	public function getTitle() {
 		return $this->title;
@@ -144,7 +144,7 @@ class ArticleBody extends DataModel {
 	/**
 	 * Get body
 	 *
-	 * @return string 
+	 * @return string
 	 */
 	public function getBody() {
 		return $this->body;
@@ -165,7 +165,7 @@ class ArticleBody extends DataModel {
 	/**
 	 * Get author
 	 *
-	 * @return string 
+	 * @return string
 	 */
 	public function getAuthor() {
 		return $this->author;
@@ -187,7 +187,7 @@ class ArticleBody extends DataModel {
 	/**
 	 * Get date
 	 *
-	 * @return \DateTime 
+	 * @return \DateTime
 	 */
 	public function getDate() {
 		return $this->date;
@@ -204,11 +204,11 @@ class ArticleBody extends DataModel {
 
 		return $this;
 	}
-	
+
 	/**
 	 * Get version
 	 *
-	 * @return float 
+	 * @return float
 	 */
 	public function getVersion() {
 		return $this->version;
@@ -217,12 +217,12 @@ class ArticleBody extends DataModel {
 	/**
 	 * Get enableComments
 	 *
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public function getEnableComments() {
 		return $this->enableComments;
 	}
-	
+
 	/**
 	 * Set enableComments
 	 *
@@ -252,7 +252,7 @@ class ArticleBody extends DataModel {
 	 * @return ArticleBody
 	 */
 	public function addAttachment(
-			\Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment $attachments) {
+		\Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment $attachments) {
 		$this->attachments[] = $attachments;
 		$attachments->setArticleBody($this);
 
@@ -265,20 +265,28 @@ class ArticleBody extends DataModel {
 	 * @param Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment $attachments
 	 */
 	public function removeAttachment(
-			\Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment $attachment) {
+		\Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachment $attachment) {
 		$this->attachments->removeElement($attachment);
 	}
 
 	/**
 	 * Get attachments
 	 *
-	 * @return Doctrine\Common\Collections\Collection 
+	 * @return Doctrine\Common\Collections\Collection
 	 */
 	public function getAttachments() {
 		return $this->attachments;
 	}
-	
-	
+
+	/**
+	 * @param mixed $attachments
+	 */
+	public function setAttachments($attachments)
+	{
+		$this->attachments = $attachments;
+	}
+
+
 	/**
 	 * Add tags
 	 *
@@ -286,23 +294,23 @@ class ArticleBody extends DataModel {
 	 * @return ArticleBody
 	 */
 	public function addTag(
-			\Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags $tags) {
+		\Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags $tags) {
 		$this->tags[] = $tags;
 		$tags->setArticleBody($this);
-	
+
 		return $this;
 	}
-	
+
 	/**
 	 * Remove tags
 	 *
 	 * @param \Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags $tags
 	 */
 	public function removeTag(
-			\Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags $tag) {
+		\Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags $tag) {
 		$this->tags->removeElement($tag);
 	}
-	
+
 	/**
 	 * Get tags
 	 *
@@ -311,14 +319,14 @@ class ArticleBody extends DataModel {
 	public function getTags() {
 		return $this->tags;
 	}
-	
+
 	public function setTags(\Doctrine\Common\Collections\ArrayCollection $tags)
 	{
 		$this->tags = $tags;
 	}
-	
+
 	public function getDataModelObjectName() {
 		return 'article';
 	}
-	
+
 }

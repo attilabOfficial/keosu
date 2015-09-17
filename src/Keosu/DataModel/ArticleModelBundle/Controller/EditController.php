@@ -1,6 +1,6 @@
 <?php
 /************************************************************************
- Keosu is an open source CMS for mobile app
+Keosu is an open source CMS for mobile app
 Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
 This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@ GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-************************************************************************/
+ ************************************************************************/
 
 namespace Keosu\DataModel\ArticleModelBundle\Controller;
 use Keosu\DataModel\ArticleModelBundle\Form\ArticleAttachmentType;
@@ -24,7 +24,7 @@ use Keosu\DataModel\ArticleModelBundle\Form\ArticleTagsType;
 use Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Controller to edit an article
@@ -46,7 +46,7 @@ class EditController extends Controller {
 			$em->flush();
 		}
 		return $this
-				->redirect($this->generateUrl('keosu_article_viewlist'));
+			->redirect($this->generateUrl('keosu_article_viewlist'));
 	}
 
 	/**
@@ -54,9 +54,22 @@ class EditController extends Controller {
 	 */
 	public function editAction($id) {
 		$repo = $this->get('doctrine')->getManager()
-				->getRepository(
-						'KeosuDataModelArticleModelBundle:ArticleBody');
+			->getRepository(
+				'KeosuDataModelArticleModelBundle:ArticleBody');
 		$article = $repo->find($id);
+
+		$listPict = $article->getAttachments();
+		$article->setAttachments(new ArrayCollection());
+		foreach($listPict as $attach){
+			$article->addAttachment($attach);
+		}
+
+		$listTags = $article->getTags();
+		$article->setTags(new ArrayCollection());
+		foreach($listTags as $tag){
+			$article->addTag($tag);
+		}
+
 
 		return $this->editArticle($article);
 
@@ -83,7 +96,7 @@ class EditController extends Controller {
 		foreach ($tagsResult as $tag){
 			$tagsList[]=$tag['tagName'];
 		}
-		
+
 		$formBuilder = $this->createFormBuilder($article);
 		$this->buildArticleForm($formBuilder);
 		$form = $formBuilder->getForm();
@@ -111,7 +124,7 @@ class EditController extends Controller {
 					$attachment->getArticleBody()->removeAttachment($attachment);
 					$em->remove($attachment);
 				}
-				
+
 				//Identify tags to delete
 				foreach ($article->getTags() as $tag) {
 					foreach ($originalTags as $key => $toDel) {
@@ -126,59 +139,59 @@ class EditController extends Controller {
 					$em->remove($tag);
 				}
 
-                //Enable html tags
-                $article->setBody(html_entity_decode($article->getBody()));
-				
+				//Enable html tags
+				$article->setBody(html_entity_decode($article->getBody()));
+
 				$em->persist($article);
 				$em->flush();
 				return $this
-						->redirect(
-								$this
-										->generateUrl(
-												'keosu_article_viewlist'));
+					->redirect(
+						$this
+							->generateUrl(
+								'keosu_article_viewlist'));
 			}
 		}
 		return $this
-				->render(
-						'KeosuDataModelArticleModelBundle:Edit:edit.html.twig',
-						array('form' => $form->createView(),
-								'articleid' => $article->getId(),
-								'tagsList'=> $tagsList));
+			->render(
+				'KeosuDataModelArticleModelBundle:Edit:edit.html.twig',
+				array('form' => $form->createView(),
+					'articleid' => $article->getId(),
+					'tagsList'=> $tagsList));
 	}
 	/**
 	 * Specific form
 	 */
 	private function buildArticleForm($formBuilder) {
 		$formBuilder->add('title', 'text')
-					->add('body', 'textarea',array(
-							'required'     => false,
-					))
-					->add('author', 'text')
-					->add('date', 'date', array(
-							'input'  => 'datetime',
-							'widget' => 'single_text',
-							'format' => 'dd-MM-yy',
-							'attr'   => array('class' => 'date')
-					))
-					->add('attachments', 'collection', array(
-							'type'         => new ArticleAttachmentType(),
-							'allow_add'    => true, 
-							'allow_delete' => true,
-							'by_reference' => false, 
-							'required'     => false,
-							'label'        => false
-					))
-					->add('tags', 'collection', array(
-							'type'         => new ArticleTagsType(),
-							'allow_add'    => true,
-							'allow_delete' => true,
-							'by_reference' => false,
-							'required'     => false,
-							'label'        => false
-					))
-					->add('enableComments','checkbox',array(
-							'required' => false,
-					));
+			->add('body', 'textarea',array(
+				'required'     => false,
+			))
+			->add('author', 'text')
+			->add('date', 'date', array(
+				'input'  => 'datetime',
+				'widget' => 'single_text',
+				'format' => 'dd-MM-yy',
+				'attr'   => array('class' => 'date')
+			))
+			->add('attachments', 'collection', array(
+				'type'         => new ArticleAttachmentType(),
+				'allow_add'    => true,
+				'allow_delete' => true,
+				'by_reference' => false,
+				'required'     => false,
+				'label'        => false
+			))
+			->add('tags', 'collection', array(
+				'type'         => new ArticleTagsType(),
+				'allow_add'    => true,
+				'allow_delete' => true,
+				'by_reference' => false,
+				'required'     => false,
+				'label'        => false
+			))
+			->add('enableComments','checkbox',array(
+				'required' => false,
+			));
 
 	}
 }

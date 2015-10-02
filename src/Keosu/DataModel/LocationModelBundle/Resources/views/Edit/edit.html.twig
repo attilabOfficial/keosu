@@ -23,6 +23,7 @@ Edit point of interest
 {% endblock %}
 
 {% block content %}
+{{ tinymce_init() }}
 <style>
 	.map-canvas{
         height: 500px;
@@ -35,7 +36,9 @@ Edit point of interest
     	display:none;
 	}
 </style>
+
 <script type="text/javascript">
+
 ///// TAGS /////
 	$(document).ready(function() {
 	 var liste = new Array();

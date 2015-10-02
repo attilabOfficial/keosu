@@ -131,7 +131,8 @@ class EditController extends Controller {
 	private function getLocationForm($poi) {
 		return $this->createFormBuilder($poi)
 				->add('name', 'text')
-				->add('description', 'text')
+				->add('description', 'textarea', array(
+					'attr' => array('class' => 'tinymce')))
 				->add('lat', 'text')
 				->add('lng', 'text')
 				->add('enableComments','checkbox',array(

@@ -23,7 +23,10 @@
 		    	"id" :"{{ content.id|escape('html_attr')}}",
 				"title" :"{{ content.name|escape('html_attr')}}",
 				"distance" :"{{  '%.2f'|format(content.distance)}}",
-				"desc" :"{{ (content.description |slice(0, 300) )|escape('html_attr')}}..."
+				"desc" :"{{ (content.description |slice(0, 300) )|escape('html_attr')}}...",
+				  "description" : "{{ content.description|escape('html_attr') }}",
+				  "lat" : "{{ content.lat }}",
+				  "lng" : "{{ content.lng }}"
 		   }
 		    {% if loop.last ==false%}
 		     ,

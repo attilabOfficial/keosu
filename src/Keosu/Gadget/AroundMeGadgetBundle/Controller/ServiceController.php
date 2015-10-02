@@ -66,14 +66,5 @@ class ServiceController extends Controller {
 								. $format . '.twig',
 						array('pois' => $pois));
 	}
-	
-	public function viewOneAction($poiid,$format){
-		$em = $this->get('doctrine')->getManager();
-		$poi = $em->getRepository('KeosuDataModelLocationModelBundle:Location')->find($poiid);
-		return $this
-			->render(
-				'KeosuGadgetAroundMeGadgetBundle:service:view.'
-				. $format . '.twig',
-				array('poi' => $poi));
-	}
+
 }

@@ -2,11 +2,3 @@
        KEOSU BASE
 ****************************/
 
-.backButton {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    padding: 0 5%;
-}

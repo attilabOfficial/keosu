@@ -2,10 +2,10 @@
 	<div class="panel list">
 		<div class="panel-body list-content" ng-repeat="page in pages">
 			<div class="media" ng-click="open(page)">
-				<div href="#" class="row list-elements">
+				<div class="row list-elements">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 						<div class="list-elem-left">
-							<a href="#"><h6>{{ page.title }}</h6></a>
+							<h6 ng-bind-html="page.title"></h6>
 						</div>
 					</div>
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -19,20 +19,15 @@
 		</div>
 	</div>
 </div>
-<div ng-show="isMap" class="animated zoomIn">
-	<h4 class="title">{{ myMap.name }}</h4>
+<div ng-show="!isList">
+	<h4 class="title" ng-bind-html="curPage.title"></h4>
 	<div class="list-elem-right">
-		<p>{{ distance }} km</p>
+		<p>{{ curPage.distance }} km</p>
 	</div>
-	<hr>
-	<div class="gadget-content">
-		<div class="row-fluid">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<div ng-bind-html="myMap.description"></div>
-			</div>
-		</div>
-	</div>
-	<hr>
+
+	<div ng-bind-html="curPage.description"></div>
+
 	<div id="map_canvas"></div>
-    <keosu-comments object-id="myMap.id" object-name="myMap.dataModelObjectName" enable-comments="myMap.enableComments" ></keosu-comments>
+
+
 </div>

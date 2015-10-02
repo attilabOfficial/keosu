@@ -1,7 +1,12 @@
 <nav class="navbar navbar-default navbar-fixed-top classic-navbar" role="banner">
-	<div class="header" ng-click="menuOpen =!menuOpen" ng-class="{'open' : menuOpen}">
-		<img src="theme/img/menu.png"/>
+	<div class="header">
+		<div class="header" ng-click="menuOpen =!menuOpen" ng-class="{'open' : menuOpen}">
+			<img src="theme/img/menu.png"/>
+		</div>
 		<div class="title"><b>{{::appName}}</b></div>
+		<div class="backButtonRight" ng-click="previous()" ng-show="previousButton">
+			<span class="glyphicon glyphicon-remove animated fadeIn .btn" aria-hidden="true"></span>
+		</div>
 	</div>
 
 </nav>

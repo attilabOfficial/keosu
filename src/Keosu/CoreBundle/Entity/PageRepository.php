@@ -42,5 +42,16 @@ class PageRepository extends EntityRepository {
 		return $nbr;
 	
 	}
+	public function findByAppId($appId)
+	{
+		$qb = $this->_em->createQueryBuilder();
+		$qb->select('a');
+		$qb->from('Keosu\CoreBundle\Entity\Page', 'a');
+		$qb->andWhere('a.appId=?1');
+		$qb->setParameter(1, $appId);
+		$qb->orderBy('a.name', 'ASC');
+		$query = $qb->getQuery();
+		return $query->getResult();
+	}
 }
 

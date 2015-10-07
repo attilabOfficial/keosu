@@ -208,7 +208,7 @@ class Icons {
      */
     public function setIconI114(File $iconI114)
     {
-        $iconI114->move($this->getUploadRootDir("ios"), "iconI144.png");
+        $iconI114->move($this->getUploadRootDir("ios"), "iconI114.png");
     
         return $this;
     }

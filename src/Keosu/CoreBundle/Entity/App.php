@@ -50,7 +50,7 @@ class App
                 // following tag to your config.xml; you will still have the INTERNET
                 // permission on your app, which PhoneGap requires.
                 array("key" => "permissions"                ,"value" => "none"),
-                array("key" => "phonegap-version"           ,"value" => "5.1.1" ), // all: current version of PhoneGap
+                array("key" => "phonegap-version"           ,"value" => "cli-5.2.0" ), // all: current version of PhoneGap
                 array("key" => "orientation"                ,"value" => "default" ), // all: default means both landscape and portrait are enabled
                 array("key" => "target-device"              ,"value" => "universal" ), // all: possible values handset, tablet, or universal
                 array("key" => "Fullscreen"                 ,"value" => "true" ), // all: hides the status bar at the top of the screen
@@ -66,7 +66,7 @@ class App
                 array("key" => "android-minSdkVersion"      ,"value" => "7" ), // android: MIN SDK version supported on the target device. MAX version is blank by default.
                 array("key" => "android-installLocation"    ,"value" => "auto" ), // android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard.
                 array("key" => "disallowOverscroll"         ,"value" => "true" ),
-                array("key" => "splash-screen-duration"     ,"value" => "10000")
+                array("key" => "SplashScreenDelay"     ,"value" => "3000")
         );
     }
 

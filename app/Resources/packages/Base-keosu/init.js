@@ -2,7 +2,17 @@ var app = angular.module('keosuApp', ['angularSpinner','angular-carousel','ngSan
 
 app.controller('main_Controller', function($http, $rootScope, $scope) {
 	$http.get('data/globalParam.json').success(function(data) {
+		if (typeof variStatusBar !== 'undefined') {
+			StatusBar.hide();
+		}
+		if (typeof navigator !== 'undefined' && typeof navigator.splashscreen !== 'undefined') {
+			setTimeout(function() {
+				navigator.splashscreen.hide();
+			}, 3000);
+		}
+
 		$rootScope.appName = data.name;
+
 		 // $rootScope;previousButton : used to display a return button in the header
 		 // to show the button you should set the value true to the boolean
 		 // when you click on the button, the method $rootScope.prev is called

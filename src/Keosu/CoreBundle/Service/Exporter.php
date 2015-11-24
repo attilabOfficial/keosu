@@ -143,6 +143,7 @@ class Exporter
         $author->setAttribute('href', $app->getWebsite());
         $author->setAttribute('email', $app->getEmail());
         $widget->setAttribute('version', $app->getVersion());
+		$widget->setAttribute('versionCode', $app->getVersion());
         $widget->appendChild($author);
 
         $mainPage = null;

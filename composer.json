@@ -36,9 +36,6 @@
         "fkr/simplepie-bundle" : "~1.0.2"
 	},
 	"scripts": {
-		"post-root-package-install": [
-			"SymfonyStandard\\Composer::hookRootPackageInstall"
-		],
 		"post-install-cmd": [
 			"Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",

@@ -1,15 +1,7 @@
-var app = angular.module('keosuApp', ['angularSpinner','angular-carousel','ngSanitize', 'ngTouch', 'ngRoute','angular-inview','LocalStorageModule','CacheManagerModule','ui.bootstrap']);
+var app = angular.module('keosuApp', ['angularSpinner','angular-carousel','ngSanitize', 'ngTouch', 'ngRoute','angular-inview','LocalStorageModule','CacheManagerModule','ui.bootstrap','chart.js']);
 
 app.controller('main_Controller', function($http, $rootScope, $scope) {
 	$http.get('data/globalParam.json').success(function(data) {
-		if (typeof variStatusBar !== 'undefined') {
-			StatusBar.hide();
-		}
-		if (typeof navigator !== 'undefined' && typeof navigator.splashscreen !== 'undefined') {
-			setTimeout(function() {
-				navigator.splashscreen.hide();
-			}, 3000);
-		}
 
 		$rootScope.appName = data.name;
 

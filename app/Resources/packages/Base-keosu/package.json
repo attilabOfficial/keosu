@@ -7,14 +7,12 @@
 		{ "gap:plugin" :[
 			{ "@attributes" : {"name" : "org.apache.cordova.network-information" , "version":"0.2.7" } }
 		]},
-		{ "gap:plugin" : [
-			{ "@attributes" : {"name" : "com.phonegap.plugin.statusbar"} }
-		]},
-		{ "gap:plugin" : [
-			{ "@attributes" : {"name" : "org.apache.cordova.splashscreen",  "version":"0.3.4" } }
+		{ "plugin" : [
+			{ "@attributes" : {"name" : "cordova-plugin-whitelist"} }
 		]}
 	],
-	"pluginToInstall" : [
+
+"pluginToInstall" : [
 		"cordova plugin add org.apache.cordova.network-information"
 	],
     "require" : [

@@ -61,7 +61,6 @@ $(document).ready(function() {
 							<th>Name</th>
 							<th>Reader</th>
 							<th>Tag</th>
-							<th>Description</th>
 							<th>Latitude</th>
 							<th>Longitude</th>
 							<th></th>
@@ -74,7 +73,6 @@ $(document).ready(function() {
 								<td>{{ poi.name }}</td>
 								<td>{% if poi.reader %} {{poi.reader.name}}{% endif %}</td>
 								<td>{% for tag in poi.tags %}{{tag.tagName}},{% endfor %}</td>
-								<td>{{ poi.description }}</td>
 								<td>{{ poi.lat }}</td>
 								<td>{{ poi.lng }}</td>
 								<td>{% if poi.reader == false  %} <a href={{ path('keosu_poi_edit',{'id':poi.id}) }}><i class='glyphicon glyphicon-edit'></i></a>{% endif %}</td>
@@ -88,7 +86,6 @@ $(document).ready(function() {
 							<th>Name</th>
 							<th>Reader</th>
 							<th>Tag</th>
-							<th>Description</th>
 							<th>Latitude</th>
 							<th>Longitude</th>
 							<th></th>

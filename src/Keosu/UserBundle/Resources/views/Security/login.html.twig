@@ -8,7 +8,7 @@
 	{% block fos_user_content %}
 		<div class="logotop" style="text-align:center;"><img class="logotop" src="http://localhost/keosu/web/img/logo_black.png"></div>
 		{% if error %}
-		    <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+		    <div class="alert alert-danger" role="alert">Erreur de connexion, vérifiez votre mot de passe</div>
 		{% endif %}
 		<div class="container">
 			<div class="logincontainer">

@@ -62,7 +62,7 @@ class PackageManager {
 		if($forceReload || !$session->has('cachePackage')) {
 			$dir = scandir($kernel->getRootDir().$this::ROOT_DIR_PACKAGE);		
 			foreach($dir as $folder) {
-				if($folder === '.' || $folder === '..')
+				if($folder === '.' || $folder === '..' || StringUtil::startsWith($folder,'.'))
 					continue;
 			
 				$this->checkPackage($kernel->getRootDir().$this::ROOT_DIR_PACKAGE.$folder);

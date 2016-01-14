@@ -5,6 +5,7 @@ namespace Keosu\Gadget\PushNotificationBundle\Service;
 use RMS\PushNotificationsBundle\Message\AppleMessage;
 use RMS\PushNotificationsBundle\Message\AndroidMessage;
 use RMS\PushNotificationsBundle\Message\MessageInterface;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class PushNotification {
 

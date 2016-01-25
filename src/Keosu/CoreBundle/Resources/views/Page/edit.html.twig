@@ -23,16 +23,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$( "#form_icon .radio" ).each(function(index) {
-            var label = $(this).find('label');
-			var input = $(this).find('input');
-            var iconPath = '{{ url_base }}/' + label.text().trim();
-            var img = '<img src="'+iconPath+'" style="height: 16px;" />';
-			label.attr('for', input.attr('id'));
-			label.text('');
-            label.append(input);
-            label.append(img);
-		});
 
 		templateButton("{{url_base}}", "{{templateDir}}", "");
 	});
@@ -43,7 +33,6 @@
 	{{ form_start(form) }}
 		{{ form_errors(form) }}
 		{{ form_row(form.name) }}
-		{{ form_row(form.icon) }}
 		{{ form_row(form.isMain) }}
 		<div class="imgTemplate">
 		{{ form_row(form.templateId) }}

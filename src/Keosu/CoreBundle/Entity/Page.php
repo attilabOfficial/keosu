@@ -57,12 +57,6 @@ class Page {
 	 * @ORM\Column(name="appId", type="integer")
 	 */
 	private $appId;
-	/**
-	 * @var string $icon
-	 *
-	 * @ORM\Column(name="icon", type="string", length=255)
-	 */
-	private $icon;
 
 	/**
 	 * @var string $templateId
@@ -122,26 +116,6 @@ class Page {
 	}
 	public function getAppId() {
 		return $this->appId;
-	}
-	/**
-	 * Set icon
-	 *
-	 * @param string $icon
-	 * @return Page
-	 */
-	public function setIcon($icon) {
-		$this->icon = $icon;
-	
-		return $this;
-	}
-	
-	/**
-	 * Get icon
-	 *
-	 * @return string
-	 */
-	public function getIcon() {
-		return $this->icon;
 	}
 	
 	/**

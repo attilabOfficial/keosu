@@ -194,45 +194,4 @@ Edit point of interest
 		<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
 	{{ form_end(form) }}
 </div>
-
-<!--div>
-    <form method="post" {{ form_enctype(form) }}>
-    	{{ form_widget(form) }}
-
-		<h4>Search a location</h4>
-		<div class="row">
-			<label class="control-label col-sm-3">Search</label>
-			<div class="col-sm-7">
-				<input type="text" id="search" placeholder="Enter a location" class="form-control">
-			</div>
-			<button type="button" class="btn btn-primary col-sm-2" onClick="setLocation()">Add this location</button>
-		</div>
-		<div id="warning" class="alert alert-warning" role="alert">
-			<strong>Warning!</strong> Google doesn't found latitude or longitude of this point.<br />
-			Enter a nearby adress or search on internet.
-		</div>
-		<br class="clear"/>
-		<div id="map-canvas" class="map-canvas"></div>
-
-		<br class="clear"/>
-		<br class="clear"/>		
-		<a href="#" id="add_tag" class="btn btn-info">Add a tag</a>
-	    <div class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
-	        {% for tag in form.tags %}
-	        	<div class="image-collection-entry">
-		        	<a class="badge remove-button">
-						<span class="glyphicon glyphicon-remove"></span>
-					</a>
-					<span class="clear"/>
-		            {{ form_row(tag) }}
-		    	</div>
-	        {% endfor %}
-	    </div>
-		<br class="clear"/>
-		<br class="clear"/>
-		
-
-    	<input type="submit" class="btn btn-success" /><a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-    </form>
-</div-->
 {% endblock %}

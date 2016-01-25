@@ -18,10 +18,14 @@
 app.controller('keosu-menuController', function ($scope, $http,$location) {
 	$scope.init = function(params) {
 		$scope.pages = params.gadgetParam.pages;
+		$http.get('data/'+params.gadgetId+".json").success(function(data) {
+			$scope.pages = data;
+		});
 	};
 
-    $scope.getPath = function(icon, page) {
-        return $location.path() == '/Page/'+page ? 'theme/icons/active/'+icon : 'theme/icons/'+icon
+    $scope.getPath = function(icon,iconActive, page) {
+
+        return $location.path() == '/Page/'+page ? 'data/menu/'+iconActive : 'data/menu/'+icon;
     }
 
 	// @see https://stackoverflow.com/questions/12592472/how-to-highlight-a-current-menu-item-in-angularjs

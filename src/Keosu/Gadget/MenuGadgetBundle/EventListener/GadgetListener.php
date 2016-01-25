@@ -2,6 +2,7 @@
 
 namespace Keosu\Gadget\MenuGadgetBundle\EventListener;
 
+use Keosu\CoreBundle\Event\ExportDataPackageEvent;
 use Keosu\CoreBundle\KeosuEvents;
 use Keosu\CoreBundle\Event\ExportConfigPackageEvent;
 use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
@@ -30,7 +31,7 @@ class GadgetListener implements EventSubscriberInterface
 	{
 		return array(
 			KeosuEvents::GADGET_CONF_FORM_BUILD.KeosuGadgetMenuGadgetBundle::PACKAGE_NAME => 'onGadgetConfFormBuild',
-			KeosuEvents::PACKAGE_EXPORT_CONFIG.KeosuGadgetMenuGadgetBundle::PACKAGE_NAME  => 'onGadgetExportConf',
+			KeosuEvents::PACKAGE_EXPORT_DATA.KeosuGadgetMenuGadgetBundle::PACKAGE_NAME  => 'onGadgetExportConf',
 		);
 	}
 
@@ -40,49 +41,69 @@ class GadgetListener implements EventSubscriberInterface
 		$appid = $this->container->get('keosu_core.curapp')->getCurApp();
 
 		$em = $this->container->get('doctrine')->getManager();
-		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
+		$menus = $em->getRepository('KeosuDataModelMenuModelBundle:MenuEntry')->findByAppId($appid);
 
-		$pageList = array();
-		foreach ($pages as $page) {
-			$pageList[$page->getId()] = $page->getName();
+		$menuList = array();
+		foreach ($menus as $menu) {
+			$menuList[$menu->getId()] = $menu->getTitle();
 		}
 
 		$builder = $event->getFormBuilder();
-		$builder->add('page', 'collection',array(
-						'type'         => 'choice',
-						'required'     => false,
-						'label'        => "Choose a page",
-						'allow_add'    => true,
-						'allow_delete' => true,
-						'by_reference' => true,
-						'options'      => array(
-							'choices' => $pageList,
-							'label'   => false,
-						)
-				));
+		$builder->add('menu-id', 'choice', array(
+			'label' 	=> 'Menu',
+			'choices'	=> $menuList));
 	}
 	
-	public function onGadgetExportConf(ExportConfigPackageEvent $event)
+	public function onGadgetExportConf(ExportDataPackageEvent $event)
 	{
 		$pages = array();
 		$em = $this->container->get('doctrine')->getManager();
 
-		$currentConfig = $event->getCurrentConfig();
-		$listPageId = $currentConfig['gadgetParam']['page'];
+		$currentConfig = $event->getConfig();
+		$menuId = $currentConfig['gadgetParam']['menu-id'];
+		$menu = $em->getRepository('KeosuDataModelMenuModelBundle:MenuEntry')->find($menuId);
+		$parts = $menu->getParts();
 		$tmp = array();
 		// add icon to page id
-		foreach($listPageId as $pageId) {
-			$page = $em->getRepository('KeosuCoreBundle:Page')->find($pageId);
-			$tmp['id'] = $pageId;
-			$tmp['icon'] = $page->getIcon();
-			$tmp['name'] = $page->getName();
+		foreach($parts as $part) {
+			$tmp['id'] = $part->getTarget();
+			$this->copyIcon($part->getPath(), $this->getUploadAbsolutePath());
+			$this->copyIcon($part->getPathActive(), $this->getUploadAbsolutePath());
+			$tmp['icon'] = $part->getPath();
+			$tmp['iconActive'] = $part->getPathActive();
+			$tmp['name'] = $part->getName();
 			$pages[] = $tmp;
 		}
-		
-		$newConfig = $currentConfig;
-		unset($newConfig['gadgetParam']['page']);
-		$newConfig['gadgetParam']['pages'] = $pages;
-		$event->setNewConfig($newConfig);
+
+		$event->setData(json_encode($pages));
+	}
+	//write a file
+	private function copyIcon($name, $initialPath)
+	{
+		if(!is_dir($this->getExportAbsolutePath()))
+			mkdir($this->getExportAbsolutePath(), 0777, true);
+		//Writting the html content in file
+		$destiPath = $this->getExportAbsolutePath();
+
+		$fileName = $destiPath . $name;
+
+		if (file_exists($fileName)) {
+			unlink($fileName);
+		}
+		copy($initialPath.$name, $destiPath.$name);
+
+	}
+	/**
+	 * Return dir where to export app
+	 */
+	private function getExportAbsolutePath() {
+		$kernel = $this->container->get('kernel');
+		return $kernel->getRootDir().'/../web/keosu/export/simulator/www/data/menu/';
+	}
+
+	private function getUploadAbsolutePath() {
+		$kernel = $this->container->get('kernel');
+		return $kernel->getRootDir().'/../web/uploads/documents/';
 	}
 }
 

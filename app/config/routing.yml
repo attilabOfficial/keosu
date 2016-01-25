@@ -1,3 +1,11 @@
+keosu_data_model_menu_model:
+    resource: "@KeosuDataModelMenuModelBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_temperature:
+    resource: "@KeosuTemperatureBundle/Resources/config/routing.yml"
+    prefix:   /
+
 keosu_data_model_search_model:
     resource: "@KeosuDataModelSearchModelBundle/Resources/config/routing.yml"
     prefix:   /

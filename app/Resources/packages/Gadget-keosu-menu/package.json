@@ -1,10 +1,10 @@
 {
     "name" : "keosu-menu",
     "description" : "Create a menu gadget",
-    "version" : "0.1",
+    "version" : "0.2",
     "type" : "gadget",
     "param" : [
-        {"name" : "pages" , "type" : "collection"}
+		{ "name" : "menu-id", "type" : "number" }
     ],
     "require" : [
         { "name" : "keosu-base" , "version" : ">=0.1" }

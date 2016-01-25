@@ -157,11 +157,6 @@ class ManagePagesController extends Controller {
 
 		$formBuilder
 			->add('name', 'text')
-			->add('icon', 'choice', array(
-				'choices' => ThemeUtil::getIconList($app->getTheme()),
-				'required' => true,
-				'expanded'=>true
-			))
 			->add('isMain', 'checkbox', array(
 				'required' => false
 			))

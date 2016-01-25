@@ -1,0 +1,97 @@
+	{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+{% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
+
+
+{% block title %}
+Edit Menu entry
+{% endblock %}
+
+{% block content %}
+	<script>
+		// Récupère le div qui contient la collection de tags
+		var collectionHolder = $('#partlist');
+
+		$(document).ready(function() {
+			$('#partlist').find('li').each(function() {
+				addTagFormDeleteLink($(this));
+			});
+			$('#addpart').on('click', function(e) {
+				// empêche le lien de créer un « # » dans l'URL
+				e.preventDefault();
+
+				// ajoute un nouveau formulaire tag (voir le prochain bloc de code)
+				addTagForm(collectionHolder);
+			});
+		});
+		function addTagForm(collectionHolder) {
+			// Récupère l'élément ayant l'attribut data-prototype comme expliqué plus tôt
+			var prototype = $('#partlist').attr('data-prototype');
+
+			// Remplace '__name__' dans le HTML du prototype par un nombre basé sur
+			// la longueur de la collection courante
+			var newForm = prototype.replace(/__name__/g, $('#partlist').children().length);
+
+			// Affiche le formulaire dans la page dans un li, avant le lien "ajouter un tag"
+			var $newFormLi = $('<li></li>').append(newForm);
+			$('#partlist').append($newFormLi);
+			addTagFormDeleteLink($newFormLi);
+		}
+		function addTagFormDeleteLink($tagFormLi) {
+			var $removeFormA = $('<br style="clear:both"/><a href="#">Delete</a>');
+			$tagFormLi.append($removeFormA);
+
+			$removeFormA.on('click', function(e) {
+				// empêche le lien de créer un « # » dans l'URL
+				e.preventDefault();
+
+				// supprime l'élément li pour le formulaire de tag
+				$tagFormLi.remove();
+			});
+		}
+	</script>
+
+<div id="articleform">
+	<form method="post" {{ form_enctype(form) }}>
+		{{ form_row(form.title) }}
+
+		<ul id="partlist" class="menuparts" data-prototype="{{ form_widget(form.parts.vars.prototype)|e }}">
+			{% for menupart in form.parts %}
+				<li>
+					{{ form_row(menupart.name) }}
+					{{ form_row(menupart.file) }}
+					{{ form_row(menupart.fileActive) }}
+					{{ form_row(menupart.target) }}
+				</li>
+			{% endfor %}
+		</ul>
+
+
+		{{ form_rest(form) }}
+		<br/>
+		<br style="clear:both"/>
+		<a id="addpart" class="btn btn-success" href="#" class="add_tag_link">Add part</a>
+		<input type="submit" class="btn btn-success" /><button type="button" class="btn btn-danger">Cancel</button>
+
+	</form>
+
+
+
+</div>
+{% endblock %}
+

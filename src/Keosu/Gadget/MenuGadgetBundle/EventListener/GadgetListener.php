@@ -67,11 +67,14 @@ class GadgetListener implements EventSubscriberInterface
 		// add icon to page id
 		foreach($parts as $part) {
 			$tmp['id'] = $part->getTarget();
-			$this->copyIcon($part->getPath(), $this->getUploadAbsolutePath());
-			$this->copyIcon($part->getPathActive(), $this->getUploadAbsolutePath());
+			if($part->getPath() != null)
+				$this->copyIcon($part->getPath(), $this->getUploadAbsolutePath());
+			if($part->getPathActive() != null)
+				$this->copyIcon($part->getPathActive(), $this->getUploadAbsolutePath());
 			$tmp['icon'] = $part->getPath();
 			$tmp['iconActive'] = $part->getPathActive();
 			$tmp['name'] = $part->getName();
+			$tmp['css'] = $part->getCss();
 			$pages[] = $tmp;
 		}
 

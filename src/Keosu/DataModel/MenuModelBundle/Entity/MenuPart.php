@@ -38,6 +38,12 @@ class MenuPart extends DataModel{
 	 */
 	private $name;
 
+	/**
+	 * @var string $css
+	 *
+	 * @ORM\Column(name="css", type="string", length=255, nullable=true)
+	 */
+	private $css;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Keosu\DataModel\MenuModelBundle\Entity\MenuEntry", inversedBy="parts")
@@ -54,7 +60,7 @@ class MenuPart extends DataModel{
 	/**
 	 * @var string $path
 	 *
-	 * @ORM\Column(name="path", type="string", length=255)
+	 * @ORM\Column(name="path", type="string", length=255, nullable=true)
 	 */
 	private $path;
 
@@ -70,7 +76,7 @@ class MenuPart extends DataModel{
 	/**
 	 * @var string $path
 	 *
-	 * @ORM\Column(name="pathActive", type="string", length=255)
+	 * @ORM\Column(name="pathActive", type="string", length=255, nullable=true)
 	 */
 	private $pathActive;
 
@@ -208,6 +214,22 @@ class MenuPart extends DataModel{
 	public function getTarget()
 	{
 		return $this->target;
+	}
+
+	/**
+	 * @param string $css
+	 */
+	public function setCss($css)
+	{
+		$this->css = $css;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCss()
+	{
+		return $this->css;
 	}
 
 

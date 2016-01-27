@@ -32,15 +32,19 @@ class MenuPartType extends AbstractType {
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 		$builder
 			->add('name')
+			->add('css','text', array('required'  => false))
 			->add('file','file',array(
 							'image_path' => 'webPath',
+							'required'  => false,
 							"attr" => array(
                 						"accept" => "image/*"
 									)
 							)
+
 				)
 			->add('fileActive','file',array(
 					'image_path' => 'webPath',
+					'required'  => false,
 					"attr" => array(
 						"accept" => "image/*"
 					)

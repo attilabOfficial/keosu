@@ -7,7 +7,7 @@ inactive: activePage.page != $index}"
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 gallery">
 				<div ng-repeat="apage in page" class="animated {{slide}}">
 					<div class="picture-gallery center">
-						<img src="{{ apage.thumbpath }}" alt="" ng-click="open(apage, apage.id)" class="{{ imgClass[apage.id] }}" />
+						<img ng-src="{{ apage.thumbpath }}" alt="" ng-click="open(apage, apage.id)" class="{{ imgClass[apage.id] }}" />
 					</div>
 				</div>
 			</div>
@@ -23,7 +23,7 @@ inactive: activePage.page != $index}"
 <div ng-show="isPicture">
 	<div class="full">
 		<div>
-		 	<img class="photo-center animated zoomIn" src="{{image.path}}" alt="" style="z-index:1"></img>
+		 	<img class="photo-center animated zoomIn" ng-src="{{image.path}}" alt="" style="z-index:1"></img>
 		</div>
         <keosu-comments object-id="image.id" object-name="image.dataModelObjectName" enable-comments="image.enableComments" ></keosu-comments>
 	</div>

@@ -1,6 +1,6 @@
 <ul rn-carousel rn-carousel-index="indexSlide" class="animated fadeIn">
 	<li ng-repeat="image in images">
-		<img class="thumbs" src="{{image.thumbpath}}" />
+		<img class="thumbs" ng-src="{{image.thumbpath}}" />
 	</li>
 </ul>
 
@@ -10,7 +10,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 gallery">
 				<div ng-repeat="apage in page" class="animated {{slidePage}}">
 					<div class="picture-gallery center " >
-						<img src="{{ apage.path }}" alt="" ng-click="open(apage, apage.id)" class="thumb" ng-class="{'is-active': (apage.id==indexSlide+1),'is-not-active': (apage.id!=indexSlide+1) }"/>
+						<img ng-src="{{ apage.path }}" alt="" ng-click="open(apage, apage.id)" class="thumb" ng-class="{'is-active': (apage.id==indexSlide+1),'is-not-active': (apage.id!=indexSlide+1) }"/>
 					</div>
 				</div>
 			</div>

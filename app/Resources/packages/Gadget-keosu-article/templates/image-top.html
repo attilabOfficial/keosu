@@ -3,7 +3,7 @@
 	<hr>
 	<ul class="img-list" style="list-style: none; margin: 0;padding: 0;">
 		<li ng-repeat="img in article.attachments">
-			<img class="center" ng-if="img" src="{{ ::img.path }}" alt="" style="width:100%; height: auto; overflow:hidden;"/>
+			<img class="center" ng-if="img" ng-src="{{ ::img.path }}" alt="" style="width:100%; height: auto; overflow:hidden;"/>
 		</li>
 	</ul>
 	<hr>

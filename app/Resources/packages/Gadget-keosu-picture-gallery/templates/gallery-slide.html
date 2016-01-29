@@ -7,7 +7,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 gallery">
 				<div ng-repeat="apage in page" class="animated {{slidePage}}">
 					<div class="picture-gallery center">
-						<img src="{{ apage.thumbpath }}" alt="" ng-click="open(apage, apage.id)" class="{{ imgClass[apage.id] }}" />
+						<img ng-src="{{ apage.thumbpath }}" alt="" ng-click="open(apage, apage.id)" class="{{ imgClass[apage.id] }}" />
 					</div>
 				</div>
 			</div>
@@ -24,7 +24,7 @@
 
 <ul rn-carousel rn-carousel-control rn-carousel-buffered="5" rn-carousel-index="indexSlide" ng-show="isPicture" class="animated fadeIn">
 	<li ng-repeat="image in images">
-		<img class="center" src="{{image.path}}" />
+		<img class="center" ng-src="{{image.path}}" />
         <keosu-comments object-id="image.id" object-name="image.dataModelObjectName" enable-comments="image.enableComments" ></keosu-comments>
 	</li>
 </ul>

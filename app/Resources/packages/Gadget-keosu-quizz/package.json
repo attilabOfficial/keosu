@@ -1,0 +1,12 @@
+{
+   "name" : "keosu-quizz",
+   "description" : "Display an quizz in your app",
+   "version" : "0.1",
+   "type" : "gadget",
+   "param" : [
+      { "name" : "quizz-id", "type" : "number" }
+   ],
+   "require" : [
+      { "name" : "keosu-base", "version" : ">=0.1" }
+   ]
+}

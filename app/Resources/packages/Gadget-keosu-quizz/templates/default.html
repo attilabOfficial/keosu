@@ -1,0 +1,33 @@
+<div class="animated fadeIn">
+	<div class="row-fluid">
+		<h4 class="title">{{ quizz.title }}</h4>
+	</div>
+	<hr>
+	<div class="gadget-content quizz">
+		<div class="row-fluid">
+			<div class="col-xs-12">
+				<form method="post" ng-hide="submitted">
+					<ol>
+						<li ng-repeat="question in quizz.questions" data-question="{{ question.id }}">
+							{{ question.text }}
+							<textarea ng-if="question.type == 'freeText'" ng-model="question.userText"></textarea>
+							<div ng-if="question.type != 'singleChoice'" ng-repeat="answer in question.answers">
+								<input type="checkbox" id="answer{{ answer.id }}" ng-model="answer.selected" />
+								<label for="answer{{ answer.id }}">{{ answer.text }}</label>
+								<input ng-if="answer.type == 'freeText'"type="text" ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-model="answer.userText" />
+							</div>
+							<div ng-if="question.type != 'multipleChoice'" ng-repeat="answer in question.answers">
+								<input type="radio" id="answer{{ answer.id }}" name="question{{ question.id }}" value="{{ answer.id }}" ng-model="question.selectedAnswer" />
+								<label for="answer{{ answer.id }}">{{ answer.text }}</label>
+								<input ng-if="answer.type == 'freeText'"type="text" ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-model="answer.userText" />
+							</div>
+						</li>
+					</ol>
+					<div class="error-message">{{ errorMessage }}</div>
+					<button type="submit" class="btn btn-primary btn-lg" ng-show="quizz" ng-click="submitQuizz()">Send</button>
+				</form>
+				<div class="submitted-message" ng-show="submitted">You have answered this quizz.</div>
+			</div>
+		</div>
+	</div>
+</div>

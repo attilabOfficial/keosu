@@ -51,6 +51,8 @@ class AppKernel extends Kernel
             new Keosu\Gadget\ContactUsGadgetBundle\KeosuGadgetContactUsGadgetBundle(),
             new Keosu\DataModel\SearchModelBundle\KeosuDataModelSearchModelBundle(),
             new Keosu\DataModel\MenuModelBundle\KeosuDataModelMenuModelBundle(),
+            new Keosu\DataModel\QuizzModelBundle\KeosuDataModelQuizzModelBundle(),
+            new Keosu\Gadget\QuizzGadgetBundle\KeosuGadgetQuizzGadgetBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {

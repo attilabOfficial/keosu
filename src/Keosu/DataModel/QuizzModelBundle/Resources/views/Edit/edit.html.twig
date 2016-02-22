@@ -1,0 +1,196 @@
+	{# 	
+	Keosu is an open source CMS for mobile app
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #}
+{% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
+
+{% block title %}
+Edit Quizz
+{% endblock %}
+
+{% block content %}
+<script>
+	$(document).ready(function() {
+		$('#questions').children().each(function() {
+			addQuestionHeader($(this));
+			refreshQuestionNumbers();
+			$(this).find('select').change(questionTypeChanged);
+			questionTypeChanged.call($(this).find('select:first'));
+		});
+		$('ul.answers').children().each(function() {
+			addAnswerHeader($(this).parent(), $(this));
+			refreshAnswerNumbers($(this).parent());
+			$(this).find('select').change(answerTypeChanged);
+			answerTypeChanged.call($(this).find('select'));
+		});
+		$('#add-question').on('click', function(e) {
+			e.preventDefault();
+			addQuestionForm();
+		});
+		$('a.add-answer').click(function(e) {
+			e.preventDefault();
+			addAnswerForm($(this).parent().children('ul'));
+		});
+		if ($('#questions').next().prop('tagName') == 'DIV') {
+			$('#questions').next().remove();
+		}
+	});
+    /**
+     * Questions
+	 */
+	function addQuestionForm() {
+		var questionPrototype = $('#questions').attr('data-prototype');
+
+		var questionsCount = $('#questions').children().length;
+		questionPrototype = questionPrototype.replace(/questions___name___/g, 'questions_'+questionsCount+'_');
+		questionPrototype = questionPrototype.replace(/\[questions\]\[__name__\]/g, '[questions]['+questionsCount+']');
+
+		var questionLi = $('<li>').append(questionPrototype);
+		var divAnswers = questionLi.find('> div:last');
+		var answerPrototype = divAnswers.attr('data-prototype');
+
+		divAnswers.remove();
+		questionLi.append('<label class="control-header col-lg-12">Answers</label>');
+
+		var answersUl = $('<ul>').addClass('answers').attr('data-prototype', answerPrototype);
+		questionLi.append(answersUl);
+		var addAnswerButton = $('<a class="btn btn-success add-answer" href="#">Add answer</a>');
+		addAnswerButton.click(function(e) {
+			e.preventDefault();
+			addAnswerForm(answersUl);
+		});
+		questionLi.append(addAnswerButton);
+		questionLi.append('<br/>');
+		questionLi.find('select').change(questionTypeChanged);
+
+		$('#questions').append(questionLi);
+		addQuestionHeader(questionLi);
+	}
+	function addQuestionHeader($questionLi) {
+		var questionNumber = $('#questions').children().length;
+		var $label = $('<div class="control-header"><b>Question '+ questionNumber +'</b></div>');
+
+		var $removeLink = $('<a href="#" class="delete">(Delete)</a>');
+		$removeLink.on('click', function(e) {
+			e.preventDefault();
+			$questionLi.remove();
+			refreshQuestionNumbers();
+		});
+
+		$label.append($removeLink);
+		$questionLi.prepend($label);
+		$questionLi.prepend('<hr/>');
+	}
+	function refreshQuestionNumbers() {
+		$('#questions > li').each(function(index) {
+			$(this).find('.control-header b').html('Question '+ (index+1));
+		});
+	}
+	function questionTypeChanged() {
+		if ($(this).val() == 'freeText') {
+			$(this).closest('li').find('ul li').remove();
+			$(this).closest('li').children('label, a').css('display', 'none');
+		} else {
+			$(this).closest('li').children('label, a').css('display', 'inline-block');
+		}
+	}
+	/**
+	 * Answers
+	 */
+	function addAnswerForm(answersUl) {
+		var answerLi = $('<li>');
+		var answerPrototype = answersUl.attr('data-prototype');
+		var answersCount = answersUl.children().length;
+
+		answerPrototype = answerPrototype.replace(/answers___name___/g, 'answers_'+answersCount+'_');
+		answerPrototype = answerPrototype.replace(/\[answers\]\[__name__\]/g, '[answers]['+answersCount+']');
+
+		answerLi.append(answerPrototype);
+		answerLi.append('<br/>');
+		answerLi.find('select').change(answerTypeChanged);
+		answerLi.find('> div > a.btn').remove();
+		answerLi.find('> div > label').each(function() {
+			if ($(this).text().indexOf('__name__label__') > 0)
+				$(this).remove();
+		});
+
+		answersUl.append(answerLi);
+		addAnswerHeader(answersUl, answerLi);
+	}
+	function addAnswerHeader($answersUl, $answerLi) {
+		var answerNumber = $answersUl.children().length;
+		var $label = $('<div class="control-header"><b>Answer '+ answerNumber +'</b></div>');
+
+		var $removeLink = $('<a href="#" class="delete">(Delete)</a>');
+		$removeLink.on('click', function(e) {
+			e.preventDefault();
+			$answerLi.remove();
+			refreshAnswerNumbers($answersUl);
+		});
+
+		$label.append($removeLink);
+		$answerLi.prepend($label);
+		$answerLi.prepend('<hr/>');
+	}
+	function refreshAnswerNumbers($answerUl) {
+		$answerUl.children().each(function(index) {
+			$(this).find('.control-header b').html('Answer '+ (index+1));
+		});
+	}
+	function answerTypeChanged() {
+		if ($(this).val() == 'freeText') {
+			$(this).closest('li').find('input:last').removeAttr('required');
+			$(this).closest('li').find('label:last').text('Text (optional)');
+		} else {
+			$(this).closest('li').find('input:last').attr('required', 'required');
+			$(this).closest('li').find('label:last').text('Text');
+		}
+	}
+</script>
+
+<div id="quizz-form">
+	<form method="post" {{ form_enctype(form) }}>
+		{{ form_row(form.title) }}
+		<br>
+		<label class="control-header col-lg-12">Questions</label>
+		<ul id="questions" data-prototype="{{ form_widget(form.questions.vars.prototype)|e }}">
+			{% for question in form.questions %}
+				<li>
+					{{ form_row(question.type) }}
+					{{ form_row(question.text) }}
+					<label class="control-header col-lg-12">Answers</label>
+					<ul class="answers" data-prototype="{{ form_widget(question.answers.vars.prototype)|e }}">
+					{% for answer in question.answers %}
+						<li>
+							{{ form_row(answer.type) }}
+							{{ form_row(answer.text) }}
+							<br/>
+						</li>
+					{% endfor %}
+					</ul>
+					<a class="btn btn-success add-answer" href="#">Add answer</a>
+					<br/>
+				</li>
+			{% endfor %}
+		</ul>
+		{{ form_rest(form) }}
+		<br/>
+		<a id="add-question" class="btn btn-success" href="#">Add question</a><br/><br/>
+		<input type="submit" class="btn btn-success" /> <button type="button" class="btn btn-danger">Cancel</button>
+	</form>
+</div>
+{% endblock %}
+

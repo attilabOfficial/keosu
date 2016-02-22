@@ -16,23 +16,37 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
-namespace Keosu\CoreBundle;
 
-class KeosuExtension {
+namespace Keosu\DataModel\QuizzModelBundle\Form;
 
-	public static $readerList = array(
-			'RssReader'      => 'RSS',
-			'RssEventReader' => 'Event RSS',
-			'icsReader'      => 'iCalendar',
-	);
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Keosu\DataModel\QuizzModelBundle\Entity\QuizzAnswer;
 
-	public static $dataModelList = array(
-			'article'  => 'KeosuDataModelArticleModelBundle:ArticleBody',
-			'location' => 'KeosuDataModelLocationModelBundle:Location',
-			'picture'  => 'KeosuDataModelPictureModelBundle:Picture',
-			'event'    => 'KeosuDataModelEventModelBundle:Event',
-			'menu'     => 'KeosuDataModelMenuModelBundle:MenuEntry',
-			'search'   => 'KeosuDataModelSearchModelBundle:Search',
-			'quizz'    => 'KeosuDataModelQuizzModelBundle:Quizz',
-	);
+class QuizzAnswerType extends AbstractType {
+
+	public function buildForm(FormBuilderInterface $builder, array $options) {
+		$builder
+			->add('type' ,'choice', array(
+				'choices' => array(
+					QuizzAnswer::PREDEFINED => 'Predefined',
+					QuizzAnswer::FREE_TEXT => 'Free text'
+				)
+			))
+			->add('text', 'text')
+		;
+	}
+
+	public function setDefaultOptions(OptionsResolverInterface $resolver) {
+		$resolver->setDefaults(
+			array(
+				'data_class' => 'Keosu\DataModel\QuizzModelBundle\Entity\QuizzAnswer'
+			)
+		);
+	}
+
+	public function getName() {
+		return 'keosu_quizzmodelbundle_quizzanswer';
+	}
 }

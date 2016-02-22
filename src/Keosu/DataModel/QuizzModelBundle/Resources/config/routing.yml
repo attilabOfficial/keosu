@@ -1,0 +1,32 @@
+keosu_quizz_viewlist:
+    pattern:  /content/quizz/
+    defaults: { _controller: KeosuDataModelQuizzModelBundle:View:view }
+
+keosu_quizz_delete:
+    pattern:  /content/quizz/delete/{id}
+    defaults: { _controller: KeosuDataModelQuizzModelBundle:Edit:delete }
+
+keosu_quizz_edit:
+    pattern:  /content/quizz/edit/{id}
+    defaults: { _controller: KeosuDataModelQuizzModelBundle:Edit:edit }
+
+keosu_quizz_add:
+    pattern:  /content/quizz/add
+    defaults: { _controller: KeosuDataModelQuizzModelBundle:Edit:add }
+
+keosu_quizz_results_viewlist:
+    pattern:  /content/quizz/results/{id}
+    defaults: { _controller: KeosuDataModelQuizzModelBundle:View:viewResults }
+
+keosu_quizz_results_delete:
+    pattern:  /content/quizz/results/delete/{id}
+    defaults: { _controller: KeosuDataModelQuizzModelBundle:Edit:deleteResults }
+
+keosu_quizz_result_view:
+    pattern:  /content/quizz/result/{id}
+    defaults: { _controller: KeosuDataModelQuizzModelBundle:View:viewResult }
+
+keosu_quizz_result_delete:
+    pattern:  /content/quizz/result/delete/{id}
+    defaults: { _controller: KeosuDataModelQuizzModelBundle:Edit:deleteResult }
+

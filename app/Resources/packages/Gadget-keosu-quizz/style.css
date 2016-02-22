@@ -1,0 +1,71 @@
+/***************************
+         QUIZZ
+***************************/
+
+.quizz > div > div {
+    padding: 8px;
+}
+
+.quizz form {
+    width: 100%;
+}
+
+.quizz ol {
+    padding: 0;
+}
+
+@media screen and (min-width: 350px) {
+    .quizz ol {
+        padding: 10px;
+    }
+}
+
+.quizz li {
+    margin-bottom: 15px;
+}
+
+.quizz textarea {
+    width: 100%;
+}
+
+.quizz button {
+    float: right;
+    margin: 0 15px 10px 0;
+}
+
+.quizz li div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.quizz label {
+    line-height: 120%;
+    margin: 0;
+}
+
+.quizz input {
+}
+
+.quizz input[type="checkbox"], .quizz input[type="radio"] {
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+
+.quizz input[type="text"] {
+    flex-grow: 1;
+    min-width: 50px;
+    margin-left: 8px;
+}
+
+.quizz .error-message {
+    margin-bottom: 20px;
+    margin-right: 15px;
+    text-align: right;
+    color: red;
+}
+
+.quizz .submitted-message {
+    margin-top: 15px;
+}

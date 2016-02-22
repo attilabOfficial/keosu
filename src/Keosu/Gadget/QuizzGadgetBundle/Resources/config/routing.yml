@@ -1,0 +1,10 @@
+keosu_gadget_quizz_service_view:
+    pattern:  /service/gadget/quizz/{gadgetId}
+    defaults: { _controller: KeosuGadgetQuizzGadgetBundle:Service:viewOne }
+    methods:  [GET]
+
+keosu_gadget_quizz_service_submit:
+    pattern:  /service/gadget/quizz/{quizzId}
+    defaults: { _controller: KeosuGadgetQuizzGadgetBundle:Service:submit }
+    methods:  [POST]
+

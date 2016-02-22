@@ -1,3 +1,11 @@
+keosu_gadget_quizz_gadget:
+    resource: "@KeosuGadgetQuizzGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+keosu_data_model_quizz_model:
+    resource: "@KeosuDataModelQuizzModelBundle/Resources/config/routing.yml"
+    prefix:   /
+
 keosu_data_model_menu_model:
     resource: "@KeosuDataModelMenuModelBundle/Resources/config/routing.yml"
     prefix:   /

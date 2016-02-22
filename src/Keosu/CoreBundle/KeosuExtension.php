@@ -31,7 +31,8 @@ class KeosuExtension {
 			'location' => 'KeosuDataModelLocationModelBundle:Location',
 			'picture'  => 'KeosuDataModelPictureModelBundle:Picture',
 			'event'    => 'KeosuDataModelEventModelBundle:Event',
-			'menu'    => 'KeosuDataModelMenuModelBundle:MenuEntry',
-			'search'    => 'KeosuDataModelSearchModelBundle:Search',
+			'menu'     => 'KeosuDataModelMenuModelBundle:MenuEntry',
+			'search'   => 'KeosuDataModelSearchModelBundle:Search',
+			'quizz'    => 'KeosuDataModelQuizzModelBundle:Quizz',
 	);
 }

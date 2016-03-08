@@ -73,14 +73,21 @@ app.controller('keosu-authenticationController',function ($rootScope, $scope, $h
 		if($scope.rememberMe) {
 			data+='&_remember_me='+$scope.rememberMe;
 		}
-		$http.post($scope.param.host + 'login_check',data).success(function(data) {
+		//If we are on mobile we authenticate else we redirect to pageToGoAfterLogin
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			$http.post($scope.param.host + 'login_check',data).success(function(data) {
+				usSpinnerService.stop('spinner');
+				if(data.success) {
+					$location.path('/Page/'+$scope.param.gadgetParam.pageToGoAfterLogin);
+				} else {
+					$scope.loginInit(data.message);
+				}
+			});
+		}else{
 			usSpinnerService.stop('spinner');
-			if(data.success) {
-				$location.path('/Page/'+$scope.param.gadgetParam.pageToGoAfterLogin);
-			} else {
-				$scope.loginInit(data.message);
-			}
-		});
+			$location.path('/Page/'+$scope.param.gadgetParam.pageToGoAfterLogin);
+		}
+
 	}
 	
 	///////////////////////////////

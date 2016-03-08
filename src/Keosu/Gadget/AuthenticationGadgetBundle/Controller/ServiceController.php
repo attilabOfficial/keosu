@@ -44,6 +44,9 @@ class ServiceController extends Controller {
 		if($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')){
 			$loggedRemembered = true;
 		}
+		if($this->get('security.context')->isGranted('ROLE_ADMIN')){
+			$loggedRemembered = false;
+		}
 
 		return new JsonResponse(array(
 			'csrf_token' => $this->getCsrfToken('authenticate'),

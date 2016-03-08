@@ -10,10 +10,6 @@ keosu_gadget_push_notification:
     resource: "@KeosuGadgetPushNotificationBundle/Resources/config/routing.yml"
     prefix:   /
 
-keosu_gadget_face_book:
-    resource: "@KeosuGadgetFaceBookBundle/Resources/config/routing.yml"
-    prefix:   /
-
 keosu_gadget_comment_gadget:
     resource: "@KeosuGadgetCommentGadgetBundle/Resources/config/routing.yml"
     prefix:   /

@@ -7,8 +7,7 @@
       { "name" : "pageToGoAfterLogin", "type" : "number"}
    ],
    "require" : [
-      { "name" : "keosu-base" , "version" : ">=0.1" },
-	   {"name": "facebookPlugins","version":">=0.3"}
+      { "name" : "keosu-base" , "version" : ">=0.1" }
    ],
    "appParam" : [
       { "name" : "privateApp", "type" : "checkbox" , "options" : {

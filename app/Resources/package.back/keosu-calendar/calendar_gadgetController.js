@@ -222,30 +222,13 @@ app.controller('calendar_gadgetController', function ($scope, $http, $sce, usSpi
 				change(false);
 				
 				var twitter_button  = document.getElementById('twitter_button');
-				var facebook_button = document.getElementById('facebook_button');
 				twitter_button.type  = 'hidden';
 				facebook_button.type  = 'hidden';		
 				
 				
 				if (window.plugins.socialsharing){
 					document.getElementById('other_share').onclick=function(){window.plugins.socialsharing.share(title+'\nDescription\n'+notes);};
-					
-					window.plugins.socialsharing.canShareVia('com.apple.social.facebook', 'msg', null, null, null, 
-							function(){
-								facebook_button.hidden = false;
-								facebook_button.onclick=function(){window.plugins.socialsharing.shareViaFacebook(title+'\nDescription\n'+notes, null, null, function(){}, function(){});};
-							}, 
-							function(){
-								window.plugins.socialsharing.canShareVia('facebook', 'msg', null, null, null, 
-									function(){
-										facebook_button.hidden = false;
-										facebook_button.onclick=function(){window.plugins.socialsharing.shareViaFacebook(title+'\nDescription\n'+notes, null, null, function(){}, function(){});};
-									}, 
-									function(){
-										alert('Facebook not available on this device');
-									});
-							});
-					
+
 					
 					window.plugins.socialsharing.canShareVia('com.apple.social.twitter', 'msg', null, null, null, 
 							function(){

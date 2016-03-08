@@ -37,7 +37,7 @@ class MenuEntry extends DataModel {
 	private $title;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\MenuModelBundle\Entity\MenuPart", mappedBy="menuEntry", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\MenuModelBundle\Entity\MenuPart", mappedBy="menuEntry", cascade={"persist","remove"})
 	 */
 	private $parts;
 

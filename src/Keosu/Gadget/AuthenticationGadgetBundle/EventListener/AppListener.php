@@ -63,7 +63,6 @@ class AppListener implements EventSubscriberInterface
 				}
 			
 				$page = new Page();
-				$page->setIcon('glyphicon-lock');
 				$page->setTemplateId(KeosuGadgetAuthenticationGadgetBundle::AUTHENTICATION_TEMPLATE_ID);
 				$page->setName(KeosuGadgetAuthenticationGadgetBundle::AUTHENTICATION_PAGE_NAME);
 				$page->setAppId($app->getId());

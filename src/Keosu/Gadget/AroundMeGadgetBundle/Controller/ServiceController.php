@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 namespace Keosu\Gadget\AroundMeGadgetBundle\Controller;
 
+use Keosu\CoreBundle\Util\TemplateUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ServiceController extends Controller {
@@ -58,9 +59,10 @@ class ServiceController extends Controller {
 		foreach($poisORM as $poiORM) {
 			$poi = $em->getRepository('KeosuDataModelLocationModelBundle:Location')->find($poiORM['id']);
 			$poi->setDistance($poiORM['distance']);
+			$poi->setDescription(TemplateUtil::formatTemplateString($poi->getDescription()));
 			$pois[] = $poi;
 		}
-
+		//return new JsonRespons`($pois);
 		return $this->render(
 						'KeosuGadgetAroundMeGadgetBundle:service:viewlist.'
 								. $format . '.twig',

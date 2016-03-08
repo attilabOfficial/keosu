@@ -110,7 +110,7 @@ class EditController extends Controller {
 					}
 				}
 
-
+				$poi->setDescription(html_entity_decode($poi->getDescription()));
 				$em = $this->get('doctrine')->getManager();
 				$em->persist($poi);
 				$em->flush();

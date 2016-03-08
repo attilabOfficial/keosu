@@ -37,6 +37,7 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
 
 		//Init map
 		$scope.curPage = page;
+		$scope.curPage.descHtml = $('<div/>').html($scope.curPage.description).text();
 		$scope.isList = false;
 		$scope.map=$scope.initialize();
 		$scope.map.setZoom($scope.param.gadgetParam.zoom);
@@ -66,7 +67,7 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
 		});
 
 					//Trace line between two point
-		var newLineCoordinates = [$scope.myMarker.position,latitudeAndLongitude];
+		var newLineCoordinates = [$scope.userMarker.position, latitudeAndLongitude];
 		var newLine = new google.maps.Polyline({
 			  path: newLineCoordinates,
 			  strokeColor: "#FF0000",

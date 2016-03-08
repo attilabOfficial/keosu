@@ -1,10 +1,10 @@
 <div ng-controller="keosu-menuController" class=" row-fluid menu">
 
 	<div ng-controller="keosu-menuController" class=" row-fluid menu">
-		<div ng-repeat="page in pages" class="menu-elements">
+		<div ng-repeat="page in pages" class="menu-elements item-menu-list">
 			<a href="#/Page/{{::page.id}}">
 				<img ng-src="{{ getPath(page.icon, page.iconActive,page.id) }}"  ng-class="getClass(page.id)" />
-				<span ng-bind="page.name"></span>
+				<span class="titre-menu-list" ng-bind="page.name"></span>
 			</a>
 		</div>
 	</div>

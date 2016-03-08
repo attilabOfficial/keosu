@@ -1,6 +1,12 @@
 /***************************
    MENU
 ***************************/
+
+.menu{
+    margin:0 !important;
+}
+
+
 .icons-menu {
 	display: block !important;
 	margin-left: auto !important;
@@ -22,15 +28,12 @@
 	float: left;
 	position: relative;
 	min-height: 1px;
-    padding: 5px 15px;
 	width: 20%;
 }
 
 .menu>.menu-elements>a>img {
 	width: 30px;
     display: inline !important;
-	margin-left: auto !important;
-	margin-right: auto !important;
 }
 
 /*.menu>.menu-elements>a>img.active {
@@ -66,5 +69,52 @@
 	 height: 100%;
 	 top: 0;
    	 max-width: 55px;
+}
+
+/***************************
+   UNICORN MENU
+***************************/
+
+
+.lien-menu-bar {
+    text-align: center;
+    float: left;
+    width: 25%;
+    margin-top: 5px;
+}
+
+.active {
+    display:inline !important;
+}
+
+/***************************
+   UNICORN MENU 2
+***************************/
+
+.image-menu-cat{
+	width: 100% !important;
+	height:auto !important;
+}
+
+.menu-elements{
+    margin:0 !important;
+    padding:0 !important;
+}
+
+.container-fluid{
+    margin:0 !important;
+    padding:0 !important;
+    }
+
+/***************************
+   MENU LIST
+***************************/
+.item-menu-list {
+    margin:24px !important;
+}
+
+.titre-menu-list {
+    font-size:24px;
+    margin-left:12px;
 }
 

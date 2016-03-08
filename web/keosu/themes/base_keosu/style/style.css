@@ -47,7 +47,7 @@ hr {
 
 .classic-navbar {
 	height: 60px;
-	font-family: 'amatic' !important;
+	font-family: 'quicksand' !important;
 }
 
 #logo {
@@ -86,11 +86,9 @@ HEADER
 	float:left;
 }
 .title{
-	margin-top:8px;
-	margin-left:20px;
+	margin-top:12px !important;
 	font-size:26px;
 	text-align: center;
-	width: 80%;
 }
 /***************************
    ICON
@@ -158,7 +156,7 @@ Menu
 	position:relative;
 	color: snow;
 	background-color:snow;
-	opacity: 0.85;
+	opacity: 0.95;
 	height: 100%;
 	left:-310px;
 	top: 60px;
@@ -207,4 +205,31 @@ Menu
 	display: flex;
 	align-items: center;
 	padding: 7% 8%;
+}
+
+
+/***
+* Menu Button
+**/
+
+.header .icon-menu2 {
+    background-image:url(img/menu_plus.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    width:64px;
+    height: 64px;
+}
+
+.header .open .icon-menu2 {
+    background-image:url(img/menu_moins.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    width:64px;
+    height: 64px;
+}
+
+.header-slide{
+    position:absolute;
 }

@@ -10,6 +10,7 @@ use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
 use Keosu\Gadget\MenuGadgetBundle\KeosuGadgetMenuGadgetBundle;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Listener responsible to gadget action
@@ -45,11 +46,11 @@ class GadgetListener implements EventSubscriberInterface
 
 		$menuList = array();
 		foreach ($menus as $menu) {
-			$menuList[$menu->getId()] = $menu->getTitle();
+			$menuList[$menu->getTitle()] = $menu->getId();
 		}
 
 		$builder = $event->getFormBuilder();
-		$builder->add('menu-id', 'choice', array(
+		$builder->add('menu-id', ChoiceType::class, array(
 			'label' 	=> 'Menu',
 			'choices'	=> $menuList));
 	}

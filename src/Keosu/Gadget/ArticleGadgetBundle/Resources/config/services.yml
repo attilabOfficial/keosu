@@ -1,12 +1,12 @@
 services:
     keosu_gadget.article.gadget:
         class: Keosu\Gadget\ArticleGadgetBundle\EventListener\GadgetListener
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_subscriber }
     keosu_gadget.article.export:
         class: Keosu\Gadget\ArticleGadgetBundle\EventListener\ExportListener
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_subscriber }
 

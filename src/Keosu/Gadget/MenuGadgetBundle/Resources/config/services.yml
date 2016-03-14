@@ -1,11 +1,11 @@
 services:
     keosu_gadget.menu.gadget:
         class: Keosu\Gadget\MenuGadgetBundle\EventListener\GadgetListener
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_subscriber }
     keosu_gadget.menu.gadget.page_delete:
         class: Keosu\Gadget\MenuGadgetBundle\EventListener\PageDeleteListener
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_subscriber }

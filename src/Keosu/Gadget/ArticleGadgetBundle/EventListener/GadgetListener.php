@@ -9,6 +9,7 @@ use keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 use Keosu\Gadget\ArticleGadgetBundle\KeosuGadgetArticleGadgetBundle;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Listener responsible to gadget action
@@ -47,15 +48,15 @@ class GadgetListener implements EventSubscriberInterface
 		//Prepare the list of article for the form
 		$articleList=array();
 		foreach($articleListTmp as $article){
-			$articleList[$article['id']]=$article['title'];
+			$articleList[$article['title']]=$article['id'];
 		}
 		
 		//Overide form
 		$builder = $event->getFormBuilder();
-		$builder->add('article-id', 'choice', array(
+		$builder->add('article-id', ChoiceType::class, array(
 				'label' 	=> 'Article',
 				'choices'	=> $articleList));
-        $builder->add('offline', 'checkbox',  array('required' => false));
+        $builder->add('offline', ChoiceType::class,  array('required' => false));
 	}
 	
 	public function onGadgetConfSav(GadgetSaveConfigEvent $event)

@@ -11,14 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
 class PackageFormBuilderEvent extends Event
 {
 	private $formBuilder;
-	private $request;
 	private $package;
 	private $overrideForm;
 
-	public function __construct(FormBuilder $formBuilder, Request $request,Package $package)
+	public function __construct(FormBuilder $formBuilder, Package $package)
 	{
 		$this->formBuilder = $formBuilder;
-		$this->request = $request;
 		$this->package = $package;
 		$this->overrideForm = false;
 	}

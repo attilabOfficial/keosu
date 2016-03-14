@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ReaderType extends AbstractType {
@@ -26,7 +27,7 @@ class ReaderType extends AbstractType {
 		$builder->add('name')->add('service');
 	}
 
-	public function setDefaultOptions(OptionsResolverInterface $resolver) {
+	public function configureOptions(OptionsResolver $resolver){
 		$resolver
 				->setDefaults(
 						array(

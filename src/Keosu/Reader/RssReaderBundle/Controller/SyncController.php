@@ -53,8 +53,9 @@ class SyncController extends Controller {
         foreach ($items as $item) {
             $this->parseAndImportArticle($item, $reader, $rssReader->striphtml);
         }
+		$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
-		if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
 			return $this->redirect($this->generateUrl('keosu_article_viewlist'));
 		} else {
 			return new JsonResponse(array(
@@ -89,7 +90,7 @@ class SyncController extends Controller {
 			}
 		}
 
-		if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+		if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
 			return $this->redirect($this->generateUrl('keosu_article_viewlist'));
 		} else {
 			return new JsonResponse(array(

@@ -30,11 +30,10 @@ use Symfony\Component\HttpFoundation\Request;
 class ServiceController extends Controller {
 
 	public function infoAction() {
-		$securityContext = $this->get('security.context');
-		$user = $securityContext->getToken()->getUser();
+		$user = $this->get('security.token_storage')->getToken()->getUser();
 
-		if($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-			$ret = array(
+		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+				$ret = array(
 				'connect' => true,
 				'type'    => $user->getAccountType(),
 				'email'   => $user->getemail(),
@@ -51,14 +50,13 @@ class ServiceController extends Controller {
 	
 	public function passwordAction(Request $request) {
 	
-		$securityContext = $this->get('security.context');
 		$userManager = $this->container->get('fos_user.user_manager');
-		$user = $securityContext->getToken()->getUser();
+		$user = $this->get('security.token_storage')->getToken()->getUser();
 	
 		$ret['success'] = false;
 		$ret['connect'] = false;
-	
-		if($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+
+		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
 		
 			$ret['connect'] = true;
 

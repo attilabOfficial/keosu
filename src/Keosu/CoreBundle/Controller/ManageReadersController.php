@@ -20,13 +20,15 @@ namespace Keosu\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Keosu\CoreBundle\KeosuExtension;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\Request;
 
 class ManageReadersController extends Controller {
 
 	/**
 	 * Create a form to choose the type of reader we want to add
 	 */
-	public function addAction()
+	public function addAction(Request $request)
 	{
 	
 		//Reader list
@@ -34,22 +36,18 @@ class ManageReadersController extends Controller {
 		$readers = $em->getRepository('KeosuCoreBundle:Reader')->findAll();
 	
 		$formBuilder = $this->createFormBuilder();
-		$formBuilder->add('readertype', 'choice', array(
+		$formBuilder->add('readertype', ChoiceType::class, array(
 								'choices' => KeosuExtension::$readerList,
 								'required' => true,
 						));
 		$form = $formBuilder->getForm();
-		$request = $this->get('request');
-		//If we are in POST method, form is submit
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
-			if ($form->isValid()) {
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
 				$data = $form->getData();
 				$readerType = $data['readertype'];
 				//We redirect to the choosen Reader Edit action 
 				return $this->redirect(
 							$this->generateUrl('keosu_ReaderManager_'. $readerType . '_add'));
-			}
 		}
 
 		return $this

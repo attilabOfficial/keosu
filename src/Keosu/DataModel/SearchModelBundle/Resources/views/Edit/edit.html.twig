@@ -26,11 +26,11 @@ Edit Search entry
 
 
 <div id="articleform">
-	<form method="post" {{ form_enctype(form) }}>
+	{{ form_start(form) }}
 		{{ form_widget(form) }}
 
 		<input type="submit" class="btn btn-success" /><button type="button" class="btn btn-danger">Cancel</button>
-	</form>
+	{{ form_end(form) }}
 
 </div>
 {% endblock %}

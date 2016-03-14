@@ -23,44 +23,43 @@ use Keosu\Reader\RssReaderBundle\RssReader;
 use Keosu\CoreBundle\Entity\Reader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 
 class EditController extends Controller {
 
-	public function addAction() {
+	public function addAction(Request $request) {
 		$commonReader = new Reader();
 		$rssReader = new RssReader();
-		return $this->editReader($rssReader, $commonReader);
+		return $this->editReader($rssReader, $commonReader, $request);
 	}
 
-	public function editAction($id) {
+	public function editAction($id, Request $request) {
 		$commonReader = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Reader')->find($id);
 
 		$rssReader = RssReader::constructfromReader($commonReader);
-		return $this->editReader($rssReader, $commonReader);
+		return $this->editReader($rssReader, $commonReader, $request);
 	}
 
-	private function editReader($rssReader, $commonReader) {
+	private function editReader($rssReader, $commonReader, Request $request) {
 		$formBuilder = $this->createFormBuilder($rssReader);
 		$this->buildReaderForm($formBuilder);
 		$form = $formBuilder->getForm();
-		$request = $this->get('request');
 
-		//If we are in POST method, form is submit
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
 
-			if ($form->isValid()) {
-				$rssReader->convertAsExistingCommonReader($commonReader);
-				$em = $this->get('doctrine')->getManager();
-				$em->persist($commonReader);
-				$em->flush();
-				return $this
-						->redirect(
-								$this
-										->generateUrl(
-												'keosu_ReaderManager_manage'));
-			}
+			$rssReader->convertAsExistingCommonReader($commonReader);
+			$em = $this->get('doctrine')->getManager();
+			$em->persist($commonReader);
+			$em->flush();
+			return $this
+					->redirect(
+							$this
+									->generateUrl(
+											'keosu_ReaderManager_manage'));
 		}
 		return $this
 				->render('KeosuReaderRssReaderBundle:Edit:edit.html.twig',
@@ -69,10 +68,10 @@ class EditController extends Controller {
 	}
 
 	private function buildReaderForm($formBuilder) {
-		$formBuilder->add('name', 'text')
-			->add('feed_url', 'text')
-			->add('striphtml', 'checkbox', array('required'=>false))
-			->add('allowupdate', 'checkbox',array('label'=>false , 'required'=>false));
+		$formBuilder->add('name', TextType::class)
+			->add('feed_url', TextType::class)
+			->add('striphtml', CheckBoxType::class, array('required'=>false))
+			->add('allowupdate', CheckboxType::class,array('label'=>false , 'required'=>false));
 	}
 
 }

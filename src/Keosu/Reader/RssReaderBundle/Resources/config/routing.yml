@@ -1,15 +1,15 @@
 keosu_ReaderManager_RssReader_add:
-    pattern:  /content/reader/manage/add/rss
+    path:  /content/reader/manage/add/rss
     defaults: { _controller: KeosuReaderRssReaderBundle:Edit:add }
     
 keosu_ReaderManager_RssReader_edit:
-    pattern:  /content/reader/manage/edit/rss/{id}
+    path:  /content/reader/manage/edit/rss/{id}
     defaults: { _controller: KeosuReaderRssReaderBundle:Edit:edit }
     
 keosu_ReaderManager_RssReader_sync:
-    pattern:  /sync/rss/{id}
+    path:  /sync/rss/{id}
     defaults: { _controller: KeosuReaderRssReaderBundle:Sync:sync }
 
 keosu_ReaderManager_RssReader_syncAll:
-    pattern:  /sync/rss
+    path:  /sync/rss
     defaults: { _controller: KeosuReaderRssReaderBundle:Sync:syncAll }

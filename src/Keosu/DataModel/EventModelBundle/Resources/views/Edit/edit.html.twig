@@ -56,11 +56,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </script>
 
     <div>
-        <form method="post" {{ form_enctype(form) }}>
+		{{ form_start(form)}}
             {{ form_widget(form) }}
             <input type="submit" class="btn btn-success" />
             <a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-        </form>
+		{{ form_end(form) }}
     </div>
 {% endblock %}
 

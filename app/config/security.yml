@@ -31,16 +31,12 @@ security:
       pattern: ^/
       form_login:
         provider: chain_provider
-        csrf_provider:  form.csrf_provider
+        csrf_token_generator:  security.csrf.token_manager
         success_handler: keosu.security.authentication_handler
         failure_handler: keosu.security.authentication_handler
+        remember_me: true
       logout:     true
       anonymous:  true
-      remember_me:
-        key:      "%secret%"
-        lifetime: 31536000 # 365 days in seconds
-        path:     /
-        domain:   ~ 
 
       
   access_control:

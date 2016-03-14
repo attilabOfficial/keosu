@@ -21,6 +21,8 @@ namespace Keosu\DataModel\SearchModelBundle\Controller;
 
 use Keosu\DataModel\SearchModelBundle\Entity\Search;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\Request;
 
 
 /**
@@ -47,26 +49,26 @@ class EditController extends Controller {
 	/**
 	 * Edit search action
 	 */
-	public function editAction($id) {
+	public function editAction($id, Request $request) {
 		$repo = $this->get('doctrine')->getManager()
 				->getRepository(
 						'KeosuDataModelSearchModelBundle:Search');
 		$search = $repo->find($id);
 
-		return $this->editSearch($search);
+		return $this->editSearch($search, $request);
 
 	}
 	/**
 	 * Add search action
 	 */
-	public function addAction() {
+	public function addAction(Request $request) {
 		$search = new Search();
-		return $this->editSearch($search);
+		return $this->editSearch($search , $request);
 	}
 	/**
 	 * Manage and store
 	 */
-	private function editSearch($search) {
+	private function editSearch($search, $request) {
 
 		//Get tags list from database
 		$em = $this->get('doctrine')->getManager();
@@ -76,23 +78,19 @@ class EditController extends Controller {
 		$form = $formBuilder->getForm();
 		//List of original attachment / tag
 
-		$request = $this->get('request');
-		//If we are in POST method, form is submit
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
-			if ($form->isValid()) {
-				$page = $em->getRepository('KeosuCoreBundle:Page')->find($search->getTarget());
-				$appid = $this->get('keosu_core.curapp')->getCurApp();
-				$search->setTargetName($page->getName());
-				$search->setAppId($appid);
-				$em->persist($search);
-				$em->flush();
-				return $this
-						->redirect(
-								$this
-										->generateUrl(
-												'keosu_search_viewlist'));
-			}
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			$page = $em->getRepository('KeosuCoreBundle:Page')->find($search->getTarget());
+			$appid = $this->get('keosu_core.curapp')->getCurApp();
+			$search->setTargetName($page->getName());
+			$search->setAppId($appid);
+			$em->persist($search);
+			$em->flush();
+			return $this
+					->redirect(
+							$this
+									->generateUrl(
+											'keosu_search_viewlist'));
 		}
 		return $this
 				->render(
@@ -111,10 +109,10 @@ class EditController extends Controller {
 
 		$pageList = array();
 		foreach ($pages as $page) {
-			$pageList[$page->getId()] = $page->getName();
+			$pageList[$page->getName()] = $page->getId();
 		}
-		$formBuilder->add('keyValue', 'text')
-				->add('target', 'choice',array(
+		$formBuilder->add('keyValue')
+				->add('target', ChoiceType::class ,array(
 						'choices' => $pageList,
 						'label'   => false,
 

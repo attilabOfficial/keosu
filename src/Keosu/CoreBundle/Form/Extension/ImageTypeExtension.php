@@ -19,8 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -31,13 +33,14 @@ class ImageTypeExtension extends AbstractTypeExtension
      *
      * @return string
      */
-    public function getExtendedType()
-    {
-        return 'file';
-    }
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-    	$resolver->setOptional(array('image_path'));
+
+	public function getExtendedType()
+	{
+		return FileType::class;
+	}
+
+    public function configureOptions(OptionsResolver $resolver){
+		$resolver->setDefined(array('image_path'));
     }
     
     /**

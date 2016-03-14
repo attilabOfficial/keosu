@@ -21,7 +21,7 @@
     {% spaceless %}
 	     {% if image_url is not null %}
 	     	<center>
-	   		 	<img src="{{url_base}}/{{ asset(image_url) }}" class="img-thumbnail img-preview uploader"/>
+	   		 	<img src="{{url_base}}{{ image_url }}" class="img-thumbnail img-preview uploader"/>
 	   		 </center>
 	    {% endif %}
 	    {{ block('form_widget') }}

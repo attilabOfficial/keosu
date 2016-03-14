@@ -1,20 +1,20 @@
 keosu_gadget_calendar_gadget_add:
-    pattern:  /views/layout/gadget/eventgadget/add/{page}/{zone}
+    path:  /views/layout/gadget/eventgadget/add/{page}/{zone}
     defaults: { _controller: KeosuGadgetCalendarGadgetBundle:Edit:add }
     
 keosu_gadget_calendar_gadget_edit:
-    pattern:  /views/layout/gadget/eventgadget/edit/{page}/{zone}
+    path:  /views/layout/gadget/eventgadget/edit/{page}/{zone}
     defaults: { _controller: KeosuGadgetCalendarGadgetBundle:Edit:edit }
 
 keosu_gadget_calendar_gadget_service_viewone:
-    pattern:  /service/gadget/calendar/view/{eventid}/{format}
+    path:  /service/gadget/calendar/view/{eventid}/{format}
     defaults: { _controller: KeosuGadgetCalendarGadgetBundle:Service:viewone}
 
 keosu_gadget_calendar_gadget_service_view:
-    pattern:  /service/gadget/calendar/{gadgetId}/{offset}/{format}
+    path:  /service/gadget/calendar/{gadgetId}/{offset}/{format}
     defaults: { _controller: KeosuGadgetCalendarGadgetBundle:Service:viewlist }
     
 keosu_gadget_calendar_gadget_service_viewtable:
-    pattern:  /service/gadget/calendar/{gadgetId}/{format}
+    path:  /service/gadget/calendar/{gadgetId}/{format}
     defaults: { _controller: KeosuGadgetCalendarGadgetBundle:Service:viewtable }
 

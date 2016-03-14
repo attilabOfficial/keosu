@@ -10,6 +10,7 @@ use Keosu\CoreBundle\Event\GadgetPanelEvent;
 use Keosu\Gadget\AuthenticationGadgetBundle\KeosuGadgetAuthenticationGadgetBundle;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -78,14 +79,14 @@ class GadgetListener implements EventSubscriberInterface
 		$pageList=array();
 		foreach($pageListTmp as $page){
 			if ($page->getId() != $event->getGadget()->getPage()->getId()) {
-				$pageList[$page->getId()]=$page->getName();
+				$pageList[$page->getName()]=$page->getId();
 			}
 		}
 		
 		
 		//Overide form
 		$builder = $event->getFormBuilder();
-		$builder->add('pageToGoAfterLogin','choice',array(
+		$builder->add('pageToGoAfterLogin',ChoiceType::class ,array(
 				'choices'	=> $pageList,
 		));
 	}

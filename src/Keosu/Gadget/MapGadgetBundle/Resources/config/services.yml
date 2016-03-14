@@ -1,7 +1,7 @@
 services:
     keosu_gadget.map.gadget:
         class: Keosu\Gadget\MapGadgetBundle\EventListener\GadgetListener
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_subscriber }
 

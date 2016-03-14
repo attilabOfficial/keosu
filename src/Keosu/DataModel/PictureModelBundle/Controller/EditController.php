@@ -19,11 +19,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\DataModel\PictureModelBundle\Controller;
 
 use Keosu\DataModel\PictureModelBundle\Entity\Picture;
-use Keosu\DataModel\PictureModelBundle\Entity\pictureTag;
 use Keosu\DataModel\PictureModelBundle\Form\PictureTagsType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * Controller to edit a picture
@@ -48,23 +52,23 @@ class EditController extends Controller {
 	/**
 	 * Edit picture action
 	 */
-	public function editAction($id) {
+	public function editAction($id, Request $request) {
 		$em = $this->get('doctrine')->getManager();
 		$picture = $em->getRepository('KeosuDataModelPictureModelBundle:Picture')->find($id);
-		return $this->editPicture($picture);
+		return $this->editPicture($picture, $request);
 	}
 	/**
 	 * Add picture action
 	 */
-	public function addAction() {
+	public function addAction(Request $request) {
 		$picture = new Picture();
 		$picture->setIdext("0");
-		return $this->editPicture($picture);
+		return $this->editPicture($picture, $request);
 	}
 	/**
 	 * Manage and store
 	 */
-	private function editPicture($picture) {
+	private function editPicture($picture, $request) {
 		$em = $this->get('doctrine')->getManager();
 		
 		//get tags
@@ -83,33 +87,29 @@ class EditController extends Controller {
 			foreach ($picture->getTags() as $tmpp)
 				$originalTags[] = $tmpp;
 		
-		$request = $this->get('request');
-		//If we are in POST method, form is submit
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
-			if ($form->isValid()) {
-				/**/
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
 
-				if($picture->getTags()!=null){
-					//Identify tags to delete
-					foreach ($picture->getTags() as $tag) {
-						foreach ($originalTags as $key => $toDel) {
-							if ($toDel->getId() === $tag->getId()) {
-								unset($originalTags[$key]);
-							}
+			if($picture->getTags()!=null){
+				//Identify tags to delete
+				foreach ($picture->getTags() as $tag) {
+					foreach ($originalTags as $key => $toDel) {
+						if ($toDel->getId() === $tag->getId()) {
+							unset($originalTags[$key]);
 						}
 					}
-					//Deleting tag from picture and database
-					foreach ($originalTags as $tag) {
-						$tag->getPicture()->removeTag($tag);
-						$em->remove($tag);
-					}
 				}
-				/**/
-				$em->persist($picture);
-				$em->flush();
-				return $this->redirect($this->generateUrl('keosu_picture_viewlist'));
+				//Deleting tag from picture and database
+				foreach ($originalTags as $tag) {
+					$tag->getPicture()->removeTag($tag);
+					$em->remove($tag);
+				}
 			}
+			/**/
+			$em->persist($picture);
+			$em->flush();
+			return $this->redirect($this->generateUrl('keosu_picture_viewlist'));
+
 		}
 		return $this->render('KeosuDataModelPictureModelBundle:Edit:edit.html.twig',array(
 									'form' => $form->createView(),
@@ -121,20 +121,20 @@ class EditController extends Controller {
 	 * Specific form
 	 */
 	private function buildPictureForm($formBuilder) {
-		$formBuilder->add('name', 'text')
-					->add('description', 'textarea')
-					->add('enableComments','checkbox',array(
+		$formBuilder->add('name')
+					->add('description', TextareaType::class)
+					->add('enableComments',CheckboxType::class,array(
 							'required' => false,
 					))
-					->add('tags', 'collection', array(
-							'type'         => new PictureTagsType(),
+					->add('tags', CollectionType::class, array(
+							'entry_type'         => PictureTagsType::class,
 							'allow_add'    => true,
 							'allow_delete' => true,
 							'by_reference' => false,
 							'required'     => false,
 							'label'        => false
 					))
-					->add('file', 'file', array(
+					->add('file', FileType::class, array(
 							'required'   => false, 
 							'image_path' => 'webPath',
 							'label'      => false,

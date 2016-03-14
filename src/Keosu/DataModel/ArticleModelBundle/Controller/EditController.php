@@ -25,6 +25,12 @@ use Keosu\DataModel\ArticleModelBundle\Entity\ArticleBody;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller to edit an article
@@ -52,7 +58,7 @@ class EditController extends Controller {
 	/**
 	 * Edit article action
 	 */
-	public function editAction($id) {
+	public function editAction($id, Request $request) {
 		$repo = $this->get('doctrine')->getManager()
 			->getRepository(
 				'KeosuDataModelArticleModelBundle:ArticleBody');
@@ -71,22 +77,22 @@ class EditController extends Controller {
 		}
 
 
-		return $this->editArticle($article);
+		return $this->editArticle($article,  $request);
 
 	}
 	/**
 	 * Add article action
 	 */
-	public function addAction() {
+	public function addAction(Request $request) {
 		$article = new ArticleBody();
 		$article->setIdext("0");
 		$article->setVersion("1.0");
-		return $this->editArticle($article);
+		return $this->editArticle($article, $request);
 	}
 	/**
 	 * Manage and store
 	 */
-	private function editArticle($article) {
+	private function editArticle($article, Request $request) {
 
 		//Get tags list from database
 		$em = $this->get('doctrine')->getManager();
@@ -105,10 +111,9 @@ class EditController extends Controller {
 		$originalTags = array();
 		foreach ($article->getAttachments() as $attachment) $originalAttachments[] = $attachment;
 		foreach ($article->getTags() as $tag) $originalTags[] = $tag;
-		$request = $this->get('request');
-		//If we are in POST method, form is submit
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
+
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->get('doctrine')->getManager();
 			if ($form->isValid()) {
 				//Identify attachments to delete
@@ -162,34 +167,34 @@ class EditController extends Controller {
 	 * Specific form
 	 */
 	private function buildArticleForm($formBuilder) {
-		$formBuilder->add('title', 'text')
-			->add('body', 'textarea',array(
+		$formBuilder->add('title', TextType::class)
+			->add('body', TextareaType::class ,array(
 				'required'     => false,
 			))
-			->add('author', 'text')
-			->add('date', 'date', array(
+			->add('author', TextType::class)
+			->add('date', DateType::class, array(
 				'input'  => 'datetime',
 				'widget' => 'single_text',
 				'format' => 'dd-MM-yy',
 				'attr'   => array('class' => 'date')
 			))
-			->add('attachments', 'collection', array(
-				'type'         => new ArticleAttachmentType(),
+			->add('attachments', CollectionType::class, array(
+				'entry_type'         =>  ArticleAttachmentType::class,
 				'allow_add'    => true,
 				'allow_delete' => true,
 				'by_reference' => false,
 				'required'     => false,
 				'label'        => false
 			))
-			->add('tags', 'collection', array(
-				'type'         => new ArticleTagsType(),
+			->add('tags', CollectionType::class, array(
+				'entry_type'         => ArticleTagsType::class,
 				'allow_add'    => true,
 				'allow_delete' => true,
 				'by_reference' => false,
 				'required'     => false,
 				'label'        => false
 			))
-			->add('enableComments','checkbox',array(
+			->add('enableComments', CheckboxType::class ,array(
 				'required' => false,
 			));
 

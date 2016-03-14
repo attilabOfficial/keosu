@@ -3,8 +3,9 @@
 namespace Keosu\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IconsType extends AbstractType
 {
@@ -12,67 +13,67 @@ class IconsType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-		->add('iconA36','file',array(
+		->add('iconA36',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))
-		->add('iconA48','file',array(
+		->add('iconA48',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))
-		->add('iconA72','file',array(
+		->add('iconA72',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))
-		->add('iconA96','file',array(
+		->add('iconA96',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))
-		->add('iconI57','file',array(
+		->add('iconI57',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))
-		->add('iconI72','file',array(
+		->add('iconI72',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))
-		->add('iconI114','file',array(
+		->add('iconI114',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))
-		->add('iconI120','file',array(
+		->add('iconI120',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))
-		->add('iconI76','file',array(
+		->add('iconI76',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))
-		->add('iconI152','file',array(
+		->add('iconI152',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
 						'accept' => 'image/*'
 		)))
-		->add('iconI144','file',array(
+		->add('iconI144',FileType::class,array(
 				'required'	=>false,
 				'label'		=> false,
 				'attr'      => array(
@@ -85,7 +86,7 @@ class IconsType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Keosu\CoreBundle\Model\Icons'

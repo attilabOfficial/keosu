@@ -23,6 +23,9 @@ use Keosu\DataModel\MenuModelBundle\Entity\Menu;
 use Keosu\DataModel\MenuModelBundle\Entity\MenuEntry;
 use Keosu\DataModel\MenuModelBundle\Form\MenuPartType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 
 /**
@@ -49,28 +52,28 @@ class EditController extends Controller {
 	/**
 	 * Edit Menu action
 	 */
-	public function editAction($id) {
+	public function editAction($id, Request $request) {
 		$repo = $this->get('doctrine')->getManager()
 				->getRepository(
 						'KeosuDataModelMenuModelBundle:MenuEntry');
-		$Menu = $repo->find($id);
+		$menu = $repo->find($id);
 
-		return $this->editMenu($Menu);
+		return $this->editMenu($menu, $request);
 
 	}
 	/**
 	 * Add Menu action
 	 */
-	public function addAction() {
+	public function addAction(Request $request) {
 		$appid = $this->get('keosu_core.curapp')->getCurApp();
 		$menu = new MenuEntry();
 		$menu->setAppId($appid);
-		return $this->editMenu($menu);
+		return $this->editMenu($menu, $request);
 	}
 	/**
 	 * Manage and store
 	 */
-	private function editMenu($menu) {
+	private function editMenu($menu, $request) {
 
 		//Get tags list from database
 		$em = $this->get('doctrine')->getManager();
@@ -82,32 +85,29 @@ class EditController extends Controller {
 		$originalParts = array();
 		foreach ($menu->getParts() as $part) $originalParts[] = $part;
 
-		$request = $this->get('request');
-		//If we are in POST method, form is submit
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
-			if ($form->isValid()) {
-				foreach ($menu->getParts() as $part) {
-					foreach ($originalParts as $key => $toDel) {
-						if ($toDel->getId() === $part->getId()) {
-							unset($originalParts[$key]);
-						}
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			foreach ($menu->getParts() as $part) {
+				foreach ($originalParts as $key => $toDel) {
+					if ($toDel->getId() === $part->getId()) {
+						unset($originalParts[$key]);
 					}
 				}
-				//Deleting part from Menu and database
-				foreach ($originalParts as $part) {
-					$part->getMenuEntry()->removePart($part);
-					$em->remove($part);
-				}
-				$em->persist($menu);
-				$em->flush();
-				return $this
-						->redirect(
-								$this
-										->generateUrl(
-												'keosu_menu_viewlist'));
 			}
+			//Deleting part from Menu and database
+			foreach ($originalParts as $part) {
+				$part->getMenuEntry()->removePart($part);
+				$em->remove($part);
+			}
+			$em->persist($menu);
+			$em->flush();
+			return $this
+					->redirect(
+							$this
+									->generateUrl(
+											'keosu_menu_viewlist'));
 		}
+
 		return $this
 				->render(
 						'KeosuDataModelMenuModelBundle:Edit:edit.html.twig',
@@ -125,12 +125,15 @@ class EditController extends Controller {
 		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
 		$pageList = array();
 		foreach ($pages as $page) {
-			$pageList[$page->getId()] = $page->getName();
+			$pageList[$page->getName()] = $page->getId();
 		}
 
-		$formBuilder->add('title', 'text')
-			->add('parts', 'collection', array(
-					'type'         => new MenuPartType($pageList),
+		$formBuilder->add('title', TextType::class)
+			->add('parts', CollectionType::class, array(
+					'entry_type'         => MenuPartType::class,
+					'entry_options'  => array(
+						'page_list'	=>$pageList
+					),
 					'allow_add'    => true,
 					'allow_delete' => true,
 					'by_reference' => false,

@@ -1,15 +1,15 @@
 keosu_search_viewlist:
-    pattern:  /content/search/
+    path:  /content/search/
     defaults: { _controller: KeosuDataModelSearchModelBundle:View:view }
     
 keosu_search_delete:
-    pattern:  /content/search/delete/{id}
+    path:  /content/search/delete/{id}
     defaults: { _controller: KeosuDataModelSearchModelBundle:Edit:delete }
     
 keosu_search_edit:
-    pattern:  /content/search/edit/{id}
+    path:  /content/search/edit/{id}
     defaults: { _controller: KeosuDataModelSearchModelBundle:Edit:edit }
     
 keosu_search_add:
-    pattern:  /content/search/add
+    path:  /content/search/add
     defaults: { _controller: KeosuDataModelSearchModelBundle:Edit:add }

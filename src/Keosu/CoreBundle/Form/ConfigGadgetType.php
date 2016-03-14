@@ -20,13 +20,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\CoreBundle\Form;
 
 use Keosu\CoreBundle\KeosuEvents;
-use Keosu\CoreBundle\Entity\Gadget;
 use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
 use Keosu\CoreBundle\Service\PackageManager;
 
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * This class allow to personalise the config of a gadget
@@ -35,22 +38,25 @@ class ConfigGadgetType extends AbstractType {
 
 	private $dispatcher;
 
-	private $request;
-
 	private $gadget;
 
 	private $packageManager;
 
-	public function __construct($dispatcher,Request $request,PackageManager $packageManager,Gadget $gadget)
+	private $typeMapping = array();
+
+	public function __construct()
 	{
-		$this->dispatcher = $dispatcher;
-		$this->request = $request;
-		$this->packageManager = $packageManager;
-		$this->gadget = $gadget;
+		$this->typeMapping['choice'] = ChoiceType::class;
+		$this->typeMapping['text'] = TextType::class;
+		$this->typeMapping['textarea'] = TextareaType::class;
 	}
 
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+		$this->gadget = $options['gadget'];
+		$this->request = $options['request'];
+		$this->dispatcher = $options['dispatcher'];
+		$this->packageManager = $options['package_manager'];;
 		$event = new GadgetFormBuilderEvent($builder,$this->request,$this->gadget);
 		$this->dispatcher->dispatch(KeosuEvents::GADGET_CONF_FORM_BUILD.$this->gadget->getName(),$event);
 		if(!$event->isOverrideForm()) {
@@ -60,18 +66,32 @@ class ConfigGadgetType extends AbstractType {
 				foreach($params as $p) {
 					if($builder->has($p['name']))
 						throw new \LogicException('The property '.$p['name'].' already exists, maybe you forgot to enable overrideForm ?');
-				
+
 					if(isset($p['options']))
-						$builder->add($p['name'],$p['type'],$p['options']);
+						$builder->add($p['name'],$this->typeMapping[$p['type']],$p['options']);
 					else
-						$builder->add($p['name'],$p['type']);
+						$builder->add($p['name'],$this->typeMapping[$p['type']]);
 				}
 			}
 		}
 	}
 
+	public function configureOptions(OptionsResolver $resolver){
+		$resolver->setDefined(array('gadget'));
+		$resolver->setDefined(array('request'));
+		$resolver->setDefined(array('dispatcher'));
+		$resolver->setDefined(array('package_manager'));
+		$resolver
+			->setDefaults(
+				array(
+					'gadget' => null,
+					'request' => null,
+					'dispatcher' => null,
+					'package_manager' => null));
+	}
+
 	public function getName()
 	{
-		return 'Keosu_CoreBundle_configgadgettype';
+		return 'keosu_core.configgadget_type';
 	}
 }

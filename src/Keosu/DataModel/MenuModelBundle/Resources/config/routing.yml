@@ -1,15 +1,15 @@
 keosu_menu_viewlist:
-    pattern:  /content/menu/
+    path:  /content/menu
     defaults: { _controller: KeosuDataModelMenuModelBundle:View:view }
     
 keosu_menu_delete:
-    pattern:  /content/menu/delete/{id}
+    path:  /content/menu/delete/{id}
     defaults: { _controller: KeosuDataModelMenuModelBundle:Edit:delete }
     
 keosu_menu_edit:
-    pattern:  /content/menu/edit/{id}
+    path:  /content/menu/edit/{id}
     defaults: { _controller: KeosuDataModelMenuModelBundle:Edit:edit }
     
 keosu_menu_add:
-    pattern:  /content/menu/add
+    path:  /content/menu/add
     defaults: { _controller: KeosuDataModelMenuModelBundle:Edit:add }

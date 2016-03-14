@@ -35,6 +35,14 @@ use Keosu\CoreBundle\Util\ThemeUtil;
 use Keosu\CoreBundle\Service\Exporter;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\HttpFoundation\Request;
 
 class ManageAppsController extends Controller
 {
@@ -48,15 +56,15 @@ class ManageAppsController extends Controller
         ));
     }
 
-    public function addAction()
+    public function addAction(Request $request)
     {
         $app = new App();
         //Copy default splashscreens and icons in a temp repertory
         FilesUtil::copyFolder(Exporter::getImageDir('keosu'), Exporter::getImageDir('tmp'));
-        return $this->editApp($app);
+        return $this->editApp($app, $request);
     }
 
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
         $em = $this->get('doctrine')->getManager();
         $app = $em->getRepository('KeosuCoreBundle:App')->find($id);
@@ -67,16 +75,15 @@ class ManageAppsController extends Controller
             //Copy older splashscreens and icons in a temp repertory
             FilesUtil::copyFolder(Exporter::getImageDir($app->getId()), Exporter::getImageDir('tmp'));
         }
-        return $this->editApp($app);
+        return $this->editApp($app, $request);
     }
 
     /**
      * Shared function to edit/add an app
      */
-    private function editApp(App $app)
+    private function editApp(App $app, Request $request)
     {
         $em = $this->get('doctrine')->getManager();
-        $request = $this->get('request');
         $packageManager = $this->get('keosu_core.packagemanager');
 
         $apps = $em->getRepository('KeosuCoreBundle:App')->findAll();
@@ -94,45 +101,41 @@ class ManageAppsController extends Controller
 
         //page edit form
         $formBuilder = $this->createFormBuilder($app, array('label' => 'Edit App'));
-        $this->buildAppForm($formBuilder);
+        $this->buildAppForm($formBuilder, $request);
         $form = $formBuilder->getForm();
 
-        //If we are in POST method, form is submit
-        if ($request->getMethod() == 'POST') {
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			$em->persist($app);
+			$em->flush();
+			$em->refresh($app);
+			$session = $this->get("session");
+			$session->set("appid", $app->getId());
 
-            $form->bind($request);
-            if ($form->isValid()) {
+			$dispatcher = $this->get('event_dispatcher');
+			$event = new PackageSaveAppEvent($form, $request, $app);
+			foreach ($listPackage as $p) {
+				$dispatcher->dispatch(KeosuEvents::PACKAGE_GLOBAL_CONFIG_SAV_FORM . $p->getName(), $event);
+			}
 
-                $em->persist($app);
-                $em->flush();
-                $em->refresh($app);
-                $session = $this->get("session");
-                $session->set("appid", $app->getId());
+			// Persist event modification
+			$em->persist($app);
+			$em->flush();
 
-                $dispatcher = $this->get('event_dispatcher');
-                $event = new PackageSaveAppEvent($form, $request, $app);
-                foreach ($listPackage as $p) {
-                    $dispatcher->dispatch(KeosuEvents::PACKAGE_GLOBAL_CONFIG_SAV_FORM . $p->getName(), $event);
-                }
+			//Copy splashscreens and icons
+			FilesUtil::copyFolder(Exporter::getImageDir('tmp'), Exporter::getImageDir($app->getId()));
 
-                // Persist event modification
-                $em->persist($app);
-                $em->flush();
+			// export the app
+			$this->container->get('keosu_core.exporter')->exportApp();
 
-                //Copy splashscreens and icons
-                FilesUtil::copyFolder(Exporter::getImageDir('tmp'), Exporter::getImageDir($app->getId()));
+			if ($event->getResponse() !== null)
+				return $event->getResponse();
 
-                // export the app
-                $this->container->get('keosu_core.exporter')->exportApp();
+			return $this->redirect(
+				$this->generateUrl('keosu_core_app_manage')
+			);
+		}
 
-                if ($event->getResponse() !== null)
-                    return $event->getResponse();
-
-                return $this->redirect(
-                    $this->generateUrl('keosu_core_app_manage')
-                );
-            }
-        }
 
         return $this->render('KeosuCoreBundle:App:edit.html.twig', array(
             'form' => $form->createView(),
@@ -145,43 +148,44 @@ class ManageAppsController extends Controller
     /**
      * Edit App form
      */
-    private function buildAppForm($formBuilder)
+    private function buildAppForm($formBuilder, $request)
     {
-        $formBuilder->add('name', 'text')
-            ->add('packageName', 'text')
-            ->add('version', 'text')
-            ->add('description', 'textarea')
-            ->add('author', 'text', array(
+        $formBuilder->add('name')
+            ->add('packageName')
+            ->add('version')
+            ->add('description', TextareaType::class)
+            ->add('author', TextType::class, array(
                 'required' => false
             ))
-            ->add('website', 'url', array(
+            ->add('website', UrlType::class, array(
                 'required' => false
             ))
-            ->add('email', 'email', array(
+            ->add('email', EmailType::class, array(
                 'required' => false
             ))
-            ->add('debugMode', 'checkbox', array(
+            ->add('debugMode', CheckboxType::class, array(
                 'required' => false
             ))
-            ->add('theme', 'choice', array(
+            ->add('theme', ChoiceType::class, array(
                 'choices' => ThemeUtil::getThemeList(),
                 'expanded' => true,
             ))
-            ->add('configPackages', new ConfigPackageType($this->container, $this->get('request')), array(
+            ->add('configPackages', ConfigPackageType::class, array(
                 'label' => false,
+				'container' => $this->container,
+				'request' => $request
             ))
-            ->add('splashscreens', new SplashscreensType())
-            ->add('icons', new IconsType())
-            ->add('preferences', 'collection', array(
-                'type' => new PreferenceType(),
+            ->add('splashscreens', SplashscreensType::class)
+            ->add('icons', IconsType::class)
+            ->add('preferences', CollectionType::class, array(
+                'entry_type' => PreferenceType::class,
                 'required' => false,
                 'label' => "Edit preference",
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => true,
-                'options' => array(
-                    'label' => false,
-                )));
+                'label' => false,
+                ));
     }
 
 }

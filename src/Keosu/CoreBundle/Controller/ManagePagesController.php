@@ -25,6 +25,10 @@ use Keosu\CoreBundle\Util\ThemeUtil;
 use Keosu\CoreBundle\Util\TemplateUtil;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 
 class ManagePagesController extends Controller {
 
@@ -45,17 +49,17 @@ class ManagePagesController extends Controller {
 	/**
 	 * Add a new page
 	 */
-	public function addAction() {
+	public function addAction(Request $request) {
 		$page = new Page();
 		$appId = $this->get('keosu_core.curapp')->getCurApp();
 		$page->setAppId($appId);
-		return $this->editPage($page);
+		return $this->editPage($page, $request);
 	}
 
 	/**
 	 * Edit an existing page
 	 */
-	public function editAction($id) {
+	public function editAction($id, Request $request) {
 		$dispatcher = $this->get('event_dispatcher');
 		$em = $this->get('doctrine')->getManager();
 		$page = $em->getRepository('KeosuCoreBundle:Page')->find($id);
@@ -68,7 +72,7 @@ class ManagePagesController extends Controller {
 				return $event->getResponse();
 		}
 
-		return $this->editPage($page);
+		return $this->editPage($page, $request);
 	}
 
 	/**
@@ -112,33 +116,30 @@ class ManagePagesController extends Controller {
 	/**
 	 * Shared function to edit/add a page
 	 */
-	private function editPage($page) {
+	private function editPage($page, $request) {
 		$appId = $this->container->get('keosu_core.curapp')->getCurApp();
 		$em = $this->get('doctrine')->getManager();
-		$request = $this->get('request');
 
 		//Get Curent theme
 		$app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
 		//page edit form
-		$formBuilder = $this->createFormBuilder($page,array(
+		$formBuilder = $this->createFormBuilder($page, array(
 			'label' => 'Page edit'
 		));
 		$this->buildPageForm($formBuilder);
 		$form = $formBuilder->getForm();
 
-		//If we are in POST method, form is submit
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
-			if ($form->isValid()) {
-				//Storing page
-				$em->persist($page);
-				$em->flush();
-				//Export app to see new page in simulator
-				$this->get('keosu_core.exporter')->exportApp();
-				return $this->redirect(
-					$this->generateUrl('keosu_core_views_page_manage'));
-			}
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			//Storing page
+			$em->persist($page);
+			$em->flush();
+			//Export app to see new page in simulator
+			$this->get('keosu_core.exporter')->exportApp();
+			return $this->redirect(
+				$this->generateUrl('keosu_core_views_page_manage'));
 		}
+
 
 		return $this->render('KeosuCoreBundle:Page:edit.html.twig',array(
 			'form' => $form->createView(),
@@ -156,11 +157,11 @@ class ManagePagesController extends Controller {
         $app = $em->getRepository('KeosuCoreBundle:App')->find($appId);
 
 		$formBuilder
-			->add('name', 'text')
-			->add('isMain', 'checkbox', array(
+			->add('name', TextType::class)
+			->add('isMain', CheckboxType::class, array(
 				'required' => false
 			))
-			->add('templateId', 'choice', array(
+			->add('templateId', ChoiceType::class, array(
 				'choices' => TemplateUtil::getTemplateList(),
 				'required'  => true,
 				'expanded'=> true

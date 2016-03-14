@@ -21,9 +21,9 @@ namespace Keosu\CoreBundle;
 class KeosuExtension {
 
 	public static $readerList = array(
-			'RssReader'      => 'RSS',
-			'RssEventReader' => 'Event RSS',
-			'icsReader'      => 'iCalendar',
+			'RSS'      => 'RssReader',
+			'Event RSS' => 'RssEventReader',
+			'iCalendar'      => 'icsReader',
 	);
 
 	public static $dataModelList = array(

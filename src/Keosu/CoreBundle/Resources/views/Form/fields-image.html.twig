@@ -22,11 +22,11 @@
     {% spaceless %}
     	{% if image_url is not null %}
     		<center>
-	   		 	<img src="{{url_base}}/{{ asset(image_url) }}" id="img-preview" class="uploader"/>
+	   		 	<img src="{{url_base}}{{ image_url }}" id="img-preview" class="uploader"/>
 	   		 </center>
 	   	{% else %}
 	   		<center>
-	   		 	<img src="{{url_base}}/{{ asset(image_url) }}" id="img-preview" class="uploader" style="display:none"/>
+	   		 	<img src="{{url_base}}{{ image_url }}" id="img-preview" class="uploader" style="display:none"/>
 	   		 </center>
 	   	{% endif %}
 	    {{ block('form_widget') }}

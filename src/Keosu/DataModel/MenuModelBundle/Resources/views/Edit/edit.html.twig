@@ -67,7 +67,7 @@ Edit Menu entry
 	</script>
 
 <div id="articleform">
-	<form method="post" {{ form_enctype(form) }}>
+	{{ form_start(form) }}
 		{{ form_row(form.title) }}
 
 		<ul id="partlist" class="menuparts" data-prototype="{{ form_widget(form.parts.vars.prototype)|e }}">
@@ -89,7 +89,7 @@ Edit Menu entry
 		<a id="addpart" class="btn btn-success" href="#" class="add_tag_link">Add part</a>
 		<input type="submit" class="btn btn-success" /><button type="button" class="btn btn-danger">Cancel</button>
 
-	</form>
+	{{ form_end(form) }}
 
 
 

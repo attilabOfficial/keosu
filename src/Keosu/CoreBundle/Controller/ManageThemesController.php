@@ -23,6 +23,8 @@ use Keosu\CoreBundle\Entity\Theme;
 use Keosu\CoreBundle\Util\ThemeUtil;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\Request;
 
 class ManageThemesController extends Controller {
 	/**
@@ -69,27 +71,27 @@ class ManageThemesController extends Controller {
 	/**
 	 * Add a new page
 	 */
-	public function addAction() {
+	public function addAction(Request $request) {
 		$theme = new Theme ();
 		$theme->setName ('tmp');
 		// Form and store action are shared with editAction
-		return $this->editTheme ( $theme );
+		return $this->editTheme ( $theme , $request);
 	}
 	
 	/**
 	 * Edit an existing page
 	 */
-	public function editAction($id) {
+	public function editAction($id, Request $request) {
 		$repo = $this->get ( 'doctrine' )->getManager ()->getRepository ( 'KeosuCoreBundle:Theme' );
 		$theme = $repo->find ( $id );
 		// Form and store action are shared with editAction
-		return $this->editTheme ( $theme );
+		return $this->editTheme ( $theme, $request );
 	}
 	
 	/**
 	 * Shared function to edit/add an app
 	 */
-	private function editTheme($theme) {
+	private function editTheme($theme, $request) {
 		// Find existing app to know if it's the first one
 		$error = null;
 		$em = $this->get('doctrine')->getManager();
@@ -100,12 +102,8 @@ class ManageThemesController extends Controller {
 		) );
 		$this->buildThemeForm ( $formBuilder );
 		$form = $formBuilder->getForm ();
-		$request = $this->get ( 'request' );
-		// If we are in POST method, form is submit
-		if ($request->getMethod () == 'POST') {
-
-			$form->bind ( $request );
-			if ($form->isValid ()) {
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
 				// Storing pag
 				if (($error = $theme->upload()) !== null)
 					return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig', array (
@@ -131,7 +129,6 @@ class ManageThemesController extends Controller {
 						'msg' => "Your upload succeeded.") );
 				
 
-			}
 		}
 		return $this->render ( 'KeosuCoreBundle:Theme:edit.html.twig', array (
 				'form' => $form->createView (),
@@ -144,7 +141,7 @@ class ManageThemesController extends Controller {
 	 * Edit App form
 	 */
 	private function buildThemeForm($formBuilder) {
-		$formBuilder->add ( 'file', 'file', array (
+		$formBuilder->add ( 'file', FileType::class, array (
 				'required' => true 
 		) );
 	}

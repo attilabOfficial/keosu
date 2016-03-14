@@ -24,7 +24,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 
 class ServiceController extends Controller {
 
@@ -40,11 +39,10 @@ class ServiceController extends Controller {
 
 		$loggedRemembered = false;
 
-		$securityContext = $this->container->get('security.context');
-		if($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
 			$loggedRemembered = true;
 		}
-		if($this->get('security.context')->isGranted('ROLE_ADMIN')){
+		if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
 			$loggedRemembered = false;
 		}
 
@@ -58,10 +56,9 @@ class ServiceController extends Controller {
 	
 		$ret['connect'] = false;
 		
-		$securityContext = $this->container->get('security.context');
-		if($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
 
-			$securityContext->setToken(NULL);
+			$this->get('security.authorization_checker')->setToken(NULL);
 
 			$em = $this->getDoctrine();
 			$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
@@ -101,8 +98,13 @@ class ServiceController extends Controller {
 				if(strlen($request->request->get('password'))> 5) {
 
 					// check email
-					$emailConstraint = new EmailConstraint();
-					$errors = $this->get('validator')->validateValue($request->request->get('email'),$emailConstraint);
+					$validator = $this->container->get('validator');
+
+					$constraints = array(
+						new \Symfony\Component\Validator\Constraints\Email(),
+						new \Symfony\Component\Validator\Constraints\NotBlank()
+					);
+					$errors = $validator->validate($request->request->get('email'), $constraints);
 
 					if($errors == "") {
 					

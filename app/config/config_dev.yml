@@ -19,6 +19,3 @@ monolog:
             type:  firephp
             level: info
 
-
-#swiftmailer:
-#    delivery_address: me@example.com

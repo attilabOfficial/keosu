@@ -8,6 +8,7 @@ use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
 use Keosu\Gadget\MapGadgetBundle\KeosuGadgetMapGadgetBundle;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Listener responsible to gadget action
@@ -47,7 +48,7 @@ class GadgetListener implements EventSubscriberInterface
 		//Prepare the list of poi for the form
 		$poiList=array();
 		foreach($poiListTmp as $poi){
-			$poiList[$poi['id']]=$poi['name'];
+			$poiList[$poi['name']]=$poi['id'];
 		}
 		
 		//Prepare the list of zoom choices
@@ -57,11 +58,11 @@ class GadgetListener implements EventSubscriberInterface
 		
 		//Overide form
 		$builder = $event->getFormBuilder();
-		$builder->add('poiId','choice',array(
+		$builder->add('poiId',ChoiceType::class ,array(
 						'label' 	=> 'Point of interest',
 						'choices'	=> $poiList
 					))
-					->add('zoom','choice',array(
+					->add('zoom',ChoiceType::class, array(
 							'choices'	=> $zoomList,
 							'label'		=> 'Zoom level when opening'
 					));

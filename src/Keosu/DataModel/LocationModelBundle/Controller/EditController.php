@@ -22,6 +22,11 @@ namespace Keosu\DataModel\LocationModelBundle\Controller;
 use Keosu\DataModel\LocationModelBundle\Entity\Location;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Keosu\DataModel\LocationModelBundle\Form\LocationTagsType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
  * Controller to edit an Location element
@@ -33,20 +38,20 @@ class EditController extends Controller {
 	/**
 	 * add Location object action
 	 */
-	public function addAction() {
+	public function addAction(Request $request) {
 		$poi = new Location();
 		$poi->setLat(48.117266);
 		$poi->setLng(-1.6777925999999752);
-		return $this->editLocation($poi);
+		return $this->editLocation($poi, $request);
 	}
 
 	/**
 	 * Edit Location object action
 	 */
-	public function editAction($id) {
+	public function editAction($id, Request $request) {
 		$em = $this->getDoctrine()->getManager();
 		$poi = $em->getRepository('KeosuDataModelLocationModelBundle:Location')->find($id);
-		return $this->editLocation($poi);
+		return $this->editLocation($poi, $request);
 	}
 	/**
 	 * delete Location object action
@@ -66,7 +71,7 @@ class EditController extends Controller {
 	 * Common function to edit/add a poi
 	 * Manage form and store object in database
 	 */
-	private function editLocation($poi) {
+	private function editLocation($poi, $request) {
 		
 		//Get tags list from database
 		$em = $this->get('doctrine')->getManager();
@@ -87,36 +92,32 @@ class EditController extends Controller {
 				foreach ($poi->getTags() as $tag)
 					$originalTags[] = $tag;
 		}
-		$request = $this->get('request');
 
 		//If we are in POST method, form is submit
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
-
-			if ($form->isValid()) {
-				//Identify tags to delete
-				if ($poi->getTags() != [] ){
-					foreach ($poi->getTags() as $tag) {
-						foreach ($originalTags as $key => $toDel) {
-							if ($toDel->getId() === $tag->getId()) {
-								unset($originalTags[$key]);
-							}
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			//Identify tags to delete
+			if ($poi->getTags() != [] ){
+				foreach ($poi->getTags() as $tag) {
+					foreach ($originalTags as $key => $toDel) {
+						if ($toDel->getId() === $tag->getId()) {
+							unset($originalTags[$key]);
 						}
 					}
-					//Deleting tag from article and database
-					foreach ($originalTags as $tag) {
-						$tag->getLocation()->removeTag($tag);
-						$em->remove($tag);
-					}
 				}
-
-				$poi->setDescription(html_entity_decode($poi->getDescription()));
-				$em = $this->get('doctrine')->getManager();
-				$em->persist($poi);
-				$em->flush();
-				return $this->redirect(
-							$this->generateUrl('keosu_location_viewlist'));
+				//Deleting tag from article and database
+				foreach ($originalTags as $tag) {
+					$tag->getLocation()->removeTag($tag);
+					$em->remove($tag);
+				}
 			}
+
+			$poi->setDescription(html_entity_decode($poi->getDescription()));
+			$em = $this->get('doctrine')->getManager();
+			$em->persist($poi);
+			$em->flush();
+			return $this->redirect(
+						$this->generateUrl('keosu_location_viewlist'));
 		}
 		return $this
 				->render('KeosuDataModelLocationModelBundle:Edit:edit.html.twig',
@@ -130,16 +131,16 @@ class EditController extends Controller {
 	 */
 	private function getLocationForm($poi) {
 		return $this->createFormBuilder($poi)
-				->add('name', 'text')
-				->add('description', 'textarea', array(
+				->add('name', TextType::class)
+				->add('description', TextareaType::class, array(
 					'attr' => array('class' => 'tinymce')))
-				->add('lat', 'text')
-				->add('lng', 'text')
-				->add('enableComments','checkbox',array(
+				->add('lat', TextType::class)
+				->add('lng', TextType::class)
+				->add('enableComments',CheckboxType::class,array(
 						'required' => false,
 				))
-				->add('tags', 'collection', array(
-						'type'         => new LocationTagsType(),
+				->add('tags', CollectionType::class, array(
+						'entry_type'         => LocationTagsType::class,
 						'allow_add'    => true,
 						'allow_delete' => true,
 						'by_reference' => false,

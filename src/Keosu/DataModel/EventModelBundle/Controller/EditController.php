@@ -21,6 +21,14 @@ namespace Keosu\DataModel\EventModelBundle\Controller;
 use Keosu\DataModel\EventModelBundle\Entity\Event;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * Controller to edit an Event element
@@ -32,18 +40,18 @@ class EditController extends Controller {
 	/**
 	 * add Event object action
 	 */
-	public function addAction() {
+	public function addAction(Request $request) {
 		$article = new Event();
-		return $this->editEvent($article);
+		return $this->editEvent($article, $request);
 	}
 
 	/**
 	 * Edit Event object action
 	 */
-	public function editAction($id) {
+	public function editAction($id, Request $request) {
 		$em = $this->get('doctrine')->getManager();
 		$event = $em->getRepository('KeosuDataModelEventModelBundle:Event')->find($id);
-		return $this->editEvent($event);
+		return $this->editEvent($event, $request);
 	}
 
 	/**
@@ -64,21 +72,16 @@ class EditController extends Controller {
 	 * Common function to edit/add a event
 	 * Manage form and store object in database
 	 */
-	private function editEvent($event) {
+	private function editEvent($event, $request) {
 		$form = $this->getEventForm($event);
 
-		$request = $this->get('request');
-
 		//If we are in POST method, form is submit
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
-
-			if ($form->isValid()) {
-				$em = $this->get('doctrine')->getManager();
-				$em->persist($event);
-				$em->flush();
-				return $this->redirect($this->generateUrl('keosu_event_viewlist'));
-			}
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			$em = $this->get('doctrine')->getManager();
+			$em->persist($event);
+			$em->flush();
+			return $this->redirect($this->generateUrl('keosu_event_viewlist'));
 		}
 		return $this->render('KeosuDataModelEventModelBundle:Edit:edit.html.twig',array(
 									'form' => $form->createView(),
@@ -92,23 +95,23 @@ class EditController extends Controller {
 	 */
 	private function getEventForm($event) {
 		return $this->createFormBuilder($event)
-				->add('name', 'text')
-				->add('description', 'textarea', array(
+				->add('name', TextType::class)
+				->add('description', TextareaType::class, array(
 						'attr' => array('class' => 'tinymce')
 				))
-				->add('lieu', 'text')
-				->add('latitude','hidden')
-				->add('longitude','hidden')
-				->add('date', 'date', array(
+				->add('lieu', TextType::class)
+				->add('latitude',HiddenType::class)
+				->add('longitude',HiddenType::class)
+				->add('date', DateType::class, array(
 						'input'  => 'datetime',
 						'widget' => 'single_text',
 						'format' => 'dd-MM-yy',
 						'attr'   => array('class' => 'date'),
 				))
-				->add('hour', 'time', array(
+				->add('hour', TimeType::class, array(
 						'label' => 'Hour (HH:MM)'
 				))
-				->add('enableComments','checkbox', array(
+				->add('enableComments',CheckboxType::class, array(
 						'required' => false,
 				))
 				->getForm();

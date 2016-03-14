@@ -8,6 +8,7 @@ use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
 use Keosu\Gadget\PictureGadgetBundle\KeosuGadgetPictureGadgetBundle;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Listener responsible to gadget action
@@ -46,13 +47,13 @@ class GadgetListener implements EventSubscriberInterface
 		//Prepare the list of picture for the form
 		$pictureList=array();
 		foreach($pictureListTmp as $picture){
-			$pictureList[$picture['id']]=$picture['name'];
+			$pictureList[$picture['name']]=$picture['id'];
 		}
 		
 		
 		//Overide form
 		$builder = $event->getFormBuilder();
-		$builder->add('pictureId','choice',array(
+		$builder->add('pictureId',ChoiceType::class,array(
 					'label' 	=> 'Picture',
 					'choices'	=> $pictureList,
 		));

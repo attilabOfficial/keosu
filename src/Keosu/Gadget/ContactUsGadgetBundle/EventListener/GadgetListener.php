@@ -8,6 +8,9 @@ use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
 use Keosu\Gadget\ContactUsGadgetBundle\KeosuGadgetContactUsGadgetBundle;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * Listener responsible to gadget action
@@ -46,21 +49,19 @@ class GadgetListener implements EventSubscriberInterface
         //Prepare the list of picture for the form
         $pictureList=array();
         foreach($pictureListTmp as $picture){
-            $pictureList[$picture['id']]=$picture['name'];
+            $pictureList[$picture['name']]=$picture['id'];
         }
-
-
         //Overide form
         $builder = $event->getFormBuilder();
-        $builder->add('name', 'text')
-                ->add('presentation', 'textarea')
-                ->add('pictureId', 'choice', array(
+        $builder->add('name')
+                ->add('presentation', TextareaType::class)
+                ->add('pictureId', ChoiceType::class, array(
                     'label'    => 'Picture',
                     'choices'  => $pictureList,
                     'required' => false))
-                ->add('address', 'textarea', array('required' => false))
-                ->add('phone', 'text', array('required' => false))
-                ->add('email', 'email', array('required' => false));
+                ->add('address', TextareaType::class, array('required' => false))
+                ->add('phone', TextareaType::class, array('required' => false))
+                ->add('email', EmailType::class, array('required' => false));
 	}
 }
 

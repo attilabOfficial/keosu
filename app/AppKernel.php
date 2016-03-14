@@ -7,7 +7,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = array(
+        $bundles =  [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -50,16 +50,26 @@ class AppKernel extends Kernel
             new Keosu\Gadget\ContactUsGadgetBundle\KeosuGadgetContactUsGadgetBundle(),
             new Keosu\DataModel\SearchModelBundle\KeosuDataModelSearchModelBundle(),
             new Keosu\DataModel\MenuModelBundle\KeosuDataModelMenuModelBundle(),
-        );
+
+        ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+			//$bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
         }
 
         return $bundles;
     }
+	public function getCacheDir()
+	{
+		return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+	}
+	public function getLogDir()
+	{
+		return dirname(__DIR__).'/var/logs';
+	}
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {

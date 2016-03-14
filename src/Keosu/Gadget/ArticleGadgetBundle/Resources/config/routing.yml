@@ -1,16 +1,16 @@
 keosu_gadget_article_gadget_add:
-    pattern:  /views/page/gadget/articlegadget/add/{page}/{zone}
+    path:  /views/page/gadget/articlegadget/add/{page}/{zone}
     defaults: { _controller: KeosuGadgetArticleGadgetBundle:Edit:add }
     
 keosu_gadget_article_gadget_edit:
-    pattern:  /views/page/gadget/articlegadget/edit/{page}/{zone}
+    path:  /views/page/gadget/articlegadget/edit/{page}/{zone}
     defaults: { _controller: KeosuGadgetArticleGadgetBundle:Edit:edit }
     
 keosu_gadget_article_gadget_viewtable:
-    pattern:  /views/page/gadget/articlegadget/viewtable
+    path:  /views/page/gadget/articlegadget/viewtable
     defaults: { _controller: KeosuGadgetArticleGadgetBundle:Edit:viewArticleTable }
     
 keosu_gadget_article_service:
-    pattern:  /service/gadget/article/{gadgetId}/{format}
+    path:  /service/gadget/article/{gadgetId}/{format}
     defaults: { _controller: KeosuGadgetArticleGadgetBundle:Service:viewOne }
 

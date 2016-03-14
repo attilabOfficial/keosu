@@ -6,35 +6,35 @@ services:
         class: Keosu\Gadget\AuthenticationGadgetBundle\Handler\AuthenticationHandler
         public: false
         arguments:
-            - @router
-            - @session
+            - '@router'
+            - '@session'
 
     keosu.password_resetting:
         class: Keosu\Gadget\AuthenticationGadgetBundle\EventListener\PasswordResettingListener
-        arguments: [@router]
+        arguments: ['@router']
         tags:
             - { name: kernel.event_subscriber }
 
     keosu.gadget.authentication.applistener:
         class: Keosu\Gadget\AuthenticationGadgetBundle\EventListener\AppListener
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_subscriber }
 
     keosu.gadget.authentication.pageeditlistener:
         class: Keosu\Gadget\AuthenticationGadgetBundle\EventListener\PageEditListener
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_subscriber }
 
     keosu.gadget.authentication.gadgetlistener:
         class: Keosu\Gadget\AuthenticationGadgetBundle\EventListener\GadgetListener
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_subscriber }
     
     keosu_gadget.authentication.gadget:
         class: Keosu\Gadget\AuthenticationGadgetBundle\EventListener\GadgetListener
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_subscriber }

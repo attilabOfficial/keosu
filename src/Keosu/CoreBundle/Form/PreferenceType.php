@@ -29,8 +29,8 @@ class PreferenceType extends AbstractType {
 
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 
-		$builder->add('key','text')
-				->add('value','text');
+		$builder->add('key')
+				->add('value');
 	}
 
 	public function getName() {

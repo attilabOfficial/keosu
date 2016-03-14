@@ -8,6 +8,7 @@ use Keosu\CoreBundle\Event\GadgetFormBuilderEvent;
 use Keosu\Gadget\LastArticleGadgetBundle\KeosuGadgetLastArticleGadgetBundle;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Listener responsible to gadget action
@@ -52,10 +53,10 @@ class GadgetListener implements EventSubscriberInterface
 		
 		//Overide form
 		$builder = $event->getFormBuilder();
-		$builder->add('articlesPerPage','choice',array(
+		$builder->add('articlesPerPage',ChoiceType::class,array(
 					'choices'	=> array("3" => 3 ,"5" => 5, "10" => 10, "50" => 50, "100" => 100)
 				))
-				->add('tag','choice',array(
+				->add('tag',ChoiceType::class ,array(
 					'choices'	=> $tagList,
 					'required'	=> false
 		));

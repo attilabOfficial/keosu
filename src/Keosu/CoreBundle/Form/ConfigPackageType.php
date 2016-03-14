@@ -24,6 +24,7 @@ use Keosu\CoreBundle\Form\ConfigPackageValueType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * This class allow to personalize the configuration of a package in a app
@@ -34,23 +35,37 @@ class ConfigPackageType extends AbstractType {
 
 	private $request;
 
-	public function __construct($container,Request $request) {
-		$this->container = $container;
-		$this->request = $request;
-	}
+	private $typeMapping = array();
+
 
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 
+		$this->request = $options['request'];
+		$this->container = $options['container'];
 		$packageManager = $this->container->get('keosu_core.packagemanager');
 		$packages = $packageManager->getPackageList();
 
 		foreach($packages as $p) {
 			$config = $packageManager->getConfigPackage($p->getPath());
 			if(isset($config['appParam']) && count($config['appParam']))
-				$builder->add($p->getName(),new ConfigPackageValueType($this->request,$config['appParam'],$this->container,$p),array(
+				$builder->add($p->getName(), ConfigPackageValueType::class, array(
 								'label' => false,
+								'request' => $this->request,
+								'config' => $config['appParam'],
+								'container' => $this->container,
+					            'package' => $p
 						));
 		}
+	}
+
+	public function configureOptions(OptionsResolver $resolver){
+		$resolver->setDefined(array('request'));
+		$resolver->setDefined(array('container'));
+		$resolver
+			->setDefaults(
+				array(
+					'request' => null,
+					'container' => null));
 	}
 
 	public function getName() {

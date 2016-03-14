@@ -34,6 +34,10 @@ use Keosu\CoreBundle\Util\TemplateUtil;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Controller that allow to add, edit and delete a gadget
@@ -97,7 +101,7 @@ class ManageGadgetsController extends Controller {
 	 * @param $zoneName where we want to add the gadget
 	 * @param $gadgetName name of the gadget
 	 */
-	public function addAction($pageId, $zoneName, $gadgetName) {
+	public function addAction($pageId, $zoneName, $gadgetName, Request $request) {
 
 		$em = $this->get('doctrine')->getManager();
 		$dispatch = $this->get('event_dispatcher');
@@ -138,7 +142,7 @@ class ManageGadgetsController extends Controller {
 		if($event->getResponse() !== null)
 			return $event->getResponse();
 		
-		return $this->formGadget($gadget);
+		return $this->formGadget($gadget, $request);
 	}
 
 	/**
@@ -146,7 +150,7 @@ class ManageGadgetsController extends Controller {
 	 * @param $pageId id of the page
 	 * @param $zoneName name of the zone
 	 */
-	public function editAction($pageId, $zoneName) {
+	public function editAction($pageId, $zoneName, Request $request) {
 	
 		$appId = $this->get('keosu_core.curapp')->getCurApp();
 		$em = $this->get('doctrine')->getManager();
@@ -168,7 +172,7 @@ class ManageGadgetsController extends Controller {
 		if($event->getResponse() !== null)
 			return $event->getResponse();
 		
-		return $this->formGadget($gadget);
+		return $this->formGadget($gadget, $request);
 	}
 
 	/**
@@ -215,57 +219,53 @@ class ManageGadgetsController extends Controller {
 	/**
 	 * Create the form to edit/add the gadget
 	 */
-	private function formGadget($gadget) {
+	private function formGadget($gadget, Request $request) {
 		
 		$em = $this->get('doctrine')->getManager();
-		$request = $this->get('request');
 		$dispatcher = $this->get('event_dispatcher');
 
 		$formBuilder = $this->createFormBuilder($gadget);
 
-		$configType = new ConfigGadgetType($dispatcher,$request,$this->container->get('keosu_core.packagemanager'),$gadget);
-
 		$listTemplate = $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName());
 		if(count($listTemplate) > 1){
-			$formBuilder->add('template', 'choice',array(
+			$formBuilder->add('template', ChoiceType::class ,array(
 					'choices'  => $listTemplate,
 					'required' => true,
 					'expanded' => true));
 		}else{
-			$formBuilder->add('template', 'text',array(
+			$formBuilder->add('template', TextType::class, array(
 					'label' => false,
 					'data' => PackageManager::DEFAULT_TEMPLATE_GADGET_NAME,
 					'attr'=>array('style'=>'display:none;')));
 		}
 	
-		$formBuilder->add('shared', 'checkbox', array(
+		$formBuilder->add('shared', CheckboxType::class, array(
 				'label'    => 'Shared with all pages',
 				'required' => false))
-				->add('config',$configType);
+		->add('config',ConfigGadgetType::class, array('gadget'=>$gadget, 'request'=>$request, 'dispatcher'=> $this->get('event_dispatcher'), 'package_manager'=>$this->container->get('keosu_core.packagemanager')));
 					
 		$form = $formBuilder->getForm();
 
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
-			if ($form->isValid()) {
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
 
-				$event = new GadgetSaveConfigEvent($form,$request,$gadget);
-				$dispatcher->dispatch(KeosuEvents::GADGET_CONF_SAV.$gadget->getName(),$event);
-				
-				if($event->getResponse() !== null) {
-					return $event->getResponse();
-				}
+			$event = new GadgetSaveConfigEvent($form,$request,$gadget);
+			$dispatcher->dispatch(KeosuEvents::GADGET_CONF_SAV.$gadget->getName(),$event);
 
-				$em->persist($gadget);
-				$em->flush();
-
-				$this->get('keosu_core.exporter')->exportApp();
-
-				return $this->redirect($this->generateUrl('keosu_core_views_page',array(
-													'id' => $gadget->getPage()->getId()
-													)));
+			if($event->getResponse() !== null) {
+				return $event->getResponse();
 			}
+
+			$em->persist($gadget);
+			$em->flush();
+
+			$this->get('keosu_core.exporter')->exportApp();
+
+			return $this->redirect($this->generateUrl('keosu_core_views_page',array(
+												'id' => $gadget->getPage()->getId()
+												)));
 		}
+
 		
 		$event = new FormEvent($form,$request);
 		$dispatcher->dispatch(KeosuEvents::GADGET_CONF_VIEW.$gadget->getName(),$event);

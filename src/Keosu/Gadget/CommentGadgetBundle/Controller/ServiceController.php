@@ -16,20 +16,19 @@ class ServiceController extends Controller
 		$ret = array();
 		$ret["connect"] = false;
 		$em = $this->getDoctrine()->getManager();
-		$securityContext = $this->container->get('security.context');
 
-		if($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
 			$ret["connect"] = true;
 		}
 		$dataModel = $em->getRepository(KeosuExtension::$dataModelList[$dataModelObjectName])->find($idDataModel);
 
 		if($request->getMethod() === 'POST' && $request->request->get('message') != "undefined"
-				&& $securityContext->isGranted('IS_AUTHENTICATED_FULLY') && $dataModel != null && $dataModel->getEnableComments()) {
+				&& $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') && $dataModel != null && $dataModel->getEnableComments()) {
 			$comment = new Comment();
 			$comment->setMessage($request->request->get('message'));
 			$comment->setDataModelObject($dataModelObjectName);
 			$comment->setIdDataModel($idDataModel);
-			$comment->setUser($securityContext->getToken()->getUser());
+			$comment->setUser($this->get('security.token_storage')->getToken()->getUser());
 			$em->persist($comment);
 			$em->flush();
 		}

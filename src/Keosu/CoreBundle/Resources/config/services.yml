@@ -6,24 +6,25 @@ parameters:
 services:
     keosu_core.exporter:
         class: %keosu_core.exporter.class%
-        arguments: [@doctrine,@service_container]
+        arguments: ['@doctrine','@service_container']
     keosu_core.package_manager:
         class: %keosu_core.packagemanager.class%
-        arguments: [@service_container]
+        arguments: ['@service_container']
     keosu_core.curapp:
         class: %keosu_core.curapp.class%
-        arguments: [@doctrine,@session]
+        arguments: ['@doctrine','@session']
     keosu_core.image_type_extension:
         class: Keosu\CoreBundle\Form\Extension\ImageTypeExtension
         tags:
-            - { name: form.type_extension, alias: file }
+            - { name: form.type_extension, alias: file, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType  }
     keosu_core.twig.includepanelextension:
         class: Keosu\CoreBundle\Twig\TwigIncludePanelExtension
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: twig.extension }
     keosu_core.twig.appmenuextension:
         class: Keosu\CoreBundle\Twig\TwigMenuExtension
-        arguments: [@service_container]
+        arguments: ['@service_container']
         tags:
             - { name: twig.extension }
+

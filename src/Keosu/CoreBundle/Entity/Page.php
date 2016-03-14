@@ -149,4 +149,9 @@ class Page {
 		$fileName = str_replace(" ", "", $fileName);
 		return $fileName;
 	}
+
+	public function __toString()
+	{
+		return $this->getName();
+	}
 }

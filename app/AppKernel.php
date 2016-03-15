@@ -49,15 +49,18 @@ class AppKernel extends Kernel
             new Fkr\SimplePieBundle\FkrSimplePieBundle(),
             new Keosu\Gadget\ContactUsGadgetBundle\KeosuGadgetContactUsGadgetBundle(),
             new Keosu\DataModel\SearchModelBundle\KeosuDataModelSearchModelBundle(),
-            new Keosu\DataModel\MenuModelBundle\KeosuDataModelMenuModelBundle(),
+            new Keosu\DataModel\MenuModelBundle\KeosuDataModelMenuModelBundle()
 
-        ];
+
+
+
+		];
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-			//$bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
+			$bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
         }
 
         return $bundles;

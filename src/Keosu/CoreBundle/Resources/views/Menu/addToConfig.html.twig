@@ -1,5 +1,9 @@
 {% for link in links %}
-<div>
-	<a class="sidebarlink" href="{{ link.href }}">{{ link.name }}</a>
-</div>
+	<div class="sidebarlink">
+		<a class="sous-menu" href="{{ link.href }}">
+			<div class="lien-menu">
+				{{ link.name }}
+			</div>
+		</a>
+	</div>
 {% endfor %}

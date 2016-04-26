@@ -1,20 +1,20 @@
-	{# 	
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
 
 {% extends 'KeosuCoreBundle::page.html.twig' %}
 
@@ -22,19 +22,20 @@
 
 {% block body %}
 
+	<h2><span class="glyphicon glyphicon-send icon-menu"></span> Publish</h2>
 	<div class="col-md-3">
 		<div class="wellcustom">
-			<h3>Export App</h3>
+			<h3><span class="glyphicon glyphicon-export icon-menu"></span>Export App</h3>
 			<p>
 				Export App before download the last version
 			</p>
 			<a href="{{ path('keosu_core_exporter_export') }}"><button id="export" type="button" data-loading-text="Loading..." class="btn btn-default">Export</button></a>
 		</div>
 	</div>
-	
+
 	<div class="col-md-3">
 		<div class="wellcustom">
-			<h3>Download app for phonegapbuild</h3>
+			<h3><img class="icon-cordova icon-menu" src="{{url_base}}/img/phonegap.png"/>Download app for phonegapbuild</h3>
 			<p>
 				You can import this zip file in https://build.phonegap.com/, test app on your phone and publish it to stores
 			</p>
@@ -43,7 +44,7 @@
 	</div>
 	<div class="col-md-3">
 		<div class="wellcustom">
-			<h3>Download app for Cordova</h3>
+			<h3><img class="icon-cordova icon-menu" src="{{url_base}}/img/cordova.png"/>Download app for Cordova</h3>
 			<p>
 				You can use import the zip file in www folfer of an existing cordova project and test your app on your computer.
 				You need to user this option if you want to use specific plugins
@@ -54,7 +55,7 @@
 
 	<div class="col-md-3">
 		<div class="wellcustom">
-			<h3>Download config</h3>
+			<h3><span class="glyphicon glyphicon-save icon-menu"></span>Download config</h3>
 			<p>
 				Configuration files for a local cordova project
 			</p>
@@ -62,11 +63,21 @@
 		</div>
 	</div>
 
-<script>				
-	$('#export').click(function () {
-		var btn = $(this);
-		btn.html("Loading...");
-		btn.addClass("btn-primary").removeClass("btn-default");
-	});
-</script>
+	<div class="col-md-3">
+		<div class="wellcustom">
+			<h3><span class="glyphicon glyphicon-usd icon-menu"></span>Submit and monetize a development</h3>
+			<p>
+				You can submit and sell your developments themes, plugins and widgets. Monetize your creations via the Keosu's Store
+			</p>
+			<a target="_blank" href="http://keosu.com/soumettre-un-developpement/?utm_source=keosu&utm_medium=cms&utm_term=soumettre&utm_campaign=soumettre%20dev"><button type="button" class="btn btn-default">Submit</button></a>
+		</div>
+	</div>
+
+	<script>
+		$('#export').click(function () {
+			var btn = $(this);
+			btn.html("Loading...");
+			btn.addClass("btn-primary").removeClass("btn-default");
+		});
+	</script>
 {% endblock %}

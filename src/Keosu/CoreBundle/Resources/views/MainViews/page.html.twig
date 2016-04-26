@@ -1,20 +1,20 @@
-	{# 	
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
 
 {% extends 'KeosuCoreBundle::page.html.twig' %}
 
@@ -32,38 +32,38 @@
 		<div class="panel">
 			{% block content %}
 				<div class="dashboard">
-				<div class="row">
-					<div class="col-md-12">
-						<h2>The page part</h2>
-						<p>
-							The page part is about your application page, articles, readers data, etc...
-						</p>
-						<p>
-							Let your creation guide your mouse
-						</p>
-					</div>
-				</div>	
-				<div class="row">
-					<div class="col-md-3">
-						<div class="wellcustom">
-							<h3>page</h3>
+					<div class="row">
+						<div class="col-md-12">
+							<h2><span class="glyphicon glyphicon-book icon-menu"></span> Pages</h2>
 							<p>
-								A page is a page page, no matter about content for instance, it's only a way to display something (but have an idea of what you want to display :P)
+								The page part is about your application page, articles, readers data, etc...
 							</p>
-							<a href="{{ path('keosu_core_views_page_manage') }}" ><button type="button" class="btn btn-default">Manage pages </button></a>
-						</div>				
+							<p>
+								Let your creation guide your mouse
+							</p>
+						</div>
 					</div>
-					{% for page in pages %}
+					<div class="row">
 						<div class="col-md-3">
 							<div class="wellcustom">
-								<h3>{{ page.name }}</h3>
-								
-								<a href="{{ path('keosu_core_views_page',{'id':page.id}) }}"><button type="button" class="btn btn-default">Edit {{ page.name }}</button></a>
+								<h3><span class="glyphicon glyphicon-file icon-menu"></span>Manage pages</h3>
+								<p>
+									A page is a page page, no matter about content for instance, it's only a way to display something (but have an idea of what you want to display :P)
+								</p>
+								<a href="{{ path('keosu_core_views_page_manage') }}" ><button type="button" class="btn btn-default">Manage pages </button></a>
 							</div>
 						</div>
-					{% endfor %}
+						{% for page in pages %}
+							<div class="col-md-3">
+								<div class="wellcustom">
+									<h3><span class="glyphicon glyphicon-edit icon-menu"></span>{{ page.name }}</h3>
+
+									<a href="{{ path('keosu_core_views_page',{'id':page.id}) }}"><button type="button" class="btn btn-default">Edit {{ page.name }}</button></a>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
 				</div>
-			</div>
 			{% endblock %}
 		</div>
 	</div>

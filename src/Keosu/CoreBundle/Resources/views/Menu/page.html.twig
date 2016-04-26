@@ -1,5 +1,9 @@
 {% for page in pages %}
-	<div>
-		<a class="sidebarlink" href="{{ path('keosu_core_views_page',{'id':page.id}) }}">Edit {{ page.name }}</a>
+	<div class="sidebarlink">
+		<a class="sous-menu" href="{{ path('keosu_core_views_page',{'id':page.id}) }}">
+			<div class="lien-menu">
+				<span class="glyphicon glyphicon-edit icon-menu"></span><span class="texte-lien-menu"> {{ page.name }}</span>
+			</div>
+		</a>
 	</div>
 {% endfor %}

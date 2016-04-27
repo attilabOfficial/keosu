@@ -1,4 +1,4 @@
-	{# 	
+	{#
 	Keosu is an open source CMS for mobile app
 	Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
@@ -22,22 +22,22 @@
         <div id="bouton-menu-responsive" class="menu-leftcol" onclick="AfficherMenu(this);">
             <img class="icon-menu-responsive" src="{{url_base}}/img/menu.png"/>
         </div>
-        
-        
+
+
 		{% block maincontent %}
-		<div class="row" style="background-color:#f1f1f1 !important;">
-			<div class="col-md-2 leftcol">
+		<div class="row">
+			<div id="left-menu" class="col-md-2 leftcol">
 				<div class="leftcol">
-					<section id="leftmenu" class="leftcol">
+					<section  class="leftcol">
 						<div class="sidebar leftcol">
 
-                            <div class="sidemenu leftcol">	
+                            <div class="sidemenu leftcol">
                                 {% block leftmenu %}
                                     <div class="logowrapper">
                                         <img class="logotop" src="{{url_base}}/img/logo_black.png"/>
                                     </div>
                                     <br/>
-                                
+
                                     <div class="dropdown" id="applist">
                                         {{ appListMenu() }}
                                     </div>
@@ -48,7 +48,7 @@
                                     {% endblock %}
                                             <div class="sidebartitle">
                                                 <a href="{{ path('keosu_core_homepage') }}">
-                                                    <div class="lien-menu lien-menu-title">
+                                                    <div class="lien-menu">
                                                         <span class="glyphicon glyphicon-th icon-menu"></span> <span class="texte-lien-menu">Content</span>
                                                     </div>
                                                 </a>
@@ -70,7 +70,7 @@
                                     <!-- Page menu -->
                                     <div class="sidebartitle">
                                          <a href="{{ path('keosu_core_page') }}">
-                                             <div class="lien-menu lien-menu-title">
+                                             <div class="lien-menu">
                                                 <span class="glyphicon glyphicon-book icon-menu"></span> <span class="texte-lien-menu">Pages</span>
                                              </div>
                                         </a>
@@ -96,7 +96,7 @@
                                     <div class="separator">&nbsp;</div>
 
                                     <div class="sidebartitle">
-                                        <a href="{{ path('keosu_core_publish') }}"> 
+                                        <a href="{{ path('keosu_core_publish') }}">
                                             <div class="lien-menu">
                                                 <span class="glyphicon glyphicon-send icon-menu"></span> <span class="texte-lien-menu">Publish</span>
                                             </div>
@@ -130,7 +130,7 @@
                                         </div>
                                         </div>
                                         {{ addItemToMenuConfiguration() }}
-                                
+
                                     <div class="sidebartitle menuTitle">
                                         <a target="_blank" href="http://store.keosu.com/index.php?utm_source=keosu&utm_medium=cms&utm_term=store&utm_campaign=keosu%20cms%20to%20store">
                                          <div class="lien-menu">
@@ -138,7 +138,7 @@
                                          </div>
                                         </a>
                                     </div>
-                                
+
                                     <div class="sidebartitle menuTitle">
                                         <a target="_blank" href="http://keosu.com/get-help/?utm_source=keosu&utm_medium=cms&utm_term=aide&utm_campaign=aide">
                                          <div class="lien-menu">
@@ -146,15 +146,15 @@
                                          </div>
                                         </a>
                                     </div>
-                                
+
                                     </div>
-                                    <div class="separator">&nbsp;</div>	
+                                    <div class="separator">&nbsp;</div>
                                 {% endblock %}
                             </div>
 					</section>
 				</div>
             </div>
-			
+
 			<div class="col-md-10">
 				<div class="container">
 					<div class="row-fluid">

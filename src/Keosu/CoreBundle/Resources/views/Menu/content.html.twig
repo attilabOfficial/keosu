@@ -1,37 +1,10 @@
 {% for content in contents %}
-	<div class="sidebarlink">
-		<a class="sous-menu" href="{{ path('keosu_'~content~'_viewlist') }}">
-			{% if content == 'article'%}
-				<div class="lien-menu">
-					<span class="glyphicon glyphicon-pushpin icon-menu"></span><span class="texte-lien-menu">Article</span>
-				</div>
-			{%endif%}
-			{% if content == 'location'%}
-				<div class="lien-menu">
-					<span class="glyphicon glyphicon-map-marker icon-menu"></span><span class="texte-lien-menu">Location</span>
-				</div>
-			{%endif%}
-			{% if content == 'picture'%}
-				<div class="lien-menu">
-					<span class="glyphicon glyphicon-picture icon-menu"></span><span class="texte-lien-menu">Picture</span>
-				</div>
-			{%endif%}
-			{% if content == 'event'%}
-				<div class="lien-menu">
-					<span class="glyphicon glyphicon-calendar icon-menu"></span><span class="texte-lien-menu">Event</span>
-				</div>
-			{%endif%}
-			{% if content == 'menu'%}
-				<div class="lien-menu">
-					<span class="glyphicon glyphicon-list icon-menu"></span><span class="texte-lien-menu">Menu</span>
-				</div>
-			{%endif%}
-			{% if content == 'search'%}
-				<div class="lien-menu">
-					<span class="glyphicon glyphicon-search icon-menu"></span><span class="texte-lien-menu">Search</span>
-				</div>
-
-			{%endif%}
-		</a>
-	</div>
+    <div class="sidebarlink">
+        <a class="sous-menu" href="{{ path('keosu_'~content~'_viewlist') }}">
+            <div class="lien-menu">
+                <span class='glyphicon glyphicon-{{ icon[content] }} icon-menu'></span><span
+                        class="texte-lien-menu">{{ content }}</span>
+            </div>
+        </a>
+    </div>
 {% endfor %}

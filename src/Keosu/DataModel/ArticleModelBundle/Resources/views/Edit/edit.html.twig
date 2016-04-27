@@ -1,4 +1,4 @@
-	{# 	
+	{#
 	Keosu is an open source CMS for mobile app
 	Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
@@ -35,10 +35,10 @@ Edit article
 	    ],
 	    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
 	});
-	
+
 	$(document).ready(function() {
 		$('.date').datepicker({ dateFormat: 'dd-mm-y' });
-		
+
 		var $container = $('.article-images');
 		 // Add a new attachment
 		 function add_image() {
@@ -57,13 +57,13 @@ Edit article
 		function openInput($el){
 			$el.parent().parent().find('input[type="file"]')[ 0 ].click();
 		}
-		 
+
 		$(document).on("click",'.uploader',function() {
 			 	openInput($(this));
 			    return false;
 		 });
 		$(document).on("click",'.remove-button',function() {
-		      $(this).parent().remove(); 
+		      $(this).parent().remove();
 		      $(this).remove();
 		      return false;
 		 });
@@ -82,15 +82,15 @@ Edit article
 			add_image();
 			return false;
 		});
-		
+
 		///// TAGS /////
-		
+
 		var liste = new Array();
 		{% for tag in tagsList %}
 			liste.push("{{tag}}");
 		{% endfor %}
 		var $tagContainer = $('.tags');
-		
+
 		function add_tag(){
 			index = $tagContainer.children().length;
 			prototype='<div class="image-collection-entry">';
@@ -100,7 +100,7 @@ Edit article
 			widget=$tagContainer.attr('data-prototype').replace(/__name__/g, index);
 			prototype+=widget;
 			$tagContainer.append($(prototype));
-			
+
 			//Autocompletion
 			$('.tags input').each(function(){
 				$(this).autocomplete({
@@ -118,7 +118,7 @@ Edit article
 				});
 		});
 	});
-	
+
 
 </script>
 <div id="articleform">
@@ -130,9 +130,9 @@ Edit article
 		{{ form_row(form.date) }}
 		{{ form_row(form.enableComments )}}
 		<br class="clear"/>
-		
+
 		<a href="#" id="add_image" class="btn btn-info">Add a new picture</a>
-		
+
 		<div class="article-images" data-prototype="{{ form_widget(form.attachments.vars.prototype)|e }}">
 		{% for attachment in form.attachments %}
 			<div class="image-collection-entry">
@@ -146,7 +146,7 @@ Edit article
 		</div>
 		<br class="clear"/>
 		<br class="clear"/>
-		
+
 		<a href="#" id="add_tag" class="btn btn-info">Add a tag</a>
 	    <div class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
 	        {% for tag in form.tags %}
@@ -159,13 +159,13 @@ Edit article
 		    	</div>
 	        {% endfor %}
 	    </div>
-    
+
 		<br class="clear"/>
 		<br class="clear"/>
-		
-		
-		
-		
+
+
+
+
 		<input type="submit" class="btn btn-success" /><span>&nbsp;</span>
 		<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
 	{{ form_end(form) }}

@@ -55,7 +55,8 @@ class TwigMenuExtension extends \Twig_Extension {
 	public function appListContent()
 	{
 		return $this->container->get('templating')->render('KeosuCoreBundle:Menu:content.html.twig',array(
-			'contents' => array_keys(KeosuExtension::$dataModelList)
+			'contents' => array_keys(KeosuExtension::$dataModelList),
+			'icon' => KeosuExtension::$dataModelIconList
 		));
 	}
 

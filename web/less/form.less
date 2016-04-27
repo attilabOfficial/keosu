@@ -1,0 +1,60 @@
+@media (min-width: 768px) {
+  .control-label {
+    text-align: left !important;
+  }
+}
+
+.tags, .article-images, .picture-upload {
+  .col-sm-9 {
+    width: 100%;
+  }
+}
+
+.article-images {
+  min-height: 120px;
+
+  .image-collection-entry {
+    float: left;
+    padding: 5px 20px;
+    margin: 5px;
+    min-height: 255px;
+    background-color: @white;
+    border: 2px solid @icon;
+    border-radius: 10px;
+    img {
+      max-width: 140px;
+      max-height: 140px;
+    }
+    input {
+      width: 140px;
+    }
+    input[type="file"] {
+      display: none;
+    }
+  }
+}
+
+.tags {
+  .image-collection-entry {
+    width: 13.33333%;
+  }
+}
+
+.picture-upload {
+  input {
+    display: none;
+  }
+}
+
+.allowupdate {
+  .form-group, .allowupdatelabel {
+    float: left;
+  }
+}
+
+
+.event-form {
+  select {
+    margin-left: 0 !important;
+  }
+}

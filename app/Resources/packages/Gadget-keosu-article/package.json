@@ -5,7 +5,13 @@
    "type" : "gadget",
    "param" : [
       { "name" : "article-id", "type" : "number" },
-      { "name" : "offline",    "type" : "checkbox", "options" : { "required" : 0 } }
+      { "name" : "offline",    "type" : "checkbox", "options" : { "required" : 0 }},
+      { "name" : "cache", "type" : "number", "options": {
+         "label": "Cache in minute",
+         "data": 10}},
+      { "name" : "timeout", "type" : "number", "options": {
+         "label": "Timeout in seconde",
+         "data": 10}}
    ],
    "require" : [
       { "name" : "keosu-base", "version" : ">=0.1" },

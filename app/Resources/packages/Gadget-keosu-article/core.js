@@ -38,10 +38,13 @@ app.controller('keosu-articleController', function ($scope, $http, $sce, usSpinn
             });
         } else {
             usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-            cacheManagerService.get($scope.param.host+ 'service/gadget/article/' + $scope.param.gadgetId + '/json').success(function(data) {
+            cacheManagerService.get($scope.param.host+ 'service/gadget/article/' + $scope.param.gadgetId + '/json', $scope.param.gadgetParam.cache, $scope.param.gadgetParam.timeout).success(function(data) {
                 usSpinnerService.stop('spinner');
                 $scope.article = data;
                 $scope.article.content = $sce.trustAsHtml(data.content);
+            }).error(function (error) {
+                $scope.error = (error);
+                usSpinnerService.stop('spinner');
             });
         }
 	};

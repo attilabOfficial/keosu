@@ -1,4 +1,5 @@
 <!-- ARTICLE LIST -->
+<div ng-bind-html="error"></div>
 <div ng-show="isList" class="list list-articles"  ng-swipe-left="next()" ng-swipe-right="previous()">
 	<div class="list-content">
 		<div class="media list-elements animated {{slide}}" ng-repeat="apage in pages">

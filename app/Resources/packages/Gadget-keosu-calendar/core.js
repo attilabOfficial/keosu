@@ -113,7 +113,7 @@ app.controller('keosu-calendarController', function ($rootScope, $scope, $http, 
 			$scope.pages = [];
 		}
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		cacheManagerService.get($scope.param.host+'service/gadget/calendar/'+$scope.param.gadgetId+'/'+pageNum+'/json').success(function(data) {
+		cacheManagerService.get($scope.param.host+'service/gadget/calendar/'+$scope.param.gadgetId+'/'+pageNum+'/json', $scope.param.gadgetParam.cache, $scope.param.gadgetParam.timeout).success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.isFirstPage = (pageNum == 0);
 			$scope.isLastPage = data.isLast;
@@ -125,6 +125,9 @@ app.controller('keosu-calendarController', function ($rootScope, $scope, $http, 
 				$scope.pages[start+i].name = $sce.trustAsHtml(decodedContent(data.data[i].name));
 				$scope.pages[start+i].date = $sce.trustAsHtml(decodedContent(data.data[i].date));
 			}
+		}).error(function (error) {
+			$scope.error = (error);
+			usSpinnerService.stop('spinner');
 		});
 	}
 	$scope.init = function (params){

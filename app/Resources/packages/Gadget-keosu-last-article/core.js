@@ -70,7 +70,7 @@ app.controller('keosu-last-articleController', function ($rootScope, $scope, $ht
 			$scope.pages = [];
 		}
 		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		cacheManagerService.get($scope.param.host+'service/gadget/lastarticle/'+$scope.param.gadgetId+'/'+pageNum+'/json').success(function(data) {
+		cacheManagerService.get($scope.param.host+'service/gadget/lastarticle/'+$scope.param.gadgetId+'/'+pageNum+'/json', $scope.param.gadgetParam.cache, $scope.param.gadgetParam.timeout).success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.isFirstPage = data.isFirst;
 			$scope.isLastPage = data.isLast;
@@ -80,6 +80,9 @@ app.controller('keosu-last-articleController', function ($rootScope, $scope, $ht
 				$scope.pages[start+i].content = $sce.trustAsHtml(decodedContent(data.data[i].content));
 				$scope.pages[start+i].title = decodedContent(data.data[i].title);
 			}	
+		}).error(function (error) {
+			$scope.error = (error);
+			usSpinnerService.stop('spinner');
 		});
 	}
 	$scope.init = function (params){

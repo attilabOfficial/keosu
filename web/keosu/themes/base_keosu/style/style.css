@@ -233,3 +233,21 @@ Menu
 .header-slide{
     position:absolute;
 }
+
+/***
+* Error message
+**/
+
+.error-message {
+	position: absolute;
+	width: 90%;
+	margin: auto;
+	padding: 5px;
+	border-radius: 5px;
+	color: #ffffff;
+	background-color: #e74c3c;
+}
+
+.error-message p {
+	text-align: center;
+}

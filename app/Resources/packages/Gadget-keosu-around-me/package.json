@@ -21,7 +21,13 @@
          }},
         {"name" : "tag", "type" : "text", "options":{
             "required" : 0
-        }}
+        }},
+      { "name" : "cache", "type" : "number", "options": {
+        "label": "Cache in minute",
+        "data": 10}},
+      { "name" : "timeout", "type" : "number", "options": {
+        "label": "Timeout in seconde",
+        "data": 10}}
     ],
 
 	"libJs" : ["https://maps.googleapis.com/maps/api/js?sensor=false"],

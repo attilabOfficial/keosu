@@ -7,6 +7,7 @@
    "require" : {},
    "configCordova" : {},
    "libJs" : [
+	  "winstore-jscompat.js",
       "angular.min.js",
       "angular-carousel.js",
       "angular-chrono.js",

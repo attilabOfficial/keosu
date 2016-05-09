@@ -111,9 +111,9 @@ li {
         }
       }
 
-      .sidebar-title {
+      .sidebartitle {
         margin-top: 14px;
-        text-transform: uppercase;
+        text-transform: uppercase !important;
       }
 
       a {
@@ -139,13 +139,19 @@ li {
 
 //END LEFT MENU
 
+.logotop .login-page{
+    text-align: center !important;
+}
+
 #login-container {
   min-width: 220px;
   max-width: 400px;
   min-height: 220px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 180px;
+  margin-top: 24px;
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.13);
+  box-shadow: 0 1px 3px rgba(0,0,0,.13);
   .logotop {
     text-align: center;
     img {
@@ -155,6 +161,7 @@ li {
 }
 
 .wellcustom {
+  font-family: "lato-regular";
   background-image: none;
   background-color: #fefefe;
   overflow: hidden;
@@ -162,11 +169,13 @@ li {
   min-height: 280px;
   padding: 19px;
   position: relative;
-  -moz-box-shadow: 0px 1px 2px 0px #e5e5e5;
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.13);
+  box-shadow: 0 1px 3px rgba(0,0,0,.13);
+ /* -moz-box-shadow: 0px 1px 2px 0px #e5e5e5;
   -webkit-box-shadow: 0px 1px 2px 0px #e5e5e5;
   -o-box-shadow: 0px 1px 2px 0px #e5e5e5;
   box-shadow: 0px 1px 2px 0px #e5e5e5;
-  filter: progid:DXImageTransform.Microsoft.Shadow(color=#e5e5e5, Direction=180, Strength=2);
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#e5e5e5, Direction=180, Strength=2);*/
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -175,6 +184,9 @@ li {
   }
 }
 
+.logincontainer input{
+    margin-bottom: 14px;
+}
 
 .icon-success {
   color: #fff !important;
@@ -330,6 +342,11 @@ div.dashboard {
 
 .logincontainer {
   width: 320px;
+    label{
+        color:grey !important;
+        font-family: "lato-regular";
+        font-weight:100;
+    }
 }
 
 .row {

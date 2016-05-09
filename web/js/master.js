@@ -52,3 +52,23 @@ function themeButton(url_base, themeDir){
 		$(this).css("border","red solid 3px");
 	});
 }
+console.log("master.js");
+
+$(document).ready(function(){
+    $("#bouton-menu-responsive").click(function(){
+        if( (document.getElementById("left-menu").className) == "col-md-2 leftcol closed")
+        {
+            document.getElementById("left-menu").className="col-md-2 leftcol open";
+            $('#icon-arrow-menu-left').show();
+            $('#icon-arrow-menu').hide();
+        }
+        else
+        {
+            document.getElementById("left-menu").className="col-md-2 leftcol closed";
+            $('#icon-arrow-menu-left').hide();
+            $('#icon-arrow-menu').show();
+        }
+
+    });
+});
+

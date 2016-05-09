@@ -2,9 +2,10 @@ app.controller('keosu-authenticationController',function ($rootScope, $scope, $h
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
-	/////////////////////////////////////
-	// Routing part
-	/////////////////////////////////////
+	/**
+	 * Routing part
+	 * @param page
+     */
 	$scope.routing = function (page) {
 
 		$scope.login = false;
@@ -26,17 +27,18 @@ app.controller('keosu-authenticationController',function ($rootScope, $scope, $h
 		}
 	}
 
-	$rootScope.previous = function()
-	{
-		$rootScope.previousButton = false;	
+	/**
+	 * specific action when the 'back' or 'close' button is called
+	 */
+	$scope.$on('back', function () {
 		$scope.loginInit();
-	}
-	
-	//////////////////////////////////////
-	// Init part
-	//////////////////////////////////////
+	});
+
+	/**
+	 * Init part
+	 * @param params
+     */
 	$scope.init = function(params){
-		$rootScope.previousButton = false;
 		$scope.nextPage = "0";
 		if($scope.param == null)
 			$http.get(params.host+'service/gadget/authentication/'+params.gadgetId+'/json/init').success(function(data) {
@@ -46,11 +48,13 @@ app.controller('keosu-authenticationController',function ($rootScope, $scope, $h
 			});
 		else
 			$scope.loginInit();
-	}
+	};
 
-	/////////////////////////////////
-	// Login part
-	/////////////////////////////////
+	/**
+	 * Login part
+	 * @param message
+	 * @param success
+     */
 	$scope.loginInit = function(message,success) {
 		usSpinnerService.spin('spinner');
 		$scope.loginError = message;
@@ -64,7 +68,7 @@ app.controller('keosu-authenticationController',function ($rootScope, $scope, $h
 				$scope.routing('login');
 			}
 		});
-	}
+	};
 	$scope.loginAction = function() {
 	
 		usSpinnerService.spin('spinner');
@@ -88,21 +92,29 @@ app.controller('keosu-authenticationController',function ($rootScope, $scope, $h
 			$location.path('/Page/'+$scope.param.gadgetParam.pageToGoAfterLogin);
 		}
 
-	}
-	
-	///////////////////////////////
-	// Register part
-	///////////////////////////////
+	};
+
+	/**
+	 * specific action when the 'open' button is called
+	 */
+	$scope.$on('open', function (event, init) {
+		(init == "register") ? $scope.registerInit() : $scope.forgotPasswordInit();
+	});
+
+	/**
+	 * Register part
+	 * @param message
+     */
 	$scope.registerInit = function(message) {
 		usSpinnerService.spin('spinner');
-		$rootScope.previousButton = true;
+		$rootScope.closeButton = true;
 		$scope.routing('register');
 		$scope.registerError = message;
 		$http.get($scope.param.host + 'service/gadget/authentication/' + $scope.param.gadgetId + '/json/register').success(function(data) {
 			usSpinnerService.stop('spinner');
 			$scope.token = data.csrf_token;
 		});
-	}
+	};
 
 	$scope.registerAction = function() {
 		$scope.registerError = null;
@@ -115,7 +127,7 @@ app.controller('keosu-authenticationController',function ($rootScope, $scope, $h
 				}
 			});
 			return ret;
-		}
+		};
 		
 		if(checkEmpty()) {
 			$scope.registerError = "All field are required";
@@ -139,18 +151,19 @@ app.controller('keosu-authenticationController',function ($rootScope, $scope, $h
 				}
 			});
 		}
-	}
-	
-	/////////////////////////////////////
-	// Forgot password part
-	/////////////////////////////////////
+	};
+
+	/**
+	 * Forgot password part
+	 * @param message
+     */
 	$scope.forgotPasswordInit = function(message) {
-		$rootScope.previousButton = true;
+		$rootScope.closeButton = true;
 		usSpinnerService.spin('spinner');
 		$scope.routing('forgotPassword');
 		$scope.forgotPasswordError = message;
 		usSpinnerService.stop('spinner');
-	}
+	};
 	$scope.forgotPasswordAction = function () {
 		$scope.forgotPasswordError = null;
 		if(typeof($scope.username) == "undefined" || $scope.username.length == 0) {

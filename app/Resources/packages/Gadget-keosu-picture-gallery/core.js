@@ -39,20 +39,18 @@ app.controller('keosu-picture-galleryController', function ($rootScope, $scope, 
 			$scope.activePage.page = $scope.activePage.page-1;
 		}
 	};
-	$rootScope.previous = function () {
-		$rootScope.previousButton = false;
+	$scope.$on('back', function () {
 		$scope.slideElement="zoomIn";
 		$scope.slide="fadeIn";
 		$scope.parts(true, false, $scope);
-	};
-	$scope.open = function (page, id) {
-		$rootScope.previousButton = true;
-		$scope.indexSlide=id-1;
+	});
+	$scope.$on('open', function (event, page) {
+		$scope.indexSlide= page.id-1;
 		$scope.slidePage="fadeIn";
 		$scope.image = page;
-		$scope.index = id - 1;
+		$scope.index = page.id - 1;
 		$scope.parts(false, true, $scope);
-	};
+	});
 	$scope.swipeLeft = function() {
 		$scope.slideElement="slideInRight";
 		if ($scope.index == $scope.imageLength - 1)

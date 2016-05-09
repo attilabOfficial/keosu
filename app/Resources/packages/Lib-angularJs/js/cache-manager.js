@@ -23,7 +23,6 @@
             var getFromCache = function (url, cacheExp, timeOut) {
                 if (cacheExp) {
                     cacheExpiration = (cacheExp * 60000);
-                    console.log('cache expiration : ' + cacheExpiration);
                 }
                 var tmp = url.split("/");
                 var cachekey = "";
@@ -38,7 +37,6 @@
 
                 setTimeout(function () {
                     if (timeOut) {
-                        console.log('timeout :' + (1000 * timeOut));
                         deferred.reject('<div class="error-message" ><p>Erreur time out.</p></div>');
                     }
                 }, (1000 * timeOut));

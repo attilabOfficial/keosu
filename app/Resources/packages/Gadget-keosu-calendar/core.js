@@ -21,126 +21,132 @@
 //Main function
 app.controller('keosu-calendarController', function ($rootScope, $scope, $http, $sce, usSpinnerService, cacheManagerService) {
 
-	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+    $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
-	$scope.parts = function (isList, isEvent) {
-		$scope.isList = isList;
-		$scope.isEvent = isEvent;
-	};
-	$rootScope.previous = function () {
-		$rootScope.previousButton = false;
-		$scope.slide="fadeIn";
-		$scope.parts(true, false);
-		
-	};
-	$scope.next = function(){
-		if(!$scope.isLastPage){
-			$scope.isFirstPage = true;
-			$scope.isLastPage = true;
-			$scope.slide="slideInRight";
-			$scope.activePage++;
-			$scope.getPage($scope.activePage,true);
-		}
-	};
-	$scope.previous = function(){
-		if(!$scope.isFirstPage){
-			$scope.isFirstPage = true;
-			$scope.isLastPage = true;
-			$scope.slide="slideInLeft";
-			$scope.activePage--;
-			$scope.getPage($scope.activePage,true);
-		}
-	};
-	$scope.open = function (page) {
-		$rootScope.previousButton = true;
-		$scope.event = page;
-		$scope.parts(false, true);
-		var map=$scope.initialize();
-		map.setZoom($scope.param.gadgetParam.zoom);
-		google.maps.event.trigger($("#map_canvas")[0], 'resize');
-		var latitudeAndLongitude = new google.maps.LatLng($scope.event.lat,$scope.event.lng);
-		map.setCenter(latitudeAndLongitude);
+    $scope.parts = function (isList, isEvent) {
+        $scope.isList = isList;
+        $scope.isEvent = isEvent;
+    };
+    /**
+     * specific action when the 'back' or 'close' button is called
+     */
+    $scope.$on('back', function () {
+        $scope.slide = "fadeIn";
+        $scope.parts(true, false);
 
-		//Init POI marker
-		markerOne = new google.maps.Marker({
-			position: latitudeAndLongitude,
-			title: "event",
-			map: map
-		});
+    });
+    $scope.next = function () {
+        if (!$scope.isLastPage) {
+            $scope.isFirstPage = true;
+            $scope.isLastPage = true;
+            $scope.slide = "slideInRight";
+            $scope.activePage++;
+            $scope.getPage($scope.activePage, true);
+        }
+    };
+    $scope.previous = function () {
+        if (!$scope.isFirstPage) {
+            $scope.isFirstPage = true;
+            $scope.isLastPage = true;
+            $scope.slide = "slideInLeft";
+            $scope.activePage--;
+            $scope.getPage($scope.activePage, true);
+        }
+    };
+    /**
+     * specific action when the 'open' button is called
+     */
+    $scope.$on('open', function (event, page) {
+        $scope.event = page;
+        $scope.parts(false, true);
+        var map = $scope.initialize();
+        map.setZoom($scope.param.gadgetParam.zoom);
+        google.maps.event.trigger($("#map_canvas")[0], 'resize');
+        var latitudeAndLongitude = new google.maps.LatLng($scope.event.lat, $scope.event.lng);
+        map.setCenter(latitudeAndLongitude);
 
-		window.setTimeout(function(){
-			google.maps.event.trigger($("#map_canvas")[0], 'resize');
-			map.setCenter(latitudeAndLongitude);
-		},100);
+        //Init POI marker
+        markerOne = new google.maps.Marker({
+            position: latitudeAndLongitude,
+            title: "event",
+            map: map
+        });
 
-		$scope.parts(false, true, $scope);
-	};
+        window.setTimeout(function () {
+            google.maps.event.trigger($("#map_canvas")[0], 'resize');
+            map.setCenter(latitudeAndLongitude);
+        }, 100);
 
-	$scope.addToCalendar = function(eventObj){
-		if(window.plugins.calendar==null){
-			alert("not available on desktop")
-		}else{
-			startDate = new Date(parseInt(eventObj.datems));
-			startDate = new Date(parseInt(eventObj.datems)+25000);
-			//TODO Fix this
-			$scope.successCal = function() { alert("Success: " + JSON.stringify("Event Added!")); };
-			$scope.errorCal = function(message) { alert("Error: " + JSON.stringify(message)); };
+        $scope.parts(false, true, $scope);
+    });
 
-			window.plugins.calendar.createEvent(eventObj.name,eventObj.place,eventObj.name,startDate,startDate,$scope.successCal,$scope.errorCal);
-		}
-	}
+    $scope.addToCalendar = function (eventObj) {
+        if (window.plugins.calendar == null) {
+            alert("not available on desktop")
+        } else {
+            startDate = new Date(parseInt(eventObj.datems));
+            startDate = new Date(parseInt(eventObj.datems) + 25000);
+            //TODO Fix this
+            $scope.successCal = function () {
+                alert("Success: " + JSON.stringify("Event Added!"));
+            };
+            $scope.errorCal = function (message) {
+                alert("Error: " + JSON.stringify(message));
+            };
 
-	$scope.more = function(){
-		$scope.activePage++;
-		$scope.getPage($scope.activePage,false);
-	}
-	//Init google gadget
-	$scope.initialize=function() {
-		var mapOptions = {
-			center: new google.maps.LatLng(47.21677,-1.553307),
-			zoom: 3,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
-		return map;
-	}
-	/*
-	 * @pageNum : page number requested.
-	 * @resetPages : if true, clean the array pages.
-	 */
-	$scope.getPage = function(pageNum,resetPages){
-		if(resetPages){
-			$scope.pages = [];
-		}
-		usSpinnerService.spin('spinner'); // While loading, there will be a spinner
-		cacheManagerService.get($scope.param.host+'service/gadget/calendar/'+$scope.param.gadgetId+'/'+pageNum+'/json', $scope.param.gadgetParam.cache, $scope.param.gadgetParam.timeout).success(function(data) {
-			usSpinnerService.stop('spinner');
-			$scope.isFirstPage = (pageNum == 0);
-			$scope.isLastPage = data.isLast;
-			start = $scope.pages.length;
-			console.log("Data lenght"+data.data.length);
-			for (i = 0; i < data.data.length; i++) {
-				$scope.pages[start+i] = data.data[i];
-				$scope.pages[start+i].id = $sce.trustAsHtml(decodedContent(data.data[i].id));
-				$scope.pages[start+i].name = $sce.trustAsHtml(decodedContent(data.data[i].name));
-				$scope.pages[start+i].date = $sce.trustAsHtml(decodedContent(data.data[i].date));
-			}
-		}).error(function (error) {
-			$scope.error = (error);
-			usSpinnerService.stop('spinner');
-		});
-	}
-	$scope.init = function (params){
-		$rootScope.previousButton = false;
-		console.log("init calendar gadget");
-		$scope.slide="fadeIn";
-		$scope.param = params;
-		$scope.pages = new Array();
-		$scope.parts(true, false);
-		$scope.activePage=0;
-		$scope.isFirstPage = true;
-		$scope.isLastPage = true;
-		$scope.getPage($scope.activePage,true);
-	};
+            window.plugins.calendar.createEvent(eventObj.name, eventObj.place, eventObj.name, startDate, startDate, $scope.successCal, $scope.errorCal);
+        }
+    }
+
+    $scope.more = function () {
+        $scope.activePage++;
+        $scope.getPage($scope.activePage, false);
+    }
+    //Init google gadget
+    $scope.initialize = function () {
+        var mapOptions = {
+            center: new google.maps.LatLng(47.21677, -1.553307),
+            zoom: 3,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        return map;
+    }
+    /*
+     * @pageNum : page number requested.
+     * @resetPages : if true, clean the array pages.
+     */
+    $scope.getPage = function (pageNum, resetPages) {
+        if (resetPages) {
+            $scope.pages = [];
+        }
+        usSpinnerService.spin('spinner'); // While loading, there will be a spinner
+        cacheManagerService.get($scope.param.host + 'service/gadget/calendar/' + $scope.param.gadgetId + '/' + pageNum + '/json', $scope.param.gadgetParam.cache, $scope.param.gadgetParam.timeout).success(function (data) {
+            usSpinnerService.stop('spinner');
+            $scope.isFirstPage = (pageNum == 0);
+            $scope.isLastPage = data.isLast;
+            start = $scope.pages.length;
+            for (i = 0; i < data.data.length; i++) {
+                $scope.pages[start + i] = data.data[i];
+                $scope.pages[start + i].id = $sce.trustAsHtml(decodedContent(data.data[i].id));
+                $scope.pages[start + i].name = $sce.trustAsHtml(decodedContent(data.data[i].name));
+                $scope.pages[start + i].date = $sce.trustAsHtml(decodedContent(data.data[i].date));
+            }
+        }).error(function (error) {
+            $scope.error = (error);
+            usSpinnerService.stop('spinner');
+        });
+    }
+    $scope.init = function (params) {
+        console.log("init calendar gadget");
+        $scope.slide = "fadeIn";
+        $scope.param = params;
+        $scope.pages = new Array();
+        $scope.parts(true, false);
+        $scope.activePage = 0;
+        $scope.isFirstPage = true;
+        $scope.isLastPage = true;
+        $scope.getPage($scope.activePage, true);
+    };
 });
 

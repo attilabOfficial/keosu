@@ -17,7 +17,7 @@
  ************************************************************************/
 
 //Main controller
-    app.controller('keosu-around-meController', function ($rootScope, $scope, $http, $sce, usSpinnerService, cacheManagerService) {
+app.controller('keosu-around-meController', function ($rootScope, $scope, $http, $sce, usSpinnerService, cacheManagerService) {
 
     //Init google gadget
     $scope.initialize = function () {
@@ -32,8 +32,10 @@
     }
 
 
-    $scope.open = function (page) {
-        $rootScope.previousButton = true;
+    /**
+     * specific action when the 'open' button is called
+     */
+    $scope.$on('open', function (event, page) {
 
         //Init map
         $scope.curPage = page;
@@ -82,15 +84,16 @@
         }, 100);
 
 
-    };
-    $rootScope.previous = function () {
-        $rootScope.previousButton = false;
+    });
+    /**
+     * specific action when the 'back' or 'close' button is called
+     */
+    $scope.$on('back', function () {
         $scope.isList = true;
-    };
+    });
 
     $scope.init = function (params) {
         console.log("init around me gadget");
-        //$rootScope.previousButton = false;
         $scope.isList = true;
         usSpinnerService.spin('spinner'); // While loading, there will be a spinner
         $scope.param = params;

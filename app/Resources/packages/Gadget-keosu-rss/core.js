@@ -3,7 +3,6 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
 {
 	$scope.init = function(params) {
         $scope.infiniteList = false;
-        $rootScope.previousButton = false;
         $scope.param = params;
         $scope.isList = true;
         $scope.list = [];
@@ -11,7 +10,7 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
         $scope.page = 0;
         $scope.max = parseInt($(document).height()) - parseInt($(window).height());
         google.load('feeds', '1', {"callback": $scope.displayRss});
-	}
+	};
 
     $scope.buildPage = function() {
         if ($scope.infiniteList == false)
@@ -20,15 +19,19 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
         var offset = $scope.page * $scope.param.gadgetParam.articlesPerPage;
         for (var i = offset; i < offset + $scope.param.gadgetParam.articlesPerPage && i < $scope.list.length; i++)
             $scope.currentlist.push($scope.list[i]);
-    }
-    
-    $rootScope.previous = function() {
-        $rootScope.previousButton = false;
-        $scope.isList = !$scope.isList;
-    }
+    };
 
-    $scope.open = function(elem) {
-        $rootScope.previousButton = true;
+    /**
+     * specific action when the 'back' or 'close' button is called
+     */
+    $scope.$on('back', function () {
+        $scope.isList = !$scope.isList;
+    });
+
+    /**
+     * specific action when the 'open' button is called
+     */
+    $scope.$on('open', function (event, elem) {
         $scope.isList = !$scope.isList;
         $scope.title = elem.title;
         $scope.body = elem.body;
@@ -36,19 +39,19 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
         $scope.link = elem.link;
         $scope.hasImage = (elem.image != "");
         window.scrollTo(0, 0);
-    }
+    });
 
     $scope.next = function() {      
         if ($scope.page < $scope.last)
             $scope.page += 1;
         $scope.buildPage();
-    }
+    };
 
     $scope.prev = function() {
         if ($scope.page > 0)
             $scope.page -= 1;
         $scope.buildPage();
-    }
+    };
 
     $scope.displayRss = function() {
         $scope.feed = new google.feeds.Feed($scope.param.gadgetParam.url);
@@ -79,11 +82,11 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
             $scope.$apply();
         }
       });
-    }
+    };
 
     $scope.setInfiniteList = function(){
         $scope.infiniteList = true;
-    }
+    };
 
     $(window).on('scroll', function() {
         if ($scope.isList && !$scope.isLastPage && $scope.infiniteList){

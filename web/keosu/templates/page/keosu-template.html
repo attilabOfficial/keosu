@@ -1,26 +1,26 @@
 <nav class="navbar navbar-default navbar-fixed-top classic-navbar" role="banner">
-    <div class="backButton" ng-click="previous()" ng-show="previousButton">
-        <span class="glyphicon glyphicon-remove animated fadeIn .btn" aria-hidden="true"></span>
+    <div class="backButton" ng-click="back()" ng-show="previousButton">
+        <span class="fui-arrow-left animated fadeIn btn" aria-hidden="true"></span>
     </div>
-    <!--<button ng-click="previous()" ng-show="previousButton" class="prev btn btn-default btn-page pull-left animated fadeIn back">Return</button>
-    <a ng-click="previous()" ng-show="previousButton"  class="back">Return</a>-->
-
-	<a href="index.html">
-		<h2 class="title">{{::appName}}</h2>
-	</a>
+    <div class="backButton" ng-click="back()" ng-show="closeButton">
+        <span class="glyphicon glyphicon-remove animated fadeIn btn" aria-hidden="true"></span>
+    </div>
+    <div>
+        <h2 class="title">{{::appName}}</h2>
+    </div>
 </nav>
 
 <div class="content">
-	<div class="container-fluid">
-		<div id="body" class="zone">&nbsp;</div>
-	</div>
+    <div class="container-fluid">
+        <div id="body" class="zone">&nbsp;</div>
+    </div>
 </div>
 
 <div class="offline">
-	<div ng-show="{{offline}}">Network unreachable</div>
+    <div ng-show="{{offline}}">Network unreachable</div>
 </div>
 
 <footer id="menu" class="zone classic-menu navbar-fixed-bottom">
-	&nbsp;
+    &nbsp;
 </footer>
  

@@ -15,8 +15,9 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
-app.controller('keosu-menuController', function ($scope, $http,$location) {
+app.controller('keosu-menuController', function ($rootScope, $scope, $http,$location) {
 	$scope.init = function(params) {
+		$rootScope.initButton();
 		$scope.pages = params.gadgetParam.pages;
 		$http.get('data/'+params.gadgetId+".json").success(function(data) {
 			$scope.pages = data;

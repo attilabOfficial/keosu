@@ -4,7 +4,10 @@
             <div class="icon-menu2"></div>
         </div>
 		<div class="title"><b>{{::appName}}</b></div>
-		<div class="backButtonRight" ng-click="previous()" ng-show="previousButton">
+		<div class="backButton" ng-click="back()" ng-show="previousButton">
+			<span class="fui-arrow-left animated fadeIn btn" aria-hidden="true"></span>
+		</div>
+		<div class="backButton" ng-click="back()" ng-show="closeButton">
 			<span class="glyphicon glyphicon-remove animated fadeIn btn" aria-hidden="true"></span>
 		</div>
     </div>

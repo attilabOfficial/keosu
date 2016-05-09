@@ -241,7 +241,7 @@ Menu
 .error-message {
 	position: absolute;
 	width: 90%;
-	margin: auto;
+	margin: 0 5%;
 	padding: 5px;
 	border-radius: 5px;
 	color: #ffffff;

@@ -8,6 +8,9 @@ app.config(function( $compileProvider ) {
 
 app.controller('main_Controller', function($http, $rootScope, $scope) {
 
+	/**
+	 * Init Buttons
+	 */
     $rootScope.initButton = function() {
         // $rootScope;previousButton : used to display a return button in the header
         // to show the button you should set the value true to the boolean
@@ -16,7 +19,10 @@ app.controller('main_Controller', function($http, $rootScope, $scope) {
         $rootScope.closeButton = false;
     };
 
-    $rootScope.back = function() {
+	/**
+	 * Manage buttons when calling previous page
+	 */
+	$rootScope.back = function() {
         $rootScope.previousButton = true;
         if ($rootScope.closeButton) {
             $rootScope.closeButton = false;
@@ -27,7 +33,11 @@ app.controller('main_Controller', function($http, $rootScope, $scope) {
         $scope.$broadcast('back',null);
     };
 
-    $rootScope.open = function (arg) {
+	/**
+	 * Manage buttons when opening an list element
+	 * @param arg
+	 */
+	$rootScope.open = function (arg) {
         $rootScope.previousButton = false;
         $rootScope.closeButton = true;
 
@@ -38,6 +48,7 @@ app.controller('main_Controller', function($http, $rootScope, $scope) {
 		$rootScope.appName = data.name;
 	});
 	//alert("Connection :"+navigator.connection.type);
+	$rootScope.initButton();
 	$rootScope.offline = false;
 	document.addEventListener("offline", function() {
 		$rootScope.offline = true;

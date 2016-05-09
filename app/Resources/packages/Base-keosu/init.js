@@ -1,14 +1,41 @@
 var app = angular.module('keosuApp', ['angularSpinner','angular-carousel','ngSanitize', 'ngTouch', 'ngRoute','angular-inview','LocalStorageModule','CacheManagerModule','ui.bootstrap']);
 
+app.config(function( $compileProvider ) {
+	$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0):/);
+
+	$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|ms-appx|x-wmapp0):|data:image\//);
+});
+
 app.controller('main_Controller', function($http, $rootScope, $scope) {
-	$http.get('data/globalParam.json').success(function(data) {
 
+    $rootScope.initButton = function() {
+        // $rootScope;previousButton : used to display a return button in the header
+        // to show the button you should set the value true to the boolean
+        // when you click on the button, the method $rootScope.prev is called
+        $rootScope.previousButton = true;
+        $rootScope.closeButton = false;
+    };
+
+    $rootScope.back = function() {
+        $rootScope.previousButton = true;
+        if ($rootScope.closeButton) {
+            $rootScope.closeButton = false;
+        }
+        else {
+            window.history.back();
+        }
+        $scope.$broadcast('back',null);
+    };
+
+    $rootScope.open = function (arg) {
+        $rootScope.previousButton = false;
+        $rootScope.closeButton = true;
+
+        $scope.$broadcast('open', arg);
+    };
+
+    $http.get('data/globalParam.json').success(function(data) {
 		$rootScope.appName = data.name;
-
-		 // $rootScope;previousButton : used to display a return button in the header
-		 // to show the button you should set the value true to the boolean
-		 // when you click on the button, the method $rootScope.prev is called
-		$rootScope.previousButton = false;
 	});
 	//alert("Connection :"+navigator.connection.type);
 	$rootScope.offline = false;

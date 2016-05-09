@@ -82,7 +82,7 @@ app.controller('keosu-picture-galleryController', function ($rootScope, $scope, 
 		$scope.imgClass = [];
 		$scope.infiniteList = false;
 		usSpinnerService.spin('spinner');
-		cacheManagerService.get( $scope.param.host + 'service/gadget/picturesgallery/'+$scope.param.gadgetId+'/0/json').success(function (data) {
+		cacheManagerService.get( $scope.param.host + 'service/gadget/picturesgallery/'+$scope.param.gadgetId+'/0/json', $scope.param.gadgetParam.cache, $scope.param.gadgetParam.timeout).success(function (data) {
 					usSpinnerService.stop('spinner');
 					$tmp = [];
 					for (i = 0; i < data.data.length; i++) {
@@ -114,7 +114,10 @@ app.controller('keosu-picture-galleryController', function ($rootScope, $scope, 
                     // For the template gallery-thumbs-navigation, we need to set the first image to get the comments
                     if (pages[0] && pages[0][0])
                         $scope.image = pages[0][0];
-				});
+				}).error(function (error) {
+			$scope.error = (error);
+			usSpinnerService.stop('spinner');
+		});
 	};
 
 	$scope.setInfiniteList = function(){

@@ -7,7 +7,13 @@
         {"name" : "pictureId" , "type" : "number"},
         {"name" : "tag", "type" : "text", "options":{
             "required" : 0
-        }}
+        }},
+        { "name" : "cache", "type" : "number", "options": {
+            "label": "Cache in minute",
+            "data": 10}},
+        { "name" : "timeout", "type" : "number", "options": {
+            "label": "Timeout in seconde",
+            "data": 10}}
     ],
     "require" : [
         { "name" : "keosu-base" , "version" : ">=0.1" },

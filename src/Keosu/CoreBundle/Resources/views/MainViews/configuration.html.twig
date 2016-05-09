@@ -1,20 +1,20 @@
-	{# 	
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
 
 {% extends 'KeosuCoreBundle::page.html.twig' %}
 
@@ -24,27 +24,27 @@
 	<div id="content">
 		<div class="panel">
 			{% block content %}
-			<div class="dashboard">
-				<div class="row">
-					<div class="col-md-11">
-						<h2>The configuration part</h2>
-					</div>
-				</div>	
-				<div class="row">
-					<div class="col-md-3">
-						<div class="wellcustom">
-							<h3>Apps</h3>
-							<a href="{{ path('keosu_core_app_manage') }}"><button type="button" class="btn btn-default">Manage Apps</button></a>
+				<div class="dashboard">
+					<div class="row">
+						<div class="col-md-11">
+							<h2><span class="glyphicon glyphicon-cog icon-menu"></span> Configuration</h2>
 						</div>
 					</div>
-					<div class="col-md-3">
-						<div class="wellcustom">
-							<h3>Themes</h3>
-							<a href="{{ path('keosu_core_theme_manage') }}"><button type="button" class="btn btn-default">Manage Themes</button></a>
+					<div class="row">
+						<div class="col-md-3">
+							<div class="wellcustom">
+								<h3><span class="glyphicon glyphicon-th-large icon-menu"></span>Apps</h3>
+								<a href="{{ path('keosu_core_app_manage') }}"><button type="button" class="btn btn-default">Manage Apps</button></a>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="wellcustom">
+								<h3><span class="glyphicon glyphicon-tint icon-menu"></span>Themes</h3>
+								<a href="{{ path('keosu_core_theme_manage') }}"><button type="button" class="btn btn-default">Manage Themes</button></a>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			{% endblock %}
 		</div>
 	</div>

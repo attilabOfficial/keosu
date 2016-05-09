@@ -34,4 +34,13 @@ class KeosuExtension {
 			'menu'    => 'KeosuDataModelMenuModelBundle:MenuEntry',
 			'search'    => 'KeosuDataModelSearchModelBundle:Search',
 	);
+
+	public static $dataModelIconList = array(
+		'article'  => 'pushpin',
+		'location' => 'map-marker',
+		'picture'  => 'picture',
+		'event'    => 'calendar',
+		'menu'    => 'list',
+		'search'    => 'search',
+	);
 }

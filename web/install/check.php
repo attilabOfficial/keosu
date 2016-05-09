@@ -1,6 +1,6 @@
 <?php
 	$phpversion = phpversion();
-	$isPhpVersion = version_compare(phpversion(), '5.4.0');
+	$isPhpVersion = version_compare(phpversion(), '5.5', '>=');
 	$isCurlInstall = function_exists('curl_version');
 	$isJsonInstall = phpversion('json');
 	$isCtypeInstall = function_exists('ctype_print');
@@ -28,7 +28,7 @@
 		<?php }else{?>
 			<p class="alert alert-danger">
 				Php version installed : <?php echo($phpversion);?><br/>
-				Upgrade to php 5.4.0 or upper to use Keosu
+				Upgrade to php 5.5 or upper to use Keosu
 			</p>
 		<?php }?>
 		<?php if ($isCurlInstall){?>

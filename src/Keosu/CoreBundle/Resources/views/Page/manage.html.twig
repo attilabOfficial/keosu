@@ -1,4 +1,4 @@
-{# 	
+{#
 Keosu is an open source CMS for mobile app
 Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
@@ -21,51 +21,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 {% block content %}
 
-<div class="row">
-	<div class="col-md-10 col-md-offset-1">
-		<fieldset>
-			<legend>Manage Pages</legend>
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<fieldset>
+				<legend><span class="glyphicon glyphicon-file icon-menu"></span>Manage Pages</legend>
 
-			<a class="btn btn-success" href="{{ path('keosu_core_views_page_manage_add') }}">Add new page</a>
+				<a class="btn btn-success" href="{{ path('keosu_core_views_page_manage_add') }}"><span class="glyphicon glyphicon-plus-sign icon-success"></span>Add new page</a>
 
-			<table class="table table-striped table-hover">
-				<thead>
+				<table class="table table-striped table-hover">
+					<thead>
 					<tr>
 						<th>is index</th>
 						<th>page name</th>
 						<th>page template</th>
 						<th colspan="2"></th>
 					</tr>
-				</thead>
-				<tbody>
-				{% for page in pages %}
-					<tr>
-						<td>
-							{% if page.isMain %}
-								<span class="glyphicon glyphicon-hand-right"></span>
-							{% endif %}
-						</td>
-						<td>{{ page.name }}</td>
-						<td>{{ page.templateId }}</td>
-						<td>
-							{{ includePanelPage(page.id) }}
-						</td>
-					</tr>
-				{% else %}
-					<p>No pages</p>
-				{% endfor %}
-				</tbody>
-				<tfoot>
+					</thead>
+					<tbody>
+					{% for page in pages %}
+						<tr>
+							<td>
+								{% if page.isMain %}
+									<span class="glyphicon glyphicon-hand-right"></span>
+								{% endif %}
+							</td>
+							<td>{{ page.name }}</td>
+							<td>{{ page.templateId }}</td>
+							<td>
+								{{ includePanelPage(page.id) }}
+							</td>
+						</tr>
+					{% else %}
+						<p>No pages</p>
+					{% endfor %}
+					</tbody>
+					<tfoot>
 					<tr>
 						<th>is index</th>
 						<th>page name</th>
 						<th>page template</th>
 						<th></th>
 					</tr>
-				</tfoot>
-			</table>
-		</fieldset>
-		</ul>
+					</tfoot>
+				</table>
+			</fieldset>
+			</ul>
+		</div>
 	</div>
-</div>
 {% endblock %}

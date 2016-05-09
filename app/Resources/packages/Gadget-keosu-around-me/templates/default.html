@@ -1,4 +1,5 @@
 <div ng-show="isList" class="animated fadeIn">
+	<div ng-bind-html="error"></div>
 	<div class="panel list">
 		<div class="panel-body list-content" ng-repeat="page in pages">
 			<div class="media" ng-click="open(page)">

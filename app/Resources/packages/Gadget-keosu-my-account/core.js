@@ -38,7 +38,7 @@ app.controller('keosu-my-accountController',function ($scope, $http, usSpinnerSe
 		
 		usSpinnerService.spin('spinner');
 		$scope.routing('account');
-		cacheManagerService.get($scope.param.host + 'service/gadget/myaccount/info').success(function(data) {
+		cacheManagerService.get($scope.param.host + 'service/gadget/myaccount/info', $scope.param.gadgetParam.cache, $scope.param.gadgetParam.timeout).success(function(data) {
 			usSpinnerService.stop('spinner');
 			if(data.connect) {
 				$scope.account = data;
@@ -47,6 +47,9 @@ app.controller('keosu-my-accountController',function ($scope, $http, usSpinnerSe
 			} else {
 				$scope.logged = false;
 			}
+		}).error(function (error) {
+			$scope.error = (error);
+			usSpinnerService.stop('spinner');
 		});
 	}
 	

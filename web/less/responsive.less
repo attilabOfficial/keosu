@@ -1,0 +1,142 @@
+.icon-menu-responsive{
+    width:42px;
+    height:42px;
+    margin:auto;
+    display:none;
+    cursor:pointer !important;
+    position:absolute;
+    z-index:99;
+}
+
+.fake-bar{
+    width:200px;
+    height:100%;
+    min-height:100%;
+    background-color: #23282d;
+    float:left;
+    left:0;
+    top:0;
+    position: absolute;
+}
+
+@media screen and (min-width:1000px) 
+{
+    .icon-menu-responsive{
+        display:none !important;
+    }
+}
+
+
+@media screen and (min-width:1000px) and (max-width: 1305px)
+{
+    .texte-lien-menu, .dropdown{
+        display:none;
+    }
+    img.logotop {
+        width:45px !important;
+    }
+    .leftcol, .fake-bar {
+        min-width:65px !important;
+        max-width:50px !important;
+    }
+    .lien-menu{
+        padding-left: 17px;
+        padding-right: none;
+    }
+}
+
+
+@media screen and (max-width:1000px) 
+{
+    #icon-arrow-menu-left, .fake-bar{
+        display:none;
+    }
+    .closed{
+        display:none;
+    }
+    .open{
+        display:block !important;
+    }
+    
+    .col-md-2 .leftcol .open{
+        max-width:none !important;
+        }
+
+    .menu-leftcol{
+        width:42px;
+        height:42px;
+        float:left;
+        margin:12px;
+        cursor:pointer !important;
+    }
+    .icon-menu-responsive{
+        display: block;
+        cursor:pointer !important;
+    }
+    
+    #left-menu{
+        width:100% !important;
+    }
+}
+
+
+
+
+
+
+
+
+/*
+.icon-menu-responsive {
+  width: 42px;
+  height: 42px;
+  margin: auto;
+  display: none;
+  cursor: pointer !important;
+}
+
+
+
+@media screen and (min-width: 992px) and (max-width: 1205px) {
+  #left-menu {
+    width: 80px;
+    .texte-lien-menu, .dropdown {
+      display: none;
+    }
+    .logowrapper {
+      img {
+        width: 42px !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  #left-menu {
+    display: none;
+  }
+
+  .leftcol {
+    max-width: none;
+    display: none;
+  }
+
+  .menu-leftcol {
+    width: 42px;
+    height: 42px;
+    float: left;
+    margin: 12px;
+    cursor: pointer !important;
+  }
+
+  .icon-menu-responsive {
+    display: block;
+    cursor: pointer !important;
+  }
+}
+
+*/
+
+
+
+

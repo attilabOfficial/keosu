@@ -1,81 +1,109 @@
-	{# 	
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2014  Vincent Le Borgne, Pockeit
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
 
 {% extends 'KeosuCoreBundle::page.html.twig' %}
 {% block contentmenu %}
-	<div class="activesidebar">
-{% endblock %}
-{% block body %}
-	<div id="content">
-		<div class="panel">
-			{% block content %}
-			<div class="dashboard">
-				<div class="row">
-					<div class="col-md-11">
-						<h2>The content part</h2>
-						<p>
-							In the content, mustly the first page you see, you will add content for your application. But don't worry, the page will come in a second step.
-						</p>
-						<p>
-							Have fun
-						</p>
-					</div>
-				</div>	
-				<div class="row">
-					<div class="col-md-3">
-						<div class="wellcustom">
-							<h3>Readers</h3>
-							<p>
-								A reader is a connector to an external source (website, RSS, software etc ...) to import contents in Keosu.
-							</p>
-							<a href="{{ path('keosu_ReaderManager_manage') }}"><button type="button" class="btn btn-default">Manage readers</button></a>
+<div class="activesidebar">
+	{% endblock %}
+	{% block body %}
+		<div id="content">
+			<div class="panel">
+				{% block content %}
+					<div class="dashboard">
+						<div class="row">
+							<div class="col-md-11">
+								<h2><span class="glyphicon glyphicon-th icon-menu"></span> Content</h2>
+								<p>
+									In the content, mustly the first page you see, you will add content for your application. But don't worry, the page will come in a second step.
+								</p>
+								<p>
+									Have fun
+								</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="wellcustom">
+									<h3><span class="glyphicon glyphicon-search icon-menu"></span>Readers</h3>
+									<p>
+										A reader is a connector to an external source (website, RSS, software etc ...) to import contents in Keosu.
+									</p>
+									<a href="{{ path('keosu_ReaderManager_manage') }}"><button type="button" class="btn btn-default">Manage readers</button></a>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="wellcustom">
+									<h3><span class="glyphicon glyphicon-pushpin icon-menu"></span>Article</h3>
+									<p>
+										An article is ... well ... a simple article with title, content, and pictures ...
+									</p>
+									<div class="btn-container">
+										<a href="{{ path('keosu_article_viewlist') }}"><button type="button" class="btn btn-default">Manage articles</button></a></div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="wellcustom">
+									<h3><span class="glyphicon glyphicon-map-marker icon-menu"></span>Location</h3>
+									<p>
+										A point on a map
+									</p>
+									<a href="{{ path('keosu_location_viewlist') }}"><button type="button" class="btn btn-default">Manage POI</button></a>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="wellcustom">
+									<h3><span class="glyphicon glyphicon-picture icon-menu"></span>Picture</h3>
+									<p>
+										Import pictures to feed your galleries
+									</p>
+									<a href="{{ path('keosu_picture_viewlist') }}"><button type="button" class="btn btn-default">Manage pictures</button></a>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="wellcustom">
+									<h3><span class="glyphicon glyphicon-calendar icon-menu"></span>Event</h3>
+									<p>
+										An event of a calendar
+									</p>
+									<a href="{{ path('keosu_event_viewlist') }}"><button type="button" class="btn btn-default">Manage events</button></a>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="wellcustom">
+									<h3><span class="glyphicon glyphicon-list icon-menu"></span>Menu</h3>
+									<p>
+										Add awesome menus to your project app
+									</p>
+									<a href="{{ path('keosu_menu_viewlist') }}"><button type="button" class="btn btn-default">Manage menus</button></a>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="wellcustom">
+									<h3><span class="glyphicon glyphicon-search icon-menu"></span>Search</h3>
+									<p>
+										Manage searches entries
+									</p>
+									<a href="{{ path('keosu_search_viewlist') }}"><button type="button" class="btn btn-default">Manage searches</button></a>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="col-md-3">
-						<div class="wellcustom">
-							<h3>Article</h3>
-							<p>
-								An article is ... well ... a simple article with title, content, and pictures ...
-							</p>
-							<a href="{{ path('keosu_article_viewlist') }}"><button type="button" class="btn btn-default">Manage articles</button></a>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="wellcustom">
-							<h3>Location</h3>
-							<p>
-								A point on a map
-							</p>
-							<a href="{{ path('keosu_location_viewlist') }}"><button type="button" class="btn btn-default">Manage POI</button></a>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="wellcustom">
-							<h3>Event</h3>
-							<p>
-								An event of a calendar
-							</p>
-							<a href="{{ path('keosu_event_viewlist') }}"><button type="button" class="btn btn-default">Manage events</button></a>
-						</div>
-					</div>
-				</div>
+				{% endblock %}
 			</div>
-			{% endblock %}
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}

@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @see http://www.webtipblog.com/adding-an-ajax-login-form-to-a-symfony-project/
@@ -86,7 +86,7 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface, Au
 	// if form login
 	} else {
 		// set authentication exception to session
-		$request->getSession()->set(SecurityContextInterface::AUTHENTICATION_ERROR, $exception);
+		$request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
 		return new RedirectResponse( $this->router->generate( 'fos_user_security_login' ) );
 	}
 	}

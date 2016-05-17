@@ -119,10 +119,10 @@ class Exporter
         $jsInit = $jsCore = $jsEnd = '';
         $css = '';
 
-		// load index.html (main template)
-		$indexHtml = new SmartDOMDocument();
-		$fileContent = file_get_contents($this->getExportAbsolutePath() . '/simulator/www/index.html');
-		@$indexHtml->loadHTML($fileContent);
+        // load index.html (main template)
+        $indexHtml = new SmartDOMDocument();
+        $fileContent = file_get_contents($this->getExportAbsolutePath() . '/simulator/www/index.html');
+        @$indexHtml->loadHTML($fileContent);
 
         ///////////////////////////////////////////////////
         // Generate config.xml
@@ -143,7 +143,7 @@ class Exporter
         $author->setAttribute('href', $app->getWebsite());
         $author->setAttribute('email', $app->getEmail());
         $widget->setAttribute('version', $app->getVersion());
-		$widget->setAttribute('versionCode', $app->getVersion());
+        $widget->setAttribute('versionCode', $app->getVersion());
         $widget->appendChild($author);
 
         $mainPage = null;
@@ -172,9 +172,9 @@ class Exporter
                 $mainPage = $page->getId();
             }
 
-			$document = new SmartDOMDocument();
-			$fileContent = file_get_contents(TemplateUtil::getPageTemplateAbsolutePath().$page->getTemplateId());
-			@$document->loadHTML($fileContent);
+            $document = new SmartDOMDocument();
+            $fileContent = file_get_contents(TemplateUtil::getPageTemplateAbsolutePath() . $page->getTemplateId());
+            @$document->loadHTML($fileContent);
 
             $finder = new \DOMXPath($document);
             $classname = "zone";//Find all the zone div in page template
@@ -220,15 +220,15 @@ class Exporter
                     if ($event->getNewConfig() !== null)
                         $paramGadget = $event->getNewConfig();
 
-					$dataEvent = new ExportDataPackageEvent($appId,$paramGadget);
-					$dispatcher->dispatch(KeosuEvents::PACKAGE_EXPORT_DATA . $package->getName(), $dataEvent);
-					if ($dataEvent->getData() !== null){
-						if($dataEvent->getFileName() != null){
-							$this->writeFile($dataEvent->getData(), $dataEvent->getFileName(), '/simulator/www/data/');
-						}else{
-							$this->writeFile($dataEvent->getData(), $gadget->getId().".json", '/simulator/www/data/');
-						}
-					}
+                    $dataEvent = new ExportDataPackageEvent($appId, $paramGadget);
+                    $dispatcher->dispatch(KeosuEvents::PACKAGE_EXPORT_DATA . $package->getName(), $dataEvent);
+                    if ($dataEvent->getData() !== null) {
+                        if ($dataEvent->getFileName() != null) {
+                            $this->writeFile($dataEvent->getData(), $dataEvent->getFileName(), '/simulator/www/data/');
+                        } else {
+                            $this->writeFile($dataEvent->getData(), $gadget->getId() . ".json", '/simulator/www/data/');
+                        }
+                    }
 
 
                     //Copy in HTML
@@ -253,10 +253,10 @@ class Exporter
         // Generate main view index.html
         ///////////////////////////////////////////////////
 
-		// import theme in index.html
-		$tmpthemeHeader = new SmartDOMDocument();
-		$fileContent = file_get_contents(ThemeUtil::getAbsolutePath() .$app->getTheme().'/header/header.html');
-		@$tmpthemeHeader->loadHTML($fileContent);
+        // import theme in index.html
+        $tmpthemeHeader = new SmartDOMDocument();
+        $fileContent = file_get_contents(ThemeUtil::getAbsolutePath() . $app->getTheme() . '/header/header.html');
+        @$tmpthemeHeader->loadHTML($fileContent);
 
         $children = $tmpthemeHeader->getElementsByTagName('head')->item(0)->childNodes;
         foreach ($children as $child) {
@@ -301,10 +301,10 @@ class Exporter
             'org.apache.cordova.device',
             'org.apache.cordova.device-motion',
             'org.apache.cordova.device-orientation',
-			'org.apache.cordova.dialogs'
+            'org.apache.cordova.dialogs'
         );
         foreach ($basePlugin as $plugin) {
-            $device = $configXml->createElement('gap:plugin');
+            $device = $configXml->createElement('plugin');
             $device->setAttribute('name', $plugin);
             $widget->appendChild($device);
         }
@@ -319,68 +319,99 @@ class Exporter
         }
 
 
-        // Define app icon for each platform.
-        $icons = array(
-            array("src" => "icon.png"),
-            // ANDROID
-            array("src" => "res/icons/android/iconA36.png", "gap:platform" => "android", "gap:density" => "ldpi"),
-            array("src" => "res/icons/android/iconA48.png", "gap:platform" => "android", "gap:density" => "mdpi"),
-            array("src" => "res/icons/android/iconA72.png", "gap:platform" => "android", "gap:density" => "hdpi"),
-            array("src" => "res/icons/android/iconA96.png", "gap:platform" => "android", "gap:density" => "xhdpi"),
-            // IOS
-            array("src" => "res/icons/ios/iconI57.png", "gap:platform" => "ios", "width" => "57", "height" => "57"),
-            array("src" => "res/icons/ios/iconI72.png", "gap:platform" => "ios", "width" => "72", "height" => "72"),
-            array("src" => "res/icons/ios/iconI114.png", "gap:platform" => "ios", "width" => "114", "height" => "114"),
-            array("src" => "res/icons/ios/iconI120.png", "gap:platform" => "ios", "width" => "120", "height" => "120"),
-            array("src" => "res/icons/ios/iconI76.png", "gap:platform" => "ios", "width" => "76", "height" => "76"),
-            array("src" => "res/icons/ios/iconI152.png", "gap:platform" => "ios", "width" => "152", "height" => "152"),
-            array("src" => "res/icons/ios/iconI144.png", "gap:platform" => "ios", "width" => "144", "height" => "144"),
+        // Define IOS ressources
+        $resIos = array(
+            // icon IOS
+            array(
+                "icon",
+                array("src" => "res/icons/ios/iconI57.png", "width" => "57", "height" => "57"),
+                array("src" => "res/icons/ios/iconI72.png", "width" => "72", "height" => "72"),
+                array("src" => "res/icons/ios/iconI114.png", "width" => "114", "height" => "114"),
+                array("src" => "res/icons/ios/iconI120.png", "width" => "120", "height" => "120"),
+                array("src" => "res/icons/ios/iconI76.png", "width" => "76", "height" => "76"),
+                array("src" => "res/icons/ios/iconI152.png", "width" => "152", "height" => "152"),
+                array("src" => "res/icons/ios/iconI144.png", "width" => "144", "height" => "144")),
+            //splash screen IOS
+            array(
+                "splash",
+                array("src" => "res/splashscreens/ios/splashscreenI320x480.png", "width" => "320", "height" => "480"),
+                array("src" => "res/splashscreens/ios/splashscreenI640x960.png", "width" => "640", "height" => "960"),
+                array("src" => "res/splashscreens/ios/splashscreenI640x1136.png", "width" => "640", "height" => "1136"),
+                array("src" => "res/splashscreens/ios/splashscreenI1024x768.png", "width" => "1024", "height" => "768"),
+                array("src" => "res/splashscreens/ios/splashscreenI768x1024.png", "width" => "768", "height" => "1024"),
+                array("src" => "res/splashscreens/ios/splashscreenI2048x1536.png", "width" => "2048", "height" => "1536"),
+                array("src" => "res/splashscreens/ios/splashscreenI1536x2048.png", "width" => "1536", "height" => "2048"),
+                array("src" => "res/splashscreens/ios/splashscreenI750x1334.png", "width" => "750", "height" => "1334"),
+                array("src" => "res/splashscreens/ios/splashscreenI1242x2208.png", "width" => "1242", "height" => "2208"),
+                array("src" => "res/splashscreens/ios/splashscreenI2208x1242.png", "width" => "2208", "height" => "1242"))
         );
 
-        foreach ($icons as $i) {
-            $icon = $configXml->createElement('icon');
-            foreach ($i as $k => $v) {
-                $icon->setAttribute($k, $v);
-            }
-            $widget->appendChild($icon);
-        }
-
-
-        // Define app splash screen for each platform.
-        $splashScreen = array(
-            // ANDROID
+        // Define Android ressources
+        $resAndroid = array(
+            // icon ANDROID
+            array(
+                "icon",
+                array("src" => "res/icons/android/iconA36.png", "qualifier" => "ldpi"),
+                array("src" => "res/icons/android/iconA48.png", "qualifier" => "mdpi"),
+                array("src" => "res/icons/android/iconA72.png", "qualifier" => "hdpi"),
+                array("src" => "res/icons/android/iconA96.png", "qualifier" => "xhdpi")),
+            // splash screen ANDROID
             // Android splashscreens can get .png or .9.png extensions : getAndroidSplashScreenPath() has been used to manage both situations
-            array("src" => $this->getAndroidSplashscreenPath("splashscreenA320x436"), "gap:platform" => "android", "gap:density" => "ldpi"),
-            array("src" => $this->getAndroidSplashscreenPath("splashscreenA320x470"), "gap:platform" => "android", "gap:density" => "mdpi"),
-            array("src" => $this->getAndroidSplashscreenPath("splashscreenA640x480"), "gap:platform" => "android", "gap:density" => "hdpi"),
-            array("src" => $this->getAndroidSplashscreenPath("splashscreenA960x720"), "gap:platform" => "android", "gap:density" => "xhdpi"),
-            // IOS
-            array("src" => "res/splashscreens/ios/splashscreenI320x480.png", "gap:platform" => "ios", "width" => "320", "height" => "480"),
-            array("src" => "res/splashscreens/ios/splashscreenI640x960.png", "gap:platform" => "ios", "width" => "640", "height" => "960"),
-            array("src" => "res/splashscreens/ios/splashscreenI640x1136.png", "gap:platform" => "ios", "width" => "640", "height" => "1136"),
-            array("src" => "res/splashscreens/ios/splashscreenI1024x768.png", "gap:platform" => "ios", "width" => "1024", "height" => "768"),
-            array("src" => "res/splashscreens/ios/splashscreenI768x1024.png", "gap:platform" => "ios", "width" => "768", "height" => "1024"),
-            array("src" => "res/splashscreens/ios/splashscreenI2048x1536.png", "gap:platform" => "ios", "width" => "2048", "height" => "1536"),
-            array("src" => "res/splashscreens/ios/splashscreenI1536x2048.png", "gap:platform" => "ios", "width" => "1536", "height" => "2048"),
-			array("src" => "res/splashscreens/ios/splashscreenI750x1334.png", "gap:platform" => "ios", "width" => "750", "height" => "1334"),
-			array("src" => "res/splashscreens/ios/splashscreenI1242x2208.png", "gap:platform" => "ios", "width" => "1242", "height" => "2208"),
-			array("src" => "res/splashscreens/ios/splashscreenI2208x1242.png", "gap:platform" => "ios", "width" => "2208", "height" => "1242"),
+            array(
+                "splash",
+                array("src" => $this->getAndroidSplashscreenPath("splashscreenA320x436"), "qualifier" => "ldpi"),
+                array("src" => $this->getAndroidSplashscreenPath("splashscreenA320x470"), "qualifier" => "mdpi"),
+                array("src" => $this->getAndroidSplashscreenPath("splashscreenA640x480"), "qualifier" => "hdpi"),
+                array("src" => $this->getAndroidSplashscreenPath("splashscreenA960x720"), "qualifier" => "xhdpi"))
         );
 
-        foreach ($splashScreen as $asplash) {
-            $splash = $configXml->createElement('gap:splash');
-            foreach ($asplash as $k => $v)
-                $splash->setAttribute($k, $v);
-            $widget->appendChild($splash);
+        // Define Winphone ressources
+        $resWinphone = array(
+            // icon WINPHONE
+            array(
+                "icon",
+                array("src" => "res/icons/winphone/icon.png"),
+                array("src" => "res/icons/winphone/tileicon.png", "role" => "background"),
+                array("src" => "res/icons/winphone/Square44x44Logo.scale-100.png", "width" => "44", "height" => "44"),
+                array("src" => "res/icons/winphone/Square44x44Logo.scale-240.png", "width" => "106", "height" => "106"),
+                array("src" => "res/icons/winphone/Square150x150Logo.scale-100.png", "width" => "150", "height" => "150"),
+                array("src" => "res/icons/winphone/Square150x150Logo.scale-240.png", "width" => "360", "height" => "360"),
+                array("src" => "res/icons/winphone/Square71x71Logo.scale-100.png", "width" => "71", "height" => "71"),
+                array("src" => "res/icons/winphone/Square71x71Logo.scale-240.png", "width" => "170", "height" => "170")),
+            //splash screen WINPHONE
+            array(
+                "splash",
+                array("src" => "res/splashscreens/winphone/splash.jpg"),
+                array("src" => "res/splashscreens/winphone/SplashScreenPhone.scale-240.png", "width" => "1152", "height" => "1920"))
+        );
+
+        // Create an array with all ressources pltaform
+        $resAll = array(
+            "ios" => $resIos,
+            "android" => $resAndroid,
+            "winphone" => $resWinphone
+        );
+
+        // Create xml ressources
+        foreach ($resAll as $name => $res) {
+            $platform = $configXml->createElement("platform");
+            $platform->setAttribute("name", $name);
+            foreach ($res as $elements) {
+                foreach ($elements as $els) {
+                    if (!is_array($els))
+                        $type = ($els == "icon") ? "icon" : "splash";
+                    if (is_array($els)) {
+                        $el = $configXml->createElement($type);
+                        foreach ($els as $k => $v) {
+                            $el->setAttribute($k, $v);
+                        }
+                        $platform->appendChild($el);
+                    }
+                }
+            }
+            $widget->appendChild($platform);
         }
 
-        // Define access to external domains.
-        // <access), - a blank access tag denies access to all external resources.
-        // <access origin="*"), - a wildcard access tag allows access to all external resource.
-        // Otherwise, you can specify specific domains:
-        // <access origin="http://phonegap.com"), - allow any secure requests to http://phonegap.com/
-        // <access origin="http://phonegap.com" subdomains="true"), - same as above, but including subdomains, such as http://build.phonegap.com/
-        // <access origin="http://phonegap.com" browserOnly="true"), - only allows http://phonegap.com to be opened by the child browser.
         $access = array(
             array('origin' => '*')
         );
@@ -615,22 +646,22 @@ class Exporter
             } elseif ($tagName === '@text') {
                 $text = $configXml->createTextNode($tag[$tagName]);
                 $currentNode->appendChild($text);
-             } elseif ($tagName === '@value') {
-				foreach ($tag[$tagName] as $key => $value) {
-					if(is_array($value)){
-						$newnode = $configXml->createElement($key);
-						foreach ($value as $subkey => $subvalue) {
-							$childNewNode = $configXml->createElement($subkey,$subvalue);
-							$newnode->appendChild($childNewNode);
-						}
-						$currentNode->appendChild($newnode);
-					}else{
-						$newnode = $configXml->createElement($key,$value);
-						$currentNode->appendChild($newnode);
-					}
+            } elseif ($tagName === '@value') {
+                foreach ($tag[$tagName] as $key => $value) {
+                    if (is_array($value)) {
+                        $newnode = $configXml->createElement($key);
+                        foreach ($value as $subkey => $subvalue) {
+                            $childNewNode = $configXml->createElement($subkey, $subvalue);
+                            $newnode->appendChild($childNewNode);
+                        }
+                        $currentNode->appendChild($newnode);
+                    } else {
+                        $newnode = $configXml->createElement($key, $value);
+                        $currentNode->appendChild($newnode);
+                    }
 
-				}
-			} else {
+                }
+            } else {
                 $element = $configXml->createElement($tagName);
                 $this->convertToXml($tag[$tagName], $configXml, $element, $configAppForPackage);
                 $currentNode->appendChild($element);

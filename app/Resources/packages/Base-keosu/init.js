@@ -47,7 +47,6 @@ app.controller('main_Controller', function($http, $rootScope, $scope) {
     $http.get('data/globalParam.json').success(function(data) {
 		$rootScope.appName = data.name;
 	});
-	//alert("Connection :"+navigator.connection.type);
 	$rootScope.initButton();
 	$rootScope.offline = false;
 	document.addEventListener("offline", function() {

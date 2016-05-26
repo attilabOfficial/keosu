@@ -21,6 +21,8 @@
 //Main function
 app.controller('keosu-calendarController', function ($rootScope, $scope, $http, $sce, usSpinnerService, cacheManagerService) {
 
+    var map = null;
+
     $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
     $scope.parts = function (isList, isEvent) {
@@ -59,22 +61,14 @@ app.controller('keosu-calendarController', function ($rootScope, $scope, $http, 
     $scope.$on('open', function (event, page) {
         $scope.event = page;
         $scope.parts(false, true);
-        var map = $scope.initialize();
-        map.setZoom($scope.param.gadgetParam.zoom);
-        google.maps.event.trigger($("#map_canvas")[0], 'resize');
-        var latitudeAndLongitude = new google.maps.LatLng($scope.event.lat, $scope.event.lng);
-        map.setCenter(latitudeAndLongitude);
 
-        //Init POI marker
-        markerOne = new google.maps.Marker({
-            position: latitudeAndLongitude,
-            title: "event",
-            map: map
-        });
+        // edit Map
+        map.editMarker("marker", [$scope.event.lat, $scope.event.lng]);
+        map.setZoom($scope.param.gadgetParam.zoom);
 
         window.setTimeout(function () {
             google.maps.event.trigger($("#map_canvas")[0], 'resize');
-            map.setCenter(latitudeAndLongitude);
+            map.setCenter([$scope.event.lat, $scope.event.lng]);
         }, 100);
 
         $scope.parts(false, true, $scope);
@@ -101,16 +95,6 @@ app.controller('keosu-calendarController', function ($rootScope, $scope, $http, 
     $scope.more = function () {
         $scope.activePage++;
         $scope.getPage($scope.activePage, false);
-    }
-    //Init google gadget
-    $scope.initialize = function () {
-        var mapOptions = {
-            center: new google.maps.LatLng(47.21677, -1.553307),
-            zoom: 3,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-        return map;
     }
     /*
      * @pageNum : page number requested.
@@ -147,6 +131,9 @@ app.controller('keosu-calendarController', function ($rootScope, $scope, $http, 
         $scope.isFirstPage = true;
         $scope.isLastPage = true;
         $scope.getPage($scope.activePage, true);
+        //init Map
+        map = new MapElement({name : "map_canvas"});
+        map.addMarker("marker", [0, 0]);
     };
 });
 

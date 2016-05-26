@@ -1,39 +1,87 @@
 {
-    "name" : "keosu-around-me",
-    "description" : "display a map that show where your are",
-    "version" : "0.1",
-    "type" : "gadget",
-
-	"configCordova" : [
-		{ "gap:plugin" : [
-			{ "@attributes" : {"name" : "org.apache.cordova.geolocation" , "version":"0.3.10" } }
-		]},
-		{ "gap:config-file" : [
-			{ "@attributes" : {"platform" : "ios" , "parent":"NSLocationWhenInUseUsageDescription", "overwrite":"false" } },
-			{ "@value" :{"array":{"string":"Find locations around you"}}}
-		]}
-	],
-
-    "param" : [
-    	{ "name" : "zoom", "type" : "choice","options": {
-         "choices" : {"1":"1","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","10":"10","11":"11","12":"12","13":"13","14":"14","15":"15","16":"16","17":"17"},
-         "label" : "Zoom level when opening"
-         }},
-        {"name" : "tag", "type" : "text", "options":{
-            "required" : 0
-        }},
-      { "name" : "cache", "type" : "number", "options": {
+  "name": "keosu-around-me",
+  "description": "display a map that show where your are",
+  "version": "0.1",
+  "type": "gadget",
+  "configCordova": [
+    {
+      "gap:plugin": [
+        {
+          "@attributes": {
+            "name": "org.apache.cordova.geolocation",
+            "version": "0.3.10"
+          }
+        }
+      ]
+    },
+    {
+      "gap:config-file": [
+        {
+          "@attributes": {
+            "platform": "ios",
+            "parent": "NSLocationWhenInUseUsageDescription",
+            "overwrite": "false"
+          }
+        },
+        {
+          "@value": {
+            "array": {
+              "string": "Find locations around you"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "param": [
+    {
+      "name": "title",
+      "type": "text",
+      "options": {
+        "required": 0,
+        "label": "Arround me title"
+      }
+    },
+    {
+      "name": "tag",
+      "type": "text",
+      "options": {
+        "required": 0
+      }
+    },
+    {
+      "name": "cache",
+      "type": "number",
+      "options": {
         "label": "Cache in minute",
-        "data": 10}},
-      { "name" : "timeout", "type" : "number", "options": {
+        "data": 10
+      }
+    },
+    {
+      "name": "timeout",
+      "type": "number",
+      "options": {
         "label": "Timeout in seconde",
-        "data": 10}}
-    ],
-
-	"libJs" : ["https://maps.googleapis.com/maps/api/js?sensor=false"],
-    "require" : [
-        { "name" : "keosu-base" , "version" : ">=0.1" },
-        { "name" : "keosu-comments" , "version" : ">=0.1" }
-    ]
+        "data": 10
+      }
+    }
+  ],
+  "libJs": [
+    "https://maps.googleapis.com/maps/api/js?sensor=false"
+  ],
+  "require": [
+    {
+      "name": "keosu-base",
+      "version": ">=0.1"
+    },
+    {
+      "name": "keosu-comments",
+      "version": ">=0.1"
+    },
+    {
+      "name": "lib-js",
+      "version": ">=0.1"
+    }
+  ]
 }
 

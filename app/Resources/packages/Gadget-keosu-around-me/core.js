@@ -19,19 +19,39 @@
 //Main controller
 app.controller('keosu-around-meController', function ($rootScope, $scope, $http, $sce, usSpinnerService, cacheManagerService) {
 
-    //Init google gadget
-    $scope.initialize = function () {
-        var mapOptions = {
-            center: new google.maps.LatLng(47.21677, -1.553307),
-            zoom: 8,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        if ($scope.map == null)
-            $scope.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-        return $scope.map;
+    var mapDefault = null;
+
+    var initMap = function () {
+        if (document.getElementById("map_default")) {
+            mapDefault = new MapElement({
+                name: "map_default",
+                requiredUserPosition: true,
+                requiredDestination: true
+            });
+            mapDefault.addMarker("user", [$scope.position.latitude, $scope.position.longitude]);
+            mapDefault.addMarker("position", [0, 0]);
+        }
+        // init map all markers
+        else {
+            var mapAll = new MapElement({
+                name: "map_all",
+                requiredUserPosition: true,
+                requiredDestination: true
+            });
+            for (var i = 0; i < $scope.pages.length; i++) {
+                var positionName = "position" + i.toString();
+                mapAll.addMarker(positionName, [$scope.pages[i].lat, $scope.pages[i].lng]);
+            }
+            updateMap("map_all", mapAll);
+        }
+    };
+
+    var updateMap = function (name, map) {
+        window.setTimeout(function () {
+            google.maps.event.trigger(document.getElementById(name), 'resize');
+            map.bound();
+        }, 100);
     }
-
-
     /**
      * specific action when the 'open' button is called
      */
@@ -41,47 +61,8 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
         $scope.curPage = page;
         $scope.curPage.descHtml = $('<div/>').html($scope.curPage.description).text();
         $scope.isList = false;
-        $scope.map = $scope.initialize();
-        $scope.map.setZoom($scope.param.gadgetParam.zoom);
-        google.maps.event.trigger(document.getElementById("map_canvas"), 'resize');
-
-        //POI Position
-        var latitudeAndLongitude = new google.maps.LatLng(page.lat, page.lng);
-        $scope.map.setCenter(latitudeAndLongitude);
-
-        //User position
-        var pinColor = "00EE00";
-        var pinImage = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor;
-        var userPosition = new google.maps.LatLng($scope.position.latitude, $scope.position.longitude);
-        $scope.userMarker = new google.maps.Marker({
-            position: userPosition
-        });
-        $scope.userMarker.setIcon(({
-            url: pinImage
-        }));
-        $scope.userMarker.setMap($scope.map);
-
-        //Init POI marker
-        markerOne = new google.maps.Marker({
-            position: latitudeAndLongitude,
-            title: $scope.curPage.title,
-            map: $scope.map
-        });
-
-        //Trace line between two point
-        var newLineCoordinates = [$scope.userMarker.position, latitudeAndLongitude];
-        var newLine = new google.maps.Polyline({
-            path: newLineCoordinates,
-            strokeColor: "#FF0000",
-            strokeOpacity: 1.0,
-            strokeWeight: 2
-        });
-        newLine.setMap($scope.map);
-
-        window.setTimeout(function () {
-            google.maps.event.trigger(document.getElementById("map_canvas"), 'resize');
-            $scope.map.setCenter(latitudeAndLongitude);
-        }, 100);
+        mapDefault.editMarker("position", [page.lat, page.lng]);
+        updateMap("map_default", mapDefault);
 
 
     });
@@ -104,6 +85,9 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
                 + position.latitude + '/'
                 + position.longitude + '/0/' + '10' + '/json', $scope.param.gadgetParam.cache, $scope.param.gadgetParam.timeout).success(function (data) {
                 $scope.pages = data.data;
+                $scope.title = $scope.param.gadgetParam.title;
+                // init map
+                initMap();
                 usSpinnerService.stop('spinner');
             }).error(function (error) {
                 $scope.error = (error);

@@ -37,31 +37,20 @@ app.controller('keosu-mapController', function ($scope, $http, $sce, usSpinnerSe
 		cacheManagerService.get($scope.param.host + 'service/gadget/mapgadget/' + $scope.param.gadgetId + '/json', $scope.param.gadgetParam.cache, $scope.param.gadgetParam.timeout).success(function (data) {
 			usSpinnerService.stop('spinner');
 			$scope.map = data[0];
-			var map = $scope.initialize();
+			
 			$scope.title = $('<div/>').html(data[0].name).text();
 			$scope.content = $sce.trustAsHtml(data[0].description);
+
+			//init map
+			var map = new MapElement({name : "map_canvas"});
+			map.addMarker("marker", [data[0].lat, data[0].lng]);
+			map.setCenter([data[0].lat, data[0].lng]);
 			map.setZoom($scope.param.gadgetParam.zoom);
 			google.maps.event.trigger($("#map_canvas")[0], 'resize');
-			var latitudeAndLongitude = new google.maps.LatLng(data[0].lat, data[0].lng);
-			map.setCenter(latitudeAndLongitude);
-			markerOne = new google.maps.Marker({
-				position: latitudeAndLongitude,
-				map: map
-			});
+
 		}).error(function (error) {
 			$scope.error = (error);
 			usSpinnerService.stop('spinner');
 		});
-	};
-
-	$scope.initialize = function () {
-		var mapOptions = {
-			center: new google.maps.LatLng(47.21677, -1.553307),//Default lat and lng
-			zoom: 8,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		var map = new google.maps.Map(document.getElementById("map_canvas"),
-			mapOptions);
-		return map;
 	};
 });

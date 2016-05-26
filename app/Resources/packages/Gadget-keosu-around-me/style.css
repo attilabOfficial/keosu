@@ -1,7 +1,7 @@
 /***************************
    MAP
 ***************************/
-#map_canvas {
+#map_default, #map_all {
 	width: 100%;
 	height: 400px;
 	margin: 0;

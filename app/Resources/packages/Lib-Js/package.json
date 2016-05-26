@@ -1,0 +1,9 @@
+{
+   "name" : "lib-js",
+   "description" : "This allowed to create personal scripts",
+   "version" : "0.1",
+   "type" : "lib",
+   "libJs" : [
+      "map.js"
+   ]
+}

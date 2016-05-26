@@ -121,6 +121,10 @@ HEADER
 	margin: 5px;
 }
 
+.block-button {
+	margin-top: 80px;
+}
+
 /****************************
 	OFFLINE
 ****************************/
@@ -163,7 +167,7 @@ Menu
 	font-size: 0.9em;
 	width:300px;
 	padding-bottom: 80px;
-	z-index: 100;
+	z-index: 1050;
 	box-shadow: 0 0 10px #000;
 	-webkit-transition:0.1s linear all;
 	transition:0.1s linear all;

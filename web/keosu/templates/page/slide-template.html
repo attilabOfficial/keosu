@@ -4,20 +4,18 @@
             <div class="icon-menu2"></div>
         </div>
 		<div class="title"><b>{{::appName}}</b></div>
-		<div class="backButton" ng-click="back()" ng-show="previousButton">
-			<span class="fui-arrow-left animated fadeIn btn" aria-hidden="true"></span>
-		</div>
-		<div class="backButton" ng-click="back()" ng-show="closeButton">
-			<span class="glyphicon glyphicon-remove animated fadeIn btn" aria-hidden="true"></span>
-		</div>
     </div>
-
 </nav>
+<div class="block-button">
+	<div class="" ng-click="back()" ng-show="closeButton">
+		<span class="glyphicon glyphicon-remove animated fadeIn btn" aria-hidden="true"></span>
+	</div>
+</div>
 <div style="overflow-x: hidden"></div>
 <div class="slide-menu" ng-class="{'open' : menuOpen}">
 	<div id="menu" class="zone">&nbsp;</div>
 </div>
-<div class="content">
+<div class="">
 	<div class="container-fluid">
 		<div id="body" class="zone">&nbsp;</div>
 	</div>

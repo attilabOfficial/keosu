@@ -132,8 +132,8 @@ HEADER
 	position: fixed;
 	display:block;
 	top: 60px;
-	right:0px; 
-	left: 0px;
+	right:0;
+	left: 0;
 	background-color: #19a6d4;
 	text-align: center;
 	color:white;
@@ -167,7 +167,7 @@ Menu
 	font-size: 0.9em;
 	width:300px;
 	padding-bottom: 80px;
-	z-index: 1050;
+	z-index: 100;
 	box-shadow: 0 0 10px #000;
 	-webkit-transition:0.1s linear all;
 	transition:0.1s linear all;

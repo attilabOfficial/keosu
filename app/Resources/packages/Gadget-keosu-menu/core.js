@@ -20,6 +20,7 @@ app.controller('keosu-menuController', function ($rootScope, $scope, $http,$loca
 		$rootScope.initButton();
 		$scope.pages = params.gadgetParam.pages;
 		$http.get('data/'+params.gadgetId+".json").success(function(data) {
+			console.log(data);
 			$scope.pages = data;
 		});
 	};

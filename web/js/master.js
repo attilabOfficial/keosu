@@ -44,11 +44,11 @@ function themeButton(url_base, themeDir){
 		$( this ).append(img);
 	});
 
-	$(".imgtheme input[checked=checked]").parent(".radio").find("img").css("border","red solid 3px");
+	$(".img-theme input[checked=checked]").parent(".radio").find("img").css("border","red solid 3px");
 	
 	// switch border color
-	$(".imgtheme img").click(function(){
-		$(".imgtheme img").css("border","none");
+	$(".img-theme img").click(function(){
+		$(".img-theme img").css("border","none");
 		$(this).css("border","red solid 3px");
 	});
 }

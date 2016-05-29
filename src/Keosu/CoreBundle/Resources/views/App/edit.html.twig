@@ -22,13 +22,13 @@
 {% block body %}
     <script>
         $(document).ready(function () {
-            themeButton("{{url_base}}", "{{themeDir}}");
+            themeButton("{{ url_base }}", "{{ themeDir }}");
         });
 
         var _URL = window.URL || window.webkitURL;
         /*
          *Test the size of an image uploaded
-         *@param input : tag input controler
+         *@param input : tag input controller
          *@param width : width expected
          *@param height : height expected
          *@param callback : function who upload the image if it's ok
@@ -51,8 +51,8 @@
 
         /*
          *Change the preview with the image uploaded
-         *@param input : tag input controler
-         *@param preview : string who contain the name of the balise "preview".
+         *@param input : tag input controller
+         *@param preview : string who contain the name of the marker "preview".
          */
         function readURL(input, preview) {
             if (input.files && input.files[0]) {
@@ -60,7 +60,7 @@
 
                 reader.onload = function (e) {
                     $('#' + preview).attr('src', e.target.result);
-                }
+                };
 
                 reader.readAsDataURL(input.files[0]);
             }
@@ -72,7 +72,7 @@
                 {% if firstApp %}
                     <div class="alert alert-success">
                         <strong>Welcome to Keosu!</strong>
-                        To start, create your first app
+                        To start, create your first app.
                     </div>
                 {% endif %}
                 <div class="panel">
@@ -90,13 +90,14 @@
                         {{ form_row(form.website) }}
                         {{ form_row(form.email) }}
 
-                        <div class="imgtheme">
+                        <div class="img-theme">
                             {{ form_row(form.theme) }}
                         </div>
                     </fieldset>
 
                     <!-- Trigger Button HTML -->
-                    <input type="button" class="btn" data-toggle="collapse" data-target="#advanced" value="Advanced...">
+                    <input type="button" class="btn btn-default" data-toggle="collapse" data-target="#advanced"
+                           value="Advanced...">
 
                     <div id="advanced" class="collapse">
                         <fieldset>
@@ -110,7 +111,8 @@
                         </fieldset>
 
                         <!-- Trigger Button HTML -->
-                        <input type="button" class="btn" data-toggle="collapse" data-target="#icons" value="Icons...">
+                        <input type="button" class="btn btn-default" data-toggle="collapse" data-target="#icons"
+                               value="Icons...">
 
                         <div id="icons" class="collapse">
                             {% include 'KeosuCoreBundle:App:editIcones.html.twig' %}
@@ -118,8 +120,8 @@
                         <br class="clear"/><br class="clear"/>
 
                         <!-- Trigger Button HTML -->
-                        <input type="button" class="btn" data-toggle="collapse" data-target="#splashscreens"
-                               value="Splashscreens...">
+                        <input type="button" class="btn btn-default" data-toggle="collapse" data-target="#splashscreens"
+                               value="Splash screens...">
 
                         <div id="splashscreens" class="collapse">
                             {% include 'KeosuCoreBundle:App:editSplashscreens.html.twig' %}
@@ -132,7 +134,7 @@
                         {% endfor %}
 
                         <!-- Trigger Button HTML -->
-                        <input type="button" class="btn" data-toggle="collapse" data-target="#configXML"
+                        <input type="button" class="btn btn-default" data-toggle="collapse" data-target="#configXML"
                                value="Preferences...">
 
                         <div id="configXML" class="collapse">

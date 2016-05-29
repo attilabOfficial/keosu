@@ -16,7 +16,8 @@
 }
 
 body {
-  background-color: @bodybackground !important;
+  background-color: @body-background !important;
+  font-family: "lato-regular";
 }
 
 body, html {
@@ -49,11 +50,11 @@ li {
 
 #main-content {
   height: 100%;
-  background-color: @bodybackground;
+  background-color: @body-background;
 }
 
 .panel {
-  background-color: @bodybackground !important;
+  background-color: @body-background !important;
   box-shadow: none;
   legend {
     display: none;
@@ -65,7 +66,7 @@ li {
 }
 
 .hidden {
-  diplay: none;
+  display: none;
 }
 
 .glyphicon {
@@ -76,14 +77,14 @@ li {
 
 //LEFT MENU
 #left-menu {
-  padding-left: 0px;
+  padding-left: 0;
   width: 215px;
 
   .dropdown {
     .menu-link-pos;
     background-color: @nav-background-state;
     .dropdown-menu {
-      border-radius: none;
+      border-radius: 0;
       margin-left: 195px;
       margin-top: -36px;
       background-color: @nav-background;
@@ -96,7 +97,6 @@ li {
   }
 
   .sidebar {
-    font-family: "lato-regular";
     background-color: @nav-background;
 
     .sidemenu {
@@ -117,7 +117,7 @@ li {
       }
 
       a {
-        color: @bodybackground;
+        color: @body-background;
         div {
           .menu-link-pos;
           height: 38px;
@@ -161,7 +161,6 @@ li {
 }
 
 .wellcustom {
-  font-family: "lato-regular";
   background-image: none;
   background-color: #fefefe;
   overflow: hidden;
@@ -179,6 +178,9 @@ li {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+  h3 {
+    height: 65px;
+  }
   p {
     height: 100px;
   }
@@ -266,7 +268,7 @@ li {
 // Dashboard
 div.dashboard {
   div {
-    margin-left: 0px;
+    margin-left: 0;
     div.well {
       background-color: @piGray;
       .box-shadow(0 1px 10px @black);
@@ -344,7 +346,6 @@ div.dashboard {
   width: 320px;
     label{
         color:grey !important;
-        font-family: "lato-regular";
         font-weight:100;
     }
 }
@@ -362,7 +363,7 @@ div.dashboard {
 }
 
 fieldset {
-  border: 0px !important;
+  border: 0 !important;
 }
 
 .form-control:focus {
@@ -443,17 +444,17 @@ fieldset {
 //Edit reader form
 
 //Theme radio button
-.imgtheme .radio {
+.img-theme .radio {
   display: inline;
-  padding-left: 0px;
+  padding-left: 0;
   padding-right: 10px;
 }
 
-.imgtheme img {
+.img-theme img {
   height: 250px;
 }
 
-.imgtheme .radio input[type="radio"] {
+.img-theme .radio input[type="radio"] {
   display: none;
 }
 
@@ -467,7 +468,7 @@ fieldset {
 .imgTemplate .radio input[type="radio"] {
   float: none;
   clear: both;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 .imgTemplate .radio input[type="radio"] {
@@ -499,7 +500,7 @@ fieldset {
   .radio {
     padding: 15px;
     float: left;
-    margin-top: 0px;
+    margin-top: 0;
   }
 
   img {
@@ -512,7 +513,7 @@ fieldset {
 #form_icon .radio {
   padding: 15px;
   float: left;
-  margin-top: 0px;
+  margin-top: 0;
   width: 50px;
 }
 
@@ -521,7 +522,7 @@ fieldset {
   .radio {
     padding: 15px;
     float: left;
-    margin-top: 0px;
+    margin-top: 0;
   }
 
   img {

@@ -30,16 +30,23 @@ use Symfony\Component\HttpFoundation\Request;
 class ServiceController extends Controller {
 
 	public function infoAction() {
-		$user = $this->get('security.token_storage')->getToken()->getUser();
+		$token = $this->get('security.token_storage')->getToken();
+		if($token != null){
+			$user = $token->getUser();
 
-		if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+			if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+					$ret = array(
+					'connect' => true,
+					'type'    => $user->getAccountType(),
+					'email'   => $user->getemail(),
+					'username'=> $user->getUsername(),
+				);
+			} else {
 				$ret = array(
-				'connect' => true,
-				'type'    => $user->getAccountType(),
-				'email'   => $user->getemail(),
-				'username'=> $user->getUsername(),
-			);
-		} else {
+					'connect' => false
+				);
+			}
+		}else{
 			$ret = array(
 				'connect' => false
 			);

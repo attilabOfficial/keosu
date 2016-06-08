@@ -22,10 +22,17 @@ app.directive('keosuComments', function(){
 
 			$scope.commentListAction = function() {
 				if ($scope.objectId) {
-					$http.get($scope.host+'service/gadget/comment/'+$scope.objectName+'/'+$scope.objectId).success(function(data){
-						$scope.comments = data.comments;
-						$scope.connect = data.connect;
+					$http.get($scope.host + 'service/gadget/myaccount/info').success(function(data) {
+						usSpinnerService.stop('spinner');
+						if(data.connect) {
+							$http.get($scope.host+'service/gadget/comment/'+$scope.objectName+'/'+$scope.objectId).success(function(data){
+								$scope.comments = data.comments;
+								$scope.connect = data.connect;
+							});
+						}
+
 					});
+
 				}
 			};
 

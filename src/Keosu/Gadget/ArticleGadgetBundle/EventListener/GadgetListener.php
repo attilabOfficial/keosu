@@ -9,6 +9,7 @@ use keosu\CoreBundle\Event\GadgetSaveConfigEvent;
 use Keosu\Gadget\ArticleGadgetBundle\KeosuGadgetArticleGadgetBundle;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
@@ -57,7 +58,8 @@ class GadgetListener implements EventSubscriberInterface
         $builder->add('article-id', ChoiceType::class, array(
             'label' => 'Article',
             'choices' => $articleList));
-        $builder->add('offline', ChoiceType::class, array('required' => false))
+        $builder
+			->add('offline', CheckboxType::class, array('required' => false))
             ->add('cache', NumberType::class, array(
                 'label' => 'Cache in minutes',
                 'data' => 10

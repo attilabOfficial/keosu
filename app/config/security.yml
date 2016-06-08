@@ -27,6 +27,10 @@ security:
     dev:
       pattern:  ^/(_(profiler|wdt)|css|images|js|install)/
       security: false
+    service:
+          pattern:  ^/service/
+          security: false
+          anonymous: ~
     main:
       pattern: ^/
       form_login:
@@ -45,7 +49,6 @@ security:
         - { path: ^/img, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/js, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/css, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/service, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/install, role: IS_AUTHENTICATED_ANONYMOUSLY }
         
         #Routes
@@ -53,7 +56,6 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: ROLE_SUPER_ADMIN }
-        - { path: ^/service, role: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/sync, role: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/, role: ROLE_ADMIN }
 

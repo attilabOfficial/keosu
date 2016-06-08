@@ -98,9 +98,6 @@ class Exporter
         FilesUtil::copyFolder(ThemeUtil::getAbsolutePath() . $app->getTheme() . '/style',
             $this->getExportAbsolutePath() . '/simulator/www/theme');
 
-        //cordova_plugins.json
-        copy(TemplateUtil::getAbsolutePath() . '/main-header/cordova_plugins.js',
-            $this->getExportAbsolutePath() . '/simulator/www/cordova_plugins.js');
 
         copy(TemplateUtil::getAbsolutePath() . '/main-header/index.html',
             $this->getExportAbsolutePath() . '/simulator/www/index.html');
@@ -442,7 +439,7 @@ class Exporter
         FilesUtil::copyFolder($this->getExportAbsolutePath() . '/simulator/www',
             $this->getExportAbsolutePath() . '/phonegapbuild/www');
 
-        copy(TemplateUtil::getAbsolutePath() . '/main-header/ios/cordova.js',
+        copy(TemplateUtil::getAbsolutePath() . '/main-header/cordova.js',
             $this->getExportAbsolutePath() . '/simulator/www/cordova.js');
 
 

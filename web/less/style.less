@@ -120,7 +120,10 @@ li {
         color: @body-background;
         div {
           .menu-link-pos;
-          height: 38px;
+          min-height: 38px !important;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         &:hover {

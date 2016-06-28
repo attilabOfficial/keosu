@@ -1,174 +1,178 @@
-	{#
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2016  Pockeit
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2016  Pockeit
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
 {% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
 {% form_theme form 'KeosuCoreBundle:Form:fields-article.html.twig' %}
 
 {% block title %}
-Edit article
+    Edit article
 {% endblock %}
 
 {% block content %}
 
-<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
-<script type="text/javascript">
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script type="text/javascript">
 
-	tinymce.init({
-	    selector: "textarea",
-	    plugins: [
-	        "advlist autolink lists link image charmap print preview anchor",
-	        "searchreplace visualblocks code fullscreen",
-	    ],
-	    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-	});
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+        });
 
-	$(document).ready(function() {
-		$('.date').datepicker({ dateFormat: 'dd-mm-y' });
+        $(document).ready(function () {
+            $('.date').datepicker({dateFormat: 'dd-mm-y'});
 
-		var $container = $('.article-images');
-		 // Add a new attachment
-		 function add_image() {
-			 index = $container.children().length;
-			 prototype='<div class="image-collection-entry">';
-			 prototype+='<a class="badge remove-button">';
-			 prototype+='<span class="glyphicon glyphicon-remove"></span></a>';
-			 prototype+='<span class="clear">&nbsp;</span>';
-			 widget=$container.attr('data-prototype').replace(/__name__/g, index);
-			 prototype+=widget;
-			 prototype+='<center><button type="button" class="btn btn-info uploader">Upload File</button></center>';
-			 prototype+='<center><img src="#"style="display:none" class="img-thumbnail img-preview uploader"/></center>';
-			 prototype+='</div>'
-			 $container.append($(prototype));
-	  	}
-		function openInput($el){
-			$el.parent().parent().find('input[type="file"]')[ 0 ].click();
-		}
+            var $container = $('.article-images');
+            // Add a new attachment
+            function add_image() {
+                index = $container.children().length;
+                prototype = '<div class="image-collection-entry">';
+                prototype += '<a class="badge remove-button">';
+                prototype += '<span class="glyphicon glyphicon-remove"></span></a>';
+                prototype += '<span class="clear">&nbsp;</span>';
+                widget = $container.attr('data-prototype').replace(/__name__/g, index);
+                prototype += widget;
+                prototype += '<center><button type="button" class="btn btn-info uploader">Upload File</button></center>';
+                prototype += '<center><img src="#"style="display:none" class="img-thumbnail img-preview uploader"/></center>';
+                prototype += '</div>'
+                $container.append($(prototype));
+            }
 
-		$(document).on("click",'.uploader',function() {
-			 	openInput($(this));
-			    return false;
-		 });
-		$(document).on("click",'.remove-button',function() {
-		      $(this).parent().remove();
-		      $(this).remove();
-		      return false;
-		 });
-		$(document).on("change",'input[type="file"]',function() {
-			if (this.files &&  this.files[0]) {
-	            var reader = new FileReader();
-	            el= $(this);
-	            reader.onload = function (e) {
-	            	el.parent().parent().parent().find('img').attr('src', e.target.result).show();
-	            	el.parent().parent().parent().find('button').hide();
-	            }
-	            reader.readAsDataURL(this.files[0]);
-	        }
-		});
-		$('#add_image').click(function() {
-			add_image();
-			return false;
-		});
+            function openInput($el) {
+                $el.parent().parent().find('input[type="file"]')[0].click();
+            }
 
-		///// TAGS /////
+            $(document).on("click", '.uploader', function () {
+                openInput($(this));
+                return false;
+            });
+            $(document).on("click", '.remove-button', function () {
+                $(this).parent().remove();
+                $(this).remove();
+                return false;
+            });
+            $(document).on("change", 'input[type="file"]', function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    el = $(this);
+                    reader.onload = function (e) {
+                        el.parent().parent().parent().find('img').attr('src', e.target.result).show();
+                        el.parent().parent().parent().find('button').hide();
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+            $('#add_image').click(function () {
+                add_image();
+                return false;
+            });
 
-		var liste = new Array();
-		{% for tag in tagsList %}
-			liste.push("{{tag}}");
-		{% endfor %}
-		var $tagContainer = $('.tags');
+            ///// TAGS /////
 
-		function add_tag(){
-			index = $tagContainer.children().length;
-			prototype='<div class="image-collection-entry">';
-			prototype+='<a class="badge remove-button">';
-			prototype+='<span class="glyphicon glyphicon-remove"></span></a>';
-			prototype+='<span class="clear">&nbsp;</span>';
-			widget=$tagContainer.attr('data-prototype').replace(/__name__/g, index);
-			prototype+=widget;
-			$tagContainer.append($(prototype));
+            var liste = new Array();
+            {% for tag in tagsList %}
+            liste.push("{{ tag }}");
+            {% endfor %}
+            var $tagContainer = $('.tags');
 
-			//Autocompletion
-			$('.tags input').each(function(){
-				$(this).autocomplete({
-			    	source : liste
-				});
-			});
-		}
-		$('#add_tag').click(function(){
-			add_tag();
-			return false;
-		});
-		$('.tags input').each(function(){
-				$(this).autocomplete({
-			    	source : liste
-				});
-		});
-	});
+            function add_tag() {
+                index = $tagContainer.children().length;
+                prototype = '<div class="image-collection-entry">';
+                prototype += '<a class="badge remove-button">';
+                prototype += '<span class="glyphicon glyphicon-remove"></span></a>';
+                prototype += '<span class="clear">&nbsp;</span>';
+                widget = $tagContainer.attr('data-prototype').replace(/__name__/g, index);
+                prototype += widget;
+                $tagContainer.append($(prototype));
 
+                //Autocompletion
+                $('.tags input').each(function () {
+                    $(this).autocomplete({
+                        source: liste
+                    });
+                });
+            }
 
-</script>
-<div id="articleform">
-	{{ form_start(form) }}
-		{{ form_errors(form) }}
-		{{ form_row(form.title) }}
-		{{ form_row(form.body) }}
-		{{ form_row(form.author) }}
-		{{ form_row(form.date) }}
-		{{ form_row(form.enableComments )}}
-		<br class="clear"/>
-
-		<a href="#" id="add_image" class="btn btn-info">Add a new picture</a>
-
-		<div class="article-images" data-prototype="{{ form_widget(form.attachments.vars.prototype)|e }}">
-		{% for attachment in form.attachments %}
-			<div class="image-collection-entry">
-				<a class="badge remove-button">
-					<span class="glyphicon glyphicon-remove"></span>
-				</a>
-				<span class="clear"/>
-				{{ form_row(attachment) }}
-			</div>
-		{% endfor %}
-		</div>
-		<br class="clear"/>
-		<br class="clear"/>
-
-		<a href="#" id="add_tag" class="btn btn-info">Add a tag</a>
-	    <div class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
-	        {% for tag in form.tags %}
-	        	<div class="image-collection-entry">
-		        	<a class="badge remove-button">
-						<span class="glyphicon glyphicon-remove"></span>
-					</a>
-					<span class="clear"/>
-		            {{ form_row(tag) }}
-		    	</div>
-	        {% endfor %}
-	    </div>
-
-		<br class="clear"/>
-		<br class="clear"/>
+            $('#add_tag').click(function () {
+                add_tag();
+                return false;
+            });
+            $('.tags input').each(function () {
+                $(this).autocomplete({
+                    source: liste
+                });
+            });
+        });
 
 
+    </script>
+    <div id="articleform">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.body) }}
+        {{ form_row(form.author) }}
+        {{ form_row(form.date) }}
+        {{ form_row(form.enableComments) }}
+        <p style="color: #0073aa;">If you want to share your content you can fill the next field with the associate url.</p>
+        {{ form_row(form.shareUrl) }}
+        <br class="clear"/>
+
+        <a href="#" id="add_image" class="btn btn-info">Add a new picture</a>
+
+        <div class="article-images" data-prototype="{{ form_widget(form.attachments.vars.prototype)|e }}">
+            {% for attachment in form.attachments %}
+                <div class="image-collection-entry">
+                    <a class="badge remove-button">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <span class="clear"/>
+                    {{ form_row(attachment) }}
+                </div>
+            {% endfor %}
+        </div>
+        <br class="clear"/>
+        <br class="clear"/>
+
+        <a href="#" id="add_tag" class="btn btn-info">Add a tag</a>
+        <div class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
+            {% for tag in form.tags %}
+                <div class="image-collection-entry">
+                    <a class="badge remove-button">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <span class="clear"/>
+                    {{ form_row(tag) }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <br class="clear"/>
+        <br class="clear"/>
 
 
-		<input type="submit" class="btn btn-success" /><span>&nbsp;</span>
-		<a class="confirmModal" href="javascript:history.go(-1);" ><button type="button" class="btn btn-danger">Cancel</button></a>
-	{{ form_end(form) }}
-</div>
+        <input type="submit" class="btn btn-success"/><span>&nbsp;</span>
+        <a class="confirmModal" href="javascript:history.go(-1);">
+            <button type="button" class="btn btn-danger">Cancel</button>
+        </a>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
 

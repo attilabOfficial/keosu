@@ -81,12 +81,18 @@ class ArticleBody extends DataModel {
 	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags", mappedBy="articleBody", cascade={"persist","remove"})
 	 */
 	private $tags;
-
-
+	
 	/**
 	 * @ORM\Column(name="enableComments", type="boolean")
 	 */
 	private $enableComments;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="shareUrl", type="string", length=255)
+	 */
+	private $shareUrl;
 
 	/**
 	 * Set title
@@ -235,6 +241,28 @@ class ArticleBody extends DataModel {
 		return $this;
 	}
 
+	/**
+	 * Set shareUrl
+	 *
+	 * @param string $shareUrl
+	 * @return ArticleBody
+	 */
+	public function setShareUrl($shareUrl)
+	{
+		$this->shareUrl = $shareUrl;
+
+		return $this;
+	}
+
+	/**
+	 * Get shareUrl
+	 *
+	 * @return string
+	 */
+	public function getShareUrl()
+	{
+		return $this->shareUrl;
+	}
 
 	/**
 	 * Constructor

@@ -73,6 +73,7 @@ class ServiceController extends Controller {
 			$data[$key]['title'] = $article->getTitle();
 			$data[$key]['content'] = $article->getBody();
 			$data[$key]['dataModelObjectName'] = $article->getDataModelObjectName();
+			$data[$key]['shareUrl'] = $article->getShareUrl();
 			$data[$key]['enableComments'] = $article->getEnableComments();
 			
 			$attachments = $article->getAttachments();

@@ -1,0 +1,31 @@
+{
+  "name": "keosu-share",
+  "description": "Share content on social networks, by email, ...",
+  "version": "0.1",
+  "type": "plugin",
+  "configCordova": [
+    {
+      "plugin": [
+        {
+          "@attributes": {
+            "name": "nl.x-services.plugins.socialsharing"
+          }
+        }
+      ]
+    }
+  ],
+  "param": [
+    {
+      "object": "array"
+    },
+    {
+      "url": "string"
+    }
+  ],
+  "require": [
+    {
+      "name": "keosu-base",
+      "version": ">=0.1"
+    }
+  ]
+}

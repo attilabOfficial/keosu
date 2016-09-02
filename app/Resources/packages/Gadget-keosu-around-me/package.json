@@ -5,12 +5,11 @@
   "type": "gadget",
   "configCordova": [
     {
-      "gap:plugin": [
+      "plugin": [
         {
           "@attributes": {
-            "name": "org.apache.cordova.geolocation",
-            "version": "0.3.10"
-          }
+            "name": "cordova-plugin-geolocation"
+		  }
         }
       ]
     },

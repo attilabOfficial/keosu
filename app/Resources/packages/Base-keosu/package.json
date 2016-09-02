@@ -4,8 +4,17 @@
     "version" : "0.1",
     "type" : "base",
 	"configCordova" : [
-		{ "gap:plugin" :[
-			{ "@attributes" : {"name" : "org.apache.cordova.network-information" , "version":"0.2.7" } }
+		{ "plugin" :[
+			{ "@attributes" : {"name" : "cordova-plugin-device" } }
+		]},
+		{ "plugin" :[
+			{ "@attributes" : {"name" : "cordova-plugin-device-orientation" } }
+		]},
+		{ "plugin" :[
+			{ "@attributes" : {"name" : "cordova-plugin-dialogs" } }
+		]},
+		{ "plugin" :[
+			{ "@attributes" : {"name" : "cordova-plugin-network-information" } }
 		]},
 		{ "plugin" : [
 			{ "@attributes" : {"name" : "cordova-plugin-whitelist"} }

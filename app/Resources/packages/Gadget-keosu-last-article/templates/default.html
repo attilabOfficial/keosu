@@ -14,13 +14,14 @@
         </div>
     </div>
     <button ng-show="!isFirstPage" ng-click="previous()"
-        class="previou btn btn-default btn-page animated fadeIn prev_btn">Prev</button>
+        class="previous btn btn-default btn-page animated fadeIn prev_btn">Prev</button>
     <button ng-show="!isLastPage" ng-click="next()"
         class="next btn btn-default btn-page pull-right animated fadeIn next_btn" >Next</button>
 </div>
 
 <!-- ONE ARTICLE -->
 <div ng-show="isArticle" class="one-article animated zoomIn">
+	<keosu-share object="article" url="article.shareUrl"></keosu-share>
 	<div class="row-fluid">
 		<h4 class="title" ng-bind-html="article.title"></h4>
 	</div>

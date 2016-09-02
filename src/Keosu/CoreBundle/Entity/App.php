@@ -165,12 +165,12 @@ class App
     private $splashscreens;
 
     private $icons;
-    
-    
+
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -186,14 +186,14 @@ class App
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -216,7 +216,7 @@ class App
     /**
      * Get theme
      *
-     * @return string 
+     * @return string
      */
     public function getTheme()
     {
@@ -239,7 +239,7 @@ class App
     /**
      * Get packageName
      *
-     * @return string 
+     * @return string
      */
     public function getPackageName()
     {
@@ -255,14 +255,14 @@ class App
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -278,14 +278,14 @@ class App
     public function setAuthor($author)
     {
         $this->author = $author;
-    
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return string 
+     * @return string
      */
     public function getAuthor()
     {
@@ -301,14 +301,14 @@ class App
     public function setWebsite($website)
     {
         $this->website = $website;
-    
+
         return $this;
     }
 
     /**
      * Get website
      *
-     * @return string 
+     * @return string
      */
     public function getWebsite()
     {
@@ -324,14 +324,14 @@ class App
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -373,14 +373,14 @@ class App
     public function setDebugMode($debugMode)
     {
         $this->debugMode = $debugMode;
-    
+
         return $this;
     }
 
     /**
      * Get debugMode
      *
-     * @return string 
+     * @return string
      */
     public function getDebugMode()
     {
@@ -396,7 +396,7 @@ class App
     public function setConfigPackages($configPackages)
     {
         $this->configPackages = $configPackages;
-    
+
         return $this;
     }
 

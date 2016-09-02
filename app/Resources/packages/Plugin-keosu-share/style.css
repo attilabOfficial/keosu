@@ -1,0 +1,17 @@
+/****************************
+	SHARE PLUGIN
+****************************/
+
+
+.share-plugin span {
+	width: 100%;
+	text-align: right;
+}
+
+.share-plugin .btn:hover {
+	color: #000000;
+}
+
+.share-plugin .btn:focus, .share-plugin .btn:active {
+	color: #00a0d2;
+}

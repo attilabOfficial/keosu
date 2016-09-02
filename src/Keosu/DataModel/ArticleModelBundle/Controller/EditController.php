@@ -196,6 +196,10 @@ class EditController extends Controller {
 			))
 			->add('enableComments', CheckboxType::class ,array(
 				'required' => false,
+			))
+			->add('shareUrl', TextType::class ,array(
+				'required' => false,
+				'label'        => 'Share url'
 			));
 
 	}

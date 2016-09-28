@@ -59,7 +59,7 @@ class App
                 array("key" => "stay-in-webview"            ,"value" => "false" ), // ios: external links should open in the default browser, 'true' would use the webview the app lives in
                 array("key" => "ios-statusbarstyle"         ,"value" => "black-opaque"), // ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar
                 array("key" => "detect-data-types"          ,"value" => "true" ), // ios: controls whether data types (such as phone no. and dates) are automatically turned into links by the system
-                array("key" => "exit-on-suspend"            ,"value" => "true" ), // ios: if set to true, app will terminate when home button is pressed
+                array("key" => "exit-on-suspend"            ,"value" => "false" ), // ios: if set to true, app will terminate when home button is pressed
                 array("key" => "Show-splash-screen-spinner" ,"value" => "true" ), // ios: if set to false, the spinner won't appear on the splash screen during app loading
                 array("key" => "auto-hide-splash-screen"    ,"value" => "false" ), // ios: if set to false, the splash screen must be hidden using a JavaScript API
                 array("key" => "disable-cursor"             ,"value" => "false" ), // blackberry: prevents a mouse-icon/cursor from being displayed on the app

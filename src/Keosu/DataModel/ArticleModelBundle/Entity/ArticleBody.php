@@ -90,7 +90,7 @@ class ArticleBody extends DataModel {
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="shareUrl", type="string", length=255)
+	 * @ORM\Column(name="shareUrl", type="string", length=255, nullable=true)
 	 */
 	private $shareUrl;
 

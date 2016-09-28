@@ -6,63 +6,8 @@ app.config(function( $compileProvider ) {
 	$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|ms-appx|x-wmapp0):|data:image\//);
 });
 
-$(document).ready(function(){
-	reloadContract();
 
-});
 
-function reloadContract(){
-	lastInit = localStorage.getItem("last");
-	for(i=0; i<lastInit; i++){
-		$('#items').append('<div> num: '+i+" "+localStorage.getItem("cont"+i)+'</div>');
-	}
-	calculateAvg();
-}
-
-function calculateAvg(){
-	lastInit = localStorage.getItem("last");
-	countLastAvg =0;
-	countAvg =0;
-	var now = new Date();
-	var nowInMillis = now.getTime();
-	for(i=0; i<lastInit; i++){
-		val = localStorage.getItem("cont"+i);
-		valDate = new Date(val).getTime();
-
-		if((nowInMillis - valDate)< 3600000){
-			countLastAvg++;
-		}
-		if((nowInMillis - valDate)>3600000 && (nowInMillis - valDate)< 3600000*2){
-			countAvg++;
-		}
-
-	}
-	$('#avgLast').html(countLastAvg);
-	$('#avg').html(countAvg);
-	console.log(countLastAvg);
-}
-function addContract(){
-	last = localStorage.getItem("last");
-	if(last == null){
-		last =0;
-	}else{
-		last++;
-	}
-	localStorage.setItem("last",last);
-
-	var d = new Date();
-	localStorage.setItem("cont"+last, d);
-	console.log("contact" +d + " "+localStorage.getItem("last"));
-	$('#items').append('<div> num: '+last+" "+d+'</div>');
-	calculateAvg();
-}
-function supprContract(){
-	last = localStorage.getItem("last");
-
-	localStorage.setItem("cont"+last, null);
-	localStorage.setItem("last", last-1);
-	location.reload();
-}
 app.controller('main_Controller', function($http, $rootScope, $scope) {
 
 	/**

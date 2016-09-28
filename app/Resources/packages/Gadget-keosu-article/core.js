@@ -19,15 +19,6 @@ app.controller('keosu-articleController', function ($scope, $http, $sce, usSpinn
 
     $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
-    /*$scope.openPDF = function () {
-        if (device.platform === 'Android') {
-            navigator.app.loadUrl("http://www.pdf995.com/samples/pdf.pdf", {openExternal: true});
-        } else if (device.platform === 'WinCE' || device.platform === 'Win32NT') {
-            cordova.InAppBrowser.open("http://www.pdf995.com/samples/pdf.pdf", '_blank', 'location=yes,EnableViewPortScale=yes');
-        } else {
-            window.plugins.fileOpener.open("http://www.pdf995.com/samples/pdf.pdf");
-        }
-    };*/
 
     /////////////////////////
     // Init part

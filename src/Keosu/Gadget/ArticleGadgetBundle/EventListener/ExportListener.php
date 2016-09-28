@@ -45,8 +45,10 @@ class ExportListener implements EventSubscriberInterface
                 'dataModelObjectName' => $article->getDataModelObjectName(),
                 'title' => $article->getTitle(),
                 'enableComments' => $article->getEnableComments(),
-                'content' => $article->getBody()
-            );
+                'content' => $article->getBody(),
+				'attachments' => array()
+
+			);
             $attachments = $article->getAttachments();
             if (count($attachments) > 0){
                 foreach ($attachments as $key=>$attachment){

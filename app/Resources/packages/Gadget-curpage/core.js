@@ -1,6 +1,6 @@
-	{# 	
+/************************************************************************
 	Keosu is an open source CMS for mobile app
-	Copyright (C) 2016  Pockeit
+	Copyright (C) 2014  Vincent Le Borgne
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
@@ -14,29 +14,15 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+ ************************************************************************/
+app.controller('curpageController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService, $timeout) {
 
-{% spaceless %}
-{ "data": [
-		  {% for content in pois %}
-		    {
-		    	"id" :"{{ content.id}}",
-				"title" :"{{ content.name}}",
-				"distance" :"{{  '%.2f'|format(content.distance)}}",
-				"desc" :"{{ (content.description |slice(0, 300) )}}...",
-				"description" : "{{ content.description }}",
-				"lat" : "{{ content.lat }}",
-				"lng" : "{{ content.lng }}"
-				{% if content.tags[0] is defined %}
-					,"cat" : "{{content.tags[0].tagName}}"
+	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
-			  	{% endif %}
+	$scope.init = function (params) {
 
-		   }
-		    {% if loop.last ==false%}
-		     ,
-		    {% endif %}
-		  {% endfor %}
-] }
-{% endspaceless %}
+		$scope.pageName = pageName[params.pageId];
 
+	};
+	
+});

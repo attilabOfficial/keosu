@@ -40,20 +40,24 @@ class ExportListener implements EventSubscriberInterface
 		$pages = $em->getRepository('KeosuCoreBundle:Page')->findByAppId($appid);
 
 		$idMain = 0;
+		$pageMap = "var pageName = new Array();";
 		foreach ($pages as $page) {
+			$pageMap = $pageMap."pageName[".$page->getId()."]='".$page->getName()."';";
 			if($page->getIsMain())
 				$idMain = $page->getId();
 		}
 
-		$event->addToJsCore('
-app.config(function($routeProvider,$locationProvider){
-	$routeProvider.when("/Page/:pageName",{
-		templateUrl: function(params) {
-			return params.pageName+".html";
-		}
-	})
-	.otherwise({redirectTo:"/Page/'.$idMain.'"});
-});');
+		$event->addToJsCore(
+		$pageMap.
+		'
+		app.config(function($routeProvider,$locationProvider){
+			$routeProvider.when("/Page/:pageName",{
+				templateUrl: function(params) {
+					return params.pageName+".html";
+				}
+			})
+			.otherwise({redirectTo:"/Page/'.$idMain.'"});
+		});');
 
 	}
 }

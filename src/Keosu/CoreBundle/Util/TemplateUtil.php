@@ -64,7 +64,6 @@ class TemplateUtil {
 		$templateString = str_replace("\n", "", $templateString);
 		$templateString = str_replace("\r\n", "", $templateString);
 		$templateString = str_replace("\r", "", $templateString);
-		$templateString = str_replace("'", "\'", $templateString);
 		return $templateString;
 	}
 

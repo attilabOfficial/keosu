@@ -49,10 +49,8 @@ class AppKernel extends Kernel
             new Fkr\SimplePieBundle\FkrSimplePieBundle(),
             new Keosu\Gadget\ContactUsGadgetBundle\KeosuGadgetContactUsGadgetBundle(),
             new Keosu\DataModel\SearchModelBundle\KeosuDataModelSearchModelBundle(),
-            new Keosu\DataModel\MenuModelBundle\KeosuDataModelMenuModelBundle()
-
-
-
+            new Keosu\DataModel\MenuModelBundle\KeosuDataModelMenuModelBundle(),
+			new Mcfedr\AwsPushBundle\McfedrAwsPushBundle()
 
 		];
 

@@ -105,3 +105,13 @@ services:
 mopa_bootstrap:
     form:
         error_type: block
+
+mcfedr_aws_push:
+    platforms:
+        ios: "%aws_ios%"
+        android: "%aws_android%"
+    topic_arn: "%aws_topic%"
+    aws:
+        key: "%aws_key%"
+        secret: "%aws_secret%"
+        region: "%aws_region%"

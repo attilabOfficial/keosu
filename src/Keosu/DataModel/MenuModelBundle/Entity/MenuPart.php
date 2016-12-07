@@ -53,9 +53,21 @@ class MenuPart extends DataModel{
 
 	/**
 	 * Target page
-	 * @ORM\Column(name="target", type="integer")
+	 * @ORM\Column(name="target", type="integer", nullable=true)
 	 */
 	private $target;
+
+	/**
+	 * Target page
+	 * @ORM\Column(name="externalLink", type="string", length=255, nullable=true)
+	 */
+	private $externalLink;
+
+	/**
+	 * Target page
+	 * @ORM\Column(name="isExternal", type="boolean", nullable=true)
+	 */
+	private $isExternal;
 
 	/**
 	 * @var string $path
@@ -232,9 +244,41 @@ class MenuPart extends DataModel{
 		return $this->css;
 	}
 
+	/**
+	 * @return mixed
+	 */
+	public function getExternalLink()
+	{
+		return $this->externalLink;
+	}
+
+	/**
+	 * @param mixed $externalLink
+	 */
+	public function setExternalLink($externalLink)
+	{
+		$this->externalLink = $externalLink;
+	}
+
 
 	public function getDataModelObjectName() {
 		return "menu-part";
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getIsExternal()
+	{
+		return $this->isExternal;
+	}
+
+	/**
+	 * @param mixed $isExternal
+	 */
+	public function setIsExternal($isExternal)
+	{
+		$this->isExternal = $isExternal;
 	}
 
 }

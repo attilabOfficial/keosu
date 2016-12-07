@@ -22,26 +22,52 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
     var mapDefault = null;
 
     var initMap = function () {
+		//Creation of default map (to see detail of a location)
         if (document.getElementById("map_default")) {
-            mapDefault = new MapElement({
-                name: "map_default",
-                requiredUserPosition: true,
-                requiredDestination: true
-            });
-            mapDefault.addMarker("user", [$scope.position.latitude, $scope.position.longitude]);
-            mapDefault.addMarker("position", [0, 0]);
+			//Centering the map on user location
+			var myLatlng = {lat: Number($scope.position.latitude), lng: Number($scope.position.longitude)};
+			map_default = new google.maps.Map(document.getElementById('map_default'), {
+				zoom: 17,
+				center: myLatlng
+			});
+
         }
-        // init map all markers
-        else {
-            var mapAll = new MapElement({
-                name: "map_all",
-                requiredUserPosition: true,
-                requiredDestination: true
-            });
-            for (var i = 0; i < $scope.pages.length; i++) {
+        // Init the map with all locations
+		if (document.getElementById("map_all")) {
+			var myLatlng = {lat: Number($scope.position.latitude), lng: Number($scope.position.longitude)};
+			var mapAll = new google.maps.Map(document.getElementById('map_all'), {
+				zoom: 4,
+				center: myLatlng
+			});
+			var latlngbounds = new google.maps.LatLngBounds();
+
+			var iconBase = 'theme/img/icons/map';
+
+
+
+			for (var i = 0; i < $scope.pages.length; i++) {
                 var positionName = "position" + i.toString();
-                mapAll.addMarker(positionName, [$scope.pages[i].lat, $scope.pages[i].lng]);
-            }
+				var myLatlng = {lat: Number($scope.pages[i].lat), lng: Number($scope.pages[i].lng)};
+				latlngbounds.extend(myLatlng);
+				var marker = new google.maps.Marker({
+					position: myLatlng,
+					map: mapAll,
+					title: ""+i,
+					icon: iconBase+$scope.pages[i].cat+'.png',
+					id : i
+				});
+				google.maps.event.addListener(marker, "click", function () {
+
+					var page = $scope.pages[parseInt(this.title)];
+					$scope.open(page);
+					$scope.$apply();
+
+				});
+				mapAll.fitBounds(latlngbounds);
+
+
+			}
+
             updateMap("map_all", mapAll);
         }
     };
@@ -49,23 +75,35 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
     var updateMap = function (name, map) {
         window.setTimeout(function () {
             google.maps.event.trigger(document.getElementById(name), 'resize');
-            map.bound();
         }, 100);
     }
     /**
      * specific action when the 'open' button is called
      */
-    $scope.$on('open', function (event, page) {
-
-        //Init map
+    $scope.open = function (page) {
+		var iconBase = 'theme/img/icons/map';
         $scope.curPage = page;
         $scope.curPage.descHtml = $('<div/>').html($scope.curPage.description).text();
         $scope.isList = false;
-        mapDefault.editMarker("position", [page.lat, page.lng]);
-        updateMap("map_default", mapDefault);
+		var pageLatlng = {lat: Number(page.lat), lng: Number(page.lng)};
 
+		$scope.locationMarker = new google.maps.Marker({
+			position: pageLatlng,
+			map: map_default,
+			icon: iconBase+page.cat+'.png',
+			title: "position"
+		});
 
-    });
+		window.setTimeout(function () {
+			google.maps.event.trigger(document.getElementById(name), 'resize');
+			map_default.setCenter(pageLatlng);
+		}, 100);
+		window.setTimeout(function () {
+			map_default.setCenter(pageLatlng);
+		}, 200);
+		updateMap("map_default", map_default);
+
+	};
     /**
      * specific action when the 'back' or 'close' button is called
      */

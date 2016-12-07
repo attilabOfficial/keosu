@@ -6,6 +6,19 @@
     "param" : [
 		{ "name" : "menu-id", "type" : "number" }
     ],
+    "configCordova" : [
+        {
+            "plugin": [
+                {
+                    "@attributes": {
+                        "name": "cordova-plugin-inappbrowser",
+                        "spec": "1.2.1",
+                        "source": "npm"
+                    }
+                }
+            ]
+        }
+    ],
     "require" : [
         { "name" : "keosu-base" , "version" : ">=0.1" }
     ]

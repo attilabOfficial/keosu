@@ -34,4 +34,28 @@ app.controller('keosu-menuController', function ($rootScope, $scope, $http,$loca
 	$scope.getClass = function(page) {
 		return $location.path() == '/Page/'+page ? 'active' : ''
 	}
+
+	$scope.httpLink = function(page){
+			console.log("link href");
+
+			if (page.isExternal) {
+				if (typeof(cordova)!= "undefined" && typeof(cordova.InAppBrowser) != "undefined") {
+					var ua = navigator.userAgent.toLowerCase();
+					console.log(device.platform);
+					if(device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos") {
+						navigator.app.loadUrl(page.externalLink, {openExternal: true});
+					} else if(device.platform == 'windows'){
+						window.open(page.externalLink,'_system');
+					}
+					else {
+						cordova.InAppBrowser.open(page.externalLink, '_blank', 'location=yes,EnableViewPortScale=yes');
+					}
+				}
+				else {
+					window.open(page.externalLink, '_blank', 'location=yes');
+				}
+			} else {
+				window.location = '#/Page/' + page.id;
+			}
+	}
 });

@@ -1,6 +1,6 @@
 <div ng-controller="keosu-menuController" class=" row-fluid menu">
 	<div ng-repeat="page in pages" class="menu-elements">
-		<a href="#/Page/{{ ::page.id }}">
+		<a ng-click="httpLink(page)">
 			<img ng-src="{{ getPath(page.icon, page.iconActive,page.id) }}"  ng-class="getClass(page.id)" />
 		</a>
 	</div>

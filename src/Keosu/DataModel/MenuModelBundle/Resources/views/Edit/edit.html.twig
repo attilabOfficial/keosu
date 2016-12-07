@@ -38,6 +38,23 @@ Edit Menu entry
 				// ajoute un nouveau formulaire tag (voir le prochain bloc de code)
 				addTagForm(collectionHolder);
 			});
+			/*$(":checkbox").change( function() {
+				if($(this).is(':checked')){
+					$(this).parent().parent().parent().parent().parent().parent().find('.target').hide();
+					$(this).parent().parent().parent().parent().parent().parent().find('.externalLink').show();
+				}else{
+					$(this).parent().parent().parent().parent().parent().parent().find('.target').show();
+					$(this).parent().parent().parent().parent().parent().parent().find('.externalLink').hide();
+				}
+			});
+			$(':checkbox').each(function( index ) {
+				if($(this).is(':checked')){
+					$(this).parent().parent().parent().parent().parent().parent().find('.target').hide();
+					$(this).parent().parent().parent().parent().parent().parent().find('.externalLink').show();
+				}else{
+					$(this).parent().parent().parent().parent().parent().parent().find('.target').show();
+					$(this).parent().parent().parent().parent().parent().parent().find('.externalLink').hide();
+				}});*/
 		});
 		function addTagForm(collectionHolder) {
 			// Récupère l'élément ayant l'attribut data-prototype comme expliqué plus tôt
@@ -45,12 +62,14 @@ Edit Menu entry
 
 			// Remplace '__name__' dans le HTML du prototype par un nombre basé sur
 			// la longueur de la collection courante
-			var newForm = prototype.replace(/__name__/g, $('#partlist').children().length);
+			var num = $('#partlist').children().length;
+			var newForm = prototype.replace(/__name__/g, num);
 
 			// Affiche le formulaire dans la page dans un li, avant le lien "ajouter un tag"
-			var $newFormLi = $('<li></li>').append(newForm);
+			var $newFormLi = $('<li id="li'+num+'"></li>').append(newForm);
 			$('#partlist').append($newFormLi);
 			addTagFormDeleteLink($newFormLi);
+
 		}
 		function addTagFormDeleteLink($tagFormLi) {
 			var $removeFormA = $('<br style="clear:both"/><a href="#">Delete</a>');
@@ -77,7 +96,15 @@ Edit Menu entry
 					{{ form_row(menupart.css) }}
 					{{ form_row(menupart.file) }}
 					{{ form_row(menupart.fileActive) }}
-					{{ form_row(menupart.target) }}
+					<div class="isExternal">
+						{{ form_row(menupart.isExternal) }}
+					</div>
+					<div class="target">
+						{{ form_row(menupart.target) }}
+					</div>
+					<div class="externalLink">
+						{{ form_row(menupart.externalLink) }}
+					</div>
 				</li>
 			{% endfor %}
 		</ul>

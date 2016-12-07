@@ -76,6 +76,8 @@ class GadgetListener implements EventSubscriberInterface
 			$tmp['iconActive'] = $part->getPathActive();
 			$tmp['name'] = $part->getName();
 			$tmp['css'] = $part->getCss();
+			$tmp['isExternal'] = $part->getIsExternal();
+			$tmp['externalLink'] = $part->getExternalLink();
 			$pages[] = $tmp;
 		}
 

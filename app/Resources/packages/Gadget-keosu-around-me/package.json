@@ -66,7 +66,7 @@
     }
   ],
   "libJs": [
-    "https://maps.googleapis.com/maps/api/js?sensor=false"
+    "https://maps.googleapis.com/maps/api/js?key=AIzaSyBZclmq_TGfQl_R2DGnM0H1DgF2qbOfz1E"
   ],
   "require": [
     {

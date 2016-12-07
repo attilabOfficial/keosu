@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Keosu\DataModel\MenuModelBundle\Form;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -53,10 +54,13 @@ class MenuPartType extends AbstractType {
 					)
 				)
 			)
+			->add('isExternal' ,CheckboxType::class )
 			->add('target' ,ChoiceType::class, array(
 				'choices'   => $this->listPage,
 				'required'  => true,
-			));
+			))
+			->add('externalLink' ,TextType::class, array('required'  => false));
+
 	}
 
 	public function configureOptions(OptionsResolver $resolver){

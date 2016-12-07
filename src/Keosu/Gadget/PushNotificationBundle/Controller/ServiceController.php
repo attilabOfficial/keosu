@@ -28,6 +28,15 @@ class ServiceController extends Controller
 			$em->persist($device);
 			$em->flush();
 		}
+
+		$topic = $this->getParameter('aws_topic');
+		if($type === Devices::TYPE_APPLE){
+			$platform = "ios";
+		}else if($type === Devices::TYPE_ANDROID){
+			$platform = "android";
+		}
+		$arn = $this->get('mcfedr_aws_push.devices')->registerDevice($deviceToken, $platform);
+		$this->get('mcfedr_aws_push.topics')->registerDeviceOnTopic($arn, $topic);
 		
 		return new JsonResponse(array(
 			'success' => true

@@ -1,6 +1,6 @@
 <?php
 	include 'installUtil.php';
-
+	$locale=test_input($_POST['language']);
 	$dbhost=test_input($_POST['dbhost']);
 	$dbport=test_input($_POST['dbport']);
 	$dbname=test_input($_POST['dbname']);
@@ -31,7 +31,7 @@
 	mysqli_close($link);
 
 	//Generating parameter.yml file
-	generateParameters($dbhost, $dbport,$dbname,$dbusername,$dbpassword,$adminpassword);
+	generateParameters($dbhost, $dbport,$dbname,$dbusername,$dbpassword,$adminpassword, $locale);
 
 
 

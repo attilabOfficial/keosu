@@ -1,5 +1,5 @@
 
-app.controller('keosu-rssController', function ($rootScope, $scope)
+app.controller('keosu-rssController', function ($rootScope, $scope,cacheManagerService)
 {
 	$scope.init = function(params) {
         $scope.infiniteList = false;
@@ -8,8 +8,16 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
         $scope.list = [];
         $scope.currentlist = [];
         $scope.page = 0;
+        $scope.limit = $scope.param.gadgetParam.articlesPerPage;
         $scope.max = parseInt($(document).height()) - parseInt($(window).height());
-        google.load('feeds', '1', {"callback": $scope.displayRss});
+        console.log(encodeURIComponent($scope.param.gadgetParam.url));
+		cacheManagerService.get($scope.param.host + 'service/xml2json?url='+encodeURIComponent($scope.param.gadgetParam.url)).success(function (data) {
+
+			$scope.list = data.channel.item;
+			$scope.buildPage();
+			$scope.$apply();
+		});
+        //google.load('feeds', '1', {"callback": $scope.displayRss});
 	};
 
     $scope.buildPage = function() {
@@ -31,15 +39,16 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
     /**
      * specific action when the 'open' button is called
      */
-    $scope.$on('open', function (event, elem) {
+    $scope.open= function (elem) {
         $scope.isList = !$scope.isList;
         $scope.title = elem.title;
-        $scope.body = elem.body;
+        $scope.body = elem.description;
         $scope.path = elem.image;
         $scope.link = elem.link;
         $scope.hasImage = (elem.image != "");
         window.scrollTo(0, 0);
-    });
+		$scope.$emit("show-back",null);
+    };
 
     $scope.next = function() {      
         if ($scope.page < $scope.last)
@@ -51,37 +60,6 @@ app.controller('keosu-rssController', function ($rootScope, $scope)
         if ($scope.page > 0)
             $scope.page -= 1;
         $scope.buildPage();
-    };
-
-    $scope.displayRss = function() {
-        $scope.feed = new google.feeds.Feed($scope.param.gadgetParam.url);
-        $scope.feed.setResultFormat(google.feeds.Feed.MIXED_FORMAT);
-        $scope.feed.setNumEntries(50);
-      	$scope.feed.load(function(result){
-        if (!result.error){
-            for(var i = 0; i < result.feed.entries.length; i++) {
-                var image = "";
-                try {
-                    image = result.feed.entries[i].xmlNode.getElementsByTagName("image")[0].innerHTML;
-                }
-                catch(err) {
-                    try {
-                        image = result.feed.entries[i].xmlNode.getElementsByTagName("enclosure")[0].getAttribute("url");
-                    }
-                    catch(err){
-                        image = "";                        
-                    }
-                }
-                $scope.list.push({"title": result.feed.entries[i].title,
-                                  "body": result.feed.entries[i].content,
-                                  "link": result.feed.entries[i].link,
-                                  "image": image});
-            }
-            $scope.last = Math.ceil($scope.list.length / $scope.param.gadgetParam.articlesPerPage);
-            $scope.buildPage();
-            $scope.$apply();
-        }
-      });
     };
 
     $scope.setInfiniteList = function(){

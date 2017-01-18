@@ -41,10 +41,6 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
 			});
 			var latlngbounds = new google.maps.LatLngBounds();
 
-			var iconBase = 'theme/img/icons/map';
-
-
-
 			for (var i = 0; i < $scope.pages.length; i++) {
                 var positionName = "position" + i.toString();
 				var myLatlng = {lat: Number($scope.pages[i].lat), lng: Number($scope.pages[i].lng)};
@@ -53,7 +49,6 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
 					position: myLatlng,
 					map: mapAll,
 					title: ""+i,
-					icon: iconBase+$scope.pages[i].cat+'.png',
 					id : i
 				});
 				google.maps.event.addListener(marker, "click", function () {
@@ -81,7 +76,6 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
      * specific action when the 'open' button is called
      */
     $scope.open = function (page) {
-		var iconBase = 'theme/img/icons/map';
         $scope.curPage = page;
         $scope.curPage.descHtml = $('<div/>').html($scope.curPage.description).text();
         $scope.isList = false;
@@ -90,7 +84,6 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
 		$scope.locationMarker = new google.maps.Marker({
 			position: pageLatlng,
 			map: map_default,
-			icon: iconBase+page.cat+'.png',
 			title: "position"
 		});
 
@@ -102,6 +95,8 @@ app.controller('keosu-around-meController', function ($rootScope, $scope, $http,
 			map_default.setCenter(pageLatlng);
 		}, 200);
 		updateMap("map_default", map_default);
+
+		$scope.$emit("show-back",null);
 
 	};
     /**

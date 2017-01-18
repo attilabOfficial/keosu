@@ -19,6 +19,9 @@
             ]
         }
     ],
+    "pluginToInstall" : [
+        "cordova plugin add cordova-plugin-inappbrowser"
+    ],
     "require" : [
         { "name" : "keosu-base" , "version" : ">=0.1" }
     ]

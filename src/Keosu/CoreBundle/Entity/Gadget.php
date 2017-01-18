@@ -27,6 +27,7 @@ use Keosu\CoreBundle\Service\PackageManager;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Keosu\CoreBundle\Entity\GadgetRepository")
+ * @ORM\Table(name="Gadget")
  */
 class Gadget {
 	/**

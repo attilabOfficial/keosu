@@ -27,6 +27,7 @@ use Keosu\CoreBundle\Entity\Model\MediaDataModel;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Keosu\DataModel\ArticleModelBundle\Entity\ArticleAttachmentRepository")
+ * @ORM\Table(name="ArticleAttachment")
  */
 class ArticleAttachment extends MediaDataModel{
 	

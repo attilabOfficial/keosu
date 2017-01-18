@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Keosu\Gadget\CommentGadgetBundle\Entity\CommentRepository")
+ * @ORM\Table(name="Comment")
  */
 class Comment extends DataModel
 {

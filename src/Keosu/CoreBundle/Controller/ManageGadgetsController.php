@@ -224,9 +224,13 @@ class ManageGadgetsController extends Controller {
 		$em = $this->get('doctrine')->getManager();
 		$dispatcher = $this->get('event_dispatcher');
 
+		$appId = $this->get('keosu_core.curapp')->getCurApp();
+
+		$theme = $em->getRepository('KeosuCoreBundle:App')->find($appId)->getTheme();
+
 		$formBuilder = $this->createFormBuilder($gadget);
 
-		$listTemplate = $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName());
+		$listTemplate = $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName(),$theme);
 		if(count($listTemplate) > 1){
 			$formBuilder->add('template', ChoiceType::class ,array(
 					'choices'  => $listTemplate,

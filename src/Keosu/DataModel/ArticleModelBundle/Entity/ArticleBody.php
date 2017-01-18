@@ -27,6 +27,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Keosu\DataModel\ArticleModelBundle\Entity\ArticleBodyRepository")
+ * @ORM\Table(name="ArticleBody")
  */
 class ArticleBody extends DataModel {
 

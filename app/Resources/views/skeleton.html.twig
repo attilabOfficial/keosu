@@ -1,158 +1,174 @@
-	{#
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2016  Pockeit
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
 {% extends '::root.html.twig' %}
 {% block skeleton %}
-<section id="main-content">
-	<div class="container-fluid">
-        <div id="bouton-menu-responsive" class="menu-leftcol">
-            <img id="icon-arrow-menu" class="icon-menu-responsive" src="{{url_base}}/img/arrow-right.png"/>
-            <img id="icon-arrow-menu-left" class="icon-menu-responsive" src="{{url_base}}/img/arrow-left.png"/>
-        </div>
+    <section id="main-content">
+        <div class="container-fluid">
+            <div id="bouton-menu-responsive" class="menu-leftcol">
+                <img id="icon-arrow-menu" class="icon-menu-responsive" src="{{ url_base }}/img/arrow-right.png"/>
+                <img id="icon-arrow-menu-left" class="icon-menu-responsive" src="{{ url_base }}/img/arrow-left.png"/>
+            </div>
 
 
-		{% block maincontent %}
-		<div class="row" style="background-color:#f1f1f1 !important;">
+            {% block maincontent %}
+            <div class="row" style="background-color:#f1f1f1 !important;">
 
                 <div id="left-menu" class="col-md-2 leftcol closed">
                     <div class="leftcol">
-                        <section id="leftcol"  class="leftcol">
+                        <section id="leftcol" class="leftcol">
                             <div class="sidebar leftcol">
 
                                 <div class="sidemenu leftcol">
                                     {% block leftmenu %}
-                                        <div class="logowrapper">
-                                            <img class="logotop" src="{{url_base}}/img/logo_black.png"/>
-                                        </div>
-                                        <br/>
+                                    <div class="logowrapper">
+                                        <img class="logotop" src="{{ url_base }}/img/logo_black.png"/>
+                                    </div>
+                                    <br/>
 
-                                        <div class="dropdown" id="applist">
-                                            {{ appListMenu() }}
-                                        </div>
-                                        <div class="separator">&nbsp;</div>
-                                        <!-- content -->
-                                        {% block contentmenu %}
-                                            <div>
+                                    <div class="dropdown" id="applist">
+                                        {{ appListMenu() }}
+                                    </div>
+                                    <div class="separator">&nbsp;</div>
+                                    <!-- content -->
+                                    {% block contentmenu %}
+                                    <div>
                                         {% endblock %}
-                                                <div class="sidebartitle">
-                                                    <a href="{{ path('keosu_core_homepage') }}">
-                                                        <div class="lien-menu">
-                                                            <span class="glyphicon glyphicon-th icon-menu"></span> <span class="texte-lien-menu">Content</span>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="sidebarlink">
-                                                    <a class="sous-menu" href="{{ path('keosu_ReaderManager_manage') }}">
-                                                        <div class="lien-menu">
-                                                           <span class="glyphicon glyphicon-save icon-menu"></span> <span class="texte-lien-menu">Import remote</span>
-                                                        </div>
-                                                    </a>
-                                                </div>
-
-
-                                                {{ appListContent() }}
-
-                                            </div>
-
-                                        <div class="separator">&nbsp;</div>
-                                        <!-- Page menu -->
                                         <div class="sidebartitle">
-                                             <a href="{{ path('keosu_core_page') }}">
-                                                 <div class="lien-menu">
-                                                    <span class="glyphicon glyphicon-book icon-menu"></span> <span class="texte-lien-menu">Pages</span>
-                                                 </div>
+                                            <a href="{{ path('keosu_core_homepage') }}">
+                                                <div class="lien-menu">
+                                                    <span class="glyphicon glyphicon-th icon-menu"></span> <span
+                                                            class="texte-lien-menu">{% trans %}Content{% endtrans %}</span>
+                                                </div>
                                             </a>
                                         </div>
                                         <div class="sidebarlink">
-                                            <a class="sous-menu" href="{{ path('keosu_core_views_page_manage') }}">
+                                            <a class="sous-menu" href="{{ path('keosu_ReaderManager_manage') }}">
                                                 <div class="lien-menu">
-                                                 <span class="glyphicon glyphicon-file icon-menu"></span> <span class="texte-lien-menu">Manage pages</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        {{ appListPage() }}
-                                        <div class="separator">&nbsp;</div>
-
-                                        <div class="sidebartitle">
-                                            <a id="simulator" target="_blank" class="mainnavel" href="http://emulate.phonegap.com?url={{url_base}}/keosu/export/simulator/www/index.html">
-                                                <div class="lien-menu">
-                                                    <span class="glyphicon glyphicon-phone icon-menu"></span> <span class="texte-lien-menu">Preview</span>
+                                                    <span class="glyphicon glyphicon-save icon-menu"></span> <span
+                                                            class="texte-lien-menu">{% trans %}Import remote{% endtrans %}</span>
                                                 </div>
                                             </a>
                                         </div>
 
-                                        <div class="separator">&nbsp;</div>
 
-                                        <div class="sidebartitle">
-                                            <a href="{{ path('keosu_core_publish') }}">
+                                        {{ appListContent() }}
+
+                                    </div>
+
+                                    <div class="separator">&nbsp;</div>
+                                    <!-- Page menu -->
+                                    <div class="sidebartitle">
+                                        <a href="{{ path('keosu_core_page') }}">
+                                            <div class="lien-menu">
+                                                <span class="glyphicon glyphicon-book icon-menu"></span> <span
+                                                        class="texte-lien-menu">{% trans %}Pages{% endtrans %}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="sidebarlink">
+                                        <a class="sous-menu" href="{{ path('keosu_core_views_page_manage') }}">
+                                            <div class="lien-menu">
+                                                <span class="glyphicon glyphicon-file icon-menu"></span> <span
+                                                        class="texte-lien-menu">{% trans %}Manage pages{% endtrans %}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    {{ appListPage() }}
+                                    <div class="separator">&nbsp;</div>
+
+                                    <div class="sidebartitle">
+                                        <a id="simulator" target="_blank" class="mainnavel"
+                                           href="http://emulate.phonegap.com?url={{ url_base }}/keosu/export/simulator/www/index.html?rand={{ date().timestamp }}">
+                                            <div class="lien-menu">
+                                                <span class="glyphicon glyphicon-phone icon-menu"></span> <span
+                                                        class="texte-lien-menu">{% trans %}Preview{% endtrans %}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="separator">&nbsp;</div>
+
+                                    <div class="sidebartitle">
+                                        <a href="{{ path('keosu_core_publish') }}">
+                                            <div class="lien-menu">
+                                                <span class="glyphicon glyphicon-send icon-menu"></span> <span
+                                                        class="texte-lien-menu">{% trans %}Publish{% endtrans %}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="separator">&nbsp;</div>
+
+                                    {# active with activesidebartitle #}
+                                    <div class="sidebartitle menuTitle">
+                                        <a href="{{ path('keosu_core_configuration') }}">
+                                            <div class="lien-menu">
+                                                <span class="glyphicon glyphicon-cog icon-menu"></span> <span
+                                                        class="texte-lien-menu">{% trans %}Config{% endtrans %}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="menuContent">
+                                        <div class="sidebarlink">
+                                            <a class="sous-menu" href="{{ path('keosu_core_app_manage') }}">
                                                 <div class="lien-menu">
-                                                    <span class="glyphicon glyphicon-send icon-menu"></span> <span class="texte-lien-menu">Publish</span>
+                                                    <span class="glyphicon glyphicon-th-large icon-menu"></span> <span
+                                                            class="texte-lien-menu">{% trans %}Apps{% endtrans %}</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="sidebarlink">
+                                            <a class="sous-menu" href="{{ path('keosu_core_theme_manage') }}">
+                                                <div class="lien-menu">
+                                                    <span class="glyphicon glyphicon-tint icon-menu"></span><span
+                                                            class="texte-lien-menu">{% trans %}Themes{% endtrans %}</span>
                                                 </div>
                                             </a>
                                         </div>
 
-                                        <div class="separator">&nbsp;</div>
+                                    </div>
+                                    {{ addItemToMenuConfiguration() }}
 
-                                        {# active with activesidebartitle #}
-                                        <div class="sidebartitle menuTitle">
-                                            <a href="{{ path('keosu_core_configuration') }}">
-                                             <div class="lien-menu">
-                                                 <span class="glyphicon glyphicon-cog icon-menu"></span> <span class="texte-lien-menu">Config</span>
-                                             </div>
-                                            </a>
-                                        </div>
-                                        <div class="menuContent">
-                                            <div class="sidebarlink">
-                                                <a class="sous-menu" href="{{ path('keosu_core_app_manage') }}">
-                                                    <div class="lien-menu">
-                                                       <span class="glyphicon glyphicon-th-large icon-menu"></span> <span class="texte-lien-menu">Apps</span>
-                                                    </div>
-                                                </a>
+                                    <div class="sidebartitle menuTitle">
+                                        <a target="_blank"
+                                           href="http://store.keosu.com/index.php?utm_source=keosu&utm_medium=cms&utm_term=store&utm_campaign=keosu%20cms%20to%20store">
+                                            <div class="lien-menu">
+                                                <span class="glyphicon glyphicon-shopping-cart icon-menu"></span> <span
+                                                        class="texte-lien-menu">{% trans %}Store{% endtrans %}</span>
                                             </div>
-                                            <div class="sidebarlink">
-                                                <a class="sous-menu" href="{{ path('keosu_core_theme_manage') }}">
-                                                    <div class="lien-menu">
-                                                        <span class="glyphicon glyphicon-tint icon-menu"></span><span class="texte-lien-menu">Themes</span>
-                                                    </div>
-                                                </a>
+                                        </a>
+                                    </div>
+
+                                    <div class="sidebartitle menuTitle">
+                                        <a target="_blank"
+                                           href="http://keosu.com/get-help/?utm_source=keosu&utm_medium=cms&utm_term=aide&utm_campaign=aide">
+                                            <div class="lien-menu">
+                                                <span class="glyphicon glyphicon-question-sign icon-menu"></span> <span
+                                                        class="texte-lien-menu">{% trans %}Help{% endtrans %}</span>
                                             </div>
-                                            </div>
-                                            {{ addItemToMenuConfiguration() }}
+                                        </a>
+                                    </div>
 
-                                        <div class="sidebartitle menuTitle">
-                                            <a target="_blank" href="http://store.keosu.com/index.php?utm_source=keosu&utm_medium=cms&utm_term=store&utm_campaign=keosu%20cms%20to%20store">
-                                             <div class="lien-menu">
-                                                 <span class="glyphicon glyphicon-shopping-cart icon-menu"></span> <span class="texte-lien-menu">Store</span>
-                                             </div>
-                                            </a>
-                                        </div>
-
-                                        <div class="sidebartitle menuTitle">
-                                            <a target="_blank" href="http://keosu.com/get-help/?utm_source=keosu&utm_medium=cms&utm_term=aide&utm_campaign=aide">
-                                             <div class="lien-menu">
-                                                 <span class="glyphicon glyphicon-question-sign icon-menu"></span> <span class="texte-lien-menu">Help</span>
-                                             </div>
-                                            </a>
-                                        </div>
-
-                                        </div>
-                                        <div class="separator">&nbsp;</div>
-                                    {% endblock %}
                                 </div>
+                                <div class="separator">&nbsp;</div>
+                                <div class="version"><i>Keosu version 0.1.6.2</i></div>
+                                {% endblock %}
+                            </div>
                         </section>
                     </div>
                 </div>
@@ -160,13 +176,13 @@
                 <div class="col-md-10">
                     <div class="container">
                         <div class="row-fluid">
-                                <div class="span6 pull-right logininfo" style="text-align:right">
-                                    <span class="glyphicon glyphicon-user"></span>
-                                    Hello {{ app.user.username }} |
-                                    <a href="{{ path('fos_user_security_logout') }}">
-                                        Logout <span class="glyphicon glyphicon-log-out"></span>
-                                    </a>
-                                </div>
+                            <div class="span6 pull-right logininfo" style="text-align:right">
+                                <span class="glyphicon glyphicon-user"></span>
+                                Hello {{ app.user.username }} |
+                                <a href="{{ path('fos_user_security_logout') }}">
+                                    Logout <span class="glyphicon glyphicon-log-out"></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -175,40 +191,40 @@
                 </div>
 
 
-            {% endblock %}
-        </div>  
-	</div>
+                {% endblock %}
+            </div>
+        </div>
 
-</section>
+    </section>
 
-<div id="dialog" title="Confirmation Required">
-	Are you sure about this? All your modification will be lost
-</div>
-<script>
-$(document).ready(function() {
-	    $("#dialog").dialog({
-	      autoOpen: false,
-	      modal: true
-	    });
-	  });
+    <div id="dialog" title="{% trans %}Confirmation Required{% endtrans %}">
+        {% trans %}Are you sure about this? All your modification will be lost{% endtrans %}
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                modal: true
+            });
+        });
 
-	  $(".confirmModal").click(function(e) {
-	    e.preventDefault();
-	    var targetUrl = $(this).attr("href");
+        $(".confirmModal").click(function (e) {
+            e.preventDefault();
+            var targetUrl = $(this).attr("href");
 
-	    $("#dialog").dialog({
-	      buttons : {
-	        "Confirm" : function() {
-	          window.location.href = targetUrl;
-	        },
-	        "Cancel" : function() {
-	          $(this).dialog("close");
-	        }
-	      }
-	    });
+            $("#dialog").dialog({
+                buttons: {
+                    "{% trans %}Confirm{% endtrans %}": function () {
+                        window.location.href = targetUrl;
+                    },
+                    "{% trans %}Cancel{% endtrans %}": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
 
-	    $("#dialog").dialog("open");
-	  });
-</script>
+            $("#dialog").dialog("open");
+        });
+    </script>
 
 {% endblock %}

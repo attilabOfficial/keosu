@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 namespace Keosu\Reader\RssReaderBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Keosu\DataModel\ArticleModelBundle\Entity\ArticleTags;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -51,7 +53,7 @@ class SyncController extends Controller {
         $feed->init();
         $items = $feed->get_items();
         foreach ($items as $item) {
-            $this->parseAndImportArticle($item, $reader, $rssReader->striphtml);
+            $this->parseAndImportArticle($item, $reader, $rssReader->striphtml, $rssReader->tags);
         }
 		$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
@@ -86,7 +88,7 @@ class SyncController extends Controller {
 			$feed->init();
 			$items = $feed->get_items();
 			foreach ($items as $item) {
-				$this->parseAndImportArticle($item, $reader, $rssReader->striphtml);
+				$this->parseAndImportArticle($item, $reader, $rssReader->striphtml, $rssReader->tags);
 			}
 		}
 
@@ -100,7 +102,7 @@ class SyncController extends Controller {
 		}
 	}
 
-    private function parseAndImportArticle($item, $reader, $stripHtml)
+    private function parseAndImportArticle($item, $reader, $stripHtml, $tags)
     {
         $title  = ($item->get_title()       ? $item->get_title()                  : '');
         $body   = ($item->get_description() ? $item->get_description()            : '');
@@ -129,10 +131,10 @@ class SyncController extends Controller {
         }
 
         //Store in database
-        $this->storeArticle($title, $body, $date, $id, $img, $author, $reader);
+        $this->storeArticle($title, $body, $date, $id, $img, $author,$tags, $reader);
     }
 
-    private function storeArticle($title, $body, $date, $idext, $img, $author,$reader)
+    private function storeArticle($title, $body, $date, $idext, $img, $author,$tags,$reader)
     {
         $em = $this->get('doctrine')->getManager();
         $article = $em->getRepository('KeosuDataModelArticleModelBundle:ArticleBody')->findOneByIdext($idext);
@@ -152,6 +154,16 @@ class SyncController extends Controller {
         $article->setTitle($title);
         $article->setIdext($idext);
         $article->setVersion("1.0");
+
+        if($tags != null){
+			$tag = new ArticleTags();
+			$tag->setTagName($tags);
+			$article->setTags(new ArrayCollection());
+			$tag->setArticleBody($article);
+			$article->addTag($tag);
+		}
+
+
         //RSS attachment
         if($img!=null){
             $attachment = new ArticleAttachment();
@@ -165,6 +177,7 @@ class SyncController extends Controller {
         }
 
         $article->setDate($date);
+
         $em->persist($article);
         $em->flush();
 

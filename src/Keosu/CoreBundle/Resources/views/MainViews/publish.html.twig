@@ -1,6 +1,6 @@
 {#
 Keosu is an open source CMS for mobile app
-Copyright (C) 2016  Pockeit
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -22,54 +22,53 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 {% block body %}
 
-	<h2><span class="glyphicon glyphicon-send icon-menu"></span> Publish</h2>
+	<h2><span class="glyphicon glyphicon-send icon-menu"></span> {% trans %}Publish{% endtrans %}</h2>
 	<div class="col-md-3">
 		<div class="wellcustom">
-			<h3><span class="glyphicon glyphicon-export icon-menu"></span>Export App</h3>
+			<h3><span class="glyphicon glyphicon-export icon-menu"></span>{% trans %}Export App{% endtrans %}</h3>
 			<p>
-				Export App before download the last version
+				{% trans %}Export App before download the last version{% endtrans %}
 			</p>
-			<a href="{{ path('keosu_core_exporter_export') }}"><button id="export" type="button" data-loading-text="Loading..." class="btn btn-default">Export</button></a>
+			<a href="{{ path('keosu_core_exporter_export') }}"><button id="export" type="button" data-loading-text="{% trans %}Loading...{% endtrans %}" class="btn btn-default">{% trans %}Export{% endtrans %}</button></a>
 		</div>
 	</div>
 
 	<div class="col-md-3">
 		<div class="wellcustom">
-			<h3><img class="icon-cordova icon-menu" src="{{url_base}}/img/phonegap.png"/>Download app for phonegapbuild</h3>
+			<h3><img class="icon-cordova icon-menu" src="{{url_base}}/img/phonegap.png"/>{% trans %}Download app for phonegapbuild{% endtrans %}</h3>
 			<p>
-				You can import this zip file in https://build.phonegap.com/, test app on your phone and publish it to stores
+				{% trans %}You can import this zip file in https://build.phonegap.com/, test app on your phone and publish it to stores{% endtrans %}
 			</p>
-			<a href="{{url_base}}/keosu/export/phonegapbuild/export.zip"><button type="button" class="btn btn-default">Download</button></a>
+			<a href="{{url_base}}/keosu/export/phonegapbuild/export.zip"><button type="button" class="btn btn-default">{% trans %}Download{% endtrans %}</button></a>
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="wellcustom">
-			<h3><img class="icon-cordova icon-menu" src="{{url_base}}/img/cordova.png"/>Download app for Cordova</h3>
+			<h3><img class="icon-cordova icon-menu" src="{{url_base}}/img/cordova.png"/>{% trans %}Download app for Cordova{% endtrans %}</h3>
 			<p>
-				You can use import the zip file in www folfer of an existing cordova project and test your app on your computer.
-				You need to user this option if you want to use specific plugins
+				{% trans %}You can use import the zip file in www folder of an existing cordova project and test your app on your computer. You need to user this option if you want to use specific plugins{% endtrans %}
 			</p>
-			<a href="{{url_base}}/keosu/export/cordova/export.zip"><button type="button" class="btn btn-default">Download</button></a>
-		</div>
-	</div>
-
-	<div class="col-md-3">
-		<div class="wellcustom">
-			<h3><span class="glyphicon glyphicon-save icon-menu"></span>Download config</h3>
-			<p>
-				Configuration files for a local cordova project
-			</p>
-			<a href="{{url_base}}/keosu/export/cordova/config.zip"><button type="button" class="btn btn-default">Download</button></a>
+			<a href="{{url_base}}/keosu/export/cordova/export.zip"><button type="button" class="btn btn-default">{% trans %}Download{% endtrans %}</button></a>
 		</div>
 	</div>
 
 	<div class="col-md-3">
 		<div class="wellcustom">
-			<h3><span class="glyphicon glyphicon-usd icon-menu"></span>Submit and monetize a development</h3>
+			<h3><span class="glyphicon glyphicon-save icon-menu"></span>{% trans %}Download config{% endtrans %}</h3>
 			<p>
-				You can submit and sell your developments themes, plugins and widgets. Monetize your creations via the Keosu's Store
+				{% trans %}Configuration files for a local cordova project{% endtrans %}
 			</p>
-			<a target="_blank" href="http://keosu.com/soumettre-un-developpement/?utm_source=keosu&utm_medium=cms&utm_term=soumettre&utm_campaign=soumettre%20dev"><button type="button" class="btn btn-default">Submit</button></a>
+			<a href="{{url_base}}/keosu/export/cordova/config.zip"><button type="button" class="btn btn-default">{% trans %}Download{% endtrans %}</button></a>
+		</div>
+	</div>
+
+	<div class="col-md-3">
+		<div class="wellcustom">
+			<h3><span class="glyphicon glyphicon-usd icon-menu"></span>{% trans %}Submit and monetize a development{% endtrans %}</h3>
+			<p>
+				{% trans %}You can submit and sell your developments themes, plugins and widgets. Monetize your creations via the Keosu's Store{% endtrans %}
+			</p>
+			<a target="_blank" href="http://keosu.com/soumettre-un-developpement/?utm_source=keosu&utm_medium=cms&utm_term=soumettre&utm_campaign=soumettre%20dev"><button type="button" class="btn btn-default">{% trans %}Submit{% endtrans %}</button></a>
 		</div>
 	</div>
 

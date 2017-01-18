@@ -22,7 +22,11 @@
 	],
 
 "pluginToInstall" : [
-		"cordova plugin add org.apache.cordova.network-information"
+		"cordova plugin add cordova-plugin-device",
+		"cordova plugin add cordova-plugin-device-orientation",
+		"cordova plugin add cordova-plugin-dialogs",
+		"cordova plugin add cordova-plugin-network-information",
+		"cordova plugin add cordova-plugin-whitelist"
 	],
     "require" : [
         { "name" : "angularJs" , "version" : ">=1.2" },

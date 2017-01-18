@@ -229,8 +229,14 @@ class Exporter
 
 
                     //Copy in HTML
-                    $gadgetTemplateHtml = file_get_contents($package->getPath() . '/templates/' . $gadget->getTemplate());
-                    $zone->nodeValue = $gadgetTemplateHtml;
+					//Check the path
+					if(file_exists(ThemeUtil::getAbsolutePath() . $app->getTheme() . "/templates/gadgetTemplates/Gadget-".$package->getName()."/".$gadget->getTemplate()))//Specific  template in theme
+						$gadgetTemplateHtml = file_get_contents(ThemeUtil::getAbsolutePath() . $app->getTheme() . "/templates/gadgetTemplates/Gadget-".$package->getName()."/".$gadget->getTemplate());
+					else // native template
+						$gadgetTemplateHtml = file_get_contents($package->getPath() . '/templates/' . $gadget->getTemplate());
+
+
+					$zone->nodeValue = $gadgetTemplateHtml;
                     //Add the angularJS directive to zone
                     // import param
                     $zone->setAttribute('ng-controller', $gadget->getName() . 'Controller');
@@ -271,13 +277,13 @@ class Exporter
 
         // this should always be at the end
         $script = $indexHtml->createElement('script');
-        $script->setAttribute('src', 'js/app.js');
+        $script->setAttribute('src', 'js/app.js?temp='.time());
         $indexHtml->getElementsByTagName('head')->item(0)->appendChild($script);
 
         $link = $indexHtml->createElement('link');
         $link->setAttribute('rel', 'stylesheet');
         $link->setAttribute('type', 'text/css');
-        $link->setAttribute('href', 'js/app.css');
+        $link->setAttribute('href', 'js/app.css?temp='.time());
         $indexHtml->getElementsByTagName('head')->item(0)->appendChild($link);
 
         $this->writeFile(StringUtil::decodeString($indexHtml->saveHTML()), 'index.html', '/simulator/www/');
@@ -291,20 +297,6 @@ class Exporter
 
         // import CSS of all packages
         $this->writeFile($css, 'app.css', '/simulator/www/js/');
-
-        //Enable individual API permissions here.
-        //The "device" permission is required for the 'deviceready' event.
-        $basePlugin = array(
-            'org.apache.cordova.device',
-            'org.apache.cordova.device-motion',
-            'org.apache.cordova.device-orientation',
-            'org.apache.cordova.dialogs'
-        );
-        foreach ($basePlugin as $plugin) {
-            $device = $configXml->createElement('plugin');
-            $device->setAttribute('name', $plugin);
-            $widget->appendChild($device);
-        }
 
         // Render preferences
         $preferences = $app->getPreferences();

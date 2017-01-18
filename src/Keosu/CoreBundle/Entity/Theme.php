@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Table(name="Theme")
  */
 class Theme extends ThemeDataModel
 {

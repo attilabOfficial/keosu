@@ -1,66 +1,66 @@
-	{# 	
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2016  Pockeit
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2016  Pockeit
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
 {% extends 'KeosuCoreBundle:MainViews:page.html.twig' %}
 
 {% block content %}
 
-<div class="pageinfo">
-	<h4>{{ page.name }}</h4>
+	<div class="pageinfo">
+		<h4>{{ page.name }}</h4>
 
-	
-	<div class="btn-group">
-		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-			Screen size
-			<span class="caret"></span>
-		</a>
-		<ul class="dropdown-menu">
-			<li>
-				<a onclick="changePreviewSize(480,320)" href="#">Phone</a>
-				<a onclick="changePreviewSize(320,480)" href="#">Phone Landscape</a>
-				<a onclick="changePreviewSize(576, 432)" href="#">Tablet</a>
-				<a onclick="changePreviewSize(432,576)" href="#">Tablet Landscape</a>
-			</li>
-		</ul>
-	</div>
-</div>
 
-<script>
-	function changePreviewSize(height, width){
-		$('.templatepreview').css('height',height);
-		$('.templatepreview').css('width',width);
-		$('#iframepreview').attr('height',height);
-		$('#iframepreview').attr('width',width);
-	}
-</script>
-	
-<div class="row">
-	<div class="col-md-5">
-		{% for zone in zones %}
-			{{ includePanelGadget(zone.zoneId,page.id,zone.gadget,gadgets) }}
-		{% endfor %}
-	</div>
-
-	<div class="col-md-7">
-		<div class="alert alert-warning" role="alert">
-			<strong>Heads up!</strong>
-			Use the simulator for more reliability. Some of our features are only available on device.
+		<div class="btn-group">
+			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+				Screen size
+				<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+				<li>
+					<a onclick="changePreviewSize(736,414)" href="#">Phone</a>
+					<a onclick="changePreviewSize(414,736)" href="#">Phone Landscape</a>
+					<a onclick="changePreviewSize(576, 432)" href="#">Tablet</a>
+					<a onclick="changePreviewSize(432,576)" href="#">Tablet Landscape</a>
+				</li>
+			</ul>
 		</div>
-		<iframe style="margin:0 auto;display:block;" id="iframepreview" width="320px" height="480px" src="{{url_base}}/keosu/export/simulator/www/index.html#/Page/{{ page.id }}"></iframe>
 	</div>
-</div>
+
+	<script>
+		function changePreviewSize(height, width){
+			$('.templatepreview').css('height',height);
+			$('.templatepreview').css('width',width);
+			$('#iframepreview').attr('height',height);
+			$('#iframepreview').attr('width',width);
+		}
+	</script>
+
+	<div class="row">
+		<div class="col-md-5">
+			{% for zone in zones %}
+				{{ includePanelGadget(zone.zoneId,page.id,zone.gadget,gadgets) }}
+			{% endfor %}
+		</div>
+
+		<div class="col-md-7">
+			<div class="alert alert-warning" role="alert">
+				<strong>Heads up!</strong>
+				Use the simulator for more reliability. Some of our features are only available on device.
+			</div>
+			<iframe style="margin:0 auto;display:block;" id="iframepreview" width="414px" height="736px" src="{{url_base}}/keosu/export/simulator/www/index.html#/Page/{{ page.id }}?rand={{ date().timestamp }}"></iframe>
+		</div>
+	</div>
 {% endblock %}

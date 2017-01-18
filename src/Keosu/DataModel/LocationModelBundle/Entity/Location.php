@@ -28,6 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Keosu\DataModel\LocationModelBundle\Entity\LocationRepository")
+ * @ORM\Table(name="Location")
  */
 class Location extends DataModel{
 	/**

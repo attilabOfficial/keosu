@@ -29,11 +29,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<div class="col-md-11">
 								<h2><span class="glyphicon glyphicon-th icon-menu"></span> Content</h2>
 								<p>
-									In the content, mustly the first page you see, you will add content for your application. But don't worry, the page will come in a second step.
+									{% trans %}In the content, mustly the first page you see, you will add content for your application. But don't worry, the page will come in a second step. {% endtrans %}
 								</p>
-								<p>
-									Have fun
-								</p>
+
 							</div>
 						</div>
 						<div class="row">
@@ -41,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="wellcustom">
 									<h3><span class="glyphicon glyphicon-search icon-menu"></span>Readers</h3>
 									<p>
-										A reader is a connector to an external source (website, RSS, software etc ...) to import contents in Keosu.
+										{% trans %}A reader is a connector to an external source (website, RSS, software etc ...) to import contents in Keosu.{% endtrans %}
 									</p>
 									<a href="{{ path('keosu_ReaderManager_manage') }}"><button type="button" class="btn btn-default">Manage readers</button></a>
 								</div>
@@ -50,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="wellcustom">
 									<h3><span class="glyphicon glyphicon-pushpin icon-menu"></span>Article</h3>
 									<p>
-										An article is ... well ... a simple article with title, content, and pictures ...
+										{% trans %}An article is ... well ... a simple article with title, content, and pictures ...{% endtrans %}
 									</p>
 									<div class="btn-container">
 										<a href="{{ path('keosu_article_viewlist') }}"><button type="button" class="btn btn-default">Manage articles</button></a></div>
@@ -60,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="wellcustom">
 									<h3><span class="glyphicon glyphicon-map-marker icon-menu"></span>Location</h3>
 									<p>
-										A point on a map
+										{% trans %}A point on a map.{% endtrans %}
 									</p>
 									<a href="{{ path('keosu_location_viewlist') }}"><button type="button" class="btn btn-default">Manage POI</button></a>
 								</div>
@@ -69,7 +67,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="wellcustom">
 									<h3><span class="glyphicon glyphicon-picture icon-menu"></span>Picture</h3>
 									<p>
-										Import pictures to feed your galleries
+										{% trans %}Import pictures to feed your galleries{% endtrans %}
 									</p>
 									<a href="{{ path('keosu_picture_viewlist') }}"><button type="button" class="btn btn-default">Manage pictures</button></a>
 								</div>
@@ -78,7 +76,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="wellcustom">
 									<h3><span class="glyphicon glyphicon-calendar icon-menu"></span>Event</h3>
 									<p>
-										An event of a calendar
+										{% trans %}An event of a calendar{% endtrans %}
 									</p>
 									<a href="{{ path('keosu_event_viewlist') }}"><button type="button" class="btn btn-default">Manage events</button></a>
 								</div>
@@ -87,7 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="wellcustom">
 									<h3><span class="glyphicon glyphicon-list icon-menu"></span>Menu</h3>
 									<p>
-										Add awesome menus to your project app
+										{% trans %}Add awesome menus to your project app{% endtrans %}
 									</p>
 									<a href="{{ path('keosu_menu_viewlist') }}"><button type="button" class="btn btn-default">Manage menus</button></a>
 								</div>
@@ -96,7 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="wellcustom">
 									<h3><span class="glyphicon glyphicon-search icon-menu"></span>Search</h3>
 									<p>
-										Manage searches entries
+										{% trans %}Manage searches entries{% endtrans %}
 									</p>
 									<a href="{{ path('keosu_search_viewlist') }}"><button type="button" class="btn btn-default">Manage searches</button></a>
 								</div>

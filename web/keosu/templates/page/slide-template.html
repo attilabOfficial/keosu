@@ -1,10 +1,12 @@
 <nav class="navbar navbar-default navbar-fixed-top classic-navbar" role="banner">
-	<div class="header">
-		<div class="header header-slide" ng-click="menuOpen =!menuOpen" ng-class="{'open' : menuOpen}">
-            <div class="icon-menu2"></div>
-        </div>
-		<div class="title"><b>{{::appName}}</b></div>
-    </div>
+	<div class="header header-slide hamburger-menu" ng-click="menuOpen =!menuOpen" ng-class="{'open' : menuOpen}">
+		<div id="nav-icon1" ng-class="{'openned-icon' : menuOpen}">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="title"><b>{{::appName}}</b></div>
 </nav>
 <div class="block-button">
 	<div class="" ng-click="back()" ng-show="closeButton">
@@ -15,7 +17,7 @@
 <div class="slide-menu" ng-class="{'open' : menuOpen}">
 	<div id="menu" class="zone">&nbsp;</div>
 </div>
-<div class="">
+<div>
 	<div class="container-fluid">
 		<div id="body" class="zone">&nbsp;</div>
 	</div>

@@ -28,6 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Keosu\DataModel\EventModelBundle\Entity\EventRepository")
+ * @ORM\Table(name="Event")
  */
 class Event extends DataModel{
 	 /**

@@ -6,15 +6,15 @@
 		{% block pageAddActionGadget %}
 			<div class="btn-group">
 				<button class="btn btn-success dropdown-toggle" data-toggle="dropdown" type="button">
-					Add gadget
+					{% trans %}Add gadget{% endtrans %}
 					<span class="caret"></span>
 				</button>
-		
+
 				<ul class="dropdown-menu">
 					{% for gadgetName in gadgetList %}
 						<li>
 							<a href="{{ path('keosu_gadget_add',{'pageId':pageId, 'zoneName':zoneId, 'gadgetName':gadgetName}) }}">
-								Add {{ gadgetName }}
+								{% trans %}Add{% endtrans %} {{ gadgetName }}
 							</a>
 						</li>
 					{% endfor %}
@@ -26,12 +26,12 @@
 
 			{% block pageEditActionGadget %}
 				<a class="btn btn-info edit-gadget" href="{{ path('keosu_gadget_edit',{'pageId':pageId, 'zoneName':zoneId}) }}">
-					Edit {{ gadget.name }}
+					{% trans %}Edit{% endtrans %} {{ gadget.name }}
 				</a>
 			{% endblock pageEditActionGadget %}
 
 			{% block pageDeleteActionGadget %}
-				<a class="remove-gadget" href="{{ path('keosu_gadget_delete',{'pageId':pageId, 'zoneName':zoneId}) }}" title="Clean zone">
+				<a class="remove-gadget" href="{{ path('keosu_gadget_delete',{'pageId':pageId, 'zoneName':zoneId}) }}" title="{% trans %}Clean zone{% endtrans %}">
 					<span class="glyphicon glyphicon-remove-circle"></span>
 				</a>
 			{% endblock pageDeleteActionGadget %}
@@ -40,11 +40,11 @@
 		{% endblock pageExtensionActionGadget%}
 		<script>
 			$( "#panel{{ zoneId }}" ).hover(
-			function() {
-				$("iframe").contents().find("#{{ zoneId }}").css("border","5px solid red");
-			}, function() {
-				$("iframe").contents().find("#{{ zoneId }}").css("border","none");
-			}
+				function() {
+					$("iframe").contents().find("#{{ zoneId }}").css("border","5px solid red");
+				}, function() {
+					$("iframe").contents().find("#{{ zoneId }}").css("border","none");
+				}
 			);
 		</script>
 	</div>

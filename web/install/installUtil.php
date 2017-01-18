@@ -27,7 +27,7 @@
 			}
 		}
 	}
-	function generateParameters($dbhost, $dbport,$dbname,$dbusername,$dbpassword,$adminpassword){
+	function generateParameters($dbhost, $dbport,$dbname,$dbusername,$dbpassword,$adminpassword, $locale){
 		$currentUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 		$lastSlach = strrpos($currentUrl, "/");
 		$currentUrl = substr($currentUrl,0,$lastSlach );
@@ -51,7 +51,7 @@
 			'    mailer_user: ~'  . PHP_EOL.
 			'    mailer_password: ~' . PHP_EOL.
 			'    admin_password: ' .$adminpassword. PHP_EOL.
-			'    locale: en' .  PHP_EOL.
+			'    locale: ' .$locale.  PHP_EOL.
 			'    secret: '.generateRandomString() .  PHP_EOL.
 			'    installer: false' .  PHP_EOL;
 

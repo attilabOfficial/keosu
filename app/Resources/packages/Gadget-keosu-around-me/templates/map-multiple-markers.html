@@ -1,7 +1,19 @@
-<div class="animated fadeIn">
+<div>
     <div ng-bind-html="error"></div>
     <div class="row-fluid">
         <h4 class="title" ng-bind-html="title"></h4>
     </div>
-    <div id="map_all"></div>
+    <div ng-show="isList" id="map_all"></div>
+    <div ng-show="!isList">
+        <h4 class="title" ng-bind-html="curPage.title"></h4>
+        <div class="list-elem-right">
+            <p>{{ curPage.distance }} km</p>
+        </div>
+
+        <div ng-bind-html="curPage.descHtml"></div>
+
+        <div id="map_default"></div>
+
+
+    </div>
 </div>

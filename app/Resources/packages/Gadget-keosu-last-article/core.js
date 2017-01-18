@@ -37,10 +37,11 @@ app.controller('keosu-last-articleController', function ($rootScope, $scope, $ht
     /**
      * specific action when the 'open' button is called
      */
-    $scope.$on('open', function (event, page) {
+    $scope.open = function (page) {
         $scope.article = page;
         $scope.parts(false, true);
-    });
+		$scope.$emit("show-back",null);
+    };
 
     $scope.next = function () {
         if (!$scope.isLastPage) {
@@ -90,7 +91,6 @@ app.controller('keosu-last-articleController', function ($rootScope, $scope, $ht
         });
     }
     $scope.init = function (params) {
-        $rootScope.previousButton = false;
         $scope.slide = "fadeIn";
         $scope.param = params;
         $scope.pages = new Array();

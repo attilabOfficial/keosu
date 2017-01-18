@@ -1,33 +1,33 @@
-	{# 	
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2016  Pockeit
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
 {% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
 
 {% block title %}
-	Configure a new reader
+	{% trans %}Configure a new reader{% endtrans %}
 {% endblock %}
 {% block content %}
-<div>
-	{{ form_start(form) }}
-    	{{ form_widget(form) }}
+	<div>
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
 
-    	<input type="submit" class="btn btn-success" /><button type="button" class="btn btn-danger">Cancel</button>
-	{{ form_end(form) }}
-    
-</div>
+		<input type="submit" class="btn btn-success" /><button type="button" class="btn btn-danger">{% trans %}Cancel{% endtrans %}</button>
+		{{ form_end(form) }}
+
+	</div>
 {% endblock %}
 

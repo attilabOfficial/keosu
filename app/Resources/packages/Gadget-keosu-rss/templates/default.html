@@ -2,11 +2,11 @@
 <div class="rss-list" ng-show="isList" ng-swipe-left="next()" ng-swipe-right="prev()">
 	<div class="panel list">
 		<div class="panel-body list-content">
-			<div class="row-fluid list-elements animated {{slide}} rss-title-wrapper" ng-repeat="elem in currentlist">
+			<div class="row-fluid list-elements animated {{slide}} rss-title-wrapper" ng-repeat="elem in currentList">
 				<div class="media" ng-click="open(elem)">
 					<div class="media-body list-title rss-title">
-						<h6 class="title">{{ elem.title }}</h6>
-						<img class="center" ng-src="{{elem.image}}" alt=""/>
+						<h6 class="title" ng-bind-html="elem.title"></h6>
+						<img class="center" ng-src="{{elem.li}}" alt=""/>
 					</div>
 				</div>
 				<hr>

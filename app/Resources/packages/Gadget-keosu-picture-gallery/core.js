@@ -69,7 +69,6 @@ app.controller('keosu-picture-galleryController', function ($rootScope, $scope, 
 		return ($scope.activePage.page+1 < $scope.pages.length);
 	};
 	$scope.init = function (params) {
-		$rootScope.previousButton = false;
 		$scope.indexSlide=0;
 		$scope.slideElement="zoomIn";
 		$scope.slidePage="fadeIn";

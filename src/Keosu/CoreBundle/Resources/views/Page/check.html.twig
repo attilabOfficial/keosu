@@ -1,12 +1,12 @@
 {% if nbrIsMain == 0 %}
-<div class="alert alert-danger">
-	No main page found. Check "isMain" attribute for one of your layout.
-	 <a href="{{ path('keosu_core_views_page_manage')}}">Manage Page</a>
-</div>
+	<div class="alert alert-danger">
+		{% trans %}No main page found. Check "isMain" attribute for one of your layout.{% endtrans %}
+		<a href="{{ path('keosu_core_views_page_manage')}}">{% trans %}Manage Page{% endtrans %}</a>
+	</div>
 {% elseif nbrIsMain > 1 %}
-<div class="alert alert-danger">
-More than one main page found. UnCheck "isMain" attribute to only have one "isMain" page.
- <a href="{{ path('keosu_core_views_page_manage')}}">Manage Page</a>
-</div>
+	<div class="alert alert-danger">
+		{% trans %}More than one main page found. UnCheck "isMain" attribute to only have one "isMain" page.{% endtrans %}
+		<a href="{{ path('keosu_core_views_page_manage')}}">{% trans %}Manage Page{% endtrans %}</a>
+	</div>
 {% endif %}
 

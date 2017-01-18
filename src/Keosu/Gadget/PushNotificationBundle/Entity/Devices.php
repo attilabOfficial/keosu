@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Keosu\Gadget\PushNotificationBundle\Entity\DevicesRepository")
+ * @ORM\Table(name="Devices")
  */
 class Devices
 {

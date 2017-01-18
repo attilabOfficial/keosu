@@ -1,6 +1,6 @@
 {#
 Keosu is an open source CMS for mobile app
-Copyright (C) 2016  Pockeit
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -17,23 +17,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 {% extends 'KeosuCoreBundle:MainViews:page.html.twig' %}
 
-{% block title %}Manage pages{% endblock %}
+{% block title %}{% trans %}Manage pages{% endtrans %}{% endblock %}
 
 {% block content %}
 
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<fieldset>
-				<legend><span class="glyphicon glyphicon-file icon-menu"></span>Manage Pages</legend>
+				<legend><span class="glyphicon glyphicon-file icon-menu"></span>{% trans %}Manage Pages{% endtrans %}</legend>
 
-				<a class="btn btn-success" href="{{ path('keosu_core_views_page_manage_add') }}"><span class="glyphicon glyphicon-plus-sign icon-success"></span>Add new page</a>
+				<a class="btn btn-success" href="{{ path('keosu_core_views_page_manage_add') }}"><span class="glyphicon glyphicon-plus-sign icon-success"></span>{% trans %}Add new page{% endtrans %}</a>
 
 				<table class="table table-striped table-hover">
 					<thead>
 					<tr>
-						<th>is index</th>
-						<th>page name</th>
-						<th>page template</th>
+						<th>{% trans %}is index{% endtrans %}</th>
+						<th>{% trans %}page name{% endtrans %}</th>
+						<th>{% trans %}page template{% endtrans %}</th>
 						<th colspan="2"></th>
 					</tr>
 					</thead>
@@ -52,14 +52,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							</td>
 						</tr>
 					{% else %}
-						<p>No pages</p>
+						<p>{% trans %}No pages{% endtrans %}</p>
 					{% endfor %}
 					</tbody>
 					<tfoot>
 					<tr>
-						<th>is index</th>
-						<th>page name</th>
-						<th>page template</th>
+						<th>{% trans %}is index{% endtrans %}</th>
+						<th>{% trans %}page name{% endtrans %}</th>
+						<th>{% trans %}page template{% endtrans %}</th>
 						<th></th>
 					</tr>
 					</tfoot>

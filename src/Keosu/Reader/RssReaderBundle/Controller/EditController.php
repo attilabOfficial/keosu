@@ -71,7 +71,8 @@ class EditController extends Controller {
 		$formBuilder->add('name', TextType::class)
 			->add('feed_url', TextType::class)
 			->add('striphtml', CheckBoxType::class, array('required'=>false))
-			->add('allowupdate', CheckboxType::class,array('label'=>false , 'required'=>false));
+			->add('allowupdate', CheckboxType::class,array('label'=>false , 'required'=>false))
+			->add('tags', TextType::class,array('required'=>false));
 	}
 
 }

@@ -1,31 +1,31 @@
-	{# 	
-	Keosu is an open source CMS for mobile app
-	Copyright (C) 2016  Pockeit
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    #}
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
 
 {% extends 'KeosuCoreBundle:MainViews:page.html.twig' %}
 
 {% block title %}
-	Edit gadget
+	{% trans %}Edit gadget{% endtrans %}
 {% endblock %}
 {% block content %}
-<h1>Edit gadget</h1>
-<br/>
-<div>
-	{{ form_start(form) }}
+	<h1>{% trans %}Edit gadget{% endtrans %}</h1>
+	<br/>
+	<div>
+		{{ form_start(form) }}
 
 		<div class="imgTemplate">
 			{{ form_row(form.template) }}
@@ -37,27 +37,27 @@
 		<br class="clear"/><br class="clear"/><br class="clear"/>
 		<input type="submit" class="btn btn-success" />&nbsp;
 		<a class="confirmModal" href="javascript:history.go(-1);" >
-			<button type="button" class="btn btn-danger">Cancel</button>
+			<button type="button" class="btn btn-danger">{% trans %}Cancel{% endtrans %}</button>
 		</a>
 
-	{{ form_end(form) }}
+		{{ form_end(form) }}
 
-</div>
-<script>
-	$(document).ready(function() {
-		templateButton("{{url_base}}", "{{gadgetDir}}", "{{gadgetName}}");
+	</div>
+	<script>
+		$(document).ready(function() {
+			templateButton("{{url_base}}", "{{gadgetDir}}", "{{gadgetName}}");
 
-        // This is a very nasty hack for resolving a issue encountered during the save of the menu gadget
-        // Sometimes, a page included in the config is not taken into account
-        if ('{{gadgetName}}' == 'keosu-menu') {
-            $('#content form').submit(function() {
-                $('#content .collection-items select').each(function(index) {
-                    $(this).attr('name', 'form[config][page][' + (index+1) + ']')
-                });
-            });
-        }
-	});
-</script>
+			// This is a very nasty hack for resolving a issue encountered during the save of the menu gadget
+			// Sometimes, a page included in the config is not taken into account
+			if ('{{gadgetName}}' == 'keosu-menu') {
+				$('#content form').submit(function() {
+					$('#content .collection-items select').each(function(index) {
+						$(this).attr('name', 'form[config][page][' + (index+1) + ']')
+					});
+				});
+			}
+		});
+	</script>
 {% endblock %}
 
 

@@ -5,7 +5,7 @@ imports:
 framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
-    translator:       ~
+    translator: { fallbacks: [%locale%] }
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -105,13 +105,3 @@ services:
 mopa_bootstrap:
     form:
         error_type: block
-
-mcfedr_aws_push:
-    platforms:
-        ios: "%aws_ios%"
-        android: "%aws_android%"
-    topic_arn: "%aws_topic%"
-    aws:
-        key: "%aws_key%"
-        secret: "%aws_secret%"
-        region: "%aws_region%"

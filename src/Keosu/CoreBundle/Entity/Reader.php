@@ -24,6 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Keosu\CoreBundle\Entity\ReaderRepository")
+ * @ORM\Table(name="Reader")
  */
 class Reader {
 	/**

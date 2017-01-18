@@ -25,7 +25,6 @@ app.controller('main_Controller', function($http, $rootScope, $scope) {
 	 * Manage buttons when calling previous page
 	 */
 	$rootScope.back = function() {
-        $rootScope.previousButton = true;
         if ($rootScope.closeButton) {
             $rootScope.closeButton = false;
         }
@@ -35,16 +34,10 @@ app.controller('main_Controller', function($http, $rootScope, $scope) {
         $scope.$broadcast('back',null);
     };
 
-	/**
-	 * Manage buttons when opening an list element
-	 * @param arg
-	 */
-	$rootScope.open = function (arg) {
-        $rootScope.previousButton = false;
-        $rootScope.closeButton = true;
+	$scope.$on("show-back", function(){
+		$rootScope.closeButton = true;
+	});
 
-        $scope.$broadcast('open', arg);
-    };
 
     $http.get('data/globalParam.json').success(function(data) {
 		$rootScope.appName = data.name;

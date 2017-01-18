@@ -25,6 +25,7 @@ use Keosu\CoreBundle\Util\TemplateUtil;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Keosu\CoreBundle\Entity\PageRepository")
+ * @ORM\Table(name="Page")
  */
 class Page {
 

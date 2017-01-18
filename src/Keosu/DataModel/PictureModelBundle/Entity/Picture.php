@@ -26,6 +26,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Keosu\DataModel\PictureModelBundle\Entity\PictureRepository")
+ * @ORM\Table(name="Picture")
  */
 class Picture extends MediaDataModel
 {
@@ -56,7 +57,7 @@ class Picture extends MediaDataModel
     private $enableComments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Keosu\DataModel\PictureModelBundle\Entity\pictureTag", mappedBy="picture", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Keosu\DataModel\PictureModelBundle\Entity\PictureTags", mappedBy="picture", cascade={"persist","remove"})
      */
     private $tags;
     

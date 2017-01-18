@@ -1,0 +1,43 @@
+{
+   "name" : "keosu-curpage",
+   "description" : "Current page",
+   "version" : "0.1",
+   "type" : "gadget",
+   "param" : [
+   ],
+   "configCordova": [
+      {
+         "plugin": [
+            {
+               "@attributes": {
+                  "name": "cordova-plugin-geolocation"
+               }
+            }
+         ]
+      },
+      {
+         "gap:config-file": [
+            {
+               "@attributes": {
+                  "platform": "ios",
+                  "parent": "NSLocationWhenInUseUsageDescription",
+                  "overwrite": "false"
+               }
+            },
+            {
+               "@value": {
+                  "array": {
+                     "string": "Find locations around you"
+                  }
+               }
+            }
+         ]
+      }
+   ],
+   "pluginToInstall" : [
+      "cordova plugin add cordova-plugin-geolocation"
+   ],
+   "require" : [
+      { "name" : "keosu-base", "version" : ">=0.1" }
+   ]
+}

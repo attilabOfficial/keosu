@@ -54,8 +54,17 @@ class TwigMenuExtension extends \Twig_Extension {
 
 	public function appListContent()
 	{
+		$returnArray = array();
+		foreach(array_keys(KeosuExtension::$dataModelList) as $entry){
+			$temp = array();
+			$temp['name'] = $entry;
+			$temp['label'] = $this->container->get('translator')->trans(ucfirst($entry));
+			$returnArray[] = $temp;
+
+		}
 		return $this->container->get('templating')->render('KeosuCoreBundle:Menu:content.html.twig',array(
-			'contents' => array_keys(KeosuExtension::$dataModelList),
+
+			'contents' => $returnArray,
 			'icon' => KeosuExtension::$dataModelList
 		));
 	}

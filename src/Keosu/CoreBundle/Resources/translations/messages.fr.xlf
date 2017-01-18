@@ -2,10 +2,756 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
+
+            <trans-unit id="Add new app">
+                <source>Add new app</source>
+                <target>Ajouter une nouvelle app</target>
             </trans-unit>
+            <trans-unit id="App name">
+                <source>App name</source>
+                <target>Nom de l'app</target>
+            </trans-unit>
+            <trans-unit id="App Theme">
+                <source>App Theme</source>
+                <target>Nom du thème</target>
+            </trans-unit>
+            <trans-unit id="Edit App">
+                <source>Edit App</source>
+                <target>Éditer l'App</target>
+            </trans-unit>
+            <trans-unit id="Welcome">
+                <source>Welcome to Keosu!</source>
+                <target>Bienvenu dans Keosu!</target>
+            </trans-unit>
+            <trans-unit id="ToStart">
+                <source>To start, create your first app.</source>
+                <target>Pour commencez, Créez votre première app.</target>
+            </trans-unit>
+            <trans-unit id="Advanced...">
+                <source>Advanced...</source>
+                <target>Avancés...</target>
+            </trans-unit>
+            <trans-unit id="configuration">
+                <source>Configuration</source>
+                <target>Configuration</target>
+            </trans-unit>
+            <trans-unit id="Manage Apps">
+                <source>Manage Apps</source>
+                <target>Gérer les Apps</target>
+            </trans-unit>
+            <trans-unit id="Manage Themes">
+                <source>Manage Themes</source>
+                <target>Gérer les Thèmes</target>
+            </trans-unit>
+            <trans-unit id="Manage Subjects">
+                <source>Manage Subjects</source>
+                <target>Gérer les Disciplines</target>
+            </trans-unit>
+
+
+            <trans-unit id="Pages">
+                <source>Pages</source>
+                <target>Pages</target>
+            </trans-unit>
+            <trans-unit id="Manage pages">
+                <source>Manage pages</source>
+                <target>Gestion pages</target>
+            </trans-unit>
+            <trans-unit id="Manage Page">
+                <source>Manage Page</source>
+                <target>Gérer la page</target>
+            </trans-unit>
+            <trans-unit id="Edit Page">
+                <source>Edit Page</source>
+                <target>Éditer la page</target>
+            </trans-unit>
+            <trans-unit id="Check page def1">
+                <source>No main page found. Check "isMain" attribute for one of your layout.</source>
+                <target>Aucune page d'accueil n'a été trouvée. Vérifiez que le champ "Accueil" est bien coché pour une de vos pages.</target>
+            </trans-unit>
+            <trans-unit id="Check page def2">
+                <source>More than one main page found. UnCheck "isMain" attribute to only have one "isMain" page.</source>
+                <target>Plusieurs pages d'accueil ont été trouvées. Vous devez coché le champ "Accueil" sur une seule page.</target>
+            </trans-unit>
+            <trans-unit id="Pages def">
+                <source>The page part is about your application page, articles, readers data, etc...</source>
+                <target>La partie page représente la création des pages de votre application, comme, les articles, les contenus importés avec les readers, etc...</target>
+            </trans-unit>
+            <trans-unit id="Page def2">
+                <source>A page is a page, no matter about content for instance, it's only a way to display something (but have an idea of what you want to display)</source>
+                <target>Les pages vous permettent d'afficher du contenu, il existe plusieurs types de page.</target>
+            </trans-unit>
+            <trans-unit id="Edit">
+                <source>Edit</source>
+                <target>Éditer</target>
+            </trans-unit>
+            <trans-unit id="Add new page">
+                <source>Add new page</source>
+                <target>Ajouter une nouvelle page</target>
+            </trans-unit>
+            <trans-unit id="is index">
+                <source>is index</source>
+                <target>est l'index</target>
+            </trans-unit>
+            <trans-unit id="page name">
+                <source>page name</source>
+                <target>nom de la page</target>
+            </trans-unit>
+            <trans-unit id="page template">
+                <source>page template</source>
+                <target>modèle de la page</target>
+            </trans-unit>
+            <trans-unit id="No pages">
+                <source>No pages</source>
+                <target>Aucune page</target>
+            </trans-unit>
+            <trans-unit id="Screen size">
+                <source>Screen size</source>
+                <target>Taille de l'écran</target>
+            </trans-unit>
+            <trans-unit id="Phone">
+                <source>Phone</source>
+                <target>Téléphone</target>
+            </trans-unit>
+            <trans-unit id="Phone Landscape">
+                <source>Phone Landscape</source>
+                <target>Téléphone Paysage</target>
+            </trans-unit>
+            <trans-unit id="Tablet">
+                <source>Tablet</source>
+                <target>Tablette</target>
+            </trans-unit>
+            <trans-unit id="Tablet Landscape">
+                <source>Tablet Landscape</source>
+                <target>Tablette Paysage</target>
+            </trans-unit>
+            <trans-unit id="Simul def">
+                <source>Use the simulator for more reliability. Some of our features are only available on device.</source>
+                <target>Utilisez le simulateur pour plus de fiabilité. Certaines fonctionnalités ne sont disponibles que sur télephone/tablette</target>
+            </trans-unit>
+
+
+
+
+            <trans-unit id="Content">
+                <source>Content</source>
+                <target>Contenu</target>
+            </trans-unit>
+            <trans-unit id="Import remote">
+                <source>Import remote</source>
+                <target>Importer</target>
+            </trans-unit>
+            <trans-unit id="Preview">
+                <source>Preview</source>
+                <target>Prévisualiser</target>
+            </trans-unit>
+            <trans-unit id="Config">
+                <source>Config</source>
+                <target>Configurer</target>
+            </trans-unit>
+            <trans-unit id="Apps">
+                <source>Apps</source>
+                <target>Apps</target>
+            </trans-unit>
+            <trans-unit id="Themes">
+                <source>Themes</source>
+                <target>Thèmes</target>
+            </trans-unit>
+            <trans-unit id="Subjects">
+                <source>Subjects</source>
+                <target>Disciplines</target>
+            </trans-unit>
+            <trans-unit id="Store">
+                <source>Store</source>
+                <target>Store</target>
+            </trans-unit>
+            <trans-unit id="Help">
+                <source>Help</source>
+                <target>Aide</target>
+            </trans-unit>
+            <trans-unit id="Content def">
+                <source>In the content, mustly the first page you see, you will add content for your application. But don't worry, the page will come in a second step.</source>
+                <target>La page contenu vous permet d'ajouter différents types de contenu. La deuxième étape sera de créer des pages pour votre application, pour pouvoir y mettre votre contenu créé.</target>
+            </trans-unit>
+            <trans-unit id="Readers">
+                <source>Readers</source>
+                <target>Readers</target>
+            </trans-unit>
+            <trans-unit id="Manage readers">
+                <source>Manage readers</source>
+                <target>Gérer les readers</target>
+            </trans-unit>
+            <trans-unit id="Reader def">
+                <source>A reader is a connector to an external source (website, RSS, software etc ...) to import contents in Keosu.</source>
+                <target>Un "reader" vous permet d'importer du contenu dans Keosu grâce à des sources externes (site web, flux RSS, logiciel, ...).</target>
+            </trans-unit>
+            <trans-unit id="Article">
+                <source>Article</source>
+                <target>Article</target>
+            </trans-unit>
+            <trans-unit id="Manage articles">
+                <source>Manage articles</source>
+                <target>Gérer les articles</target>
+            </trans-unit>
+            <trans-unit id="Article def">
+                <source>An article is ... well ... a simple article with title, content, and pictures ...</source>
+                <target>Le type de contenu article vous permet de créer des articles avec un titre, un texte, des images, ...</target>
+            </trans-unit>
+
+            <trans-unit id="Location">
+                <source>Location</source>
+                <target>Localisation</target>
+            </trans-unit>
+            <trans-unit id="location">
+                 <source>location</source>
+                 <target>localisation</target>
+             </trans-unit>
+
+            <trans-unit id="Manage POI">
+                <source>Manage POI</source>
+                <target>Gérer les POI (point d'intérêt)</target>
+            </trans-unit>
+            <trans-unit id="Location def">
+                <source>A point on a map.</source>
+                <target>Un point sur une carte.</target>
+            </trans-unit>
+            <trans-unit id="Picture">
+                <source>Picture</source>
+                <target>Image</target>
+            </trans-unit>
+            <trans-unit id="Manage pictures">
+                <source>Manage pictures</source>
+                <target>Gérer les images</target>
+            </trans-unit>
+            <trans-unit id="Picture def">
+                <source>Import pictures to feed your galleries</source>
+                <target>Importez des images pour remplir votre galerie d'images</target>
+            </trans-unit>
+            <trans-unit id="Event">
+                <source>Event</source>
+                <target>Événement</target>
+            </trans-unit>
+            <trans-unit id="Manage events">
+                <source>Manage events</source>
+                <target>Gérer les événements</target>
+            </trans-unit>
+            <trans-unit id="Event def">
+                <source>An event of a calendar</source>
+                <target>Un événement sur un calendrier</target>
+            </trans-unit>
+            <trans-unit id="Menu">
+                <source>Menu</source>
+                <target>Menu</target>
+            </trans-unit>
+            <trans-unit id="Manage menus">
+                <source>Manage menus</source>
+                <target>Gérer les menus</target>
+            </trans-unit>
+            <trans-unit id="Menu def">
+                <source>Add awesome menus to your project app</source>
+                <target>Permet d'ajouter différents types de menu</target>
+            </trans-unit>
+            <trans-unit id="Search">
+                <source>Search</source>
+                <target>Recherche</target>
+            </trans-unit>
+            <trans-unit id="Manage searches">
+                <source>Manage searches</source>
+                <target>Géres les recherches</target>
+            </trans-unit>
+            <trans-unit id="Search def">
+                <source>Manage searches entries</source>
+                <target>Gérer les entrées des recherches</target>
+            </trans-unit>
+            <trans-unit id="Add">
+                <source>Add</source>
+                <target>Ajouter</target>
+            </trans-unit>
+            <trans-unit id="Add gadget">
+                <source>Add gadget</source>
+                <target>Ajouter un gadget</target>
+            </trans-unit>
+            <trans-unit id="Clean zone">
+                <source>Clean zone</source>
+                <target>Nettoyer la zone</target>
+            </trans-unit>
+            <trans-unit id="Configure a new reader">
+                <source>Configure a new reader</source>
+                <target>Configurer un nouveau Reader</target>
+            </trans-unit>
+            <trans-unit id="Add a new reader">
+                <source>Add a new reader</source>
+                <target>Ajouter un nouveau Reader</target>
+            </trans-unit>
+            <trans-unit id="Reader name">
+                <source>Reader name</source>
+                <target>Nom du reader</target>
+            </trans-unit>
+            <trans-unit id="No content">
+                <source>No content</source>
+                <target>Aucun contenu</target>
+            </trans-unit>
+            <trans-unit id="Add a reader">
+                <source>Add a reader</source>
+                <target>Ajouter un reader</target>
+            </trans-unit>
+            <trans-unit id="Reader Type">
+                <source>Reader Type</source>
+                <target>Type de Reader</target>
+            </trans-unit>
+
+
+
+
+            <trans-unit id="Publish">
+                <source>Publish</source>
+                <target>Publier</target>
+            </trans-unit>
+            <trans-unit id="Export App">
+                <source>Export App</source>
+                <target>Exporter votre application</target>
+            </trans-unit>
+            <trans-unit id="Export App def">
+                <source>Export App before download the last version</source>
+                <target>Exporter l'application avant de télécharger la dernière version</target>
+            </trans-unit>
+            <trans-unit id="Loading...">
+                <source>Loading...</source>
+                <target>Chargement...</target>
+            </trans-unit>
+            <trans-unit id="Export">
+                <source>Export</source>
+                <target>Exporter</target>
+            </trans-unit>
+            <trans-unit id="Download app for phonegapbuild">
+                <source>Download app for phonegapbuild</source>
+                <target>Télécharger l'app pour phonegapbuild</target>
+            </trans-unit>
+            <trans-unit id="PG def">
+                <source>You can import this zip file in https://build.phonegap.com/, test app on your phone and publish it to stores</source>
+                <target>Vous pouvez importer le fichier compressé (zip) dans https://build.phonegap.com/, testez votre app sur votre téléphone et la publier sur le store</target>
+            </trans-unit>
+            <trans-unit id="Download">
+                <source>Download</source>
+                <target>Télécharger</target>
+            </trans-unit>
+            <trans-unit id="Download app for Cordova">
+                <source>Download app for Cordova</source>
+                <target>Télécharger l'app pour cordova</target>
+            </trans-unit>
+            <trans-unit id="Cord def">
+                <source>You can use import the zip file in www folder of an existing cordova project and test your app on your computer. You need to user this option if you want to use specific plugins</source>
+                <target>Vous pouvez importer le fichier compressé (zip) dans un projet cordova existant, dans le dossier wwww et testez votre app sur votre ordinateur. Utilisez cet option pour des plugins spécifiques</target>
+            </trans-unit>
+            <trans-unit id="Download config">
+                <source>Download config</source>
+                <target>Télécharger la configuration</target>
+            </trans-unit>
+            <trans-unit id="Conf def">
+                <source>Configuration files for a local cordova project</source>
+                <target>Les fichiers de configurations pour un projet cordova en local</target>
+            </trans-unit>
+            <trans-unit id="Sub and Monetize">
+                <source>Submit and monetize a development</source>
+                <target>Soumettre et monétiser un développement</target>
+            </trans-unit>
+            <trans-unit id="Sub and Monetize def">
+                <source>You can submit and sell your developments themes, plugins and widgets. Monetize your creations via the Keosu's Store</source>
+                <target>Vous pouvez soumettre et vendre vos développements, telque les thèmes, plugins et widgets. Monétisez vos créations via le Store Keosu </target>
+            </trans-unit>
+            <trans-unit id="Submit">
+                <source>Submit</source>
+                <target>Soumettre</target>
+            </trans-unit>
+
+            <trans-unit id="Edit subject">
+                <source>Edit subject</source>
+                <target>Éditer la discipline</target>
+            </trans-unit>
+            <trans-unit id="Manage subjects">
+                <source>Manage subjects</source>
+                <target>Gérer les disciplines</target>
+            </trans-unit>
+            <trans-unit id="Add new subject">
+                <source>Add new subject</source>
+                <target>Ajouter une nouvelle disciplines</target>
+            </trans-unit>
+            <trans-unit id="Subject name">
+                <source>Subject name</source>
+                <target>Nom de la discipline</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="workshop">
+                <source>workshop</source>
+                <target>collectif</target>
+            </trans-unit>
+            <trans-unit id="Workshop">
+                <source>Workshop</source>
+                <target>Collectif</target>
+            </trans-unit>
+            <trans-unit id="Name">
+                <source>Name</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="Fields">
+                <source>Fields</source>
+                <target>Champs</target>
+            </trans-unit>
+            <trans-unit id="Received data">
+                <source>Received data</source>
+                <target>Données reçues</target>
+            </trans-unit>
+            <trans-unit id="Description">
+                <source>Description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="(optional)">
+                <source>(optional)</source>
+                <target>(optionel)</target>
+            </trans-unit>
+            <trans-unit id="Mail">
+                <source>Mail</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="Lat">
+                <source>Lat</source>
+                <target>Lat</target>
+            </trans-unit>
+            <trans-unit id="Lng">
+                <source>Lng</source>
+                <target>Lng</target>
+            </trans-unit>
+            <trans-unit id="Enable comments">
+                <source>Enable comments</source>
+                <target>Autoriser les commentaires</target>
+            </trans-unit>
+            <trans-unit id="File">
+                <source>File</source>
+                <target>Fichier</target>
+            </trans-unit>
+            <trans-unit id="File active">
+                <source>File active</source>
+                <target>Fichier actif</target>
+            </trans-unit>
+            <trans-unit id="Target">
+                <source>Target</source>
+                <target>Cible</target>
+            </trans-unit>
+            <trans-unit id="Tag name">
+                <source>Tag name</source>
+                <target>Nom du tag</target>
+            </trans-unit>
+            <trans-unit id="Main Params">
+                <source>Main Params</source>
+                <target>Paramètres principaux</target>
+            </trans-unit>
+            <trans-unit id="Package name">
+                <source>Package name</source>
+                <target>Nom du package</target>
+            </trans-unit>
+            <trans-unit id="Version">
+                <source>Version</source>
+                <target>Version</target>
+            </trans-unit>
+            <trans-unit id="Author">
+                <source>Author</source>
+                <target>Auteur</target>
+            </trans-unit>
+            <trans-unit id="Website">
+                <source>Website</source>
+                <target>Site web</target>
+            </trans-unit>
+            <trans-unit id="Email">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="Theme">
+                <source>Theme</source>
+                <target>Thème</target>
+            </trans-unit>
+            <trans-unit id="Debug mode">
+                <source>Debug mode</source>
+                <target>Mode débogue</target>
+            </trans-unit>
+            <trans-unit id="Title">
+                <source>Title</source>
+                <target>Titre</target>
+            </trans-unit>
+            <trans-unit id="Private app">
+                <source>Private app</source>
+                <target>App privée</target>
+            </trans-unit>
+            <trans-unit id="Enable push">
+                <source>Enable push</source>
+                <target>Activer les notifications push</target>
+            </trans-unit>
+            <trans-unit id="Google gcm project number">
+                <source>Google gcm project number</source>
+                <target>Google gcm project number</target>
+            </trans-unit>
+            <trans-unit id="Google gcm api key">
+                <source>Google gcm api key</source>
+                <target>Google gcm api key</target>
+            </trans-unit>
+            <trans-unit id="Google use multi curl">
+                <source>Google use multi curl</source>
+                <target>Google use multi curl</target>
+            </trans-unit>
+            <trans-unit id="Ios sandbox">
+                <source>Ios sandbox</source>
+                <target>Ios sandbox</target>
+            </trans-unit>
+            <trans-unit id="Ios pem">
+                <source>Ios pem</source>
+                <target>Ios pem</target>
+            </trans-unit>
+            <trans-unit id="Ios pass phrase">
+                <source>Ios pass phrase</source>
+                <target>Ios pass phrase</target>
+            </trans-unit>
+            <trans-unit id="Key">
+                <source>Key</source>
+                <target>Clé</target>
+            </trans-unit>
+            <trans-unit id="Value">
+                <source>Value</source>
+                <target>Valeur</target>
+            </trans-unit>
+            <trans-unit id="Is main">
+                <source>Is main</source>
+                <target>Accueil</target>
+            </trans-unit>
+            <trans-unit id="Shared with all pages">
+                <source>Shared with all pages</source>
+                <target>Partager avec toutes les pages</target>
+            </trans-unit>
+            <trans-unit id="Feed url">
+                <source>Feed url</source>
+                <target>Url du flux</target>
+            </trans-unit>
+            <trans-unit id="Upload a new Theme">
+                <source>Upload a new </source>
+                <target>Télécharger un nouveau Thème</target>
+            </trans-unit>
+            <trans-unit id="Upload theme def">
+                <source>Upload themes and page templates archive file.</source>
+                <target>Télécharger des thèmes et des modèles de page d'un fichier d'archive</target>
+            </trans-unit>
+            <trans-unit id="Add new Theme">
+                <source>Add new Theme</source>
+                <target>Ajouter un thème</target>
+            </trans-unit>
+            <trans-unit id="Theme Store">
+                <source>Theme Store</source>
+                <target>Store Thème</target>
+            </trans-unit>
+            <trans-unit id="Theme name">
+                <source>Theme name</source>
+                <target>Nom du thème</target>
+            </trans-unit>
+
+            <trans-unit id="Address">
+                <source>Address</source>
+                <target>Adresse</target>
+            </trans-unit>
+            <trans-unit id="Enter an address">
+                <source>Enter an address</source>
+                <target>Entrer une adresse</target>
+            </trans-unit>
+            <trans-unit id="Add an address">
+                <source>Add an address</source>
+                <target>Sauvegarder l'adresse</target>
+            </trans-unit>
+            <trans-unit id="Add an image">
+                <source>Add an image</source>
+                <target>Ajouter une image</target>
+            </trans-unit>
+            <trans-unit id="Add a tag">
+                <source>Add a tag</source>
+                <target>Ajouter un tag</target>
+            </trans-unit>
+            <trans-unit id="Cancel">
+                <source>Cancel</source>
+                <target>Annuler</target>
+            </trans-unit>
+            <trans-unit id="Upload File">
+                <source>Upload File</source>
+                <target>Télécharger un fichier</target>
+            </trans-unit>
+            <trans-unit id="City">
+                <source>City</source>
+                <target>Ville</target>
+            </trans-unit>
+            <trans-unit id="Access school">
+                <source>Access school</source>
+                <target>Accueil groupes scolaires</target>
+            </trans-unit>
+            <trans-unit id="Access invalid">
+                <source>Access invalid</source>
+                <target>Accueil personne à mobilité réduite</target>
+            </trans-unit>
+            <trans-unit id="Hour (HH:MM)">
+                <source>Hour (HH:MM)</source>
+                <target>Heure (HH:MM)</target>
+            </trans-unit>
+            <trans-unit id="Hours">
+                <source>Hours</source>
+                <target>Heures</target>
+            </trans-unit>
+            <trans-unit id="Key value">
+                <source>Key value</source>
+                <target>Valeur de la clé</target>
+            </trans-unit>
+
+
+            <trans-unit id="Edit gadget">
+                <source>Edit gadget</source>
+                <target>Éditer le gadget</target>
+            </trans-unit>
+            <trans-unit id="Edit article">
+                <source>Edit article</source>
+                <target>Éditer l'article</target>
+            </trans-unit>
+            <trans-unit id="New artiste">
+                <source>New artiste</source>
+                <target>Nouvel artiste</target>
+            </trans-unit>
+            <trans-unit id="Create an artiste">
+                <source>Create an artiste</source>
+                <target>Créer un artiste</target>
+            </trans-unit>
+            <trans-unit id="Are you sure about this? All your modification will be lost">
+                <source>Are you sure about this? All your modification will be lost</source>
+                <target>Êtes-vous sur de vouloir annuler? Tout vos modifications seront perdues</target>
+            </trans-unit>
+            <trans-unit id="Confirmation Required">
+                <source>Confirmation Required</source>
+                <target>Confirmation requise</target>
+            </trans-unit>
+            <trans-unit id="Confirm">
+                <source>Confirm</source>
+                <target>Confirmer</target>
+            </trans-unit>
+            <trans-unit id="New collectif">
+                <source>New collectif</source>
+                <target>Nouveau collectif</target>
+            </trans-unit>
+            <trans-unit id="Create a collectif">
+                <source>Create a collectif</source>
+                <target>Créer un collectif</target>
+            </trans-unit>
+            <trans-unit id="Search a location">
+                <source>Search a location</source>
+                <target>Rechercher une position</target>
+            </trans-unit>
+            <trans-unit id="Add this location">
+                <source>Add this location</source>
+                <target>Ajouter cette position</target>
+            </trans-unit>
+            <trans-unit id="Add a picture">
+                <source>Add a picture</source>
+                <target>Ajouter une image</target>
+            </trans-unit>
+            <trans-unit id="Upload new File">
+                <source>Upload new File</source>
+                <target>Télécharger un nouveau fichier</target>
+            </trans-unit>
+            <trans-unit id="Events">
+                <source>Events</source>
+                <target>Événements</target>
+            </trans-unit>
+            <trans-unit id="New event">
+                <source>New event</source>
+                <target>Nouvel événement</target>
+            </trans-unit>
+            <trans-unit id="Create an event">
+                <source>Create an event</source>
+                <target>Créer un événement</target>
+            </trans-unit>
+            <trans-unit id="Menu Entry">
+                <source>Menu Entry</source>
+                <target>Menus</target>
+            </trans-unit>
+            <trans-unit id="New menu entry">
+                <source>New menu entry</source>
+                <target>Nouveau menu</target>
+            </trans-unit>
+            <trans-unit id="Create a menu entry">
+                <source>Create a menu entry</source>
+                <target>Créer un menu</target>
+            </trans-unit>
+            <trans-unit id="Add part">
+                <source>Add part</source>
+                <target>Ajouter une partie</target>
+            </trans-unit>
+            <trans-unit id="Delete">
+                <source>Delete</source>
+                <target>Supprimer</target>
+            </trans-unit>
+            <trans-unit id="Search Entry">
+                <source>Search Entry</source>
+                <target>Recherches</target>
+            </trans-unit>
+            <trans-unit id="New search entry">
+                <source>New search entry</source>
+                <target>Nouvelle recherche</target>
+            </trans-unit>
+            <trans-unit id="Create a search entry">
+                <source>Create a search entry</source>
+                <target>Créer une recherche</target>
+            </trans-unit>
+            <trans-unit id="Search def2">
+                <source>The pages are automatically added. You can add here specific search entry</source>
+                <target>Les pages sont ajoutées automatiquements. Vous pouvez ajouter des recherche spécifiques ici</target>
+            </trans-unit>
+            <trans-unit id="Artiste field more">
+                <source>If the artiste is not member of a collectif, please fill fields below.</source>
+                <target>Si l'artiste ne fait pas parti d'un collectif, merci de remplissez les champs ci-dessous.</target>
+            </trans-unit>
+            <trans-unit id="Save this location">
+                <source>Save this location</source>
+                <target>Sauvegarder la position</target>
+            </trans-unit>
+            <trans-unit id="Enter a location">
+                <source>Enter a location</source>
+                <target>Entrez une position</target>
+            </trans-unit>
+            <trans-unit id="Last minute alert">
+                <source>Last minute alert</source>
+                <target>Alerte de dernière minute</target>
+            </trans-unit>
+            <trans-unit id="Share url">
+                <source>Share url</source>
+                <target>URL pour le partage</target>
+            </trans-unit>
+            <trans-unit id="Artiste home">
+                <source>Artiste home</source>
+                <target>Maison des artistes</target>
+            </trans-unit>
+            <trans-unit id="Territory">
+                <source>Territory</source>
+                <target>Territoire</target>
+            </trans-unit>
+            <trans-unit id="Days">
+                <source>Days</source>
+                <target>Jours</target>
+            </trans-unit>
+            <trans-unit id="Friday">
+                <source>Friday</source>
+                <target>Vendredi</target>
+            </trans-unit>
+            <trans-unit id="Saturday">
+                <source>Saturday</source>
+                <target>Samedi</target>
+            </trans-unit>
+            <trans-unit id="Sunday">
+                <source>Sunday</source>
+                <target>Dimanche</target>
+            </trans-unit>
+
+
         </body>
     </file>
 </xliff>

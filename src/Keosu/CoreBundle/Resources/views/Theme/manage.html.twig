@@ -21,17 +21,17 @@ not, see <http://www.gnu.org/licenses/>. #}
 			<div class="col-md-12">
 				<div class="wellcustom">
 					<fieldset>
-						<legend><span class="glyphicon glyphicon-tint icon-menu"></span>Themes</legend>
-						<p>Upload themes and page templates archive file.</p>
+						<legend><span class="glyphicon glyphicon-tint icon-menu"></span>{% trans %}Themes{% endtrans %}</legend>
+						<p>{% trans %}Upload themes and page templates archive file.{% endtrans %}</p>
 						<a class="btn btn-success"
-						   href="{{ path('keosu_core_theme_manage_add') }}"><span class="glyphicon glyphicon-plus-sign icon-btn"></span>Add new Theme</a>
+						   href="{{ path('keosu_core_theme_manage_add') }}"><span class="glyphicon glyphicon-plus-sign icon-btn"></span>{% trans %}Add new Theme{% endtrans %}</a>
 						<a target="_blank" class="btn btn-store"
-						   href="http://store.keosu.com/index.php?id_category=12&controller=category&utm_source=keosu&utm_medium=cms&utm_term=theme%20store&utm_campaign=keosu%20cms%20to%20store"><span class="glyphicon glyphicon-shopping-cart icon-btn"></span>Theme Store</a>
+						   href="http://store.keosu.com/index.php?id_category=12&controller=category&utm_source=keosu&utm_medium=cms&utm_term=theme%20store&utm_campaign=keosu%20cms%20to%20store"><span class="glyphicon glyphicon-shopping-cart icon-btn"></span>{% trans %}Theme Store{% endtrans %}</a>
 						<br class="clear" /> <br class="clear" />
 						<table class="table table-striped table-hover">
 							<thead>
 							<tr>
-								<th>Theme name</th>
+								<th>{% trans %}Theme name{% endtrans %}</th>
 								<th></th>
 							</tr>
 							</thead>
@@ -45,7 +45,7 @@ not, see <http://www.gnu.org/licenses/>. #}
 							</tbody>
 							<tfoot>
 							<tr>
-								<th>Theme name</th>
+								<th>{% trans %}Theme name{% endtrans %}</th>
 								<th></th>
 							</tr>
 							</tfoot>

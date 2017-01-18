@@ -30,6 +30,7 @@ use Keosu\CoreBundle\Util\ThemeUtil;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Table(name="App")
  */
 class App
 {
@@ -43,7 +44,7 @@ class App
         $this->author = 'keosu team';
         $this->website = 'http://keosu.com';
         $this->email = 'mail@localhost.com';
-        $this->version = '1.0';
+        $this->version = '1';
         $this->theme = array_keys(ThemeUtil::getThemeList())[0];
         $this->preferences = array(
                 // If you do not want any permissions to be added to your app, add the

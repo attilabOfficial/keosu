@@ -27,6 +27,7 @@ class RssReader implements ReaderInterface {
 	private $service = "RssReader";
 	public $feed_url; //Url of RSS feed
 	public $striphtml;
+	public $tags;
 	public $allowupdate;
 	public $linkedEntity="KeosuDataModelArticleModelBundle:ArticleBody";
 
@@ -47,6 +48,7 @@ class RssReader implements ReaderInterface {
 			$instance->striphtml = $readerConfig['striphtml'];
 			$instance->feed_url = $readerConfig['feed_url'];
 			$instance->allowupdate = $reader->getAllowupdate();
+			$instance->tags = $readerConfig['tags'];;
 
 		}
 		return $instance;
@@ -61,6 +63,7 @@ class RssReader implements ReaderInterface {
 			$config = array();
 			$config['feed_url'] = $this->feed_url;
 			$config['striphtml'] = $this->striphtml;
+			$config['tags'] = $this->tags;
 
 			$commonReader->setName($this->name);
 			$commonReader->setService($this->service);
@@ -79,6 +82,7 @@ class RssReader implements ReaderInterface {
 			$config = array();
 			$config['feed_url'] = $this->feed_url;
 			$config['striphtml'] = $this->striphtml;
+			$config['tags'] = $this->tags;
 			$commonReader->setName($this->name);
 			$commonReader->setService($this->service);
 			$commonReader->setConfig($config);

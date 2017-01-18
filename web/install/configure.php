@@ -32,6 +32,11 @@ $error=@$_GET["error"];
 		<?php }?>
 		<form action="installdb.php" method="post" onsubmit="return validateForm()">
 			<div class="col-lg-3 configurelabel">
+				Language (fr or en)
+			</div>
+			<input class="form-control input-box" id="language" type="text" name="language" placeholder="fr or en">
+			<br/>
+			<div class="col-lg-3 configurelabel">
 				Database Host
 			</div>
 			<br/>

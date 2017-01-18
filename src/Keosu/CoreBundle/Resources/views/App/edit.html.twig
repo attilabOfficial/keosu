@@ -1,6 +1,6 @@
-{# 	
+{#
 	Keosu is an open source CMS for mobile app
-	Copyright (C) 2016  Pockeit
+	Copyright (C) 2014  Vincent Le Borgne, Pockeit
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
@@ -17,15 +17,15 @@
     #}
 {% extends 'KeosuCoreBundle:MainViews:configuration.html.twig' %}
 
-{% block title %}Edit App{% endblock %}
+{% block title %}{% trans %}Edit App{% endtrans %}{% endblock %}
 
 {% block body %}
     <script>
-        $(document).ready(function () {
-            themeButton("{{ url_base }}", "{{ themeDir }}");
-        });
+		$(document).ready(function () {
+			themeButton("{{ url_base }}", "{{ themeDir }}");
+		});
 
-        var _URL = window.URL || window.webkitURL;
+		var _URL = window.URL || window.webkitURL;
         /*
          *Test the size of an image uploaded
          *@param input : tag input controller
@@ -33,78 +33,78 @@
          *@param height : height expected
          *@param callback : function who upload the image if it's ok
          */
-        function check(input, width, height, callback) {
-            var file, img;
-            if ((file = input.files[0])) {
-                img = new Image();
-                img.onload = function () {
-                    if (this.width != width || this.height != height) {
-                        alert("Warning: Width " + width + " / Height " + height + " expected");
-                        callback(0, input);
-                    } else {
-                        callback(1, input);
-                    }
-                };
-            }
-            img.src = _URL.createObjectURL(file);
-        }
+		function check(input, width, height, callback) {
+			var file, img;
+			if ((file = input.files[0])) {
+				img = new Image();
+				img.onload = function () {
+					if (this.width != width || this.height != height) {
+						alert("Warning: Width " + width + " / Height " + height + " expected");
+						callback(0, input);
+					} else {
+						callback(1, input);
+					}
+				};
+			}
+			img.src = _URL.createObjectURL(file);
+		}
 
         /*
          *Change the preview with the image uploaded
          *@param input : tag input controller
          *@param preview : string who contain the name of the marker "preview".
          */
-        function readURL(input, preview) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+		function readURL(input, preview) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
 
-                reader.onload = function (e) {
-                    $('#' + preview).attr('src', e.target.result);
-                };
+				reader.onload = function (e) {
+					$('#' + preview).attr('src', e.target.result);
+				};
 
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
     </script>
     <div class="panel">
         <div class="row">
             <div class="col-md-12">
-                {% if firstApp %}
+				{% if firstApp %}
                     <div class="alert alert-success">
-                        <strong>Welcome to Keosu!</strong>
-                        To start, create your first app.
+                        <strong>{% trans %}Welcome to Keosu!{% endtrans %}</strong>
+						{% trans %}To start, create your first app.{% endtrans %}
                     </div>
-                {% endif %}
+				{% endif %}
                 <div class="panel">
-                    <h1>Edit App</h1>
-                    {{ form_start(form) }}
-                    {{ form_errors(form) }}
+                    <h1>{% trans %}Edit App{% endtrans %}</h1>
+					{{ form_start(form) }}
+					{{ form_errors(form) }}
 
                     <fieldset>
-                        <legend>Main Params</legend>
-                        {{ form_row(form.name) }}
-                        {{ form_row(form.packageName) }}
-                        {{ form_row(form.version) }}
-                        {{ form_row(form.description) }}
-                        {{ form_row(form.author) }}
-                        {{ form_row(form.website) }}
-                        {{ form_row(form.email) }}
+                        <legend>{% trans %}Main Params{% endtrans %}</legend>
+						{{ form_row(form.name) }}
+						{{ form_row(form.packageName) }}
+						{{ form_row(form.version) }}
+						{{ form_row(form.description) }}
+						{{ form_row(form.author) }}
+						{{ form_row(form.website) }}
+						{{ form_row(form.email) }}
 
                         <div class="img-theme">
-                            {{ form_row(form.theme) }}
+							{{ form_row(form.theme) }}
                         </div>
                     </fieldset>
 
                     <!-- Trigger Button HTML -->
                     <input type="button" class="btn btn-default" data-toggle="collapse" data-target="#advanced"
-                           value="Advanced...">
+                           value="{% trans %}Advanced...{% endtrans %}">
 
                     <div id="advanced" class="collapse">
                         <fieldset>
-                            {{ form_row(form.debugMode) }}
+							{{ form_row(form.debugMode) }}
                             <div class="row">
                                 <div class="col-lg-9 col-lg-push-3">
-                                    <span class="help-block">This param allow to debug your app with <a
+                                    <span class="help-block">{% trans %}This param allow to debug your app with {% endtrans %}<a
                                                 href="https://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">Weinre</a> on the port 8080.</span>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                                value="Icons...">
 
                         <div id="icons" class="collapse">
-                            {% include 'KeosuCoreBundle:App:editIcones.html.twig' %}
+							{% include 'KeosuCoreBundle:App:editIcones.html.twig' %}
                         </div>
                         <br class="clear"/><br class="clear"/>
 
@@ -124,14 +124,14 @@
                                value="Splash screens...">
 
                         <div id="splashscreens" class="collapse">
-                            {% include 'KeosuCoreBundle:App:editSplashscreens.html.twig' %}
+							{% include 'KeosuCoreBundle:App:editSplashscreens.html.twig' %}
                         </div>
                         <br class="clear"/>
 
 
-                        {% for p in packageToConfigure %}
-                            {{ includePanelAppConfig(p.name,p.type,null,attribute(form.configPackages,p.name) ) }}
-                        {% endfor %}
+						{% for p in packageToConfigure %}
+							{{ includePanelAppConfig(p.name,p.type,null,attribute(form.configPackages,p.name) ) }}
+						{% endfor %}
 
                         <!-- Trigger Button HTML -->
                         <input type="button" class="btn btn-default" data-toggle="collapse" data-target="#configXML"
@@ -139,7 +139,7 @@
 
                         <div id="configXML" class="collapse">
                             <fieldset>
-                                {{ form_row(form.preferences) }}
+								{{ form_row(form.preferences) }}
                             </fieldset>
                         </div>
                         <br class="clear"/>
@@ -148,9 +148,9 @@
                     <br class="clear"/><br class="clear"/>
                     <input type="submit" class="btn btn-success"/>&nbsp;
                     <a class="confirmModal" href="javascript:history.go(-1);">
-                        <button type="button" class="btn btn-danger">Cancel</button>
+                        <button type="button" class="btn btn-danger">{% trans %}Cancel{% endtrans %}</button>
                     </a>
-                    {{ form_end(form) }}
+					{{ form_end(form) }}
                 </div>
             </div>
         </div>

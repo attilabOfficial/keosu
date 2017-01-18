@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
-app.controller('curpageController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService, $timeout) {
+app.controller('keosu-curpageController', function ($scope, $http, $sce, usSpinnerService, cacheManagerService, $timeout) {
 
 	$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 

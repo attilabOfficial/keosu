@@ -104,3 +104,9 @@ keosu_core_exporter_export:
 keosu_changeapp:
     path:  /changeapp/{appid}
     defaults: { _controller: KeosuCoreBundle:ChangeApp:changeApp }
+
+keosu_xml2json:
+    path:  /service/xml2json
+    defaults: { _controller: KeosuCoreBundle:XmlToJson:convert }
+    requirements:
+        url: .+

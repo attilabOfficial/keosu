@@ -32,6 +32,9 @@
       ]
     }
   ],
+  "pluginToInstall" : [
+    "cordova plugin add cordova-plugin-geolocation"
+  ],
   "param": [
     {
       "name": "title",
@@ -66,7 +69,7 @@
     }
   ],
   "libJs": [
-    "https://maps.googleapis.com/maps/api/js?key=AIzaSyBZclmq_TGfQl_R2DGnM0H1DgF2qbOfz1E"
+    "https://maps.googleapis.com/maps/api/js"
   ],
   "require": [
     {

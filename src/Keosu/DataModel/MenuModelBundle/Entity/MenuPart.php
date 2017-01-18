@@ -28,6 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Table(name="MenuPart")
  */
 class MenuPart extends DataModel{
 

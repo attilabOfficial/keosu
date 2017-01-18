@@ -29,6 +29,7 @@ class PackageManager {
 
 	const ROOT_DIR_PACKAGE = '/Resources/packages/';
 	const ROOT_DIR_TEMPLATE = '/../web/keosu/templates/gadget/';
+	const ROOT_DIR_THEMES = '/../web/keosu/themes/';
 	const ROOT_DIR_APP_DATA = '/Resources/appData/';
 
 	const TYPE_PACKAGE_LIB = 'lib';
@@ -287,28 +288,48 @@ class PackageManager {
 	 * @param $gadgetName name of the gadget
 	 * @return array with list of html template
 	 */
-	public function getListTemplateForGadget($gadgetName)
+	public function getListTemplateForGadget($gadgetName, $theme)
 	{
-		$pathToGadget = $this->getPath($gadgetName);
+		//Main template are the default Keosu templates
+		$pathToMainGadget = $this->getPath($gadgetName);
 		$kernel = $this->container->get('kernel');
 		
 		// test good gadget type
-		$config = $this->getConfigPackage($pathToGadget);
+		$config = $this->getConfigPackage($pathToMainGadget);
 		if($config['type'] !== $this::TYPE_PACKAGE_GADGET)
 			throw new \LogicException('This action works only on gadget type package');
 
 		// get list of template
 		$ret = array();
-		$templates = scandir($pathToGadget.'/templates');
+		$mainTemplates = scandir($pathToMainGadget.'/templates');
 		$templatesGadgetFolder = $kernel->getRootDir().$this::ROOT_DIR_TEMPLATE.$gadgetName.'/';
 		if(!is_dir($templatesGadgetFolder))
-			mkdir($templatesGadgetFolder);
+			mkdir( $templatesGadgetFolder);
 
-		foreach($templates as $t) {
+		//Specific templates defined in theme
+		$themeTemplates = array();
+		$pathToThemeTemplate = $kernel->getRootDir().$this::ROOT_DIR_THEMES.$theme."/templates/gadgetTemplates/Gadget-".$gadgetName;
+		if(is_dir($pathToThemeTemplate))
+			$themeTemplates = scandir($pathToThemeTemplate);
+
+
+		foreach($mainTemplates as $t) {
 			if($t == '.' || $t == '..')
 				continue;
 			if(StringUtil::endsWith($t,'.html')) {
 				$ret[$t] = $t;
+				if(file_exists($pathToMainGadget.'/templates/'.$t.'.png'))
+					copy($pathToMainGadget.'/templates/'.$t.'.png', $templatesGadgetFolder.'/'.$t.'.png');
+			}
+		}
+		foreach($themeTemplates as $t) {
+			if($t == '.' || $t == '..')
+				continue;
+			if(StringUtil::endsWith($t,'.html')) {
+				$ret[$t] = $t;
+				if(file_exists($pathToThemeTemplate.'/'.$t.'.png'))
+					copy($pathToThemeTemplate.'/'.$t.'.png', $templatesGadgetFolder.'/'.$t.'.png');
+
 			}
 		}
 		return $ret;

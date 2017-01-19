@@ -1,52 +1,21 @@
-<!-- EVENT LIST -->
-<div ng-bind-html="error"></div>
-<div ng-show="isList" ng-swipe-left="next()" ng-swipe-right="previous()">
-		<div class="panel list">
-			<div class="panel-body list-content">
-				<div class="row-fluid list-elements animated {{slide}}" ng-repeat="apage in pages">
-					<div class="alert alert-info" role="alert" ng-click="open(apage)">
-						<div class="media-body list-title">
-							<h4 class="title" >{{ apage.name }}</h4>
-							<h6 class="title" style="display:inline;">
-								<span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;
-								{{ apage.date }}
-							</h6>
-							<br />
-							<h6 class="title" style="display:inline;">
-								<span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;
-								{{ apage.place }}
-							</h6>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</li>
-	<button ng-hide="isFirstPage" ng-click="previous()" class="previous btn btn-default btn-page animated fadeIn" style="float:left;">
-		Prev
-	</button>
-	<button ng-hide="isLastPage" ng-click="next()" class="next btn btn-default btn-page pull-right animated fadeIn" style="float:right;">
-		Next
-	</button>
-</div>
 
-<!-- ONE EVENT -->
-<div ng-show="isEvent" class="animated zoomIn">
-	<div class="row-fluid">
-		<h4 class="title" style="text-align: center">{{ event.name }}</h4>
+
+<div class="calendar">
+	<div ng-show="!showDetail">
+		<div ui-calendar="uiConfig.calendar" class="span8" ng-model="eventSources" calendar="agenda"></div>
+
+		<div ng-click="showCalendarView('listMonth')">Show List</div>
+		<div ng-click="showCalendarView('month')">Show Calendar</div>
 	</div>
-	<hr>
-	<div class="gadget-content">
-		<div class="row-fluid">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<div ng-bind-html="event.date"></div>
-				<div ng-bind-html="event.place"></div>
-			</div>
+
+	<div ng-show="showDetail">
+		<h1 ng-bind-html="eventToDisplay.title"></h1>
+		Start at <span ng-bind-html="eventToDisplay.startDisplay"></span><br/>
+		Stop at <span ng-bind-html="eventToDisplay.endDisplay"></span><br/>
+		<span ng-bind-html="eventToDisplay.location"></span><br/>
+		<div>
+			<span ng-bind-html="eventToDisplay.description"></span>
 		</div>
 	</div>
-	<div id="map_canvas"></div>
-	<br />
-		<button ng-click="addToCalendar(event)" class="btn btn-default btn-page animated fadeIn" style="float:right;">
-			Add to my phone calendar
-		</button>
+
 </div>

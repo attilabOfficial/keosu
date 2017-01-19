@@ -12,10 +12,8 @@ app.controller('keosu-rssController', function ($rootScope, $scope,cacheManagerS
         $scope.max = parseInt($(document).height()) - parseInt($(window).height());
         console.log(encodeURIComponent($scope.param.gadgetParam.url));
 		cacheManagerService.get($scope.param.host + 'service/xml2json?url='+encodeURIComponent($scope.param.gadgetParam.url)).success(function (data) {
-
 			$scope.list = data.channel.item;
 			$scope.buildPage();
-			$scope.$apply();
 		});
         //google.load('feeds', '1', {"callback": $scope.displayRss});
 	};
@@ -76,4 +74,3 @@ app.controller('keosu-rssController', function ($rootScope, $scope,cacheManagerS
         }
     });
 });
-/* RSS Feed lemonde:  http://rss.lemonde.fr/c/205/f/3050/index.rss */

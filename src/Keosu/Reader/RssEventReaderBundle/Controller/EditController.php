@@ -22,32 +22,33 @@ use Keosu\CoreBundle\Entity\Reader;
 use Keosu\Reader\RssEventReaderBundle\RssEventReader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 
 class EditController extends Controller {
 
-	public function addAction() {
+	public function addAction(Request $request) {
 		$commonReader = new Reader();
 		$rssEventReader = new RssEventReader();
-		return $this->editReader($rssEventReader, $commonReader);
+		return $this->editReader($request, $rssEventReader, $commonReader);
 	}
 
-	public function editAction($id) {
+	public function editAction(Request $request, $id) {
 		$commonReader = $this->get('doctrine')->getManager()
 				->getRepository('KeosuCoreBundle:Reader')->find($id);
 
 		$rssEventReader = RssEventReader::constructfromReader($commonReader);
-		return $this->editReader($rssEventReader, $commonReader);
+		return $this->editReader($request, $rssEventReader, $commonReader);
 	}
 
-	private function editReader($rssEventReader, $commonReader) {
+	private function editReader(Request $request, $rssEventReader, $commonReader) {
 		$formBuilder = $this->createFormBuilder($rssEventReader);
 		$this->buildReaderForm($formBuilder);
 		$form = $formBuilder->getForm();
-		$request = $this->get('request');
 
-		//If we are in POST method, form is submit
-		if ($request->getMethod() == 'POST') {
-			$form->bind($request);
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
 
 			if ($form->isValid()) {
 				$rssEventReader->convertAsExistingCommonReader($commonReader);
@@ -68,9 +69,9 @@ class EditController extends Controller {
 	}
 
 	private function buildReaderForm($formBuilder) {
-		$formBuilder->add('name', 'text')
-			->add('feed_url', 'text')
-			->add('allowupdate', 'checkbox',array('label'=>false , 'required'=>false));
+		$formBuilder->add('name', TextType::class)
+			->add('feed_url', TextType::class)
+			->add('allowupdate', CheckboxType::class,array('label'=>false , 'required'=>false));
 	}
 
 }

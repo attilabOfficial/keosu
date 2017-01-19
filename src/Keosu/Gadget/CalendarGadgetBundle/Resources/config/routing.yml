@@ -11,7 +11,7 @@ keosu_gadget_calendar_gadget_service_viewone:
     defaults: { _controller: KeosuGadgetCalendarGadgetBundle:Service:viewone}
 
 keosu_gadget_calendar_gadget_service_view:
-    path:  /service/gadget/calendar/{gadgetId}/{offset}/{format}
+    path:  /service/gadget/calendar/{gadgetId}
     defaults: { _controller: KeosuGadgetCalendarGadgetBundle:Service:viewlist }
     
 keosu_gadget_calendar_gadget_service_viewtable:

@@ -64,9 +64,9 @@ $(document).ready(function() {
 					<tbody>
 						{% for event in events %}
 							<tr>
-								<td>{{ event.name }}</td>
+								<td>{{ event.title }}</td>
 								<td>{{ event.getDateString() }}</td>
-								<td>{{ event.lieu }}</td>
+								<td>{{ event.location }}</td>
 								<td>{% if event.reader == false or (event.reader and event.reader.allowupdate == false)  %} <a href={{ path('keosu_event_edit',{'id':event.id}) }}><i class='glyphicon glyphicon-edit'></i></a>{% endif %}</td>
 								<td>{% if event.reader == false or (event.reader and event.reader.allowupdate == false) %} <a href={{ path('keosu_event_delete',{'id':event.id}) }}><i class='glyphicon glyphicon-remove'></i></a>{% endif %}</td>
 							</tr>

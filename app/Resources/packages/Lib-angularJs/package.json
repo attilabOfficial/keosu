@@ -21,7 +21,8 @@
       "angular-local-storage.js",
       "cache-manager.js",
       "utilString.js",
-	  "ui-bootstrap-tpls-0.13.0.min.js"
+	  "ui-bootstrap-tpls-0.13.0.min.js",
+      "angular-local-fr-fr.js"
    ],
    "appParam" : []
 }

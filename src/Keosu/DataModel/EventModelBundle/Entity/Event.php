@@ -34,16 +34,24 @@ class Event extends DataModel{
 	 /**
 	 * @var string
 	 *
-	 * @ORM\Column(name="name", type="string", length=255)
+	 * @ORM\Column(name="title", type="string", length=255)
 	 */
-	 private $name;
-	  
+	 private $title;
+
 	 /**
 	  * @var \DateTime
 	  * 
-	  * @ORM\Column(name="date", type="datetime")
+	  * @ORM\Column(name="start", type="datetime")
 	  */
-	 private $date;
+	 private $start;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="end", type="datetime")
+	 */
+	private $end;
+
 	   
 	 /**
 	  * @var string
@@ -58,7 +66,7 @@ class Event extends DataModel{
 	  * 
 	  * @ORM\Column(name="location", type="string")
 	  */
-	 private $lieu;
+	 private $location;
 	 
 	 /**
 	  * @var float
@@ -78,51 +86,66 @@ class Event extends DataModel{
 	  * @ORM\Column(name="enableComments", type="boolean")
 	  */
 	 private $enableComments;
+
+	 private $hour;
 	 
 	 public function __construct() {
 	 	$this->enableComments = false;
 	 }
 
-	 /**
-	  * Get name
-	  *
-	  * @return string
-	  */
-	 public function getName(){
-	 	return $this->name;
-	 }
-	 
-	 /**
-	  * Set name
-	  *
-	  * @param string $name
-	  * @return Event
-	  */
-	 public function setName($name){
-	 	$this->name = $name;
-	 	
-	 	return $this;
-	 }
-	 
-	 /**
-	  * Get date
-	  *
-	  * @return \DateTime
-	  */
-	 public function getDate(){
-	 	return $this->date;
-	 }
-	 
-	 
-	 /**
-	  * Get hour
-	  *
-	  * @return \DateTime
-	  */
-	 public function getHour(){
-	 	return $this->date;
-	 }
-	 
+	/**
+	 * @return string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+	/**
+	 * @param string $title
+	 */
+	public function setTitle($title)
+	{
+		$this->title = $title;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getStart()
+	{
+		return $this->start;
+	}
+
+	/**
+	 * @param \DateTime $start
+	 */
+	public function setStart($start)
+	{
+		$this->start = $start;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getEnd()
+	{
+		return $this->end;
+	}
+
+	/**
+	 * @param \DateTime $end
+	 */
+	public function setEnd($end)
+	{
+		$this->end = $end;
+	}
+
+
+	public function getHour()
+	{
+		return $this->hour;
+	}
 	 /**
 	  * Set hour
 	  *
@@ -132,7 +155,7 @@ class Event extends DataModel{
 	 public function setHour($hour){
 	 	$hours = date_format($hour,'H');
 	 	$minutes = date_format($hour,'i');
-	 	date_time_set($this->date,$hours,$minutes);
+	 	date_time_set($this->start,$hours,$minutes);
 	 	return $this;
 	 }
 	 
@@ -143,7 +166,7 @@ class Event extends DataModel{
 	  * @return string
 	  */
 	 public function getDateString(){
-	 	return date_format($this->date,'d-m-y H:i');
+	 	return date_format($this->start,'d-m-y H:i');
 	 }
 	 
 	 /**
@@ -152,20 +175,9 @@ class Event extends DataModel{
 	  * @return string
 	  */
 	 public function getDateMs(){
-	 	return strtotime(date_format($this->date,'d M y h:i:s A'))*1000;
+	 	return strtotime(date_format($this->start,'d M y h:i:s A'))*1000;
 	 }
-	 
-	 /**
-	  * Set date
-	  *
-	  * @param \DateTime $date
-	  * @return Event
-	  */
-	 public function setDate($date){
-	 	$this->date = $date;
-	 	
-	 	return $this;
-	 }
+
 	 
 	 /**
 	  * Get description
@@ -194,8 +206,8 @@ class Event extends DataModel{
 	  *
 	  * @return string
 	  */
-	 public function getLieu(){
-	 	return $this->lieu;
+	 public function getLocation(){
+	 	return $this->location;
 	 }
 	 
 	 /**
@@ -204,8 +216,8 @@ class Event extends DataModel{
 	  * @param string $lieu
 	  * @return Event
 	  */
-	 public function setLieu($lieu){
-	 	$this->lieu = $lieu;
+	 public function setLocation($location){
+	 	$this->location = $location;
 	 	
 	 	return $this;
 	 }
@@ -268,7 +280,7 @@ class Event extends DataModel{
 	 * Set enableComments
 	 *
 	 * @param boolean $enableComments
-	 * @return ArticleBody
+	 * @return
 	 */
 	public function setEnableComments($enableComments) {
 		$this->enableComments = $enableComments;

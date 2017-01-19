@@ -95,18 +95,24 @@ class EditController extends Controller {
 	 */
 	private function getEventForm($event) {
 		return $this->createFormBuilder($event)
-				->add('name', TextType::class)
+				->add('title', TextType::class)
 				->add('description', TextareaType::class, array(
 						'attr' => array('class' => 'tinymce')
 				))
-				->add('lieu', TextType::class)
+				->add('location', TextType::class)
 				->add('latitude',HiddenType::class)
 				->add('longitude',HiddenType::class)
-				->add('date', DateType::class, array(
+				->add('start', DateType::class, array(
 						'input'  => 'datetime',
 						'widget' => 'single_text',
 						'format' => 'dd-MM-yy',
 						'attr'   => array('class' => 'date'),
+				))
+				->add('end', DateType::class, array(
+					'input'  => 'datetime',
+					'widget' => 'single_text',
+					'format' => 'dd-MM-yy',
+					'attr'   => array('class' => 'date'),
 				))
 				->add('hour', TimeType::class, array(
 						'label' => 'Hour (HH:MM)'

@@ -1,0 +1,25 @@
+
+Sample of and overrided template
+<div class="animated fadeIn">
+    <div ng-bind-html="error"></div>
+    <keosu-share object="article" url="article.shareUrl"></keosu-share>
+    <div class="row-fluid">
+        <h4 class="title" ng-bind-html="::article.title"></h4>
+    </div>
+    <hr>
+    <div class="gadget-content article">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div ng-bind-html="::article.content"></div>
+            </div>
+        </div>
+    </div>
+    <ul class="img-list" style="list-style: none; margin: 0;padding: 0;">
+        <li ng-repeat="img in article.attachments">
+            <img class="center" ng-if="img" ng-src="{{ ::img.path }}" alt=""
+                 style="width:100%; height: auto; overflow:hidden;"/>
+        </li>
+    </ul>
+    <keosu-comments object-id="article.id" object-name="article.dataModelObjectName"
+                    enable-comments="article.enableComments"></keosu-comments>
+</div>

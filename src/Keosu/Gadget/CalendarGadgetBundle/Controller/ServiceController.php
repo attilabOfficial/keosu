@@ -20,39 +20,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace Keosu\Gadget\CalendarGadgetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class ServiceController extends Controller {
 
-	public function viewListAction($gadgetId, $format, $offset) {
+	public function viewListAction($gadgetId) {
 		$em = $this->get('doctrine')->getManager();
 	
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
 		$gadgetConfig = $gadget->getConfig();
 		$eventsperpage = $gadgetConfig['events-per-page'];
 
-        // Count the number of events, and determine if it's the last page
-        $queryCount = $em->createQueryBuilder();
-        $queryCount->add('select', 'count(p.id)')
-            ->add('from','Keosu\DataModel\EventModelBundle\Entity\Event p');
-        $count = $queryCount->getQuery()->execute();
-        $count = $count[0][1];
-        $isLast = ((($offset+1)*$eventsperpage >= $count) ? true : false);
-
-        // Get the articles
+        // Get the events
 		$qb = $em->createQueryBuilder();
 		$qb->add('select', 'p')
 				->add('from','Keosu\DataModel\EventModelBundle\Entity\Event p')
-				->add('orderBy', 'p.date DESC')
-				->setFirstResult($offset*$eventsperpage)
+				->add('orderBy', 'p.start DESC')
 				->setMaxResults($eventsperpage);
 		$query = $qb->getQuery();
 		$eventsList = $query->execute();
 
-		return $this->render('KeosuGadgetCalendarGadgetBundle:Service:viewlist.'.$format.'.twig', array(
-									'events'        => $eventsList,
-									'eventsperpage' => $eventsperpage,
-                                    'isLast'        => $isLast
-        ));
+		$encoders = array(new JsonEncode());
+
+		$normalizer = new GetSetMethodNormalizer();
+		$callback = function ($dateTime) {
+			return $dateTime instanceof \DateTime
+				? $dateTime->format(\DateTime::ISO8601)
+				: '';
+		};
+		$normalizer->setCallbacks(array('start' => $callback, 'end' => $callback));
+
+		$serializer = new Serializer(array($normalizer), $encoders);
+
+		return new Response($serializer->serialize($eventsList, 'json'));
 	}
 	
 }

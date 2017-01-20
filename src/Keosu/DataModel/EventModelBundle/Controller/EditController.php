@@ -23,6 +23,7 @@ use Keosu\DataModel\EventModelBundle\Entity\Event;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -99,14 +100,24 @@ class EditController extends Controller {
 				->add('description', TextareaType::class, array(
 						'attr' => array('class' => 'tinymce')
 				))
+				->add('file', FileType::class, array(
+					'required'   => false,
+					'image_path' => 'webPath',
+					'label'      => false,
+					'attr'       => array(
+						'accept' => 'image/*'
+					)))
 				->add('location', TextType::class)
-				->add('latitude',HiddenType::class)
-				->add('longitude',HiddenType::class)
+				->add('color', TextType::class, array(
+					'label' => 'Color (html notation ex :#ff0000)','required' => false))
 				->add('start', DateType::class, array(
 						'input'  => 'datetime',
 						'widget' => 'single_text',
 						'format' => 'dd-MM-yy',
 						'attr'   => array('class' => 'date'),
+				))
+				->add('startHour', TimeType::class, array(
+					'label' => 'Start Hour (HH:MM)'
 				))
 				->add('end', DateType::class, array(
 					'input'  => 'datetime',
@@ -114,8 +125,8 @@ class EditController extends Controller {
 					'format' => 'dd-MM-yy',
 					'attr'   => array('class' => 'date'),
 				))
-				->add('hour', TimeType::class, array(
-						'label' => 'Hour (HH:MM)'
+				->add('endHour', TimeType::class, array(
+					'label' => 'End Hour (HH:MM)'
 				))
 				->add('enableComments',CheckboxType::class, array(
 						'required' => false,

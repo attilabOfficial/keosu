@@ -19,9 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Keosu\DataModel\EventModelBundle\Entity;
 
-use Keosu\CoreBundle\Entity\Model\DataModel;
 
 use Doctrine\ORM\Mapping as ORM;
+use Keosu\CoreBundle\Entity\Model\MediaDataModel;
 
 /**
  * Keosu\DataModel\EventModelBundle\Entity\Event
@@ -30,7 +30,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Keosu\DataModel\EventModelBundle\Entity\EventRepository")
  * @ORM\Table(name="Event")
  */
-class Event extends DataModel{
+class Event extends MediaDataModel {
 	 /**
 	 * @var string
 	 *
@@ -67,27 +67,21 @@ class Event extends DataModel{
 	  * @ORM\Column(name="location", type="string")
 	  */
 	 private $location;
-	 
-	 /**
-	  * @var float
-	  *
-	  * @ORM\Column(name="latitude", type="float")
-	  */
-	 private $latitude;
-	 
-	 /**
-	  * @var float
-	  *
-	  * @ORM\Column(name="longitude", type="float")
-	  */
-	 private $longitude;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="color", type="string", nullable=true)
+	 */
+	 private $color;
 	 
 	 /**
 	  * @ORM\Column(name="enableComments", type="boolean")
 	  */
 	 private $enableComments;
 
-	 private $hour;
+	 private $startHour;
+	 private $endHour;
 	 
 	 public function __construct() {
 	 	$this->enableComments = false;
@@ -142,9 +136,9 @@ class Event extends DataModel{
 	}
 
 
-	public function getHour()
+	public function getStartHour()
 	{
-		return $this->hour;
+		return $this->startHour;
 	}
 	 /**
 	  * Set hour
@@ -152,12 +146,28 @@ class Event extends DataModel{
 	  * @param \DateTime $hours
 	  * @return string
 	  */
-	 public function setHour($hour){
+	 public function setStartHour($hour){
 	 	$hours = date_format($hour,'H');
 	 	$minutes = date_format($hour,'i');
 	 	date_time_set($this->start,$hours,$minutes);
 	 	return $this;
 	 }
+	public function getEndHour()
+	{
+		return $this->endHour;
+	}
+	/**
+	 * Set hour
+	 *
+	 * @param \DateTime $hours
+	 * @return string
+	 */
+	public function setEndHour($hour){
+		$hours = date_format($hour,'H');
+		$minutes = date_format($hour,'i');
+		date_time_set($this->end,$hours,$minutes);
+		return $this;
+	}
 	 
 	 
 	 /**
@@ -222,48 +232,6 @@ class Event extends DataModel{
 	 	return $this;
 	 }
 	 
-	 /**
-	  * Get latitude
-	  *
-	  * @return float
-	  */
-	 public function getLatitude(){
-	 	return $this->latitude;
-	 }
-	 
-	 /**
-	  * Set latitude
-	  *
-	  * @param float $lat
-	  * @return Event
-	  */
-	 public function setLatitude($lat){
-	 	$this->latitude = $lat;
-	 	
-	 	return $this;
-	 }
-
-	 /**
-	  * Get longitude
-	  *
-	  * @return float
-	  */
-	 public function getLongitude(){
-	 	return $this->longitude;
-	 }
-	 
-	 /**
-	  * Set longitude
-	  *
-	  * @param float $long
-	  * @return Event
-	  */
-	 public function setLongitude($long){
-	 	$this->longitude = $long;
-	 	
-	 	return $this;
-	 }
-	 
 	public function getDataModelObjectName() {
 		return 'event';
 	}
@@ -274,6 +242,22 @@ class Event extends DataModel{
 	 */
 	public function getEnableComments() {
 		return $this->enableComments;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getColor()
+	{
+		return $this->color;
+	}
+
+	/**
+	 * @param string $eventColor
+	 */
+	public function setColor($eventColor)
+	{
+		$this->color = $eventColor;
 	}
 	
 	/**

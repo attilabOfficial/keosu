@@ -52,7 +52,10 @@ class ServiceController extends Controller {
 				? $dateTime->format(\DateTime::ISO8601)
 				: '';
 		};
-		$normalizer->setCallbacks(array('start' => $callback, 'end' => $callback));
+		$webPah = function ($path) {
+			return $this->container->getParameter('url_base') . $path;
+		};
+		$normalizer->setCallbacks(array('start' => $callback, 'end' => $callback, 'webPath'=>$webPah));
 
 		$serializer = new Serializer(array($normalizer), $encoders);
 

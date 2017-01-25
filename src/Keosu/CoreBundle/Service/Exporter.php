@@ -277,7 +277,7 @@ class Exporter
 
         // this should always be at the end
         $script = $indexHtml->createElement('script');
-        $script->setAttribute('src', 'js/app.js?temp='.time());
+        $script->setAttribute('src', 'js/app.js');
         $indexHtml->getElementsByTagName('head')->item(0)->appendChild($script);
 
         $link = $indexHtml->createElement('link');

@@ -16,7 +16,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-
 //Main function
 app.controller('keosu-calendarController', function ($rootScope, $scope, $http, $timeout,$locale,cacheManagerService, uiCalendarConfig, usSpinnerService) {
 

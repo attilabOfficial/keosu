@@ -23,7 +23,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 class ServiceController extends Controller {
@@ -32,8 +31,7 @@ class ServiceController extends Controller {
 		$em = $this->get('doctrine')->getManager();
 	
 		$gadget = $em->getRepository('KeosuCoreBundle:Gadget')->find($gadgetId);
-		$gadgetConfig = $gadget->getConfig();
-		$eventsperpage = $gadgetConfig['events-per-page'];
+		$eventsperpage = 300;
 
         // Get the events
 		$qb = $em->createQueryBuilder();

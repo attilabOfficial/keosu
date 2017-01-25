@@ -22,7 +22,8 @@
       "cache-manager.js",
       "utilString.js",
 	  "ui-bootstrap-tpls-0.13.0.min.js",
-      "angular-local-fr-fr.js"
+      "angular-local-fr-fr.js",
+      "angular-calendar.js"
    ],
    "appParam" : []
 }

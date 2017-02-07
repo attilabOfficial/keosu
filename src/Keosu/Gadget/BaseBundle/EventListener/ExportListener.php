@@ -42,7 +42,7 @@ class ExportListener implements EventSubscriberInterface
 		$idMain = 0;
 		$pageMap = "var pageName = new Array();";
 		foreach ($pages as $page) {
-			$pageMap = $pageMap."pageName[".$page->getId()."]='".$page->getName()."';";
+			$pageMap = $pageMap."pageName[".$page->getId()."]='".str_replace('\'', '\\\'', $page->getName())."';";
 			if($page->getIsMain())
 				$idMain = $page->getId();
 		}

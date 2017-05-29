@@ -81,6 +81,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Keosu\UserBundle\Entity\User
+    from_email:
+        address: you@keosu.com
+        sender_name: You
   
 # TinyMCE Configuration
 stfalcon_tinymce:

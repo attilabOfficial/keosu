@@ -29,7 +29,7 @@ Move to your web/install/check.php with your navigator (ie http://localhost/keos
 Note : Don't create your database manually before executing the script
 
 
-From sources (nerd only)
+From sources (nerd only) Run control table as administrator
 =
 Clone project in your apache webspace
 Download composer.phar

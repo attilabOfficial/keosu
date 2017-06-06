@@ -156,12 +156,20 @@ class SyncController extends Controller {
         $article->setVersion("1.0");
 
         if($tags != null){
-			$tag = new ArticleTags();
-			$tag->setTagName($tags);
-			$article->setTags(new ArrayCollection());
-			$tag->setArticleBody($article);
-			$article->addTag($tag);
-		}
+
+            foreach ($article->getTags() as $existingTag) {
+                $em->remove($existingTag);
+                $article->removeTag($existingTag);
+            }
+            $em->flush();
+
+            $tag = new ArticleTags();
+            $tag->setTagName($tags);
+
+            $article->setTags(new ArrayCollection());
+            $tag->setArticleBody($article);
+            $article->addTag($tag);
+        }
 
 
         //RSS attachment

@@ -22,6 +22,9 @@ namespace Keosu\DataModel\EventModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Keosu\CoreBundle\Entity\Model\MediaDataModel;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 /**
  * Keosu\DataModel\EventModelBundle\Entity\Event
@@ -79,7 +82,7 @@ class Event extends MediaDataModel {
 	  * @ORM\Column(name="enableComments", type="boolean")
 	  */
 	 private $enableComments;
-
+	 
 	 private $startHour;
 	 private $endHour;
 	 
@@ -271,5 +274,7 @@ class Event extends MediaDataModel {
 
 		return $this;
 	}
+	
+	
 	 
 }

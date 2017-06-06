@@ -25,7 +25,7 @@ class PictureTagsType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver){
         $resolver->setDefaults(array(
-            'data_class' => 'Keosu\DataModel\PictureModelBundle\Entity\pictureTag'
+            'data_class' => 'Keosu\DataModel\PictureModelBundle\Entity\PictureTags'
         ));
     }
 

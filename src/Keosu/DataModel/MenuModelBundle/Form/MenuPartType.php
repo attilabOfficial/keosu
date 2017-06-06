@@ -41,7 +41,7 @@ class MenuPartType extends AbstractType {
 							'image_path' => 'webPath',
 							'required'  => false,
 							"attr" => array(
-                						"accept" => "image/*"
+                						"accept" => "image/jpeg"
 									)
 							)
 
@@ -50,7 +50,7 @@ class MenuPartType extends AbstractType {
 					'image_path' => 'webPath',
 					'required'  => false,
 					"attr" => array(
-						"accept" => "image/*"
+						"accept" => "image/jpeg"
 					)
 				)
 			)

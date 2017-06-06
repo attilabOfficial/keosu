@@ -1,0 +1,334 @@
+@font-face {
+    font-family: 'quicksand';
+    src: url('polices/quicksand/quicksand-regular.eot') format('eot'),
+         url('polices/quicksand/quicksand-regular.woff') format('woff'),
+         url('polices/quicksand/quicksand-regular.ttf') format('truetype'),
+         url('polices/quicksand/quicksand-regular.svg') format('svg');
+}
+
+@font-face {
+    font-family: 'amatic';
+    src: url('polices/amatic/amatic-bold.eot') format('eot'),
+         url('polices/amatic/amatic-bold.woff') format('woff'),
+         url('polices/amatic/amatic-bold.ttf') format('truetype'),
+         url('polices/amatic/amatic-bold.svg') format('svg');
+}
+/***************************
+   GLOBAL
+***************************/
+body {
+	background-color: #f5f7f7 !important;
+	color: #000000 !important;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+	word-wrap: break-word;
+}
+
+hr {
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+
+.content {
+	margin-top: 85px;
+	margin-bottom: 45px;
+}
+
+.content-right {
+	padding-left: 16.666666666666664%;
+}
+
+.content-left {
+	padding-right: 16.666666666666664%;
+}
+
+.classic-navbar {
+	height: 60px;
+	font-family: 'quicksand' !important;
+  background-color: #fff !important;
+  border-bottom: 1px solid #e8eced !important;
+}
+
+#logo {
+	height: 45px;
+	width: 137px;
+	background-image: url(img/logo.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin-top: 5px;
+}
+
+#logo, .center {
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px;
+}
+.full {
+}
+
+h6.title, h5.title, h4.title, h3.title, h2.title, h1.title {
+	text-align: center;
+	margin-top: 0px;
+	color: #000000!important;
+}
+
+a {
+	color: #000000 !important;
+}
+/**************************
+HEADER
+***************************/
+.header>img{
+	max-width:30px;
+	margin-top:8px;
+	margin-left:20px;
+	float:left;
+}
+.title{
+  line-height: 60px;
+	font-size:26px;
+	text-align: center;
+}
+/***************************
+   ICON
+***************************/
+[class*="basic-icon-"] {
+	color: #000000;
+	margin: 0 auto !important;
+}
+
+
+/***************************
+   PAGE
+***************************/
+.active {
+	display: block;
+}
+
+.inactive {
+	display: none;
+}
+
+/***************************
+   BUTTON
+***************************/
+.btn-basic, .btn-page {
+	text-shadow: none !important;
+}
+
+.next > .btn-page, .previous > .btn-page {
+	margin: 5px;
+}
+
+.block-button {
+	margin-top: 80px;
+}
+
+/****************************
+	OFFLINE
+****************************/
+.offline{
+	position: fixed;
+	display:block;
+	top: 60px;
+	right:0;
+	left: 0;
+	background-color: #19a6d4;
+	text-align: center;
+	color:white;
+}
+
+/**
+Menu
+**/
+.vertical-menu, .slide-menu {
+	height: 100%;
+	position: fixed !important;
+	top: 0;
+	opacity: 1;
+}
+
+.vertical-menu >.menu >.menu-elements, .slide-menu >.zone >.menu >.menu-elements {
+	height: 16.66666666666668%;
+	padding-top:-10px;
+}
+.slide-menu >.zone >.menu >.menu-elements >.icons-menu {
+	padding-left: 10px;
+}
+.slide-menu {
+	position:relative;
+  background-color: #fff;
+  opacity: 0.94;
+	height: 100%;
+	left:-310px;
+	top: 60px;
+	font-size: 0.9em;
+	width:75%;
+	padding-bottom: 80px;
+	z-index: 100;
+  border-right: 1px solid #e8eced;
+	-webkit-transition:0.1s linear all;
+	transition:0.1s linear all;
+	-webkit-transform: translateZ(0);
+}
+
+.slide-menu.open{
+	left:0;
+	-webkit-transition:0.1s linear all;
+	transition:0.1s linear all;
+	-webkit-transform: translateZ(0);
+}
+
+.menu{
+	margin-top:20px;
+}
+
+.menu-elements{
+	padding-left:15px;
+	margin-top:5px;
+}
+/* Nav-icon */
+.hamburger-menu{
+  margin-top:12px !important;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+/* Icon 1 */
+#nav-icon1, #nav-icon2, #nav-icon3, #nav-icon4 {
+  width: 36px;
+  height: 24px;
+  position: relative;
+  margin-left:10px;
+  margin-top:4px;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer;
+}
+#nav-icon1 span, #nav-icon3 span, #nav-icon4 span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: #333;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
+}
+#nav-icon1 span:nth-child(1) {
+  top: 0px;
+}
+#nav-icon1 span:nth-child(2) {
+  top: 12px;
+}
+#nav-icon1 span:nth-child(3) {
+  top: 24px;
+}
+.openned-icon span:nth-child(1) {
+  top: 12px!important;
+  -webkit-transform: rotate(135deg)!important;
+  -moz-transform: rotate(135deg)!important;
+  -o-transform: rotate(135deg)!important;
+  transform: rotate(135deg)!important;
+}
+.openned-icon span:nth-child(2) {
+  opacity: 0!important;
+  left: -60px!important;
+}
+.openned-icon span:nth-child(3) {
+  top: 12px!important;
+  -webkit-transform: rotate(-135deg)!important;
+  -moz-transform: rotate(-135deg)!important;
+  -o-transform: rotate(-135deg)!important;
+  transform: rotate(-135deg)!important;
+}
+/***
+* Back button
+**/
+
+.backButton {
+	position: absolute;
+  width:36px;
+  height:60px;
+  left:12px;
+  line-height: 60px;
+  background-image: url(img/left-arrow.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.backButtonRight {
+  position: absolute;
+  width:36px;
+  height:60px;
+  top:0;
+  right:12px;
+  line-height: 60px;
+  background-image: url(img/left-arrow.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+
+/***
+* Menu Button
+**/
+
+.header .icon-menu2 {
+    background-image:url(img/menu_plus.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    width:64px;
+    height: 64px;
+}
+
+.header .open .icon-menu2 {
+    background-image:url(img/menu_moins.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    width:64px;
+    height: 64px;
+}
+
+.header-slide{
+    position:absolute;
+}
+
+/***
+* Error message
+**/
+
+.error-message {
+	position: absolute;
+	width: 90%;
+	margin: 0 5%;
+	padding: 5px;
+	border-radius: 5px;
+	color: #ffffff;
+	background-color: #e74c3c;
+}
+
+.error-message p {
+	text-align: center;
+}

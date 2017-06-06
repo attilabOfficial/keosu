@@ -72,7 +72,7 @@ class EditController extends Controller {
 		$em = $this->get('doctrine')->getManager();
 		
 		//get tags
-		$query = $em->createQuery('SELECT DISTINCT u.tagName FROM Keosu\DataModel\PictureModelBundle\Entity\pictureTag u');
+		$query = $em->createQuery('SELECT DISTINCT u.tagName FROM Keosu\DataModel\PictureModelBundle\Entity\PictureTags u');
 		$tagsResult = $query->getResult();
 		$tagsList=array();
 		foreach ($tagsResult as $tag){

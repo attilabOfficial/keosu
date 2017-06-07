@@ -163,10 +163,10 @@ class Picture extends MediaDataModel
     /**
      * Add tags
      *
-     * @param \Keosu\DataModel\PictureModelBundle\Entity\pictureTag $tags
+     * @param \Keosu\DataModel\PictureModelBundle\Entity\PictureTags $tags
      * @return Picture
      */
-    public function addTag(\Keosu\DataModel\PictureModelBundle\Entity\pictureTag $tags) {
+    public function addTag(\Keosu\DataModel\PictureModelBundle\Entity\PictureTags $tags) {
         $this->tags[] = $tags;
         $tags->setPicture($this);
     
@@ -176,10 +176,9 @@ class Picture extends MediaDataModel
     /**
      * Remove tags
      *
-     * @param \Keosu\DataModel\PictureModelBundle\Entity\pictureTag $tags
+     * @param \Keosu\DataModel\PictureModelBundle\Entity\PictureTags $tags
      */
-    public function removeTag(
-            \Keosu\DataModel\PictureModelBundle\Entity\pictureTag $tag) {
+    public function removeTag( \Keosu\DataModel\PictureModelBundle\Entity\PictureTags $tag) {
         $this->tags->removeElement($tag);
     }
     

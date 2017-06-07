@@ -5,10 +5,10 @@ namespace Keosu\DataModel\PictureModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * pictureTag
+ * PictureTags
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Keosu/DataModel\PictureModelBundle\Entity\PictureRepository")
  * @ORM\Table(name="PictureTags")
  */
 class PictureTags
@@ -32,7 +32,8 @@ class PictureTags
      * @var string
      *
      * @ORM\Column(name="tagName", type="string", length=255)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
+	 * 
      */
     private $tagName;
 

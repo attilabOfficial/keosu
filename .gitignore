@@ -7,3 +7,5 @@ Thumbs.db
 /bin
 /.settings/
 /.idea
+/var/
+/web/keosu/export/cordova/

@@ -35,23 +35,25 @@ abstract class MediaDataModel extends DataModel
      */
     const PORTRAIT = 'portrait';
     const LANDSCAPE = 'landscape';
-
-	/**
+	
+	 /**
 	 * @var string $path
 	 *
-	 * @ORM\Column(name="path", type="string", length=255)
+     * @ORM\Column(name="path", type="string", length=255)
+	 *
+	 * @Assert\NotBlank(message="Vous devez ajouter une image")
 	 */
-	private $path;
-
+	 private $path;
+	
 	/**
-     * @Assert\Image(
+	 *@Assert\Image(
      *     minWidth = 200,
      *     maxWidth = 1000,
      *     minHeight = 200,
-     *     maxHeight = 1000
-     * )
-     */
-	private $file;
+     *     maxHeight = 1000,	   
+	 *)
+	 */
+	 private $file;
 
     /**
      * @ORM\Column(name="orientation", type="string")

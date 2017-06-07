@@ -1,2 +1,0 @@
-["cordova plugin add phonegap-plugin-push"]
-["cordova plugin add cordova-plugin-device","cordova plugin add cordova-plugin-device-orientation","cordova plugin add cordova-plugin-dialogs","cordova plugin add cordova-plugin-network-information","cordova plugin add cordova-plugin-whitelist"]

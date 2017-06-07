@@ -67,7 +67,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <tr>
                                 <td>{{ entry.keyValue|raw }}</td>
                                 <td>{{ entry.targetName|raw }}</td>
-                                <td></td>
+                               
+                                <td><a href={{ path('keosu_search_delete', {'id':entry.id}) }}><i class='glyphicon glyphicon-remove'></i></a></td>
                             </tr>
                         {% endfor %}
                         </tbody>

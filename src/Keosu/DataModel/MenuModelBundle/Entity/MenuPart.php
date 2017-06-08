@@ -21,7 +21,6 @@ namespace Keosu\DataModel\MenuModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Keosu\CoreBundle\Entity\Model\DataModel;
-use Keosu\CoreBundle\Entity\Model\MediaDataModel;
 use Keosu\CoreBundle\Util\PathUtil;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,8 +33,9 @@ class MenuPart extends DataModel{
 
 	/**
 	 * @var string $name
-	 *
 	 * @ORM\Column(name="name", type="string", length=255)
+	 * @Assert\NotNull()
+	 *
 	 */
 	private $name;
 

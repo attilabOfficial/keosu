@@ -35,11 +35,11 @@ class MenuPartType extends AbstractType {
 
 		$this->listPage = $options['page_list'];
 		$builder
-			->add('name')
+			->add('name',TextType::class)
 			->add('css',TextType::class, array('required'  => false))
 			->add('file',FileType::class ,array(
 							'image_path' => 'webPath',
-							'required'  => false,
+							'required'  => true,
 							"attr" => array(
                 						"accept" => "image/jpeg"
 									)
@@ -48,7 +48,7 @@ class MenuPartType extends AbstractType {
 				)
 			->add('fileActive',FileType::class,array(
 					'image_path' => 'webPath',
-					'required'  => false,
+					'required'  => true,
 					"attr" => array(
 						"accept" => "image/jpeg"
 					)

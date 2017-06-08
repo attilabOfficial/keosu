@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Keosu\DataModel\MenuModelBundle\Entity;
 use Keosu\CoreBundle\Entity\Model\DataModel;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -39,7 +41,10 @@ class MenuEntry extends DataModel {
 
 	/**
 	 * @ORM\OneToMany(targetEntity="Keosu\DataModel\MenuModelBundle\Entity\MenuPart", mappedBy="menuEntry", cascade={"persist","remove"})
+	 *
+	 * @Assert\Valid
 	 */
+
 	private $parts;
 
 	/**

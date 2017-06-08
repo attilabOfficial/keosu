@@ -12,7 +12,7 @@
                 {
                     "@attributes": {
                         "name": "cordova-plugin-inappbrowser",
-                        "spec": "1.2.1",
+                        "spec": "1.7.1",
                         "source": "npm"
                     }
                 }

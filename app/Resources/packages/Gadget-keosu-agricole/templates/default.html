@@ -1,0 +1,233 @@
+<form class="form-horizontal well">
+<div ng-show="accueil" >
+	<div class="row-fluid form-group">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Nombres de vaches :</label>
+			<input type="text" ng-model="vache1" class="form-control">
+		</div>
+	</div>
+	<div class="row-fluid form-group ">	
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 "></div>
+		<button ng-click="showFormulaire1()" class=" btn btn-info col-xs-6 col-sm-6 col-md-6 col-lg-6 ">1er formulaire</button>
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 "></div>
+	</div>
+</div>
+<div ng-show="formulaire1">
+	<div class="row-fluid form-group">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Maladie Respiratoire : </label>
+			<input type="text" ng-model="respiratoire1"  ng-change="changeRespiratoire()" class="form-control">
+			<label >{{manqueRespiratoire1 | number :2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Diarrhée : </label>
+			<input type="text" ng-model="diarrhee1" ng-change="changeDiarrhee()" class="form-control">
+			<label >{{manqueDiarrhee1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Infection Ombilicale :</label>
+			<input type="text" ng-model="infection1" ng-change="changeInfection()" class="form-control">
+			<label >{{manqueInfection1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Acétonémie :</label>
+			<input type="text" ng-model="acetonemie1" ng-change="changeAcetonemie()" class="form-control">
+			<label >{{manqueAcetonemie1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Acidose :</label>
+			<input type="text" ng-model="acidose1" ng-change="changeAcidose()" class="form-control">
+			<label >{{manqueAcidose1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Avortement :</label>
+			<input type="text" ng-model="avortement1" ng-change="changeAvortement()" class="form-control">
+			<label >{{manqueAvortement1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Boiterie :</label>
+			<input type="text" ng-model="boiterie1" ng-change="changeBoiterie()" class="form-control">
+			<label >{{manqueBoiterie1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Césarienne :</label>
+			<input type="text" ng-model="cesarienne1" ng-change="changeCesarienne()" class="form-control">
+			<label >{{manqueCesarienne1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Deplacement de caillette :</label>
+			<input type="text" ng-model="caillette1" ng-change="changeCaillette()" class="form-control">
+			<label >{{manqueCaillette1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Fievre vitulaire :</label>
+			<input type="text" ng-model="vitulaire1" ng-change="changeVitulaire()" class="form-control">
+			<label >{{manqueVitulaire1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Mammite générale :</label>
+			<input type="text" ng-model="mammiteG1" ng-change="changeMammiteG()" class="form-control">
+			<label >{{manqueMammiteG1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Mammite locale :</label>
+			<input type="text" ng-model="mammiteL1" ng-change="changeMammiteL()" class="form-control">
+			<label >{{manqueMammiteL1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Métrite :</label>
+			<input type="text" ng-model="metrite1" ng-change="changeMetrite()" class="form-control">
+			<label >{{manqueMetrite1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Non Délivrance :</label>
+			<input type="text" ng-model="nonDelivrance1" ng-change="changeNonDelivrance()" class="form-control">
+			<label >{{manqueNonDelivrance1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Vêlage Difficile :</label>
+			<input type="text" ng-model="velage1" ng-change="changeVelage()" class="form-control">
+			<label >{{manqueVelage1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Mortalité Veaux :</label>
+			<input type="text" ng-model="mortaliteVeaux1" ng-change="changeMortaliteVeaux()" class="form-control">
+			<label >{{manqueMortaliteVeaux1 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Mortalité Vaches :</label>
+			<input type="text" ng-model="mortaliteVache1" ng-change="changeMortaliteVache()" class="form-control">
+			<label >{{manqueMortaliteVache1 | number : 2}}</label>
+		</div>
+	</div>	
+		<div class="row-fluid form-group">
+			<button ng-click="resetFormulaire1()" class="btn btn-info  col-xs-4 col-sm-4 col-md-4 col-lg-4">Reset</button>
+			<button ng-click="showAccueil()" class=" btn btn-info col-xs-4 col-sm-4 col-md-4 col-lg-4">Accueil</button>
+			<button ng-click="showResultat1()" class=" btn btn-info col-xs-4 col-sm-4 col-md-4 col-lg-4">Suivant</button>
+		</div>
+	
+</div>
+
+<div ng-show="resultat1" >
+	<div class="row-fluid form-group">	
+			<label class="col-xs-12 col-sm-12 col-md-12 col-lg-12">Manque à gagner l'année dernière  {{totalManque1 | number :2}}</label>
+			<button ng-click="showFormulaire1()" class=" btn btn-info col-xs-4 col-sm-4 col-md-4 col-lg-4">Precedent</button>
+			<button ng-click="showAccueil()" class=" btn btn-info col-xs-4 col-sm-4 col-md-4 col-lg-4">Accueil</button>
+			<button ng-click="showFormulaire2()" class=" btn btn-info col-xs-4 col-sm-4 col-md-4 col-lg-4">Suivant</button>		
+	</div>
+</div>
+<div ng-show="formulaire2">
+	<div class="row-fluid form-group">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Nombres de vaches :</label>
+			<input type="text" ng-model="vache2" class="form-control">
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Maladie Respiratoire :</label>
+			<input type="text" ng-model="respiratoire2"  ng-change="changeRespiratoire()" class="form-control">
+			<label>{{manqueRespiratoire2 | number : 2}}
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Diarrhée</label>
+			<input type="text" ng-model="diarrhee2" ng-change="changeDiarrhee()" class="form-control">
+			<label>{{manqueDiarrhee2 | number : 2}}
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Infection Ombilicale :</label>
+			<input type="text" ng-model="infection2" ng-change="changeInfection()" class="form-control">
+			<label>{{manqueInfection2 | number : 2}}
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Acétonémie :</label>
+			<input type="text" ng-model="acetonemie2" ng-change="changeAcetonemie()" class="form-control">
+			<label>{{manqueAcetonemie2 | number : 2}}
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Acidose :</label>
+			<input type="text" ng-model="acidose2" ng-change="changeAcidose()" class="form-control">
+			<label>{{manqueAcidose2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Avortement :</label>
+			<input type="text" ng-model="avortement2" ng-change="changeAvortement()" class="form-control">
+			<label>{{manqueAvortement2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Boiterie :</label>
+			<input type="text" ng-model="boiterie2" ng-change="changeBoiterie()" class="form-control">
+			<label>{{manqueBoiterie2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Césarienne :</label>
+			<input type="text" ng-model="cesarienne2" ng-change="changeCesarienne()" class="form-control">
+			<label>{{manqueCesarienne2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Deplacement de caillette :</label>
+			<input type="text" ng-model="caillette2" ng-change="changeCaillette()" class="form-control">
+			<label>{{manqueCaillette2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Fievre vitulaire :</label>
+			<input type="text" ng-model="vitulaire2" ng-change="changeVitulaire()" class="form-control">
+			<label>{{manqueVitulaire2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Mammite générale :</label>
+			<input type="text" ng-model="mammiteG2" ng-change="changeMammiteG()" class="form-control">
+			<label>{{manqueMammiteG2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Mammite locale :</label>
+			<input type="text" ng-model="mammiteL2" ng-change="changeMammiteL()" class="form-control">
+			<label>{{manqueMammiteL2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Métrite :</label>
+			<input type="text" ng-model="metrite2" ng-change="changeMetrite()" class="form-control">
+			<label>{{manqueMetrite2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Non Délivrance :</label>
+			<input type="text" ng-model="nonDelivrance2" ng-change="changeNonDelivrance()" class="form-control">
+			<label>{{manqueNonDelivrance2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Vêlage Difficile :</label>
+			<input type="text" ng-model="velage2" ng-change="changeVelage()" class="form-control">
+			<label>{{manqueVelage2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Mortalité Veaux :</label>
+			<input type="text" ng-model="mortaliteVeaux2" ng-change="changeMortaliteVeaux()" class="form-control">
+			<label>{{manqueMortaliteVeaux2 | number : 2}}</label>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label for="text">Mortalité Vaches :</label>
+			<input type="text" ng-model="mortaliteVache2" ng-change="changeMortaliteVache()" class="form-control">
+			<label>{{manqueMortaliteVache2 | number : 2}}</label>
+		</div>
+	</div>
+		<div class="row-fluid form-group ">
+			<button ng-click="showResultat1()" class=" btn btn-info col-xs-4">Precedent</button>
+			<button ng-click="showAccueil()" class=" btn btn-info col-xs-4">Accueil</button>
+			<button ng-click="showResultat2()" class=" btn btn-info col-xs-4">Suivant</button>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 "></div>
+			<button ng-click="resetFormulaire2()" class="btn btn-info col-xs-4 col-sm-4 col-md-4 col-lg-4">Reset</button>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 "></div>
+		</div>
+	
+</div>
+<div ng-show="resultat2">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<label>Manque à gagner prévu :  {{totalManque2 | number :2}}</label>
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<label>Gain Potentiel : {{gainPotentielTotal | number :2}}</label>
+	</div>	
+	<div class="row-fluid form-group">
+	<button ng-click="showAccueil()" class=" btn btn-info col-xs-6 col-sm-6 col-md-6 col-lg-6">Accueil</button>
+	<button ng-click="showFormulaire2()" class=" btn btn-info col-xs-6 col-sm-6 col-md-6 col-lg-6">Precedent</button>
+	</div>
+</div>
+</form>

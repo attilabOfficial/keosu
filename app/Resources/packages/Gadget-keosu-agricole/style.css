@@ -1,0 +1,19 @@
+/***************************
+         ARTICLE
+***************************/
+
+.article iframe, .article img {
+    max-width: 100%;
+}
+.well {
+	background-color: #FEFEFE;
+	padding : 20px;
+}
+.btn {
+	margin-top: 10px;
+	border-width: 2px;
+} 
+
+.btn-info{
+	background-color: #4CA66B;
+}

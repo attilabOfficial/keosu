@@ -1,0 +1,19 @@
+{
+   "name" : "keosu-agricole",
+   "description" : "Display a calculator in your app",
+   "version" : "0.1",
+   "type" : "gadget",
+   "param" : [
+        { "name" : "cache", "type" : "number", "options": {
+         "label": "Cache in minute",
+         "data": 10}},
+      { "name" : "timeout", "type" : "number", "options": {
+         "label": "Timeout in seconde",
+         "data": 10}}
+   ],
+   "require" : [
+      { "name" : "keosu-base", "version" : ">=0.1" },
+      { "name" : "keosu-comments", "version" : ">=0.1" },
+      { "name" : "keosu-share", "version" : ">=0.1" }
+   ]
+}

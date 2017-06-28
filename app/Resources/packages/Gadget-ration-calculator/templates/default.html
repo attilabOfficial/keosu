@@ -1,0 +1,242 @@
+<div ng-show="ecranChoix">
+	<div class="col-xs-6">
+		<button ng-click="showEcranValeurs1()">Lactation Primi</button>
+	</div>
+	<div class="col-xs-6">
+		<button ng-click="showEcranValeurs2()">Lactation Multi</button>
+	</div>
+</div>
+
+<div ng-show="ecranValeurs1">
+<div class="col-xs-12">
+	Poids ( kg )
+	<input type="text" ng-model="poids" ng-change="changePoids()" class="text"></input>{{indiceA}}
+</div>
+<div class="col-xs-12">	
+	Potentiel lait (kg/j)
+	<input type="text" ng-model="potentiel" ng-change="changePotentiel()" class="text"></input>{{indiceB | number : 2}}
+</div>
+<div class="col-xs-12">		
+	Réserves (note d'état)
+	<input type="text" ng-model="reserves" ng-change="changeReserves()" class="text"></input>{{indiceC}}
+</div>
+<div class="col-xs-12">
+	Lactation Primi(en semaines)
+	<input type="text" ng-model="lactationPrimi" ng-change="changeLactationPrimi()" class="text"></input>{{indiceD}}
+</div>	
+<div class="col-xs-12">
+	Gestation (en semaines)	
+	<input type="text" ng-model="gestation" ng-change="changeGestation()" class="text"></input>{{indiceE}}
+</div>	
+<div class="col-xs-12">
+	Maturité (âge en mois)
+	<input type="text" ng-model="maturite" ng-change="changeMaturite()" class="text"></input>{{indiceF}}
+</div>	
+<div class="col-xs-12">
+
+	<button ng-click="showEcranResultat1()">Afficher le CI</button>
+</div>
+	<div class="col-xs-4"></div>
+	<button ng-click="resetAnimal()" class="col-xs-4">Reset</button>
+	<div class="col-xs-4"></div>
+</div>
+<div ng-show="ecranResultat1">
+	<row>
+		<div class="col-xs-1"></div>
+		<div class="col-xs-10">
+		 	Le CI est de {{resultat | number : 2}} UEL/j
+		</div>
+	<div class="col-xs-1"></div>
+	</row>
+	<row>
+		<div class="col-xs-6">
+		 	<button ng-click="showEcranValeurs1()">précédent</button>
+		</div>
+		<div class="col-xs-6">
+			<button ng-click="showEcranAliments()">suivant</button>
+		</div>
+	</row>
+</div>		
+
+<div ng-show="ecranValeurs2">
+	<div class="col-xs-12">
+	Poids ( kg )
+	<input type="text" ng-model="poids" ng-change="changePoids()" class="text"></input>{{indiceA}}
+</div>
+<div class="col-xs-12">	
+	Potentiel lait (kg/j)
+	<input type="text" ng-model="potentiel" ng-change="changePotentiel()" class="text"></input>{{indiceB | number : 2}}
+</div>
+<div class="col-xs-12">		
+	Réserves (note d'état)
+	<input type="text" ng-model="reserves" ng-change="changeReserves()" class="text"></input>{{indiceC}}
+</div>
+<div class="col-xs-12">
+	Lactation Multi(en semaines)
+	<input type="text" ng-model="lactationMulti" ng-change="changeLactationMulti()" class="text"></input>{{indiceG}}
+</div>	
+<div class="col-xs-12">
+	Gestation (en semaines)	
+	<input type="text" ng-model="gestation" ng-change="changeGestation()" class="text"></input>{{indiceE}}
+</div>	
+<div class="col-xs-12">
+	Maturité (âge en mois)
+	<input type="text" ng-model="maturite" ng-change="changeMaturite()" class="text"></input>	{{indiceF}}
+</div>	
+<div class="col-xs-12">
+	<button ng-click="showEcranResultat2()">Afficher le CI</button>
+
+</div>
+</div>
+<div ng-show="ecranResultat2">
+	<div class="col-xs-12">
+		 Le CI est de {{resultat | number : 2}} UEL/j
+	</div>
+	<div class="col-xs-6">
+		<button ng-click="showEcranValeurs2()">precedent</button>
+	</div>
+	<div class="col-xs-6">
+		<button ng-click="showEcranAliments()">suivant</button>
+	</div>
+</div>
+<div ng-show="ecranAliments">
+	<row>
+		<input type="checkbox" class="col-xs-1" ng-model="checked1"></input>
+		<div class="col-xs-9" >Ens Maïs</div>
+		<input type="text" ng-model="mais" ng-change="changeMais()" class="text" ng-disabled="!checked1"></input>
+	</row>
+	<row>
+		<input type="checkbox" class="col-xs-1" ng-model="checked2">
+		<div class="col-xs-9" >Foin Luzerne</div>
+		<input type="text" ng-model="luzerne" ng-change="changeLuzerne()" class="text" ng-disabled="!checked2"></input>
+	</row>
+	<row>
+		<input type="checkbox" class="col-xs-1" ng-model="checked3">
+		<div class="col-xs-9" >Ens Herbe</div>
+		<input type="text" ng-model="herbe" ng-change="changeHerbe()" class="text" ng-disabled="!checked3"></input>
+	</row>
+	<row>
+		<input type="checkbox" class="col-xs-1" ng-model="checked4">
+		<div class="col-xs-9" >Z Maïs grain</div>
+		<input type="text" ng-model="grain" ng-change="changeGrain()" class="text" ng-disabled="!checked4"></input>
+	</row>
+	<row>
+		<input type="checkbox" class="col-xs-1" ng-model="checked5">
+		<div class="col-xs-9" >Z Orge laminé</div>
+		<input type="text" ng-model="orge" ng-change="changeOrge()" class="text" ng-disabled="!checked5"></input>
+		
+	</row>
+	<row>
+		<input type="checkbox" class="col-xs-1" ng-model="checked6">
+		<div class="col-xs-9" >Paille de blé seule</div>
+		<input type="text" ng-model="ble" ng-change="changeBle()" class="text" ng-disabled="!checked6"></input>
+		
+	</row>
+	<button class="col-xs-4" ng-click="showEcranChoix()">Accueil</button>
+	<div class="col-xs-4"></div>
+	<button class="col-xs-4" ng-click="showEcranCalculs()">Suivant</button>
+	<button ng-click="resetAliment()" class="col-xs-12">Reset</button>
+</div>
+<div ng-show="ecranCalculs">
+	<row>
+		<div class="col-xs-12" > 
+			Matière sèche :{{matiereseche | number : 2}} kg
+		</div>
+	</row>
+	<row>
+		<div class="col-xs-12">	
+			Encombrement :{{encombrement | number : 2}} UEL	
+		</div>
+	</row>
+	<row>
+		<div class="col-xs-12">
+			Energie :{{energie | number : 2}} UFL
+		</div>
+	</row>
+	<row>
+		<div class="col-xs-12">
+			PDIN :{{azote1 | number : 2}} g
+		</div>	
+	</row>
+	<row>
+		<div class="col-xs-12">
+			PDIE :{{azote2 | number : 2}} g
+		</div>	
+	</row>
+	<row>
+	<div class="col-xs-4"> {{poids}} kg  </div>
+	<div class="col-xs-4">
+		{{besoinEnergie | number : 2}} UFL 
+	</div>
+	<div class="col-xs-4">
+		et de {{besoinAzote | number : 2}} g
+	</div>
+	</row>
+	<row>
+	<div class="col-xs-3">Il reste donc </div>
+		<div class="col-xs-3">
+			{{resteEnergie | number : 2}} UFL,
+		</div>
+		<div class="col-xs-3">
+			{{resteAzote1 | number : 2}} g et
+		</div>
+		<div class="col-xs-3">
+			{{resteAzote2 | number : 2}} g pour le lait
+		</div> 
+	</row>
+	
+		<div class="col-xs-4">
+			{{productionEnergie | number : 2}} kg
+		</div>
+		<div class="col-xs-4">
+			{{productionAzote1 | number : 2}} kg
+		</div>
+		<div class="col-xs-4">
+			{{productionAzote2 | number : 2}} kg
+		</div> 
+	</row>
+	<div class="col-xs-3">
+		<button ng-click="showEcranAliments()">precedent</button>
+	</div>
+	<div class="col-xs-6">		
+	</div>
+	<div class="col-xs-3">
+		<button ng-click="showEcranEquilibre()">suivant</button>
+	</div>
+</div>	
+<div ng-show="ecranEquilibre">
+	<div class="col-xs-12">
+		Il y a un désiquilibre de {{equilibre | number : 2}} kg
+	</div>
+	<div class="col-xs-12">
+		Nous allons donc utiliser le correcteur {{correcteur}}
+	</div>
+	<div class="col-xs-12">
+		Il faut en ajouter {{correction | number : 2}} kg pour corriger
+	</div>
+	<row>
+		<div class="col-xs-4">
+			{{correctionEnergie | number : 2}}
+		</div>
+		<div class="col-xs-4">
+			 {{correctionAzote1 | number : 2}}
+		</div>
+		<div class="col-xs-4">
+			 {{correctionAzote2 | number : 2}}
+		</div>
+	</row>	
+	<row>
+		<div class="col-xs-4">
+			{{productionEnergie | number : 2}} kg
+		</div>
+		<div class="col-xs-4">
+			{{productionAzote1 | number : 2}} kg 
+		</div>
+		<div class="col-xs-4">
+			{{productionAzote2 | number : 2}} kg
+		</div>
+	</row>
+	<div class="col-xs-12">
+		<button ng-click="showEcranCalculs()" class="col-xs-4">precedent</button>
+	</div>
+</div>

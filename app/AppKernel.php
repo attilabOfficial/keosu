@@ -49,6 +49,7 @@ class AppKernel extends Kernel
             new Fkr\SimplePieBundle\FkrSimplePieBundle(),
             new Keosu\Gadget\ContactUsGadgetBundle\KeosuGadgetContactUsGadgetBundle(),
             new Keosu\DataModel\SearchModelBundle\KeosuDataModelSearchModelBundle(),
+            new Keosu\Gadget\TwitterGadgetBundle\KeosuGadgetTwitterGadgetBundle(),
             new Keosu\DataModel\MenuModelBundle\KeosuDataModelMenuModelBundle()
 		];
 

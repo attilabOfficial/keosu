@@ -42,7 +42,7 @@ class ConfigPackageType extends AbstractType {
 
 		$this->request = $options['request'];
 		$this->container = $options['container'];
-		$packageManager = $this->container->get('keosu_core.packagemanager');
+		$packageManager = $this->container->get('keosu_core.package_manager');
 		$packages = $packageManager->getPackageList();
 
 		foreach($packages as $p) {

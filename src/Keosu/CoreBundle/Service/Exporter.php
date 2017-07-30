@@ -67,7 +67,7 @@ class Exporter
     {
         $this->doctrine = $doctrine;
         $this->container = $container;
-        $this->packageManager = $this->container->get('keosu_core.packagemanager');
+        $this->packageManager = $this->container->get('keosu_core.package_manager');
     }
 
     public function exportApp()

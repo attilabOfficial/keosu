@@ -33,6 +33,7 @@ class KeosuExtension
         'picture' => array('KeosuDataModelPictureModelBundle:Picture', 'picture'),
         'event' => array('KeosuDataModelEventModelBundle:Event', 'calendar'),
         'menu' => array('KeosuDataModelMenuModelBundle:MenuEntry', 'list'),
-        'search' => array('KeosuDataModelSearchModelBundle:Search', 'search')
+        'search' => array('KeosuDataModelSearchModelBundle:Search', 'search'),
+        'form' => array('KeosuDataModelFormModelBundle:Form', 'font')
     );
 }

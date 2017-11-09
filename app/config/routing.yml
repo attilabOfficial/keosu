@@ -114,7 +114,13 @@ login_check:
 logout:
     path: /logout
 
+keosu_data_model_form_model:
+    resource: "@KeosuDataModelFormModelBundle/Resources/config/routing.yml"
+    prefix:   /
 
+keosu_gadget_form_gadget:
+    resource: "@KeosuGadgetFormGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
 
 # Internal routing configuration to handle ESI
 #_internal:

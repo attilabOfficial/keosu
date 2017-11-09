@@ -50,7 +50,9 @@ class AppKernel extends Kernel
             new Keosu\Gadget\ContactUsGadgetBundle\KeosuGadgetContactUsGadgetBundle(),
             new Keosu\DataModel\SearchModelBundle\KeosuDataModelSearchModelBundle(),
             new Keosu\Gadget\TwitterGadgetBundle\KeosuGadgetTwitterGadgetBundle(),
-            new Keosu\DataModel\MenuModelBundle\KeosuDataModelMenuModelBundle()
+            new Keosu\DataModel\MenuModelBundle\KeosuDataModelMenuModelBundle(),
+            new Keosu\Gadget\FormGadgetBundle\KeosuGadgetFormGadgetBundle(),
+            new Keosu\DataModel\FormModelBundle\KeosuDataModelFormModelBundle()
 		];
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'local', 'testing'))) {

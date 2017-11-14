@@ -1,0 +1,133 @@
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+{% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
+
+{% block title %}
+	Edit Form
+{% endblock %}
+
+{% block content %}
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<script>
+		$(document).ready(function() {
+
+			/**
+			 * Fields
+			 */
+
+			$('#fields').children().each(function() {
+
+				addFieldHeader($(this));
+				refreshFieldsNumber();
+
+			});
+
+			$('#add-field').on('click', function(e) {
+				e.preventDefault();
+				addFieldForm();
+			});
+
+			if ($('#fields').next().prop('tagName') == 'DIV') {
+				$('#fields').next().remove();
+			}
+
+			$('#form-form form > .form_fields_form_group').remove();
+
+		});
+
+		/**
+		 * Fields
+		 */
+
+		function addFieldForm() {
+
+			var fieldPrototype = $('#fields').attr('data-prototype');
+
+			var fieldsCount = $('#fields').children().length;
+			fieldPrototype = fieldPrototype.replace(/__name__/g, fieldsCount);
+
+			var fieldLi = $('<li>').append(fieldPrototype);
+			fieldLi.append('<br/>');
+
+			$('#fields').append(fieldLi);
+			addFieldHeader(fieldLi);
+
+		}
+
+		function addFieldHeader($fieldLi) {
+
+			var fieldNumber = $('#fields').children().length;
+			var $label = $('<div class="control-header"><b>Field '+ fieldNumber +'</b></div>');
+
+			var $removeLink = $('<a href="#" class="delete">(Delete)</a>');
+			$removeLink.on('click', function(e) {
+
+				e.preventDefault();
+				$fieldLi.remove();
+				refreshFieldsNumber();
+
+			});
+
+			$label.append($removeLink);
+			$fieldLi.prepend($label);
+			$fieldLi.prepend('<hr/>');
+
+		}
+
+		function refreshFieldsNumber() {
+			$('#fields > li').each(function(index) {
+				$(this).find('.control-header b').html('Field '+ (index+1));
+			});
+		}
+
+	</script>
+
+	<div id="form-form">
+
+		{{ form_start(form) }}
+		{{ form_row(form.name) }}
+		{{ form_row(form.mailFrom) }}
+		{{ form_row(form.mailTo) }}
+
+		<div class="form-group">
+
+			<label class="control-header col-lg-12">Fields</label>
+			<ul id="fields" data-prototype="{{ form_widget(form.fields.vars.prototype)|e }}">
+				{% for field in form.fields %}
+					<li>
+						{{ form_row(field.type) }}
+						{{ form_row(field.text) }}
+						{{ form_row(field.required) }}
+					</li>
+				{% endfor %}
+			</ul>
+
+			<br/>
+
+		</div>
+
+		<br class="clear"/><br class="clear"/>
+
+		<button id="add-field" class="btn btn-success">Add field</button>
+		<input type="submit" class="btn btn-success" />
+		<a href="{{ path('keosu_form_viewlist') }}" ><input value="Cancel" type="button" class="btn btn-danger"/></a>
+
+		{{ form_end(form) }}
+
+	</div>
+{% endblock %}

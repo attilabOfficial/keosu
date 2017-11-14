@@ -1,0 +1,12 @@
+services:
+    keosu_gadget.form.gadget:
+        class: Keosu\Gadget\FormGadgetBundle\EventListener\GadgetListener
+        arguments: ['@service_container']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    keosu_gadget.article.export:
+        class: Keosu\Gadget\FormGadgetBundle\EventListener\ExportListener
+        arguments: ['@service_container']
+        tags:
+            - { name: kernel.event_subscriber }

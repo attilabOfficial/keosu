@@ -1,0 +1,80 @@
+{#
+Keosu is an open source CMS for mobile app
+Copyright (C) 2014  Vincent Le Borgne, Pockeit
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+{% extends 'KeosuCoreBundle:MainViews:content.html.twig' %}
+
+{% block content %}
+<script>
+$(document).ready(function() {
+	// Init table for quizz
+	$('#content-table').dataTable({
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bSort": true,
+			"bInfo": true,
+			"bAutoWidth": true,
+			"aoColumns": [
+							null,
+							null
+			]});
+});
+</script>
+<div class="row table">
+	<div class="col-md-12">
+		<div id="dynamic">
+			<fieldset>
+				<div class="clearfix">
+		    		<h1 class="pull-left">Form</h1>
+		    		<a class="right-button pull-right" href="{{ path('keosu_form_add') }}">
+						<button class="btn btn-success" title="Create a form">
+							New form
+						</button>
+					</a>
+				</div>
+				<table class="table table-striped table-hover clearfix" id="content-table" width="100%">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+
+					{% for form in forms %}
+						<tr>
+							<td class="title">{{ form.name|raw }}</td>
+							<td class="actions">
+								<a href={{ path('keosu_form_edit',{'id':form.id}) }}><i class='glyphicon glyphicon-edit'></i></a>
+								<a href={{ path('keosu_form_delete',{'id':form.id}) }}><i class='glyphicon glyphicon-remove'></i></a>
+							</td>
+						</tr>
+					{% endfor %}
+
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>Name</th>
+							<th></th>
+						</tr>
+					</tfoot>
+				</table>
+			</fieldset>
+		</div>
+	</div>
+</div>
+{% endblock %}

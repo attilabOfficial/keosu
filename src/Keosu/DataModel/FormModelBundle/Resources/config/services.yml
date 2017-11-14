@@ -1,0 +1,7 @@
+parameters:
+#    keosu_data_model_form_model.example.class: Keosu\DataModel\FormModelBundle\Example
+
+services:
+#    keosu_data_model_form_model.example:
+#        class: %keosu_data_model_form_model.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

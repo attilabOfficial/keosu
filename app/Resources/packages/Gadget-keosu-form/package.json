@@ -1,0 +1,52 @@
+{
+   "name" : "keosu-form",
+   "description" : "Display a form in your app",
+   "version" : "0.1",
+   "type" : "gadget",
+   "param" : [
+      { "name" : "id", "type" : "number" },
+      { "name" : "offline", "type" : "boolean"}
+   ],
+   "require" : [
+      { "name" : "keosu-base", "version" : ">=0.1" }
+   ],
+   "configCordova" : [
+     { "plugin" : [
+       { "@attributes" : {"name" : "cordova-plugin-camera"} }
+     ]}, { "plugin" : [
+       { "@attributes" : {"name" : "cordova-plugin-file-transfer"} }
+     ]}, {
+       "edit-config" : [
+         { "@attributes" : {"target" : "NSCameraUsageDescription"} },
+         { "@attributes" : {"file" : "*-Info.plist"} },
+         { "@attributes" : {"mode" : "merge"} },
+         { "@value" : { "string":"Upload photos directly from your camera!" } }
+       ]
+     }, {
+       "edit-config" : [
+         { "@attributes" : {"target" : "NSPhotoLibraryUsageDescription"} },
+         { "@attributes" : {"file" : "*-Info.plist"} },
+         { "@attributes" : {"mode" : "merge"} },
+         { "@value" : { "string":"Upload photos from your library" } }
+       ]
+     }, {
+       "edit-config" : [
+         { "@attributes" : {"target" : "NSLocationWhenInUseUsageDescription"} },
+         { "@attributes" : {"file" : "*-Info.plist"} },
+         { "@attributes" : {"mode" : "merge"} },
+         { "@value" : { "string":"?" } }
+       ]
+     }, {
+       "edit-config" : [
+         { "@attributes" : {"target" : "NSPhotoLibraryAddUsageDescription"} },
+         { "@attributes" : {"file" : "*-Info.plist"} },
+         { "@attributes" : {"mode" : "merge"} },
+         { "@value" : { "string":"?" } }
+       ]
+     }
+   ],
+   "pluginToInstall" : [
+   "cordova plugin add cordova-plugin-camera",
+   "cordova plugin add cordova-plugin-file-transfer"
+   ]
+}

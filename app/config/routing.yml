@@ -10,6 +10,10 @@ keosu_gadget_push_notification:
     resource: "@KeosuGadgetPushNotificationBundle/Resources/config/routing.yml"
     prefix:   /
 
+keosu_gadget_twitter_gadget:
+    resource: "@KeosuGadgetTwitterGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
 keosu_gadget_comment_gadget:
     resource: "@KeosuGadgetCommentGadgetBundle/Resources/config/routing.yml"
     prefix:   /
@@ -33,7 +37,7 @@ keosu_gadget_picture_gadget:
 keosu_data_model_picture_model:
     resource: "@KeosuDataModelPictureModelBundle/Resources/config/routing.yml"
     prefix:   /
-    
+
 keosu_gadget_around_me_gadget:
     resource: "@KeosuGadgetAroundMeGadgetBundle/Resources/config/routing.yml"
     prefix:   /
@@ -41,7 +45,7 @@ keosu_gadget_around_me_gadget:
 keosu_reader_rss_reader:
     resource: "@KeosuReaderRssReaderBundle/Resources/config/routing.yml"
     prefix:   /
-    
+
 keosu_readerics_reader:
     resource: "@KeosuReaderIcsReaderBundle/Resources/config/routing.yml"
     prefix:   /
@@ -61,7 +65,7 @@ keosu_gadget_article_gadget:
 keosu_gadget_map_gadget:
     resource: "@KeosuGadgetMapGadgetBundle/Resources/config/routing.yml"
     prefix:   /
-    
+
 keosu_gadget_calendar_gadget:
     resource: "@KeosuGadgetCalendarGadgetBundle/Resources/config/routing.yml"
     prefix:   /
@@ -73,15 +77,15 @@ keosu_core:
 keosu_article:
     resource: "@KeosuDataModelArticleModelBundle/Resources/config/routing.yml"
     prefix:   /
-    
+
 keosu_poi:
     resource: "@KeosuDataModelLocationModelBundle/Resources/config/routing.yml"
     prefix:   /
-    
+
 keosu_event:
     resource: "@KeosuDataModelEventModelBundle/Resources/config/routing.yml"
     prefix:   /
-    
+
 #FOS User route
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
@@ -110,7 +114,13 @@ login_check:
 logout:
     path: /logout
 
+keosu_data_model_form_model:
+    resource: "@KeosuDataModelFormModelBundle/Resources/config/routing.yml"
+    prefix:   /
 
+keosu_gadget_form_gadget:
+    resource: "@KeosuGadgetFormGadgetBundle/Resources/config/routing.yml"
+    prefix:   /
 
 # Internal routing configuration to handle ESI
 #_internal:

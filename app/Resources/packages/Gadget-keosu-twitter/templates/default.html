@@ -1,0 +1,28 @@
+<div class="twitter-list-elem" ng-repeat="tweet in tweets">
+  <div class="twitter-elem-header">
+  	<img class="twitter-img" ng-src="{{ tweet.user.profile_image_url_https }}" alt="" />
+
+	<div class="twitter-user">
+  	  <div class="twitter-user-name">
+  	  	<strong>{{ tweet.user.name }}</strong>
+  	  </div>
+  	  <div class="twitter-screen-name">
+  	  	@{{ tweet.user.screen_name }}
+  	  </div>
+  	</div>
+  </div>
+
+  <div class="twitter-elem-content">
+  	<p>{{ tweet.text }}</p>
+  </div>
+</div>
+
+<div class="loading-tweet" ng-if="!tweets">
+  <p>Chargement en cours...</p>
+</div>
+
+<div class="no-tweet" ng-if="no_tweets">
+  <p>Pas encore de tweets, soyez le premier !</p>
+</div>
+
+<keosu-share id="twitter-keosu-share" label="<span class='glyphicon glyphicon-share-alt' aria-hidden='true'></span>&nbsp;Tweetez <strong>vos coups de coeur #rvnature</strong>" hashtag="rvnature" url="url" twitter="true"></keosu-share>

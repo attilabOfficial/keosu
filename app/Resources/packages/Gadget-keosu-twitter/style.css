@@ -1,0 +1,13 @@
+#twitter-keosu-share {
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  position:fixed;
+  bottom:40px;
+  left:0;
+  width:100%;
+  height: 40px;
+  background-color: #3598db;
+  color:#fff;
+}

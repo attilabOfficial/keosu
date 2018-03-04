@@ -88,7 +88,7 @@ class ExportCommand extends ContainerAwareCommand
 	
 		try {
 			$exporter = $this->getContainer()->get('keosu_core.exporter');
-			$manager = $this->getContainer()->get('keosu_core.packagemanager');
+			$manager = $this->getContainer()->get('keosu_core.package_manager');
 			$manager->checkAllPackages();
 			$exporter->export($app->getId());
 			$stdout->writeln('<comment>'.date('H:i:s').'</comment> <info>[success]</info> '.$app->getName().' exported');

@@ -1,0 +1,4 @@
+keosu_gadget_twitter_service:
+    path:  /service/gadget/twitter/{search}
+    defaults: { _controller: KeosuGadgetTwitterGadgetBundle:Service:getAll }
+    methods:  [GET]

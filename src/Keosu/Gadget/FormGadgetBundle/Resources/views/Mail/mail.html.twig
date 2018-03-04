@@ -1,0 +1,42 @@
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>[Keosu] {{ form.name }}</title>
+  </head>
+
+  <body>
+
+    <h3>[Keosu] {{ form.name }}</h3>
+
+    {% if user %}
+
+    <h4>Utilisateur</h4>
+
+    <ul>
+      <li><strong>Nom d'utilisateur</strong> : {{ user.username }}</li>
+      <li><strong>Adresse e-mail</strong> : {{ user.email}}</li>
+    </ul>
+
+    {% endif %}
+
+    <h4>Données</h4>
+
+    <ul>{% for field, value in data %}
+      {% if value is iterable %}
+        <li>
+          <strong>{{ field }}</strong>
+          <ol>
+            {% for photo in value %}
+            <li><a href="{{ photo }}">{{ photo }}</a></li>
+            {% endfor %}
+          </ol>
+        </li>
+      {% else %}
+        <li><strong>{{ field }}</strong>&nbsp;{{ value|raw }}</li>
+      {% endif %}
+    {% endfor %}</ul>
+
+  </body>
+
+</html>

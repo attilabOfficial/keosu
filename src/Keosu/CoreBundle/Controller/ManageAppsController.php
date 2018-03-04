@@ -84,7 +84,7 @@ class ManageAppsController extends Controller
     private function editApp(App $app, Request $request)
     {
         $em = $this->get('doctrine')->getManager();
-        $packageManager = $this->get('keosu_core.packagemanager');
+        $packageManager = $this->get('keosu_core.package_manager');
 
         $apps = $em->getRepository('KeosuCoreBundle:App')->findAll();
         //Find existing app to know if it's the first one

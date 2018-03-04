@@ -1,0 +1,14 @@
+keosu_gadget_form_service_viewone:
+    path:  /service/gadget/form/{gadgetId}
+    defaults: { _controller: KeosuGadgetFormGadgetBundle:Service:viewOne }
+    methods:  [GET]
+
+keosu_gadget_form_service_submit:
+    path:  /service/gadget/form/{formId}+{email}
+    defaults: { _controller: KeosuGadgetFormGadgetBundle:Service:submit }
+    methods:  [POST]
+
+keosu_gadget_form_service_upload:
+    path:  /service/gadget/form/{formId}/upload
+    defaults: { _controller: KeosuGadgetFormGadgetBundle:Service:upload }
+    methods:  [POST]

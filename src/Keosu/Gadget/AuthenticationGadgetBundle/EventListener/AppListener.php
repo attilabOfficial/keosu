@@ -42,7 +42,7 @@ class AppListener implements EventSubscriberInterface
 	public function onAppSaveData(PackageSaveAppEvent $event)
 	{
 		$em = $this->container->get('doctrine')->getManager();
-		$packageManager = $this->container->get('keosu_core.packagemanager');
+		$packageManager = $this->container->get('keosu_core.package_manager');
 		$app = $event->getApp();
 		$appPrivate = !!$app->getConfigPackages()[KeosuGadgetAuthenticationGadgetBundle::PACKAGE_NAME]['privateApp'];
 	

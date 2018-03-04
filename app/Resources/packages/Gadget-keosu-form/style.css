@@ -1,0 +1,83 @@
+/***************************
+         FORM
+***************************/
+
+.form:not(.ui) > div > div {
+    padding: 8px;
+    margin-bottom: 75px !important;
+    padding-bottom: 75px !important;
+}
+
+.form:not(.ui) form {
+    width: 100%;
+}
+
+.form:not(.ui) ol {
+    padding: 0;
+}
+
+@media screen and (min-width: 350px) {
+    .form:not(.ui) ol {
+        padding: 10px;
+    }
+}
+
+.form:not(.ui) li {
+    margin-bottom: 15px;
+    list-style-type: none;
+}
+
+.form:not(.ui) textarea {
+    width: 100%;
+}
+
+.form:not(.ui) button {
+    float: right;
+    margin: 0 15px 10px 0;
+}
+
+.form:not(.ui) li div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.form:not(.ui) label {
+    line-height: 120%;
+    margin: 0;
+}
+
+.form:not(.ui) input {
+}
+
+.form:not(.ui) input[type="checkbox"], .form:not(.ui) input[type="radio"] {
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+
+.form:not(.ui) input[type="text"] {
+    flex-grow: 1;
+    min-width: 50px;
+    margin-left: 8px;
+}
+
+.form:not(.ui) .error-message {
+    margin-bottom: 0;
+    margin-right: 15px;
+    text-align: right;
+    color: red;
+}
+
+.form:not(.ui) .submitted-message {
+    margin-top: 15px;
+}
+
+input[type="hidden"]~img {
+  width:100%;
+  height:auto;
+}
+
+label span {
+  color:red;
+}

@@ -1,0 +1,43 @@
+<section class="ui basic segment">
+
+	<h1 class="ui header">{{ form.name }}</h1>
+
+	<form method="post" class="ui form">
+
+		<div class="field" ng-repeat="field in form.fields">
+
+			<label for="{{ field.text }}">{{ field.text }}<span ng-if="field.required"> *</span></label>
+
+			<!-- textarea -->
+			<textarea ng-if="field.type == 'longText'" ng-model="field.value" name="{{ field.text }}" ng-required="field.required"></textarea>
+
+			<!-- input -->
+			<input ng-if="field.type == 'shortText'" type="text" ng-model="field.value" name="{{ field.text }}" ng-required="field.required" />
+
+			<!-- photo -->
+			<input name="{{ field.text }}" type="hidden" ng-if="field.type == 'photo'" ng-model="field.value" ng-required="field.required" />
+			<div class="ui grid" ng-if="field.type == 'photo'"></div>
+			<div class="ui grid">
+				<div class="ui eight wide column"><input class="ui fluid button" type="button" ng-if="field.type == 'photo'" ng-click="pickFromLibrary(field.text)" value="Mes photos" /></div>
+				<div class="ui eight wide column"><input class="ui fluid button" type="button" ng-if="field.type == 'photo'" ng-click="openCamera(field.text)" value="Caméra" /></div>
+			</div>
+
+		</div>
+
+	</form>
+
+	<div style="margin-top:32px;">
+		<div class="ui positive message" ng-show="submitted">Vos données ont été envoyées !</div>
+		<div class="ui positive message" ng-show="saved">Vos données ont été sauvegardées !</div>
+		<div class="ui positive message" ng-show="synchronized">Vos données ont été envoyées !</div>
+		<div class="ui negative message" ng-if="errorMessage">{{ errorMessage }}</div>
+	</div>
+
+	<div class="ui grid">
+		<div class="ui sixteen wide column"></div>
+		<div class="ui sixteen wide column"><button type="submit" class="ui fluid button primary" ng-hide="form.offline" ng-click="submit()">Envoyer</button></div>
+		<div class="ui eight wide column"><button type="submit" class="ui fluid button primary" ng-show="form.offline" ng-click="submit()">Sauvegarder</button></div>
+		<div class="ui eight wide column"><button type="submit" class="ui fluid button" ng-show="form.offline" ng-click="synchronize()">Envoyer ({{ toSynchronize }})</button></div>
+	</div>
+
+</section>

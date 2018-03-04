@@ -1,0 +1,11 @@
+{
+   "name" : "keosu-twitter",
+   "description" : "Twitter",
+   "version" : "0.1",
+   "type" : "gadget",
+   "param" : [
+   ],
+   "require" : [
+      { "name" : "keosu-base", "version" : ">=0.1" }
+   ]
+}

@@ -1,0 +1,60 @@
+<div class="animated fadeIn">
+
+	<div class="row-fluid">
+		<h4 class="title">{{ form.name }}</h4>
+	</div>
+
+	<hr>
+
+	<div class="gadget-content form">
+		<div class="row-fluid">
+			<div class="col-xs-12">
+
+				<form method="post">
+
+					<div class="form-group" ng-repeat="field in form.fields">
+
+							<label for="{{ field.text }}">{{ field.text }}</label>
+
+							<!-- textarea -->
+							<textarea class="form-control" ng-if="field.type == 'longText'" ng-model="field.value" name="{{ field.text }}"></textarea>
+
+							<!-- input -->
+							<input class="form-control" ng-if="field.type == 'shortText'" type="text" ng-model="field.value" name="{{ field.text }}" />
+
+							<!-- single select -->
+							<select class="form-control" ng-if="field.type == 'singleChoice'" ng-model="field.value" name="{{ field.text }}">
+								<option ng-repeat="answer in field.answers" value="{{ answer }}">{{ answer }}</option>
+							</select>
+
+							<!-- multiple select -->
+							<select class="form-control" ng-if="field.type == 'multipleChoice'" ng-model="field.value" name="{{ field.text }}" multiple="multiple">
+								<option ng-repeat="answer in field.answers" value="{{ answer }}">{{ answer }}</option>
+							</select>
+
+							<!-- photo -->
+							<br ng-if="field.type == 'photo'" />
+							<input name="{{ field.text }}" type="hidden" ng-if="field.type == 'photo'" ng-model="field.value" />
+							<input class="btn" type="button" ng-if="field.type == 'photo'" ng-click="pickFromLibrary(field.text)" value="Pick from library" />
+							<input class="btn" type="button" ng-if="field.type == 'photo'" ng-click="openCamera(field.text)" value="Open camera" />
+
+					</div>
+
+					<div class="error-message" ng-if="errorMessage">{{ errorMessage }}</div>
+
+					<button type="submit" class="btn btn-primary btn-lg" ng-hide="form.offline" ng-click="submit()">Send</button>
+
+					<button type="submit" class="btn btn-primary btn-lg" ng-show="form.offline" ng-click="submit()">Save</button>
+					<button type="submit" class="btn btn-lg" ng-show="form.offline" ng-click="synchronize()">Synchronize ({{ toSynchronize }})</button>
+
+				</form>
+
+				<div class="submitted-message" ng-show="submitted">Your data has been sent !</div>
+				<div class="submitted-message" ng-show="saved">Your data has been saved !</div>
+				<div class="submitted-message" ng-show="synchronized">Your data has been synchronized !</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>

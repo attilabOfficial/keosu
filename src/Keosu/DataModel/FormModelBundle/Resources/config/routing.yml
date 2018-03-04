@@ -1,0 +1,15 @@
+keosu_form_viewlist:
+    path:  /content/form/
+    defaults: { _controller: KeosuDataModelFormModelBundle:View:view }
+
+keosu_form_delete:
+    path:  /content/form/delete/{id}
+    defaults: { _controller: KeosuDataModelFormModelBundle:Edit:delete }
+
+keosu_form_edit:
+    path:  /content/form/edit/{id}
+    defaults: { _controller: KeosuDataModelFormModelBundle:Edit:edit }
+
+keosu_form_add:
+    path:  /content/form/add
+    defaults: { _controller: KeosuDataModelFormModelBundle:Edit:add }

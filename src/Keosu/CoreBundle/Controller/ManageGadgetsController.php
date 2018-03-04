@@ -119,7 +119,7 @@ class ManageGadgetsController extends Controller {
 			$gadget->setZone($zoneName);
 		}
 		
-		if(!$this->get('keosu_core.packagemanager')->isGadgetExist($gadgetName))
+		if(!$this->get('keosu_core.package_manager')->isGadgetExist($gadgetName))
 			throw new \LogicException("Gadget : ".$gadgetName." Not Found");
 			
 		$gadget->setConfig(array());
@@ -230,7 +230,7 @@ class ManageGadgetsController extends Controller {
 
 		$formBuilder = $this->createFormBuilder($gadget);
 
-		$listTemplate = $this->get('keosu_core.packagemanager')->getListTemplateForGadget($gadget->getName(),$theme);
+		$listTemplate = $this->get('keosu_core.package_manager')->getListTemplateForGadget($gadget->getName(),$theme);
 		if(count($listTemplate) > 1){
 			$formBuilder->add('template', ChoiceType::class ,array(
 					'choices'  => $listTemplate,
@@ -246,7 +246,7 @@ class ManageGadgetsController extends Controller {
 		$formBuilder->add('shared', CheckboxType::class, array(
 				'label'    => 'Shared with all pages',
 				'required' => false))
-		->add('config',ConfigGadgetType::class, array('gadget'=>$gadget, 'request'=>$request, 'dispatcher'=> $this->get('event_dispatcher'), 'package_manager'=>$this->container->get('keosu_core.packagemanager')));
+		->add('config',ConfigGadgetType::class, array('gadget'=>$gadget, 'request'=>$request, 'dispatcher'=> $this->get('event_dispatcher'), 'package_manager'=>$this->container->get('keosu_core.package_manager')));
 					
 		$form = $formBuilder->getForm();
 

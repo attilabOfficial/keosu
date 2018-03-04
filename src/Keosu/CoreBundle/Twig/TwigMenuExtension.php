@@ -84,7 +84,7 @@ class TwigMenuExtension extends \Twig_Extension {
 	{
 		$dispatcher = $this->container->get('event_dispatcher');
 		$event = new PackageSideMenuEvent();
-		$packageManager = $this->container->get('keosu_core.packagemanager');
+		$packageManager = $this->container->get('keosu_core.package_manager');
 		$packages = $packageManager->getPackageList();
 		foreach($packages as $package) {
 			$dispatcher->dispatch(KeosuEvents::PACKAGE_GLOBAL_MENU_CONFIG.$package->getName(),$event);

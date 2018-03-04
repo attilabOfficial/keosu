@@ -12,7 +12,7 @@
 	<div class="wellcustom" id="login-container">
 		{% block fos_user_content %}
 			{% if error %}
-				<div class="alert alert-danger" role="alert">Error, check your password</div>
+				<div class="alert alert-danger" role="alert">{{ error.getMessageKey() }}</div>
 			{% endif %}
 			<div class="container">
 				<div class="logincontainer">

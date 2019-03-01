@@ -38,9 +38,8 @@ class PageDeleteListener implements EventSubscriberInterface
 	{
 		$curPage=$event->getPage();
 		$gadget = $event->getGadget();
-		$pages=$gadget->getConfig()['page'];
+		$pages=$gadget->getConfig(); :/*hello, i had an error when i wanted to delete a page, it works with this modification, thanks for making KEOSU, i think it will help me a lot ! */
 		$newConfig = array();
-        $newConfig['page'] = array();
 		foreach($pages as $page) {
 			if($page != $curPage->getId()){
 				$newConfig['page'][] = $page;
